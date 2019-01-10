@@ -1,0 +1,7 @@
+[package]
+name = "plex-api"
+version = "0.1.0"
+authors = ["Andrey Yantsen <andrey@janzen.su>"]
+edition = "2018"
+
+[dependencies]
