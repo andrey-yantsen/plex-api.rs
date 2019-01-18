@@ -1,0 +1,11 @@
+[package]
+name = "tools-bootstrap-plex"
+version = "0.1.0"
+authors = ["Andrey Yantsen <andrey@janzen.su>"]
+edition = "2018"
+
+[dependencies]
+plex-api = { path = "../plex-api" }
+log = "0.4"
+fern = "0.5"
+chrono = "0.4.6"

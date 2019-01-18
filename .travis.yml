@@ -4,6 +4,9 @@ rust:
   - beta
   - nightly
 cache: cargo
+script:
+  - cargo build --verbose --all
+  - cargo test --verbose --all
 matrix:
   allow_failures:
     - rust: nightly
