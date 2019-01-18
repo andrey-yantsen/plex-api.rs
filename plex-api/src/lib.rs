@@ -5,6 +5,7 @@ extern crate serde;
 extern crate serde_derive;
 extern crate serde_json;
 extern crate serde_with;
+extern crate chrono;
 
 use reqwest::header::HeaderMap;
 use uname::uname;

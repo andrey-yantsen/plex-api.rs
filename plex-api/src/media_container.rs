@@ -1,5 +1,6 @@
 use crate::{bool_from_int, option_bool_from_int};
 use serde_with::CommaSeparator;
+use chrono::{DateTime, Utc};
 
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, serde(deny_unknown_fields))]
@@ -74,8 +75,8 @@ struct Server {
     #[serde(rename = "machineIdentifier")]
     machine_identifier: String,
     name: String,
-    #[serde(rename = "lastSeenAt")]
-    last_seen_at: u64,
+    #[serde(rename = "lastSeenAt", with = "chrono::serde::ts_seconds")]
+    last_seen_at: DateTime<Utc>,
     #[serde(rename = "numLibraries")]
     num_libraries: u32,
     #[serde(rename = "allLibraries", deserialize_with = "bool_from_int")]
@@ -112,10 +113,10 @@ pub struct Device {
     token: Option<String>,
     #[serde(rename = "accessToken")]
     access_token: Option<String>,
-    #[serde(rename = "createdAt")]
-    created_at: u64,
-    #[serde(rename = "lastSeenAt")]
-    last_seen_at: u64,
+    #[serde(rename = "createdAt", with = "chrono::serde::ts_seconds")]
+    created_at: DateTime<Utc>,
+    #[serde(rename = "lastSeenAt", with = "chrono::serde::ts_seconds")]
+    last_seen_at: DateTime<Utc>,
     #[serde(
         rename = "screenResolution",
         deserialize_with = "serde_with::rust::StringWithSeparator::<CommaSeparator>::deserialize",

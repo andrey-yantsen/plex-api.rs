@@ -10,13 +10,15 @@ use crate::{base_headers, bool_from_int};
 use reqwest::{header::HeaderMap, Client, Error, IntoUrl, Response};
 use serde::Serialize;
 use std::result;
+use chrono::DateTime;
+use chrono::Utc;
 
 #[derive(Deserialize, Debug)]
 #[cfg_attr(test, serde(deny_unknown_fields))]
 struct SubscriptionSummary {
     active: bool,
-    #[serde(rename = "subscribedAt")]
-    subscribed_at: Option<String>,
+    #[serde(rename = "subscribedAt", default)]
+    subscribed_at: Option<DateTime<Utc>>,
     status: String,
     #[serde(rename = "paymentService")]
     payment_service: String,
@@ -51,9 +53,9 @@ struct Subscription {
     mode: String,
     state: String,
     #[serde(rename = "renewsAt")]
-    renews_at: Option<String>,
+    renews_at: Option<DateTime<Utc>>,
     #[serde(rename = "endsAt")]
-    ends_at: Option<String>,
+    ends_at: Option<DateTime<Utc>>,
     #[serde(rename = "type")]
     kind: Option<String>,
 }
@@ -109,8 +111,8 @@ pub struct MyPlexAccount {
     max_home_size: i32,
     #[serde(rename = "certificateVersion")]
     certificate_version: i32,
-    #[serde(rename = "rememberExpiresAt")]
-    remember_expires_at: i64,
+    #[serde(rename = "rememberExpiresAt", with = "chrono::serde::ts_seconds")]
+    remember_expires_at: DateTime<Utc>,
     profile: Profile,
     entitlements: Vec<String>,
     roles: Vec<String>,
