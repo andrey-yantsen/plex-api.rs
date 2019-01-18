@@ -57,7 +57,7 @@ struct Subscription {
     #[serde(rename = "endsAt")]
     ends_at: Option<DateTime<Utc>>,
     #[serde(rename = "type")]
-    kind: Option<String>,
+    subscription_type: Option<String>,
 }
 
 #[derive(Deserialize, Debug)]
