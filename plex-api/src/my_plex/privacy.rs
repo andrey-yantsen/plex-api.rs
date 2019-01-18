@@ -1,4 +1,4 @@
-use crate::my_plex::{MyPlexAccount, MyPlexError, Result};
+use crate::my_plex::{MyPlexAccount, MyPlexError, Result, MyPlexApiErrorResponse};
 use reqwest::StatusCode;
 use std::collections::HashMap;
 
@@ -31,7 +31,8 @@ impl MyPlexAccount {
             let p: Privacy = response.json()?;
             Ok(p)
         } else {
-            Err(MyPlexError {})
+            let err: MyPlexApiErrorResponse = response.json()?;
+            Err(MyPlexError::from(err))
         }
     }
 
