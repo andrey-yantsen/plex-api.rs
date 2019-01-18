@@ -25,9 +25,10 @@ impl MyPlexAccount {
     }
 }
 
+// TODO: Implement error conversion
 impl From<ErrorResponse> for MyPlexError {
     fn from(e: ErrorResponse) -> Self {
-        println!("{:#?}", e);
+        eprintln!("{:#?}", e);
         Self {}
     }
 }

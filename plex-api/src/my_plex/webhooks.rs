@@ -22,7 +22,8 @@ impl MyPlexAccount {
             }
             Ok(ret)
         } else {
-            Err(MyPlexError::from(response.json::<MyPlexApiErrorResponse>()?))
+            let err: MyPlexApiErrorResponse = response.json()?;
+            Err(MyPlexError::from(err))
         }
     }
 
@@ -39,7 +40,8 @@ impl MyPlexAccount {
         if response.status() == StatusCode::CREATED {
             Ok(())
         } else {
-            Err(MyPlexError::from(response.json::<MyPlexApiErrorResponse>()?))
+            let err: MyPlexApiErrorResponse = response.json()?;
+            Err(MyPlexError::from(err))
         }
     }
 

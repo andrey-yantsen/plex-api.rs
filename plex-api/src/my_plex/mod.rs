@@ -188,23 +188,26 @@ impl MyPlexAccount {
     }
 }
 
+// TODO: Implement error conversion
 impl From<reqwest::Error> for MyPlexError {
     fn from(e: Error) -> Self {
-        println!("{:#?}", e);
+        eprintln!("{:#?}", e);
         Self {}
     }
 }
 
+// TODO: Implement error conversion
 impl From<MyPlexApiErrorResponse> for MyPlexError {
     fn from(e: MyPlexApiErrorResponse) -> Self {
-        println!("{:#?}", e);
+        eprintln!("{:#?}", e);
         Self {}
     }
 }
 
+// TODO: Implement error conversion
 impl From<serde_xml_rs::Error> for MyPlexError {
     fn from(e: serde_xml_rs::Error) -> Self {
-        println!("{:#?}", e);
+        eprintln!("{:#?}", e);
         Self {}
     }
 }
