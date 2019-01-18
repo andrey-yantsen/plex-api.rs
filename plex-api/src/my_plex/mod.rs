@@ -70,7 +70,7 @@ struct Service {
 
 #[derive(Deserialize, Debug)]
 #[cfg_attr(test, serde(deny_unknown_fields))]
-pub struct MyPlex {
+pub struct MyPlexAccount {
     id: i32,
     uuid: String,
     username: String,
@@ -136,7 +136,7 @@ pub struct MyPlexError;
 
 pub type Result<T> = result::Result<T, MyPlexError>;
 
-impl MyPlex {
+impl MyPlexAccount {
     pub fn get_auth_token(&self) -> String {
         self.auth_token.clone()
     }

@@ -1,9 +1,9 @@
 use crate::media_container::{Device, MediaContainer};
-use crate::my_plex::{MyPlex, MyPlexError, Result};
+use crate::my_plex::{MyPlexAccount, MyPlexError, Result};
 use reqwest::StatusCode;
 use serde_xml_rs;
 
-impl MyPlex {
+impl MyPlexAccount {
     pub fn get_resources(&self) -> Result<Vec<Device>> {
         let mut response = self.get("https://plex.tv/api/resources")?;
         if response.status() == StatusCode::OK {

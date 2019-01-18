@@ -1,4 +1,4 @@
-use plex_api::MyPlex;
+use plex_api::MyPlexAccount;
 
 extern crate chrono;
 extern crate fern;

@@ -1,4 +1,4 @@
-use crate::my_plex::{MyPlex, MyPlexError, Result};
+use crate::my_plex::{MyPlexAccount, MyPlexError, Result};
 use reqwest::StatusCode;
 
 const CLAIM_TOKEN_URL: &str = "https://plex.tv/api/claim/token.json";
@@ -15,7 +15,7 @@ struct ErrorResponse {
     error: String,
 }
 
-impl MyPlex {
+impl MyPlexAccount {
     pub fn get_claim_token(&self) -> Result<String> {
         let mut response = self.get(CLAIM_TOKEN_URL)?;
         match response.status() {

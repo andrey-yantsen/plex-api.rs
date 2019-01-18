@@ -1,4 +1,4 @@
-use crate::my_plex::{MyPlex, MyPlexError, Result};
+use crate::my_plex::{MyPlexAccount, MyPlexError, Result};
 use reqwest::StatusCode;
 use std::collections::HashMap;
 
@@ -24,7 +24,7 @@ struct Metric {
 
 const PRIVACY_URL: &str = "https://plex.tv/api/v2/user/privacy";
 
-impl MyPlex {
+impl MyPlexAccount {
     pub fn get_privacy(&self) -> Result<Privacy> {
         let mut response = self.get(PRIVACY_URL)?;
         if response.status() == StatusCode::OK {

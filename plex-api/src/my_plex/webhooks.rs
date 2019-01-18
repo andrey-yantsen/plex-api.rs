@@ -1,5 +1,5 @@
 use crate::my_plex::MyPlexApiErrorResponse;
-use crate::my_plex::{MyPlex, MyPlexError, Result};
+use crate::my_plex::{MyPlexAccount, MyPlexError, Result};
 use reqwest::StatusCode;
 use serde_json;
 
@@ -11,7 +11,7 @@ struct Webhook {
     url: String,
 }
 
-impl MyPlex {
+impl MyPlexAccount {
     pub fn get_webhooks(&self) -> Result<Vec<String>> {
         let mut response = self.get(WEBHOOKS_URL)?;
         if response.status() == StatusCode::OK {
