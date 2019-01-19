@@ -13,18 +13,20 @@ use std::env;
 use std::result;
 use std::sync::RwLock;
 
-use reqwest::header::HeaderMap;
+use reqwest::{header::HeaderMap, Client};
 use serde::de::{self, Deserialize, Deserializer, Unexpected};
 use uname::uname;
 use uuid::Uuid;
 
-pub use self::my_plex::*;
+use std::sync::{LockResult, PoisonError, RwLockReadGuard, RwLockWriteGuard};
 
 mod media_container;
 mod my_plex;
 
 #[cfg(test)]
 mod tests;
+
+pub use self::my_plex::*;
 
 const PROJECT: Option<&'static str> = option_env!("CARGO_PKG_NAME");
 const VERSION: Option<&'static str> = option_env!("CARGO_PKG_VERSION");
@@ -39,6 +41,19 @@ lazy_static! {
     pub static ref X_PLEX_DEVICE: RwLock<&'static str> = RwLock::new("");
     pub static ref X_PLEX_DEVICE_NAME: RwLock<&'static str> = RwLock::new("");
     pub static ref X_PLEX_CLIENT_IDENTIFIER: RwLock<&'static str> = RwLock::new("");
+    static ref HTTP_CLIENT: RwLock<Client> = RwLock::new(Client::new());
+}
+
+pub fn set_http_client(
+    c: Client,
+) -> result::Result<(), PoisonError<RwLockWriteGuard<'static, Client>>> {
+    let mut client = HTTP_CLIENT.write()?;
+    *client = c;
+    Ok(())
+}
+
+fn get_http_client() -> LockResult<RwLockReadGuard<'static, Client>> {
+    HTTP_CLIENT.read()
 }
 
 fn base_headers() -> HeaderMap {

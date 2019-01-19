@@ -6,12 +6,12 @@ mod resources;
 mod users;
 mod webhooks;
 
+use crate::get_http_client;
 use crate::{base_headers, bool_from_int};
 use chrono::DateTime;
 use chrono::Utc;
 use reqwest::{header::HeaderMap, Client, Error, IntoUrl, Response};
 use serde::Serialize;
-use std::result;
 
 #[derive(Deserialize, Debug)]
 #[cfg_attr(test, serde(deny_unknown_fields))]
@@ -136,7 +136,7 @@ struct MyPlexApiErrorResponse {
 #[derive(Debug, Clone)]
 pub struct MyPlexError;
 
-pub type Result<T> = result::Result<T, MyPlexError>;
+pub type Result<T> = std::result::Result<T, MyPlexError>;
 
 impl MyPlexAccount {
     pub fn get_auth_token(&self) -> String {
@@ -159,32 +159,24 @@ impl MyPlexAccount {
         headers
     }
 
-    fn get<U: IntoUrl>(&self, url: U) -> reqwest::Result<Response> {
-        Client::new().get(url).headers(self.headers()).send()
+    fn get<U: IntoUrl>(&self, url: U) -> Result<Response> {
+        Ok(get_http_client()?.get(url).headers(self.headers()).send()?)
     }
 
-    fn post_form<U: IntoUrl, T: Serialize + ?Sized>(
-        &self,
-        url: U,
-        params: &T,
-    ) -> reqwest::Result<Response> {
-        Client::new()
+    fn post_form<U: IntoUrl, T: Serialize + ?Sized>(&self, url: U, params: &T) -> Result<Response> {
+        Ok(get_http_client()?
             .post(url)
             .form(params)
             .headers(self.headers())
-            .send()
+            .send()?)
     }
 
-    fn put_form<U: IntoUrl, T: Serialize + ?Sized>(
-        &self,
-        url: U,
-        params: &T,
-    ) -> reqwest::Result<Response> {
-        Client::new()
+    fn put_form<U: IntoUrl, T: Serialize + ?Sized>(&self, url: U, params: &T) -> Result<Response> {
+        Ok(get_http_client()?
             .put(url)
             .form(params)
             .headers(self.headers())
-            .send()
+            .send()?)
     }
 }
 
@@ -207,6 +199,14 @@ impl From<MyPlexApiErrorResponse> for MyPlexError {
 // TODO: Implement error conversion
 impl From<serde_xml_rs::Error> for MyPlexError {
     fn from(e: serde_xml_rs::Error) -> Self {
+        eprintln!("{:#?}", e);
+        Self {}
+    }
+}
+
+// TODO: Implement error conversion
+impl From<std::sync::PoisonError<std::sync::RwLockReadGuard<'_, Client>>> for MyPlexError {
+    fn from(e: std::sync::PoisonError<std::sync::RwLockReadGuard<'_, Client>>) -> Self {
         eprintln!("{:#?}", e);
         Self {}
     }

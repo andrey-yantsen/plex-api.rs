@@ -1,6 +1,7 @@
 use crate::base_headers;
+use crate::get_http_client;
 use crate::my_plex::{MyPlexAccount, MyPlexApiErrorResponse, MyPlexError, Result};
-use reqwest::{header::ACCEPT, Client, StatusCode};
+use reqwest::{header::ACCEPT, StatusCode};
 
 const MYPLEX_LOGIN_URL: &str = "https://plex.tv/api/v2/users/signin";
 const MYPLEX_ACCOUNT_INFO_URL: &str = "https://plex.tv/api/v2/user?includeSubscriptions=1";
@@ -13,7 +14,7 @@ impl MyPlexAccount {
             ("mememberMe", "true"),
         ];
 
-        let mut response = Client::new()
+        let mut response = get_http_client()?
             .post(MYPLEX_LOGIN_URL)
             .form(&params)
             .headers(base_headers())
@@ -29,7 +30,7 @@ impl MyPlexAccount {
     }
 
     pub fn by_token(token: &str) -> Result<Self> {
-        let mut response = Client::new()
+        let mut response = get_http_client()?
             .get(MYPLEX_ACCOUNT_INFO_URL)
             .headers(base_headers())
             .header(ACCEPT, "application/json")
