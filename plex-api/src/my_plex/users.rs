@@ -1,5 +1,5 @@
 use crate::media_container::{MediaContainer, User};
-use crate::my_plex::{MyPlexAccount, MyPlexError, Result, MyPlexApiErrorResponse};
+use crate::my_plex::{MyPlexAccount, MyPlexApiErrorResponse, MyPlexError, Result};
 use reqwest::StatusCode;
 use serde_xml_rs;
 

@@ -7,11 +7,11 @@ mod users;
 mod webhooks;
 
 use crate::{base_headers, bool_from_int};
+use chrono::DateTime;
+use chrono::Utc;
 use reqwest::{header::HeaderMap, Client, Error, IntoUrl, Response};
 use serde::Serialize;
 use std::result;
-use chrono::DateTime;
-use chrono::Utc;
 
 #[derive(Deserialize, Debug)]
 #[cfg_attr(test, serde(deny_unknown_fields))]

@@ -1,6 +1,6 @@
 use crate::{bool_from_int, option_bool_from_int};
-use serde_with::CommaSeparator;
 use chrono::{DateTime, Utc};
+use serde_with::CommaSeparator;
 
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, serde(deny_unknown_fields))]
