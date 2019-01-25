@@ -27,12 +27,11 @@ impl MyPlexAccount {
         }
     }
 
-    pub fn set_webhooks(&self, webhooks: Vec<String>) -> Result<()> {
+    pub fn set_webhooks(&self, webhooks: &Vec<&str>) -> Result<()> {
         let mut params: Vec<(&str, &str)> = Vec::new();
+
         if webhooks.len() > 0 {
-            for url in &webhooks {
-                params.push(("urls[]", url.as_str()));
-            }
+            params = webhooks.iter().map(|&url| ("urls[]", url)).collect();
         } else {
             params.push(("urls", ""));
         }
@@ -45,27 +44,25 @@ impl MyPlexAccount {
         }
     }
 
-    pub fn add_webhook(&self, webhook: String) -> Result<()> {
-        let mut webhooks = self.get_webhooks()?;
+    pub fn add_webhook(&self, webhook: &str) -> Result<()> {
+        let webhooks = self.get_webhooks()?;
+        let mut webhooks: Vec<&str> = webhooks.iter().map(|s| &**s).collect();
         webhooks.push(webhook);
-        self.set_webhooks(webhooks)
+        self.set_webhooks(&webhooks)
     }
 
-    pub fn del_webhook(&self, webhook: String) -> Result<()> {
-        let mut webhooks = self.get_webhooks()?;
-        let mut del_idx = webhooks.len() + 1;
-
-        for (idx, value) in webhooks.iter().enumerate() {
-            if *value == webhook {
-                del_idx = idx;
-                break;
-            }
-        }
-        if del_idx == webhooks.len() + 1 {
+    pub fn del_webhook(&self, webhook: &str) -> Result<()> {
+        let webhooks: Vec<String> = self.get_webhooks()?;
+        let original_len = webhooks.len();
+        let new_webhooks: Vec<&str> = webhooks
+            .iter()
+            .filter(|&value| *value != *webhook)
+            .map(|s| &**s)
+            .collect();
+        if original_len == new_webhooks.len() {
             Err(MyPlexError {})
         } else {
-            webhooks.remove(del_idx);
-            self.set_webhooks(webhooks)
+            self.set_webhooks(&new_webhooks)
         }
     }
 }
