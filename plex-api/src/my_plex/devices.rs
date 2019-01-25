@@ -9,12 +9,7 @@ impl MyPlexAccount {
         if response.status() == StatusCode::OK {
             let mc: MediaContainer = serde_xml_rs::from_str(response.text()?.as_str())?;
             let devices = mc.get_devices();
-            if devices.is_some() {
-                Ok(devices.unwrap())
-            } else {
-                let ret: Vec<Device> = Vec::new();
-                Ok(ret)
-            }
+            Ok(devices.unwrap_or(Vec::new()))
         } else {
             let err: MyPlexApiErrorResponse = serde_xml_rs::from_str(response.text()?.as_str())?;
             Err(MyPlexError::from(err))

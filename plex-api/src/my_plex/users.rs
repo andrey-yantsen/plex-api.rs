@@ -10,13 +10,8 @@ impl MyPlexAccount {
         let mut response = self.get(USERS_URL)?;
         if response.status() == StatusCode::OK {
             let mc: MediaContainer = serde_xml_rs::from_str(response.text()?.as_str())?;
-            let resources = mc.get_users();
-            if resources.is_some() {
-                Ok(resources.unwrap())
-            } else {
-                let ret: Vec<User> = Vec::new();
-                Ok(ret)
-            }
+            let users = mc.get_users();
+            Ok(users.unwrap_or(Vec::new()))
         } else {
             let err: MyPlexApiErrorResponse = serde_xml_rs::from_str(response.text()?.as_str())?;
             Err(MyPlexError::from(err))
