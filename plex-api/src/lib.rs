@@ -12,7 +12,6 @@ extern crate serde_with;
 use std::env;
 use std::result;
 use std::sync::RwLock;
-use std::time::Duration;
 
 use reqwest::{header::HeaderMap, Client};
 use uname::uname;
@@ -77,12 +76,22 @@ lazy_static! {
     ///
     /// **N.B.** Should be unique across all your devices.
     pub static ref X_PLEX_CLIENT_IDENTIFIER: RwLock<&'static str> = RwLock::new("");
-    static ref HTTP_CLIENT: RwLock<Client> = RwLock::new(
-        Client::builder()
-            .timeout(Duration::from_secs(5))
-            .build()
-            .expect("HTTP_CLIENT init")
-    );
+    static ref HTTP_CLIENT: RwLock<Client> = {
+        #[cfg(all(test, not(any(feature = "test_connect_authenticated", feature = "test_connect_anonymous"))))]
+        {
+            panic!("Client shouldn't be requested in this testing mode")
+        }
+        #[cfg(any(not(test), feature = "test_connect_authenticated", feature = "test_connect_anonymous"))]
+        {
+            use std::time::Duration;
+            RwLock::new(
+                Client::builder()
+                    .timeout(Duration::from_secs(5))
+                    .build()
+                    .expect("HTTP_CLIENT init")
+            )
+        }
+    };
 }
 
 /// A method to set custom HTTP-client, e.g. to change request timeout or to set a proxy.
