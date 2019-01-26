@@ -2,12 +2,7 @@ language: rust
 
 cache: cargo
 
-before_script:
-  - rustup component add clippy
-
 script:
-  - cargo build --verbose --all
-  - cargo clippy --all-targets --all-features -- -D warnings
   - cargo test --verbose --all
 
 matrix:
@@ -22,6 +17,18 @@ jobs:
   include:
     - rust: stable
     - rust: beta
+    - name: "Clippy"
+      rust: stable
+      before_script:
+        - rustup component add clippy
+      script:
+        - cargo clippy --all-targets --all-features -- -D warnings
+    - name: "Format check"
+      rust: stable
+      before_script:
+        - rustup component add rustfmt
+      script:
+        - cargo fmt -- --check
     - stage: deploy
       name: "Deploy to Cargo"
       rust: stable
