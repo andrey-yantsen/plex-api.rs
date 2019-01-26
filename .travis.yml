@@ -1,13 +1,34 @@
 language: rust
-rust:
-  - stable
-  - beta
+
 cache: cargo
+
 before_script:
   - rustup component add clippy
+
 script:
   - cargo build --verbose --all
   - cargo clippy --all-targets --all-features -- -D warnings
   - cargo test --verbose --all
+
 matrix:
   fast_finish: true
+
+stages:
+  - test
+  - name: deploy
+    if: tag IS present
+
+jobs:
+  include:
+    - rust: stable
+    - rust: beta
+    - stage: deploy
+      name: "Deploy to Cargo"
+      rust: stable
+      script: skip
+      deploy:
+        - provider: script
+          script: rm -rf target && cd plex-api && cargo publish --token $CARGO_TOKEN
+          on:
+            tags: true
+            repo: andrey-yantsen/plex-api.rs
