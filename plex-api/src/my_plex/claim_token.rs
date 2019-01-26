@@ -4,13 +4,13 @@ use reqwest::StatusCode;
 const CLAIM_TOKEN_URL: &str = "https://plex.tv/api/claim/token.json";
 
 #[derive(Serialize, Deserialize)]
-#[cfg_attr(feature = "strict_deserialize", serde(deny_unknown_fields))]
+#[cfg_attr(test, serde(deny_unknown_fields))]
 struct SuccessResponse {
     token: String,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
-#[cfg_attr(feature = "strict_deserialize", serde(deny_unknown_fields))]
+#[cfg_attr(test, serde(deny_unknown_fields))]
 struct ErrorResponse {
     error: String,
 }

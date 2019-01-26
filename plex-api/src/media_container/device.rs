@@ -6,7 +6,7 @@ use std::sync::mpsc;
 use std::thread;
 
 #[derive(Debug, Deserialize, Clone)]
-#[cfg_attr(feature = "strict_deserialize", serde(deny_unknown_fields))]
+#[cfg_attr(test, serde(deny_unknown_fields))]
 pub struct Device {
     name: String,
     #[serde(rename = "publicAddress")]
@@ -74,7 +74,7 @@ pub struct Device {
 }
 
 #[derive(Debug, Deserialize, Clone)]
-#[cfg_attr(feature = "strict_deserialize", serde(deny_unknown_fields))]
+#[cfg_attr(test, serde(deny_unknown_fields))]
 struct SyncList {
     #[serde(rename = "itemsCompleteCount")]
     items_complete_count: u32,
@@ -84,7 +84,7 @@ struct SyncList {
 }
 
 #[derive(Debug, Deserialize, Clone)]
-#[cfg_attr(feature = "strict_deserialize", serde(deny_unknown_fields))]
+#[cfg_attr(test, serde(deny_unknown_fields))]
 struct Connection {
     uri: String,
     protocol: Option<String>,

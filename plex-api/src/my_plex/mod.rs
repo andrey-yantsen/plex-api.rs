@@ -14,7 +14,7 @@ use reqwest::{header::HeaderMap, Client, Error, IntoUrl, Response};
 use serde::Serialize;
 
 #[derive(Deserialize, Debug)]
-#[cfg_attr(feature = "strict_deserialize", serde(deny_unknown_fields))]
+#[cfg_attr(test, serde(deny_unknown_fields))]
 struct SubscriptionSummary {
     active: bool,
     #[serde(rename = "subscribedAt", default)]
@@ -27,7 +27,7 @@ struct SubscriptionSummary {
 }
 
 #[derive(Deserialize, Debug)]
-#[cfg_attr(feature = "strict_deserialize", serde(deny_unknown_fields))]
+#[cfg_attr(test, serde(deny_unknown_fields))]
 struct Profile {
     #[serde(rename = "autoSelectAudio")]
     auto_select_audio: bool,
@@ -47,7 +47,7 @@ struct Profile {
 }
 
 #[derive(Deserialize, Debug)]
-#[cfg_attr(feature = "strict_deserialize", serde(deny_unknown_fields))]
+#[cfg_attr(test, serde(deny_unknown_fields))]
 struct Subscription {
     id: Option<i32>,
     mode: String,
@@ -61,7 +61,7 @@ struct Subscription {
 }
 
 #[derive(Deserialize, Debug)]
-#[cfg_attr(feature = "strict_deserialize", serde(deny_unknown_fields))]
+#[cfg_attr(test, serde(deny_unknown_fields))]
 struct Service {
     identifier: String,
     endpoint: String,
@@ -71,7 +71,7 @@ struct Service {
 }
 
 #[derive(Deserialize, Debug)]
-#[cfg_attr(feature = "strict_deserialize", serde(deny_unknown_fields))]
+#[cfg_attr(test, serde(deny_unknown_fields))]
 pub struct MyPlexAccount {
     id: i32,
     uuid: String,
@@ -121,14 +121,14 @@ pub struct MyPlexAccount {
 }
 
 #[derive(Deserialize, Debug)]
-#[cfg_attr(feature = "strict_deserialize", serde(deny_unknown_fields))]
+#[cfg_attr(test, serde(deny_unknown_fields))]
 struct MyPlexApiError {
     code: i32,
     message: String,
 }
 
 #[derive(Deserialize, Debug)]
-#[cfg_attr(feature = "strict_deserialize", serde(deny_unknown_fields))]
+#[cfg_attr(test, serde(deny_unknown_fields))]
 struct MyPlexApiErrorResponse {
     errors: Vec<MyPlexApiError>,
 }
