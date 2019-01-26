@@ -20,3 +20,17 @@ fn decode_users() {
     let mc = from_str::<MediaContainer>(s);
     assert!(mc.is_ok(), "Unable to deserialize users: {:?}", mc.err());
 }
+
+#[cfg(feature = "test_connect_authenticated")]
+#[test]
+fn decode_users_online() {
+    use crate::MyPlexAccount;
+    use std::env;
+    let acc: Result<MyPlexAccount, _> = {
+        let auth_token = env::var("PLEX_API_AUTH_TOKEN").expect("Auth token not specified");
+        MyPlexAccount::by_token(&auth_token)
+    };
+    assert!(acc.is_ok(), "Unable to authenticate");
+    let users = acc.unwrap().get_users();
+    assert!(users.is_ok(), "Unable to get users: {:?}", users.err());
+}

@@ -1,7 +1,4 @@
-use crate::{
-    base_headers, X_PLEX_CLIENT_IDENTIFIER, X_PLEX_DEVICE, X_PLEX_DEVICE_NAME, X_PLEX_PLATFORM,
-    X_PLEX_PLATFORM_VERSION, X_PLEX_PRODUCT, X_PLEX_PROVIDES, X_PLEX_SYNC_VERSION, X_PLEX_VERSION,
-};
+use crate::base_headers;
 
 #[test]
 fn base_headers_contains_required_headers() {
@@ -17,8 +14,18 @@ fn base_headers_contains_required_headers() {
     assert_eq!(true, headers.contains_key("x-plex-device-name"));
 }
 
+#[cfg(not(any(
+    feature = "test_connect_authenticated",
+    feature = "test_connect_anonymous"
+)))]
 #[test]
 fn base_headers_use_provided_values() {
+    use crate::{
+        X_PLEX_CLIENT_IDENTIFIER, X_PLEX_DEVICE, X_PLEX_DEVICE_NAME, X_PLEX_PLATFORM,
+        X_PLEX_PLATFORM_VERSION, X_PLEX_PRODUCT, X_PLEX_PROVIDES, X_PLEX_SYNC_VERSION,
+        X_PLEX_VERSION,
+    };
+
     {
         let mut provides = X_PLEX_PROVIDES.write().unwrap();
         *provides = "plex_provides";

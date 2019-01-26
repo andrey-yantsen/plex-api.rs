@@ -37,6 +37,7 @@ impl MyPlexAccount {
 
     fn handle_login(r: &mut reqwest::Response) -> Result<Self> {
         match r.status() {
+            reqwest::StatusCode::OK => Ok(r.json::<MyPlexAccount>()?),
             reqwest::StatusCode::CREATED => Ok(r.json::<MyPlexAccount>()?),
             _ => Err(MyPlexError::from(r.json::<MyPlexApiErrorResponse>()?)),
         }

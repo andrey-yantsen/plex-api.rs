@@ -224,6 +224,12 @@ pub struct MediaContainer {
     version: Option<String>,
     #[serde(rename = "Directory")]
     directories: Option<Vec<Directory>>,
+    #[serde(rename = "maxUploadBitrate")]
+    max_upload_bitrate: Option<u16>,
+    #[serde(rename = "maxUploadBitrateReason")]
+    max_upload_bitrate_reason: Option<String>,
+    #[serde(rename = "maxUploadBitrateReasonMessage")]
+    max_upload_bitrate_reason_message: Option<String>,
 }
 
 impl MediaContainer {

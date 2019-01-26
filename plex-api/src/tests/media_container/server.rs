@@ -34,3 +34,23 @@ fn decode_server() {
     let mc = from_str::<MediaContainer>(s);
     assert!(mc.is_ok(), "Unable to deserialize users: {:?}", mc.err());
 }
+
+#[cfg(any(
+    feature = "test_connect_authenticated",
+    feature = "test_connect_anonymous"
+))]
+#[test]
+fn decode_server_online() {
+    use crate::Server;
+    use std::env;
+    let srv: Result<Server, _> = {
+        let server_url = env::var("PLEX_API_SERVER_URL").expect("Server url not specified");
+        if cfg!(feature = "test_connect_authenticated") {
+            let auth_token = env::var("PLEX_API_AUTH_TOKEN").expect("Auth token not specified");
+            Server::login(&server_url, &auth_token)
+        } else {
+            Server::connect(&server_url)
+        }
+    };
+    assert!(srv.is_ok(), "Unable to connect to server: {:?}", srv.err());
+}

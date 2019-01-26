@@ -23,3 +23,5 @@ lazy_static = "1.2.0"
 [features]
 default = []
 strict_deserialize = []
+test_connect_authenticated = ["strict_deserialize"]
+test_connect_anonymous = ["strict_deserialize"]
