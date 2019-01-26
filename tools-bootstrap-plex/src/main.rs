@@ -19,5 +19,8 @@ fn main() {
         .apply()
         .unwrap();
 
-    println!("Hello, world!");
+    let token = std::env::var("PLEX_API_AUTH_TOKEN").expect("Auth token not specified");
+    let myplex = MyPlexAccount::by_token(&token).unwrap();
+
+    dbg!(myplex.get_webhooks().expect("Unable to get webhooks"));
 }
