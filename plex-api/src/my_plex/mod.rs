@@ -139,10 +139,12 @@ pub struct MyPlexError;
 pub type Result<T> = std::result::Result<T, MyPlexError>;
 
 impl MyPlexAccount {
+    /// Returns authentication token for current application.
     pub fn get_auth_token(&self) -> String {
         self.auth_token.clone()
     }
 
+    /// Return username which was used to log in to MyPlex.
     pub fn get_username(&self) -> String {
         self.username.clone()
     }

@@ -16,6 +16,10 @@ struct ErrorResponse {
 }
 
 impl MyPlexAccount {
+    /// Returns a token which can help you to claim freshly installed Plex Server.
+    ///
+    /// See [https://www.plex.tv/claim](https://www.plex.tv/claim/),
+    /// [docker:plexinc/pms-docker](https://hub.docker.com/r/plexinc/pms-docker/).
     pub fn get_claim_token(&self) -> Result<String> {
         let mut response = self.get(CLAIM_TOKEN_URL)?;
         match response.status() {

@@ -6,6 +6,7 @@ const MYPLEX_LOGIN_URL: &str = "https://plex.tv/api/v2/users/signin";
 const MYPLEX_ACCOUNT_INFO_URL: &str = "https://plex.tv/api/v2/user?includeSubscriptions=1";
 
 impl MyPlexAccount {
+    /// Log in to [MyPlex](http://app.plex.tv) using username and password.
     pub fn login(username: &str, password: &str) -> Result<Self> {
         let params = [
             ("login", username),
@@ -22,6 +23,7 @@ impl MyPlexAccount {
         MyPlexAccount::handle_login(&mut response)
     }
 
+    /// Log in to [MyPlex](http://app.plex.tv) using existing authentication token.
     pub fn by_token(auth_token: &str) -> Result<Self> {
         let mut response = get_http_client()?
             .get(MYPLEX_ACCOUNT_INFO_URL)

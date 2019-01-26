@@ -35,13 +35,47 @@ const VERSION: Option<&'static str> = option_env!("CARGO_PKG_VERSION");
 const X_PLEX_SYNC_VERSION: &str = "2";
 
 lazy_static! {
+    /// `X-Plex-Provides` header value.
+    ///
+    /// Should be one or more of `controller`, `server`, `sync-target`, `player`.
     pub static ref X_PLEX_PROVIDES: RwLock<&'static str> = RwLock::new("controller");
+
+    /// `X-Plex-Platform` header value.
+    ///
+    /// Platform name, e.g. iOS, macOS, etc.
     pub static ref X_PLEX_PLATFORM: RwLock<&'static str> = RwLock::new("");
+
+    /// `X-Plex-Platform-Version` header value.
+    ///
+    /// OS version, e.g. 4.3.1
     pub static ref X_PLEX_PLATFORM_VERSION: RwLock<&'static str> = RwLock::new("");
+
+    /// `X-Plex-Product` header value.
+    ///
+    /// Application name, e.g. Laika, Plex Media Server, Media Link.
     pub static ref X_PLEX_PRODUCT: RwLock<&'static str> = RwLock::new("");
+
+    /// `X-Plex-Version` header value.
+    ///
+    /// Application version, e.g. 10.6.7.
     pub static ref X_PLEX_VERSION: RwLock<&'static str> = RwLock::new("");
+
+    /// `X-Plex-Device` header value.
+    ///
+    /// Device name and model number, e.g. iPhone3,2, Motorola XOOM™, LG5200TV.
     pub static ref X_PLEX_DEVICE: RwLock<&'static str> = RwLock::new("");
+
+    /// `X-Plex-Device-Name` header value.
+    ///
+    /// Primary name for the device, e.g. "Plex Web (Chrome)".
     pub static ref X_PLEX_DEVICE_NAME: RwLock<&'static str> = RwLock::new("");
+
+    /// `X-Plex-Client-Identifier` header value.
+    ///
+    /// UUID, serial number, or other number unique per device. Random value would be generated
+    /// if not set. Can be set by providing ENV-value `X_PLEX_CLIENT_IDENTIFIER`.
+    ///
+    /// **N.B.** Should be unique across all your devices.
     pub static ref X_PLEX_CLIENT_IDENTIFIER: RwLock<&'static str> = RwLock::new("");
     static ref HTTP_CLIENT: RwLock<Client> = RwLock::new(
         Client::builder()
@@ -51,6 +85,28 @@ lazy_static! {
     );
 }
 
+/// A method to set custom HTTP-client, e.g. to change request timeout or to set a proxy.
+///
+/// Error would be returned if [`RwLock`] had been poisoned.
+///
+/// [`RwLock`]: https://doc.rust-lang.org/std/sync/struct.RwLock.html
+///
+/// # Examples
+///
+/// ```
+/// use plex_api::set_http_client;
+/// use reqwest::{Client, Proxy};
+/// use std::time::Duration;
+///
+/// fn main() {
+///     set_http_client(Client::builder()
+///                         .timeout(Duration::from_secs(1))
+///                         .proxy(Proxy::http("http://example.com").expect("Proxy failed"))
+///                         .build()
+///                         .expect("Build failed")
+///     ).expect("Mutex poisoned");
+/// }
+/// ```
 pub fn set_http_client(
     c: Client,
 ) -> result::Result<(), PoisonError<RwLockWriteGuard<'static, Client>>> {

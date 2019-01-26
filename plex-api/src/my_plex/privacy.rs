@@ -25,6 +25,7 @@ struct Metric {
 const PRIVACY_URL: &str = "https://plex.tv/api/v2/user/privacy";
 
 impl MyPlexAccount {
+    /// Returns current privacy settings, see [Privacy Preferences on plex.tv](https://www.plex.tv/about/privacy-legal/privacy-preferences/#opd).
     pub fn get_privacy(&self) -> Result<Privacy> {
         let mut response = self.get(PRIVACY_URL)?;
         if response.status() == StatusCode::OK {
@@ -36,6 +37,7 @@ impl MyPlexAccount {
         }
     }
 
+    /// Changes privacy settings, see [Privacy Preferences on plex.tv](https://www.plex.tv/about/privacy-legal/privacy-preferences/#opd).
     pub fn set_privacy(&self, opt_out_playback: bool, opt_out_library_stats: bool) -> Result<()> {
         let mut params = HashMap::new();
         params.insert("optOutPlayback", if opt_out_playback { "1" } else { "0" });

@@ -4,6 +4,7 @@ use reqwest::StatusCode;
 use serde_xml_rs;
 
 impl MyPlexAccount {
+    /// Returns the list of devices (players and servers), registered with current MyPlex account.
     pub fn get_devices(&self) -> Result<Vec<Device>> {
         let mut response = self.get("https://plex.tv/devices.xml")?;
         if response.status() == StatusCode::OK {

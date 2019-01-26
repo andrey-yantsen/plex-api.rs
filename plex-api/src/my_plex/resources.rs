@@ -4,6 +4,9 @@ use reqwest::StatusCode;
 use serde_xml_rs;
 
 impl MyPlexAccount {
+    /// Returns the list of resources, registered with current MyPlex account.
+    ///
+    /// Resource is any available device, despite of its `provides` setting.
     pub fn get_resources(&self) -> Result<Vec<Device>> {
         let mut response = self.get("https://plex.tv/api/resources")?;
         if response.status() == StatusCode::OK {

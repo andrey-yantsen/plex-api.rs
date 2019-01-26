@@ -12,6 +12,7 @@ struct Webhook {
 }
 
 impl MyPlexAccount {
+    /// Returns a list of URLs for currently registered WebHooks.
     pub fn get_webhooks(&self) -> Result<Vec<String>> {
         let mut response = self.get(WEBHOOKS_URL)?;
         if response.status() == StatusCode::OK {
@@ -27,6 +28,7 @@ impl MyPlexAccount {
         }
     }
 
+    /// Sets a list of WebHooks to provided URLs list.
     pub fn set_webhooks(&self, webhooks: &[&str]) -> Result<()> {
         let params = if webhooks.is_empty() {
             vec![("urls", "")]
@@ -43,6 +45,7 @@ impl MyPlexAccount {
         }
     }
 
+    /// Add an URL to webhooks list.
     pub fn add_webhook(&self, webhook: &str) -> Result<()> {
         let webhooks = self.get_webhooks()?;
         let mut webhooks: Vec<&str> = webhooks.iter().map(|s| &**s).collect();
@@ -50,6 +53,7 @@ impl MyPlexAccount {
         self.set_webhooks(&webhooks)
     }
 
+    /// Deletes provided URL from webhooks list.
     pub fn del_webhook(&self, webhook: &str) -> Result<()> {
         let webhooks: Vec<String> = self.get_webhooks()?;
         let original_len = webhooks.len();
