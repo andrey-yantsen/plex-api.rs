@@ -234,10 +234,6 @@ impl MediaContainer {
     pub fn get_users(&self) -> Option<Vec<User>> {
         self.users.clone()
     }
-
-    pub fn get_directories(&self) -> Option<Vec<Directory>> {
-        self.directories.clone()
-    }
 }
 
 #[derive(Debug, Deserialize, Clone)]
