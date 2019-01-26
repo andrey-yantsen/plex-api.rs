@@ -6,7 +6,7 @@ use serde_json;
 const WEBHOOKS_URL: &str = "https://plex.tv/api/v2/user/webhooks";
 
 #[derive(Debug, Deserialize)]
-#[cfg_attr(test, serde(deny_unknown_fields))]
+#[cfg_attr(feature = "strict_deserialize", serde(deny_unknown_fields))]
 struct Webhook {
     url: String,
 }

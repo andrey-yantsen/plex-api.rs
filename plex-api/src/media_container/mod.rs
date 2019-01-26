@@ -7,7 +7,7 @@ use crate::serde_helpers::{
 use chrono::{DateTime, Utc};
 
 #[derive(Debug, Deserialize, Clone)]
-#[cfg_attr(test, serde(deny_unknown_fields))]
+#[cfg_attr(feature = "strict_deserialize", serde(deny_unknown_fields))]
 pub struct MediaContainer {
     size: Option<u32>,
     #[serde(rename = "totalSize")]
@@ -237,7 +237,7 @@ impl MediaContainer {
 }
 
 #[derive(Debug, Deserialize, Clone)]
-#[cfg_attr(test, serde(deny_unknown_fields))]
+#[cfg_attr(feature = "strict_deserialize", serde(deny_unknown_fields))]
 pub struct Directory {
     count: u16,
     key: String,
@@ -245,7 +245,7 @@ pub struct Directory {
 }
 
 #[derive(Debug, Deserialize, Clone)]
-#[cfg_attr(test, serde(deny_unknown_fields))]
+#[cfg_attr(feature = "strict_deserialize", serde(deny_unknown_fields))]
 pub struct User {
     id: u32,
     title: String,
@@ -281,7 +281,7 @@ pub struct User {
 }
 
 #[derive(Debug, Deserialize, Clone)]
-#[cfg_attr(test, serde(deny_unknown_fields))]
+#[cfg_attr(feature = "strict_deserialize", serde(deny_unknown_fields))]
 struct Server {
     id: u32,
     #[serde(rename = "serverId")]

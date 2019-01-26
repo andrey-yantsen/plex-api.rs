@@ -19,3 +19,7 @@ serde-xml-rs = "0.3.0"
 serde_with = "0.2.5"
 chrono = { version = "0.4", features = ["serde"] }
 lazy_static = "1.2.0"
+
+[features]
+default = []
+strict_deserialize = []
