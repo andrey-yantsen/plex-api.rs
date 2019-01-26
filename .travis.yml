@@ -30,12 +30,14 @@ jobs:
       script:
         - cargo fmt --all -- --check
     - name: "Test against real server [anonymous]"
+      stage: "Online test"
       rust: stable
       before_script:
         - cargo run -p tools-bootstrap-plex -- --anonymous
       script:
         - cargo test --manifest-path plex-api/Cargo.toml --features 'test_connect_anonymous'
     - name: "Test against real server [authenticated]"
+      stage: "Online test"
       if: type != 'pull_request'
       rust: stable
       before_script:
