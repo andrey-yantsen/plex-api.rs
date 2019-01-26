@@ -15,7 +15,6 @@ use std::sync::RwLock;
 use std::time::Duration;
 
 use reqwest::{header::HeaderMap, Client};
-use serde::de::{self, Deserialize, Deserializer, Unexpected};
 use uname::uname;
 use uuid::Uuid;
 
@@ -23,6 +22,7 @@ use std::sync::{LockResult, PoisonError, RwLockReadGuard, RwLockWriteGuard};
 
 mod media_container;
 mod my_plex;
+mod serde_helpers;
 mod server;
 #[cfg(test)]
 mod tests;
@@ -131,28 +131,4 @@ fn base_headers() -> HeaderMap {
     headers.insert("X-Plex-Device-Name", device_name.parse().unwrap());
 
     headers
-}
-
-fn bool_from_int<'de, D>(deserializer: D) -> result::Result<bool, D::Error>
-where
-    D: Deserializer<'de>,
-{
-    match u8::deserialize(deserializer)? {
-        0 => Ok(false),
-        1 => Ok(true),
-        other => Err(de::Error::invalid_value(
-            Unexpected::Unsigned(u64::from(other)),
-            &"zero or one",
-        )),
-    }
-}
-
-fn option_bool_from_int<'de, D>(deserializer: D) -> result::Result<Option<bool>, D::Error>
-where
-    D: Deserializer<'de>,
-{
-    match bool_from_int(deserializer) {
-        Ok(v) => Ok(Option::from(v)),
-        Err(e) => Err(e),
-    }
 }

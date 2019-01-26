@@ -6,8 +6,8 @@ mod resources;
 mod users;
 mod webhooks;
 
-use crate::get_http_client;
-use crate::{base_headers, bool_from_int};
+use crate::serde_helpers::bool_from_int;
+use crate::{base_headers, get_http_client};
 use chrono::DateTime;
 use chrono::Utc;
 use reqwest::{header::HeaderMap, Client, Error, IntoUrl, Response};

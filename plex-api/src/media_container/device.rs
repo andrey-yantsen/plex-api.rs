@@ -1,4 +1,4 @@
-use crate::option_bool_from_int;
+use crate::serde_helpers::option_bool_from_int;
 use crate::server::{Server, ServerError};
 use chrono::{DateTime, Utc};
 use serde_with::CommaSeparator;

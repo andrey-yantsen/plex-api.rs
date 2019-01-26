@@ -1,7 +1,9 @@
 mod device;
 
 pub use self::device::*;
-use crate::{bool_from_int, option_bool_from_int};
+use crate::serde_helpers::{
+    bool_from_int, option_bool_from_int, option_comma_separated_to_vec, option_seconds_to_datetime,
+};
 use chrono::{DateTime, Utc};
 
 #[derive(Debug, Deserialize, Clone)]
@@ -111,7 +113,8 @@ pub struct MediaContainer {
     my_plex_subscription: Option<bool>,
     #[serde(rename = "countryCode")]
     country_code: Option<String>,
-    diagnostics: Option<String>, // TODO: vec
+    #[serde(default, deserialize_with = "option_comma_separated_to_vec")]
+    diagnostics: Option<Vec<String>>,
     livetv: Option<u8>,
     #[serde(rename = "myPlexMappingState")]
     my_plex_mapping_state: Option<String>,
@@ -119,8 +122,12 @@ pub struct MediaContainer {
     my_plex_signin_state: Option<String>,
     #[serde(rename = "myPlexUsername")]
     my_plex_username: Option<String>,
-    #[serde(rename = "ownerFeatures")]
-    owner_features: Option<String>, // TODO: vec
+    #[serde(
+        rename = "ownerFeatures",
+        deserialize_with = "option_comma_separated_to_vec",
+        default
+    )]
+    owner_features: Option<Vec<String>>,
     #[serde(
         rename = "photoAutoTag",
         default,
@@ -190,14 +197,30 @@ pub struct MediaContainer {
         deserialize_with = "option_bool_from_int"
     )]
     voice_search: Option<bool>,
-    #[serde(rename = "transcoderVideoBitrates")]
-    transcoder_video_bitrates: Option<String>, // TODO: vec
-    #[serde(rename = "transcoderVideoQualities")]
-    transcoder_video_qualities: Option<String>, // TODO: vec
-    #[serde(rename = "transcoderVideoResolutions")]
-    transcoder_video_resolutions: Option<String>, // TODO: vec
-    #[serde(default, rename = "updatedAt")]
-    updated_at: Option<u64>, // TODO: , DateTime
+    #[serde(
+        rename = "transcoderVideoBitrates",
+        deserialize_with = "option_comma_separated_to_vec",
+        default
+    )]
+    transcoder_video_bitrates: Option<Vec<u16>>,
+    #[serde(
+        rename = "transcoderVideoQualities",
+        deserialize_with = "option_comma_separated_to_vec",
+        default
+    )]
+    transcoder_video_qualities: Option<Vec<u8>>,
+    #[serde(
+        rename = "transcoderVideoResolutions",
+        deserialize_with = "option_comma_separated_to_vec",
+        default
+    )]
+    transcoder_video_resolutions: Option<Vec<u16>>,
+    #[serde(
+        default,
+        rename = "updatedAt",
+        deserialize_with = "option_seconds_to_datetime"
+    )]
+    updated_at: Option<DateTime<Utc>>,
     version: Option<String>,
     #[serde(rename = "Directory")]
     directories: Option<Vec<Directory>>,
@@ -207,9 +230,11 @@ impl MediaContainer {
     pub fn get_devices(&self) -> Option<Vec<Device>> {
         self.devices.clone()
     }
+
     pub fn get_users(&self) -> Option<Vec<User>> {
         self.users.clone()
     }
+
     pub fn get_directories(&self) -> Option<Vec<Directory>> {
         self.directories.clone()
     }
