@@ -28,7 +28,7 @@ jobs:
       before_script:
         - rustup component add rustfmt
       script:
-        - cargo fmt -- --check
+        - cargo fmt --all -- --check
     - stage: deploy
       name: "Deploy to Cargo"
       rust: stable
