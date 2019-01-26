@@ -29,6 +29,19 @@ jobs:
         - rustup component add rustfmt
       script:
         - cargo fmt --all -- --check
+    - name: "Test against real server [anonymous]"
+      rust: stable
+      before_script:
+        - cargo run -p tools-bootstrap-plex -- --anonymous
+      script:
+        - cargo test --manifest-path plex-api/Cargo.toml --features 'test_connect_anonymous'
+    - name: "Test against real server [authenticated]"
+      if: type != 'pull_request'
+      rust: stable
+      before_script:
+        - cargo run -p tools-bootstrap-plex -- --authenticated
+      script:
+        - cargo test --manifest-path plex-api/Cargo.toml --features 'test_connect_authenticated'
     - stage: deploy
       name: "Deploy to Cargo"
       rust: stable
