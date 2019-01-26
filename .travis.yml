@@ -4,8 +4,11 @@ rust:
   - beta
   - nightly
 cache: cargo
+before_script:
+  - rustup component add clippy
 script:
   - cargo build --verbose --all
+  - cargo clippy --all-targets --all-features -- -D warnings
   - cargo test --verbose --all
 matrix:
   allow_failures:

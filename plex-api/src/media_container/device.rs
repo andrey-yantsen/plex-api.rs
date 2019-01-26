@@ -130,7 +130,7 @@ impl Device {
                     return srv;
                 }
             }
-            left = left - 1;
+            left -= 1;
             if left == 0 {
                 // TODO: Return descriptive error
                 return Err(ServerError {});
@@ -172,7 +172,7 @@ impl Device {
                     return srv;
                 }
             }
-            left = left - 1;
+            left -= 1;
             if left == 0 {
                 // TODO: Return descriptive error
                 return Err(ServerError {});

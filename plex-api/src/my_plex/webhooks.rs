@@ -27,14 +27,13 @@ impl MyPlexAccount {
         }
     }
 
-    pub fn set_webhooks(&self, webhooks: &Vec<&str>) -> Result<()> {
-        let mut params: Vec<(&str, &str)> = Vec::new();
-
-        if webhooks.len() > 0 {
-            params = webhooks.iter().map(|&url| ("urls[]", url)).collect();
+    pub fn set_webhooks(&self, webhooks: &[&str]) -> Result<()> {
+        let params = if webhooks.is_empty() {
+            vec![("urls", "")]
         } else {
-            params.push(("urls", ""));
-        }
+            webhooks.iter().map(|&url| ("urls[]", url)).collect()
+        };
+
         let mut response = self.post_form(WEBHOOKS_URL, &params)?;
         if response.status() == StatusCode::CREATED {
             Ok(())

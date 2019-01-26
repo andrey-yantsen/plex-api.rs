@@ -11,7 +11,7 @@ impl MyPlexAccount {
         if response.status() == StatusCode::OK {
             let mc: MediaContainer = serde_xml_rs::from_str(response.text()?.as_str())?;
             let users = mc.get_users();
-            Ok(users.unwrap_or(Vec::new()))
+            Ok(users.unwrap_or_default())
         } else {
             let err: MyPlexApiErrorResponse = serde_xml_rs::from_str(response.text()?.as_str())?;
             Err(MyPlexError::from(err))
