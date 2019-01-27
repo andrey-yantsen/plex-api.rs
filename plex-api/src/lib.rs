@@ -19,6 +19,7 @@ use uuid::Uuid;
 
 use std::sync::{LockResult, PoisonError, RwLockReadGuard, RwLockWriteGuard};
 
+mod error;
 mod media_container;
 mod my_plex;
 mod serde_helpers;
@@ -26,6 +27,8 @@ mod server;
 #[cfg(test)]
 mod tests;
 
+pub use self::error::*;
+pub use self::media_container::*;
 pub use self::my_plex::*;
 pub use self::server::*;
 
@@ -196,4 +199,37 @@ fn base_headers() -> HeaderMap {
     headers.insert("X-Plex-Device-Name", device_name.parse().unwrap());
 
     headers
+}
+
+pub type Result<T> = std::result::Result<T, crate::error::PlexApiError>;
+
+pub trait CanBeDeleted {
+    fn delete(&mut self) -> Result<reqwest::Response>;
+}
+
+pub trait HasDeleteUrl {
+    fn get_delete_url(&self) -> Option<String>;
+}
+
+impl<T: HasDeleteUrl + HasMyPlexToken + HasPlexHeaders> CanBeDeleted for T {
+    /// Remove current object from your account.
+    fn delete(&mut self) -> Result<reqwest::Response> {
+        let url = self.get_delete_url();
+
+        if url.is_none() {
+            // TODO: Better error
+            Err(crate::error::PlexApiError {})
+        } else {
+            let url = url.unwrap();
+            get_http_client()?
+                .delete(&url)
+                .headers(self.headers())
+                .send()
+                .map_err(From::from)
+        }
+    }
+}
+
+pub trait HasPlexHeaders {
+    fn headers(&self) -> HeaderMap;
 }

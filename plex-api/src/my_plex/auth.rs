@@ -1,13 +1,13 @@
 use crate::base_headers;
 use crate::get_http_client;
-use crate::my_plex::{MyPlexAccount, MyPlexApiErrorResponse, MyPlexError, Result};
+use crate::my_plex::{MyPlexAccount, MyPlexApiErrorResponse};
 
 const MYPLEX_LOGIN_URL: &str = "https://plex.tv/api/v2/users/signin";
 const MYPLEX_ACCOUNT_INFO_URL: &str = "https://plex.tv/api/v2/user?includeSubscriptions=1";
 
 impl MyPlexAccount {
     /// Log in to [MyPlex](http://app.plex.tv) using username and password.
-    pub fn login(username: &str, password: &str) -> Result<Self> {
+    pub fn login(username: &str, password: &str) -> crate::Result<Self> {
         let params = [
             ("login", username),
             ("password", password),
@@ -24,7 +24,7 @@ impl MyPlexAccount {
     }
 
     /// Log in to [MyPlex](http://app.plex.tv) using existing authentication token.
-    pub fn by_token(auth_token: &str) -> Result<Self> {
+    pub fn by_token(auth_token: &str) -> crate::Result<Self> {
         let mut response = get_http_client()?
             .get(MYPLEX_ACCOUNT_INFO_URL)
             .headers(base_headers())
@@ -35,11 +35,14 @@ impl MyPlexAccount {
         MyPlexAccount::handle_login(&mut response)
     }
 
-    fn handle_login(r: &mut reqwest::Response) -> Result<Self> {
+    fn handle_login(r: &mut reqwest::Response) -> crate::Result<Self> {
         match r.status() {
-            reqwest::StatusCode::OK => Ok(r.json::<MyPlexAccount>()?),
-            reqwest::StatusCode::CREATED => Ok(r.json::<MyPlexAccount>()?),
-            _ => Err(MyPlexError::from(r.json::<MyPlexApiErrorResponse>()?)),
+            reqwest::StatusCode::OK | reqwest::StatusCode::CREATED => {
+                Ok(r.json::<MyPlexAccount>()?)
+            }
+            _ => Err(crate::error::PlexApiError::from(
+                r.json::<MyPlexApiErrorResponse>()?,
+            )),
         }
     }
 }

@@ -1,4 +1,4 @@
-use crate::my_plex::{MyPlexAccount, MyPlexError, Result};
+use crate::my_plex::MyPlexAccount;
 use reqwest::StatusCode;
 
 const CLAIM_TOKEN_URL: &str = "https://plex.tv/api/claim/token.json";
@@ -20,17 +20,19 @@ impl MyPlexAccount {
     ///
     /// See [https://www.plex.tv/claim](https://www.plex.tv/claim/),
     /// [docker:plexinc/pms-docker](https://hub.docker.com/r/plexinc/pms-docker/).
-    pub fn get_claim_token(&self) -> Result<String> {
+    pub fn get_claim_token(&self) -> crate::Result<String> {
         let mut response = self.get(CLAIM_TOKEN_URL)?;
         match response.status() {
             StatusCode::OK => Ok((response.json::<SuccessResponse>()?).token.clone()),
-            _ => Err(MyPlexError::from(response.json::<ErrorResponse>()?)),
+            _ => Err(crate::error::PlexApiError::from(
+                response.json::<ErrorResponse>()?,
+            )),
         }
     }
 }
 
 // TODO: Implement error conversion
-impl From<ErrorResponse> for MyPlexError {
+impl From<ErrorResponse> for crate::error::PlexApiError {
     fn from(e: ErrorResponse) -> Self {
         eprintln!("{:#?}", e);
         Self {}

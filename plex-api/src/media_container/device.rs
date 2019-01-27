@@ -1,5 +1,6 @@
 use crate::serde_helpers::option_bool_from_int;
-use crate::server::{Server, ServerError};
+use crate::server::Server;
+use crate::{HasDeleteUrl, HasMyPlexToken};
 use chrono::{DateTime, Utc};
 use serde_with::CommaSeparator;
 use std::sync::mpsc;
@@ -71,6 +72,8 @@ pub struct Device {
     owned: Option<bool>,
     #[serde(rename = "SyncList")]
     sync_list: Option<SyncList>,
+    #[serde(default)]
+    auth_token: String,
 }
 
 #[derive(Debug, Deserialize, Clone)]
@@ -97,15 +100,15 @@ struct Connection {
 }
 
 impl Device {
-    pub fn connect_to_server(&self) -> Result<Server, ServerError> {
+    pub fn connect_to_server(&self) -> crate::Result<Server> {
         if !self.provides.contains(&String::from("server")) {
             // TODO: Return descriptive error
-            return Err(ServerError {});
+            return Err(crate::error::PlexApiError {});
         }
 
         if self.connections.is_none() {
             // TODO: Return descriptive error
-            return Err(ServerError {});
+            return Err(crate::error::PlexApiError {});
         }
 
         let (tx, rx) = mpsc::channel();
@@ -113,8 +116,13 @@ impl Device {
         let connections = self.connections.clone().unwrap();
         for c in connections {
             let tx_clone = mpsc::Sender::clone(&tx);
+            let auth_token_clone = self.auth_token.clone();
             let handler = thread::spawn(move || {
-                let srv = Server::connect(&c.uri);
+                let srv = if auth_token_clone.is_empty() {
+                    Server::connect(&c.uri)
+                } else {
+                    Server::login(&c.uri, &auth_token_clone)
+                };
                 tx_clone.send(srv)
             });
             handlers.push(handler);
@@ -133,54 +141,31 @@ impl Device {
             left -= 1;
             if left == 0 {
                 // TODO: Return descriptive error
-                return Err(ServerError {});
-            }
-        }
-    }
-
-    pub fn login_to_server(&self, auth_token: &str) -> Result<Server, ServerError> {
-        if !self.provides.contains(&String::from("server")) {
-            // TODO: Return descriptive error
-            return Err(ServerError {});
-        }
-
-        if self.connections.is_none() {
-            // TODO: Return descriptive error
-            return Err(ServerError {});
-        }
-
-        let (tx, rx) = mpsc::channel();
-        let mut handlers = vec![];
-        let connections = self.connections.clone().unwrap();
-        for c in connections {
-            let tx_clone = mpsc::Sender::clone(&tx);
-            let auth_token_clone = String::from(auth_token);
-            let handler = thread::spawn(move || {
-                let srv = Server::login(&c.uri, &auth_token_clone);
-                tx_clone.send(srv)
-            });
-            handlers.push(handler);
-        }
-
-        let mut left = handlers.len();
-
-        loop {
-            let thread_result = rx.recv();
-            if thread_result.is_ok() {
-                let srv = thread_result.unwrap();
-                if srv.is_ok() {
-                    return srv;
-                }
-            }
-            left -= 1;
-            if left == 0 {
-                // TODO: Return descriptive error
-                return Err(ServerError {});
+                return Err(crate::error::PlexApiError {});
             }
         }
     }
 
     pub fn get_name(&self) -> &str {
         &self.name
+    }
+}
+
+impl HasMyPlexToken for Device {
+    /// Returns authentication token for current account.
+    fn get_auth_token(&self) -> String {
+        self.auth_token.clone()
+    }
+
+    /// Sets authentication token for current account.
+    fn set_auth_token(&mut self, auth_token: &str) {
+        self.auth_token = String::from(auth_token);
+    }
+}
+
+impl HasDeleteUrl for Device {
+    fn get_delete_url(&self) -> Option<String> {
+        self.id
+            .map(|id| format!("https://plex.tv/devices/{}.xml", id))
     }
 }

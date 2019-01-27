@@ -1,5 +1,5 @@
+use crate::my_plex::MyPlexAccount;
 use crate::my_plex::MyPlexApiErrorResponse;
-use crate::my_plex::{MyPlexAccount, MyPlexError, Result};
 use reqwest::StatusCode;
 use serde_json;
 
@@ -13,7 +13,7 @@ struct Webhook {
 
 impl MyPlexAccount {
     /// Returns a list of URLs for currently registered WebHooks.
-    pub fn get_webhooks(&self) -> Result<Vec<String>> {
+    pub fn get_webhooks(&self) -> crate::Result<Vec<String>> {
         let mut response = self.get(WEBHOOKS_URL)?;
         if response.status() == StatusCode::OK {
             let hooks: Vec<Webhook> = serde_json::from_str(response.text()?.as_str())?;
@@ -24,12 +24,12 @@ impl MyPlexAccount {
             Ok(ret)
         } else {
             let err: MyPlexApiErrorResponse = response.json()?;
-            Err(MyPlexError::from(err))
+            Err(crate::error::PlexApiError::from(err))
         }
     }
 
     /// Sets a list of WebHooks to provided URLs list.
-    pub fn set_webhooks(&self, webhooks: &[&str]) -> Result<()> {
+    pub fn set_webhooks(&self, webhooks: &[&str]) -> crate::Result<()> {
         let params = if webhooks.is_empty() {
             vec![("urls", "")]
         } else {
@@ -41,12 +41,12 @@ impl MyPlexAccount {
             Ok(())
         } else {
             let err: MyPlexApiErrorResponse = response.json()?;
-            Err(MyPlexError::from(err))
+            Err(crate::error::PlexApiError::from(err))
         }
     }
 
     /// Add an URL to webhooks list.
-    pub fn add_webhook(&self, webhook: &str) -> Result<()> {
+    pub fn add_webhook(&self, webhook: &str) -> crate::Result<()> {
         let webhooks = self.get_webhooks()?;
         let mut webhooks: Vec<&str> = webhooks.iter().map(|s| &**s).collect();
         webhooks.push(webhook);
@@ -54,7 +54,7 @@ impl MyPlexAccount {
     }
 
     /// Deletes provided URL from webhooks list.
-    pub fn del_webhook(&self, webhook: &str) -> Result<()> {
+    pub fn del_webhook(&self, webhook: &str) -> crate::Result<()> {
         let webhooks: Vec<String> = self.get_webhooks()?;
         let original_len = webhooks.len();
         let new_webhooks: Vec<&str> = webhooks
@@ -63,16 +63,10 @@ impl MyPlexAccount {
             .map(|s| &**s)
             .collect();
         if original_len == new_webhooks.len() {
-            Err(MyPlexError {})
+            // TODO: Better errors
+            Err(crate::error::PlexApiError {})
         } else {
             self.set_webhooks(&new_webhooks)
         }
-    }
-}
-
-impl From<serde_json::Error> for MyPlexError {
-    fn from(e: serde_json::Error) -> Self {
-        println!("{:#?}", e);
-        Self {}
     }
 }

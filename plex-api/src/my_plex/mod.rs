@@ -7,10 +7,10 @@ mod users;
 mod webhooks;
 
 use crate::serde_helpers::bool_from_int;
-use crate::{base_headers, get_http_client};
+use crate::{base_headers, get_http_client, HasPlexHeaders};
 use chrono::DateTime;
 use chrono::Utc;
-use reqwest::{header::HeaderMap, Client, Error, IntoUrl, Response};
+use reqwest::{header::HeaderMap, IntoUrl};
 use serde::Serialize;
 
 #[derive(Deserialize, Debug)]
@@ -133,82 +133,84 @@ struct MyPlexApiErrorResponse {
     errors: Vec<MyPlexApiError>,
 }
 
-#[derive(Debug, Clone)]
-pub struct MyPlexError;
+pub trait HasMyPlexToken {
+    fn get_auth_token(&self) -> String;
+    fn set_auth_token(&mut self, auth_token: &str);
+}
 
-pub type Result<T> = std::result::Result<T, MyPlexError>;
-
-impl MyPlexAccount {
-    /// Returns authentication token for current application.
-    pub fn get_auth_token(&self) -> String {
-        self.auth_token.clone()
-    }
-
-    /// Return username which was used to log in to MyPlex.
-    pub fn get_username(&self) -> String {
-        self.username.clone()
-    }
-
+impl<T> HasPlexHeaders for T
+where
+    T: HasMyPlexToken,
+{
     fn headers(&self) -> HeaderMap {
         let mut headers = base_headers();
 
-        if self.auth_token != "" {
-            headers.insert("X-Plex-Token", self.auth_token.parse().unwrap());
+        if !self.get_auth_token().is_empty() {
+            headers.insert("X-Plex-Token", self.get_auth_token().parse().unwrap());
         }
 
         headers.insert("Accept", "application/json".parse().unwrap());
 
         headers
     }
+}
 
-    fn get<U: IntoUrl>(&self, url: U) -> Result<Response> {
-        Ok(get_http_client()?.get(url).headers(self.headers()).send()?)
+impl HasMyPlexToken for MyPlexAccount {
+    /// Returns authentication token for current account.
+    fn get_auth_token(&self) -> String {
+        self.auth_token.clone()
     }
 
-    fn post_form<U: IntoUrl, T: Serialize + ?Sized>(&self, url: U, params: &T) -> Result<Response> {
-        Ok(get_http_client()?
+    /// Sets authentication token for current account.
+    fn set_auth_token(&mut self, auth_token: &str) {
+        self.auth_token = String::from(auth_token);
+    }
+}
+
+impl MyPlexAccount {
+    /// Return username which was used to log in to MyPlex.
+    pub fn get_username(&self) -> String {
+        self.username.clone()
+    }
+
+    fn get<U: IntoUrl>(&self, url: U) -> crate::Result<reqwest::Response> {
+        get_http_client()?
+            .get(url)
+            .headers(self.headers())
+            .send()
+            .map_err(From::from)
+    }
+
+    fn post_form<U: IntoUrl, T: Serialize + ?Sized>(
+        &self,
+        url: U,
+        params: &T,
+    ) -> crate::Result<reqwest::Response> {
+        get_http_client()?
             .post(url)
             .form(params)
             .headers(self.headers())
-            .send()?)
+            .send()
+            .map_err(From::from)
     }
 
-    fn put_form<U: IntoUrl, T: Serialize + ?Sized>(&self, url: U, params: &T) -> Result<Response> {
-        Ok(get_http_client()?
+    fn put_form<U: IntoUrl, T: Serialize + ?Sized>(
+        &self,
+        url: U,
+        params: &T,
+    ) -> crate::Result<reqwest::Response> {
+        get_http_client()?
             .put(url)
             .form(params)
             .headers(self.headers())
-            .send()?)
+            .send()
+            .map_err(From::from)
     }
 }
 
 // TODO: Implement error conversion
-impl From<reqwest::Error> for MyPlexError {
-    fn from(e: Error) -> Self {
-        eprintln!("{:#?}", e);
-        Self {}
-    }
-}
-
-// TODO: Implement error conversion
-impl From<MyPlexApiErrorResponse> for MyPlexError {
+impl From<MyPlexApiErrorResponse> for crate::error::PlexApiError {
     fn from(e: MyPlexApiErrorResponse) -> Self {
-        eprintln!("{:#?}", e);
-        Self {}
-    }
-}
-
-// TODO: Implement error conversion
-impl From<serde_xml_rs::Error> for MyPlexError {
-    fn from(e: serde_xml_rs::Error) -> Self {
-        eprintln!("{:#?}", e);
-        Self {}
-    }
-}
-
-// TODO: Implement error conversion
-impl From<std::sync::PoisonError<std::sync::RwLockReadGuard<'_, Client>>> for MyPlexError {
-    fn from(e: std::sync::PoisonError<std::sync::RwLockReadGuard<'_, Client>>) -> Self {
         eprintln!("{:#?}", e);
         Self {}
     }
