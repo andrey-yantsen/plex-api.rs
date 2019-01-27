@@ -1,12 +1,17 @@
 use crate::media_container::{Device, MediaContainer};
-use crate::my_plex::{HasMyPlexToken, MyPlexAccount, MyPlexApiErrorResponse};
+use crate::{
+    my_plex::{HasMyPlexToken, MyPlexAccount, MyPlexApiErrorResponse},
+    InternalHttpApi,
+};
 use reqwest::StatusCode;
 use serde_xml_rs;
+
+const DEVICES_URL: &str = "devices.xml";
 
 impl MyPlexAccount {
     /// Returns the list of devices (players and servers), registered with current MyPlex account.
     pub fn get_devices(&self) -> crate::Result<Vec<Device>> {
-        let mut response = self.get("https://plex.tv/devices.xml")?;
+        let mut response = self.get(DEVICES_URL)?;
         if response.status() == StatusCode::OK {
             let mc: MediaContainer = serde_xml_rs::from_str(response.text()?.as_str())?;
             let mut devices: Vec<Device> = mc.get_devices().unwrap_or_default();

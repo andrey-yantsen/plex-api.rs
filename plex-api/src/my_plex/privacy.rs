@@ -1,4 +1,7 @@
-use crate::my_plex::{MyPlexAccount, MyPlexApiErrorResponse};
+use crate::{
+    my_plex::{MyPlexAccount, MyPlexApiErrorResponse},
+    InternalHttpApi,
+};
 use reqwest::StatusCode;
 use std::collections::HashMap;
 
@@ -22,7 +25,7 @@ struct Metric {
     status: String,
 }
 
-const PRIVACY_URL: &str = "https://plex.tv/api/v2/user/privacy";
+const PRIVACY_URL: &str = "api/v2/user/privacy";
 
 impl MyPlexAccount {
     /// Returns current privacy settings, see [Privacy Preferences on plex.tv](https://www.plex.tv/about/privacy-legal/privacy-preferences/#opd).

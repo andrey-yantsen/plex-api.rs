@@ -7,11 +7,10 @@ mod users;
 mod webhooks;
 
 use crate::serde_helpers::bool_from_int;
-use crate::{base_headers, get_http_client, HasPlexHeaders};
+use crate::{base_headers, HasPlexHeaders};
 use chrono::DateTime;
 use chrono::Utc;
-use reqwest::{header::HeaderMap, IntoUrl};
-use serde::Serialize;
+use reqwest::header::HeaderMap;
 
 #[derive(Deserialize, Debug)]
 #[cfg_attr(test, serde(deny_unknown_fields))]
@@ -172,39 +171,11 @@ impl MyPlexAccount {
     pub fn get_username(&self) -> String {
         self.username.clone()
     }
+}
 
-    fn get<U: IntoUrl>(&self, url: U) -> crate::Result<reqwest::Response> {
-        get_http_client()?
-            .get(url)
-            .headers(self.headers())
-            .send()
-            .map_err(From::from)
-    }
-
-    fn post_form<U: IntoUrl, T: Serialize + ?Sized>(
-        &self,
-        url: U,
-        params: &T,
-    ) -> crate::Result<reqwest::Response> {
-        get_http_client()?
-            .post(url)
-            .form(params)
-            .headers(self.headers())
-            .send()
-            .map_err(From::from)
-    }
-
-    fn put_form<U: IntoUrl, T: Serialize + ?Sized>(
-        &self,
-        url: U,
-        params: &T,
-    ) -> crate::Result<reqwest::Response> {
-        get_http_client()?
-            .put(url)
-            .form(params)
-            .headers(self.headers())
-            .send()
-            .map_err(From::from)
+impl crate::HasBaseUrl for MyPlexAccount {
+    fn get_base_url(&self) -> String {
+        String::from("https://plex.tv/")
     }
 }
 

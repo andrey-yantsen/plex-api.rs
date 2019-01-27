@@ -233,3 +233,99 @@ impl<T: HasDeleteUrl + HasMyPlexToken + HasPlexHeaders> CanBeDeleted for T {
 pub trait HasPlexHeaders {
     fn headers(&self) -> HeaderMap;
 }
+
+pub trait HasBaseUrl {
+    fn get_base_url(&self) -> String;
+}
+
+pub trait CanMakeRequests {
+    fn prepare_query<P: reqwest::IntoUrl + AsStr>(
+        &self,
+        url: P,
+        method: reqwest::Method,
+    ) -> Result<reqwest::RequestBuilder>;
+}
+
+pub trait AsStr {
+    fn as_str(&self) -> &str;
+}
+
+impl AsStr for &str {
+    fn as_str(&self) -> &str {
+        self
+    }
+}
+
+impl<T: HasPlexHeaders + HasBaseUrl> CanMakeRequests for T {
+    fn prepare_query<P: reqwest::IntoUrl + AsStr>(
+        &self,
+        url: P,
+        method: reqwest::Method,
+    ) -> Result<reqwest::RequestBuilder> {
+        let request_url = {
+            let s = url.as_str();
+            match url::Url::parse(s) {
+                Ok(u) => Ok(u),
+                Err(e) => match e {
+                    url::ParseError::RelativeUrlWithoutBase => {
+                        let mut request_url = self.get_base_url();
+                        if request_url.chars().last().unwrap() != '/' {
+                            request_url.push('/');
+                        }
+                        request_url.push_str(s);
+                        url::Url::parse(&request_url).map_err(PlexApiError::from)
+                    }
+                    _ => Err(PlexApiError::from(e)),
+                },
+            }
+        };
+
+        Ok(get_http_client()?
+            .request(method, request_url?)
+            .headers(self.headers()))
+    }
+}
+
+trait InternalHttpApi {
+    fn get<U: reqwest::IntoUrl + AsStr>(&self, url: U) -> crate::Result<reqwest::Response>;
+    fn post_form<U: reqwest::IntoUrl + AsStr, T: serde::Serialize + ?Sized>(
+        &self,
+        url: U,
+        params: &T,
+    ) -> crate::Result<reqwest::Response>;
+    fn put_form<U: reqwest::IntoUrl + AsStr, T: serde::Serialize + ?Sized>(
+        &self,
+        url: U,
+        params: &T,
+    ) -> crate::Result<reqwest::Response>;
+}
+
+impl<T: CanMakeRequests> InternalHttpApi for T {
+    fn get<U: reqwest::IntoUrl + AsStr>(&self, url: U) -> Result<reqwest::Response> {
+        self.prepare_query(url, reqwest::Method::GET)?
+            .send()
+            .map_err(From::from)
+    }
+
+    fn post_form<U: reqwest::IntoUrl + AsStr, P: serde::Serialize + ?Sized>(
+        &self,
+        url: U,
+        params: &P,
+    ) -> Result<reqwest::Response> {
+        self.prepare_query(url, reqwest::Method::POST)?
+            .form(params)
+            .send()
+            .map_err(From::from)
+    }
+
+    fn put_form<U: reqwest::IntoUrl + AsStr, P: serde::Serialize + ?Sized>(
+        &self,
+        url: U,
+        params: &P,
+    ) -> Result<reqwest::Response> {
+        self.prepare_query(url, reqwest::Method::POST)?
+            .form(params)
+            .send()
+            .map_err(From::from)
+    }
+}

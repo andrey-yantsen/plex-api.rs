@@ -1,9 +1,11 @@
-use crate::my_plex::MyPlexAccount;
-use crate::my_plex::MyPlexApiErrorResponse;
+use crate::{
+    my_plex::{MyPlexAccount, MyPlexApiErrorResponse},
+    InternalHttpApi,
+};
 use reqwest::StatusCode;
 use serde_json;
 
-const WEBHOOKS_URL: &str = "https://plex.tv/api/v2/user/webhooks";
+const WEBHOOKS_URL: &str = "api/v2/user/webhooks";
 
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, serde(deny_unknown_fields))]

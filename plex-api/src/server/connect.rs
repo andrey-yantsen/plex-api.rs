@@ -13,6 +13,7 @@ impl Server {
             Ok(Server {
                 info: mc,
                 url: String::from(url),
+                auth_token: String::from(""),
             })
         } else {
             eprintln!("{:?}", response.text()?);
@@ -34,6 +35,7 @@ impl Server {
             Ok(Server {
                 info: mc,
                 url: String::from(url),
+                auth_token: String::from(auth_token),
             })
         } else {
             eprintln!("{:?}", response.text()?);

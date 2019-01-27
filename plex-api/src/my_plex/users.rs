@@ -1,9 +1,12 @@
 use crate::media_container::{MediaContainer, User};
-use crate::my_plex::{MyPlexAccount, MyPlexApiErrorResponse};
+use crate::{
+    my_plex::{MyPlexAccount, MyPlexApiErrorResponse},
+    InternalHttpApi,
+};
 use reqwest::StatusCode;
 use serde_xml_rs;
 
-const USERS_URL: &str = "https://plex.tv/api/users/";
+const USERS_URL: &str = "api/users/";
 
 impl MyPlexAccount {
     /// Returns a list of users, who has access to the current server, except the owner.

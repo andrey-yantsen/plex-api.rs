@@ -1,7 +1,7 @@
-use crate::my_plex::MyPlexAccount;
+use crate::{my_plex::MyPlexAccount, InternalHttpApi};
 use reqwest::StatusCode;
 
-const CLAIM_TOKEN_URL: &str = "https://plex.tv/api/claim/token.json";
+const CLAIM_TOKEN_URL: &str = "api/claim/token.json";
 
 #[derive(Serialize, Deserialize)]
 #[cfg_attr(test, serde(deny_unknown_fields))]

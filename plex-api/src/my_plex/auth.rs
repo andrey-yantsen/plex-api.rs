@@ -1,6 +1,7 @@
-use crate::base_headers;
-use crate::get_http_client;
-use crate::my_plex::{MyPlexAccount, MyPlexApiErrorResponse};
+use crate::{
+    base_headers, get_http_client,
+    my_plex::{MyPlexAccount, MyPlexApiErrorResponse},
+};
 
 const MYPLEX_LOGIN_URL: &str = "https://plex.tv/api/v2/users/signin";
 const MYPLEX_ACCOUNT_INFO_URL: &str = "https://plex.tv/api/v2/user?includeSubscriptions=1";

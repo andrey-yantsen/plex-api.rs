@@ -27,8 +27,17 @@ impl From<std::sync::PoisonError<std::sync::RwLockReadGuard<'_, reqwest::Client>
     }
 }
 
+// TODO: Implement error conversion
 impl From<serde_json::Error> for PlexApiError {
     fn from(e: serde_json::Error) -> Self {
+        println!("{:#?}", e);
+        Self {}
+    }
+}
+
+// TODO: Implement error conversion
+impl From<url::ParseError> for PlexApiError {
+    fn from(e: url::ParseError) -> Self {
         println!("{:#?}", e);
         Self {}
     }
