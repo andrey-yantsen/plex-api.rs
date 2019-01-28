@@ -8,15 +8,13 @@ use std::thread;
 
 #[derive(Debug, Deserialize, Clone)]
 #[cfg_attr(test, serde(deny_unknown_fields))]
+#[serde(rename_all = "camelCase")]
 pub struct Device {
     name: String,
-    #[serde(rename = "publicAddress")]
     public_address: String,
     product: String,
-    #[serde(rename = "productVersion")]
     product_version: String,
     platform: String,
-    #[serde(rename = "platformVersion")]
     platform_version: String,
     device: String,
     model: Option<String>,
@@ -25,46 +23,34 @@ pub struct Device {
         deserialize_with = "serde_with::rust::StringWithSeparator::<CommaSeparator>::deserialize"
     )]
     provides: Vec<String>,
-    #[serde(rename = "clientIdentifier")]
     client_identifier: String,
     version: Option<String>,
     id: Option<u32>,
     token: Option<String>,
-    #[serde(rename = "accessToken")]
     access_token: Option<String>,
-    #[serde(rename = "createdAt", with = "chrono::serde::ts_seconds")]
+    #[serde(with = "chrono::serde::ts_seconds")]
     created_at: DateTime<Utc>,
-    #[serde(rename = "lastSeenAt", with = "chrono::serde::ts_seconds")]
+    #[serde(with = "chrono::serde::ts_seconds")]
     last_seen_at: DateTime<Utc>,
     #[serde(
-        rename = "screenResolution",
         deserialize_with = "serde_with::rust::StringWithSeparator::<CommaSeparator>::deserialize",
         default
     )]
     screen_resolution: Vec<String>,
     #[serde(
-        rename = "screenDensity",
         deserialize_with = "serde_with::rust::string_empty_as_none::deserialize",
         default
     )]
     screen_density: Option<u8>,
     #[serde(rename = "Connection")]
     connections: Option<Vec<Connection>>,
-    #[serde(
-        rename = "httpsRequired",
-        deserialize_with = "option_bool_from_int",
-        default
-    )]
+    #[serde(deserialize_with = "option_bool_from_int", default)]
     https_required: Option<bool>,
     #[serde(deserialize_with = "option_bool_from_int", default)]
     synced: Option<bool>,
     #[serde(deserialize_with = "option_bool_from_int", default)]
     relay: Option<bool>,
-    #[serde(
-        rename = "publicAddressMatches",
-        deserialize_with = "option_bool_from_int",
-        default
-    )]
+    #[serde(deserialize_with = "option_bool_from_int", default)]
     public_address_matches: Option<bool>,
     #[serde(deserialize_with = "option_bool_from_int", default)]
     presence: Option<bool>,
@@ -78,10 +64,9 @@ pub struct Device {
 
 #[derive(Debug, Deserialize, Clone)]
 #[cfg_attr(test, serde(deny_unknown_fields))]
+#[serde(rename_all = "camelCase")]
 struct SyncList {
-    #[serde(rename = "itemsCompleteCount")]
     items_complete_count: u32,
-    #[serde(rename = "totalSize")]
     total_size: u64,
     version: u32,
 }

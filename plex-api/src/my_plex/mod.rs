@@ -14,12 +14,12 @@ use reqwest::header::HeaderMap;
 
 #[derive(Deserialize, Debug)]
 #[cfg_attr(test, serde(deny_unknown_fields))]
+#[serde(rename_all = "camelCase")]
 struct SubscriptionSummary {
     active: bool,
-    #[serde(rename = "subscribedAt", default)]
+    #[serde(default)]
     subscribed_at: Option<DateTime<Utc>>,
     status: String,
-    #[serde(rename = "paymentService")]
     payment_service: String,
     plan: String,
     features: Vec<String>,
@@ -27,35 +27,28 @@ struct SubscriptionSummary {
 
 #[derive(Deserialize, Debug)]
 #[cfg_attr(test, serde(deny_unknown_fields))]
+#[serde(rename_all = "camelCase")]
 struct Profile {
-    #[serde(rename = "autoSelectAudio")]
     auto_select_audio: bool,
-    #[serde(rename = "autoSelectSubtitle", deserialize_with = "bool_from_int")]
+    #[serde(deserialize_with = "bool_from_int")]
     auto_select_subtitle: bool,
-    #[serde(
-        rename = "defaultSubtitleAccessibility",
-        deserialize_with = "bool_from_int"
-    )]
+    #[serde(deserialize_with = "bool_from_int")]
     default_subtitle_accessibility: bool,
-    #[serde(rename = "defaultSubtitleForced", deserialize_with = "bool_from_int")]
+    #[serde(deserialize_with = "bool_from_int")]
     default_subtitle_forced: bool,
-    #[serde(rename = "defaultAudioLanguage")]
     default_audio_language: String,
-    #[serde(rename = "defaultSubtitleLanguage")]
     default_subtitle_language: String,
 }
 
 #[derive(Deserialize, Debug)]
 #[cfg_attr(test, serde(deny_unknown_fields))]
+#[serde(rename_all = "camelCase")]
 struct Subscription {
     id: Option<i32>,
     mode: String,
     state: String,
-    #[serde(rename = "renewsAt")]
     renews_at: Option<DateTime<Utc>>,
-    #[serde(rename = "endsAt")]
     ends_at: Option<DateTime<Utc>>,
-    #[serde(rename = "type")]
     subscription_type: Option<String>,
 }
 
@@ -71,6 +64,7 @@ struct Service {
 
 #[derive(Deserialize, Debug)]
 #[cfg_attr(test, serde(deny_unknown_fields))]
+#[serde(rename_all = "camelCase")]
 pub struct MyPlexAccount {
     id: i32,
     uuid: String,
@@ -79,38 +73,25 @@ pub struct MyPlexAccount {
     email: String,
     thumb: String,
     locale: Option<String>,
-    #[serde(rename = "emailOnlyAuth")]
     email_only_auth: bool,
-    #[serde(rename = "hasPassword")]
     has_password: bool,
-    #[serde(rename = "cloudSyncDevice")]
     cloud_sync_device: Option<String>,
-    #[serde(rename = "authToken")]
     auth_token: String,
-    #[serde(rename = "mailingListStatus")]
     mailing_list_status: String,
-    #[serde(rename = "mailingListActive")]
     mailing_list_active: bool,
-    #[serde(rename = "scrobbleTypes")]
     scrobble_types: String,
     pin: String,
     subscription: SubscriptionSummary,
-    #[serde(rename = "subscriptionDescription")]
     subscription_description: String,
     restricted: bool,
     home: bool,
     guest: bool,
-    #[serde(rename = "queueEmail")]
     queue_email: String,
-    #[serde(rename = "queueUid")]
     queue_uid: String,
-    #[serde(rename = "homeSize")]
     home_size: i32,
-    #[serde(rename = "maxHomeSize")]
     max_home_size: i32,
-    #[serde(rename = "certificateVersion")]
     certificate_version: i32,
-    #[serde(rename = "rememberExpiresAt", with = "chrono::serde::ts_seconds")]
+    #[serde(with = "chrono::serde::ts_seconds")]
     remember_expires_at: DateTime<Utc>,
     profile: Profile,
     entitlements: Vec<String>,

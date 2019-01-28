@@ -7,13 +7,11 @@ use std::collections::HashMap;
 
 #[derive(Debug, Deserialize)]
 #[cfg_attr(test, serde(deny_unknown_fields))]
+#[serde(rename_all = "camelCase")]
 pub struct Privacy {
-    #[serde(rename = "optOutPlayback")]
     opt_out_playback: bool,
-    #[serde(rename = "optOutLibraryStats")]
     opt_out_library_stats: bool,
     domain: String,
-    #[serde(rename = "baseUrl")]
     base_url: String,
     metrics: Vec<Metric>,
 }
