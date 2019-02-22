@@ -269,7 +269,7 @@ impl<T: HasPlexHeaders + HasBaseUrl> CanMakeRequests for T {
                 Err(e) => match e {
                     url::ParseError::RelativeUrlWithoutBase => {
                         let mut request_url = self.get_base_url();
-                        if request_url.chars().last().unwrap() != '/' {
+                        if !request_url.ends_with('/') {
                             request_url.push('/');
                         }
                         request_url.push_str(s);
