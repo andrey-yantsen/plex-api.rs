@@ -3,7 +3,7 @@ name = "plex-api"
 version = "0.0.0"
 authors = ["Andrey Yantsen <andrey@janzen.su>"]
 edition = "2018"
-description = "Library for communication with Plex server"
+description = "Work in progress, not ready for any use. See github for details. Library for communication with Plex server."
 license = "MIT"
 repository = "https://github.com/andrey-yantsen/plex-api.rs"
 
