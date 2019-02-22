@@ -1,10 +1,26 @@
 mod device;
+mod settings;
 
 pub use self::device::*;
+pub use self::settings::*;
 use crate::serde_helpers::{
     bool_from_int, option_bool_from_int, option_comma_separated_to_vec, option_seconds_to_datetime,
 };
 use chrono::{DateTime, Utc};
+
+#[derive(Debug, Deserialize, Clone)]
+#[cfg_attr(test, serde(deny_unknown_fields))]
+#[serde(rename_all = "camelCase")]
+pub struct MediaContainerWrapper {
+    #[serde(rename = "MediaContainer")]
+    media_container: MediaContainer,
+}
+
+impl MediaContainerWrapper {
+    pub fn unwrap_media_container(self) -> MediaContainer {
+        self.media_container
+    }
+}
 
 #[derive(Debug, Deserialize, Clone)]
 #[cfg_attr(test, serde(deny_unknown_fields))]
@@ -104,6 +120,8 @@ pub struct MediaContainer {
     max_upload_bitrate: Option<u16>,
     max_upload_bitrate_reason: Option<String>,
     max_upload_bitrate_reason_message: Option<String>,
+    #[serde(rename = "Setting", default)]
+    settings: Option<Vec<Setting>>,
 }
 
 impl MediaContainer {
@@ -113,6 +131,12 @@ impl MediaContainer {
 
     pub fn get_users(&self) -> Option<Vec<User>> {
         self.users.clone()
+    }
+}
+
+impl From<MediaContainerWrapper> for MediaContainer {
+    fn from(w: MediaContainerWrapper) -> Self {
+        w.unwrap_media_container()
     }
 }
 
