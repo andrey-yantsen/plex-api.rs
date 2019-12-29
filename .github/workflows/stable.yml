@@ -38,13 +38,13 @@ jobs:
           toolchain: stable
           override: true
 
-      - name: "Prepare env"
+      - name: Prepare env
           uses: actions-rs/cargo@v1
           with:
             command: run
             args: -p tools-bootstrap-plex -- --anonymous
 
-      - name: "Test against real server [anonymous]"
+      - name: Test against real server [anonymous]
         uses: actions-rs/cargo@v1
         with:
           command: test
