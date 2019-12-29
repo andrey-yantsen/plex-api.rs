@@ -20,10 +20,10 @@ jobs:
           override: true
 
       - name: Prepare env
-          uses: actions-rs/cargo@v1
-          with:
-            command: run
-            args: run -p tools-bootstrap-plex -- --authenticated
+        uses: actions-rs/cargo@v1
+        with:
+          command: run
+          args: run -p tools-bootstrap-plex -- --authenticated
 
       - name: Test against real server [anonymous]
         uses: actions-rs/cargo@v1
