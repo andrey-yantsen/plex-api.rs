@@ -12,12 +12,18 @@ extern crate serde_with;
 use std::env;
 use std::result;
 use std::sync::RwLock;
+use std::sync::{LockResult, PoisonError, RwLockReadGuard, RwLockWriteGuard};
 
 use reqwest::{header::HeaderMap, Client};
-use uname::uname;
 use uuid::Uuid;
 
-use std::sync::{LockResult, PoisonError, RwLockReadGuard, RwLockWriteGuard};
+use async_trait::async_trait;
+use uname::uname;
+
+pub use self::error::*;
+pub use self::media_container::*;
+pub use self::my_plex::*;
+pub use self::server::*;
 
 mod error;
 mod media_container;
@@ -26,11 +32,6 @@ mod serde_helpers;
 mod server;
 #[cfg(test)]
 mod tests;
-
-pub use self::error::*;
-pub use self::media_container::*;
-pub use self::my_plex::*;
-pub use self::server::*;
 
 const PROJECT: Option<&'static str> = option_env!("CARGO_PKG_NAME");
 const VERSION: Option<&'static str> = option_env!("CARGO_PKG_VERSION");
@@ -110,14 +111,12 @@ lazy_static! {
 /// use reqwest::{Client, Proxy};
 /// use std::time::Duration;
 ///
-/// fn main() {
 ///     set_http_client(Client::builder()
 ///                         .timeout(Duration::from_secs(1))
 ///                         .proxy(Proxy::http("http://example.com").expect("Proxy failed"))
 ///                         .build()
 ///                         .expect("Build failed")
 ///     ).expect("Mutex poisoned");
-/// }
 /// ```
 pub fn set_http_client(
     c: Client,
@@ -170,13 +169,14 @@ fn base_headers() -> HeaderMap {
     let mut client_identifier: String = String::from(*X_PLEX_CLIENT_IDENTIFIER.read().unwrap());
     if client_identifier == "" {
         let client_id = env::var("X_PLEX_CLIENT_IDENTIFIER");
-        if client_id.is_ok() {
-            client_identifier = client_id.unwrap().clone();
-        } else {
-            warn!(target: "plex-api", "Generating random identifier for the machine! Set X_PLEX_CLIENT_IDENTIFIER to avoid this");
-            let random_uuid = Uuid::new_v4();
-            client_identifier = random_uuid.to_string().clone();
-        }
+        client_identifier = match client_id {
+            Ok(id) => id,
+            Err(_) => {
+                warn!(target: "plex-api", "Generating random identifier for the machine! Set X_PLEX_CLIENT_IDENTIFIER to avoid this");
+                let random_uuid = Uuid::new_v4();
+                random_uuid.to_string()
+            }
+        };
     }
 
     headers.insert(
@@ -203,29 +203,29 @@ fn base_headers() -> HeaderMap {
 
 pub type Result<T> = std::result::Result<T, crate::error::PlexApiError>;
 
+#[async_trait]
 pub trait CanBeDeleted {
-    fn delete(&mut self) -> Result<reqwest::Response>;
+    async fn delete(&mut self) -> Result<reqwest::Response>;
 }
 
 pub trait HasDeleteUrl {
     fn get_delete_url(&self) -> Option<String>;
 }
 
-impl<T: HasDeleteUrl + HasMyPlexToken + HasPlexHeaders> CanBeDeleted for T {
+#[async_trait]
+impl<T: HasDeleteUrl + CanMakeRequests + Send + Sync> CanBeDeleted for T {
     /// Remove current object from your account.
-    fn delete(&mut self) -> Result<reqwest::Response> {
+    async fn delete(&mut self) -> Result<reqwest::Response> {
         let url = self.get_delete_url();
 
-        if url.is_none() {
+        if let Some(url) = url {
+            self.prepare_query(&url, reqwest::Method::DELETE)?
+                .send()
+                .await
+                .map_err(From::from)
+        } else {
             // TODO: Better error
             Err(crate::error::PlexApiError {})
-        } else {
-            let url = url.unwrap();
-            get_http_client()?
-                .delete(&url)
-                .headers(self.headers())
-                .send()
-                .map_err(From::from)
         }
     }
 }
@@ -251,6 +251,12 @@ pub trait AsStr {
 }
 
 impl AsStr for &str {
+    fn as_str(&self) -> &str {
+        self
+    }
+}
+
+impl AsStr for &String {
     fn as_str(&self) -> &str {
         self
     }
@@ -286,28 +292,34 @@ impl<T: HasPlexHeaders + HasBaseUrl> CanMakeRequests for T {
     }
 }
 
+#[async_trait]
 trait InternalHttpApi {
-    fn get<U: reqwest::IntoUrl + AsStr>(&self, url: U) -> crate::Result<reqwest::Response>;
-    fn post_form<U: reqwest::IntoUrl + AsStr, T: serde::Serialize + ?Sized>(
+    async fn get<U: reqwest::IntoUrl + AsStr + Send>(
+        &self,
+        url: U,
+    ) -> crate::Result<reqwest::Response>;
+    async fn post_form<U: reqwest::IntoUrl + AsStr + Send, T: serde::Serialize + ?Sized + Sync>(
         &self,
         url: U,
         params: &T,
     ) -> crate::Result<reqwest::Response>;
-    fn put_form<U: reqwest::IntoUrl + AsStr, T: serde::Serialize + ?Sized>(
+    async fn put_form<U: reqwest::IntoUrl + AsStr + Send, T: serde::Serialize + ?Sized + Sync>(
         &self,
         url: U,
         params: &T,
     ) -> crate::Result<reqwest::Response>;
 }
 
-impl<T: CanMakeRequests> InternalHttpApi for T {
-    fn get<U: reqwest::IntoUrl + AsStr>(&self, url: U) -> Result<reqwest::Response> {
+#[async_trait]
+impl<T: CanMakeRequests + Sync> InternalHttpApi for T {
+    async fn get<U: reqwest::IntoUrl + AsStr + Send>(&self, url: U) -> Result<reqwest::Response> {
         self.prepare_query(url, reqwest::Method::GET)?
             .send()
+            .await
             .map_err(From::from)
     }
 
-    fn post_form<U: reqwest::IntoUrl + AsStr, P: serde::Serialize + ?Sized>(
+    async fn post_form<U: reqwest::IntoUrl + AsStr + Send, P: serde::Serialize + ?Sized + Sync>(
         &self,
         url: U,
         params: &P,
@@ -315,10 +327,11 @@ impl<T: CanMakeRequests> InternalHttpApi for T {
         self.prepare_query(url, reqwest::Method::POST)?
             .form(params)
             .send()
+            .await
             .map_err(From::from)
     }
 
-    fn put_form<U: reqwest::IntoUrl + AsStr, P: serde::Serialize + ?Sized>(
+    async fn put_form<U: reqwest::IntoUrl + AsStr + Send, P: serde::Serialize + ?Sized + Sync>(
         &self,
         url: U,
         params: &P,
@@ -326,6 +339,7 @@ impl<T: CanMakeRequests> InternalHttpApi for T {
         self.prepare_query(url, reqwest::Method::POST)?
             .form(params)
             .send()
+            .await
             .map_err(From::from)
     }
 }

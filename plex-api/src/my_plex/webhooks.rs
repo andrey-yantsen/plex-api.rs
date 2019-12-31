@@ -15,49 +15,49 @@ struct Webhook {
 
 impl MyPlexAccount {
     /// Returns a list of URLs for currently registered WebHooks.
-    pub fn get_webhooks(&self) -> crate::Result<Vec<String>> {
-        let mut response = self.get(WEBHOOKS_URL)?;
+    pub async fn get_webhooks(&self) -> crate::Result<Vec<String>> {
+        let response = self.get(WEBHOOKS_URL).await?;
         if response.status() == StatusCode::OK {
-            let hooks: Vec<Webhook> = serde_json::from_str(response.text()?.as_str())?;
+            let hooks: Vec<Webhook> = serde_json::from_str(response.text().await?.as_str())?;
             let mut ret: Vec<String> = Vec::new();
             for hook in hooks {
                 ret.push(hook.url)
             }
             Ok(ret)
         } else {
-            let err: MyPlexApiErrorResponse = response.json()?;
+            let err: MyPlexApiErrorResponse = response.json().await?;
             Err(crate::error::PlexApiError::from(err))
         }
     }
 
     /// Sets a list of WebHooks to provided URLs list.
-    pub fn set_webhooks(&self, webhooks: &[&str]) -> crate::Result<()> {
+    pub async fn set_webhooks(&self, webhooks: &[&str]) -> crate::Result<()> {
         let params = if webhooks.is_empty() {
             vec![("urls", "")]
         } else {
             webhooks.iter().map(|&url| ("urls[]", url)).collect()
         };
 
-        let mut response = self.post_form(WEBHOOKS_URL, &params)?;
+        let response = self.post_form(WEBHOOKS_URL, &params).await?;
         if response.status() == StatusCode::CREATED {
             Ok(())
         } else {
-            let err: MyPlexApiErrorResponse = response.json()?;
+            let err: MyPlexApiErrorResponse = response.json().await?;
             Err(crate::error::PlexApiError::from(err))
         }
     }
 
     /// Add an URL to webhooks list.
-    pub fn add_webhook(&self, webhook: &str) -> crate::Result<()> {
-        let webhooks = self.get_webhooks()?;
+    pub async fn add_webhook(&self, webhook: &str) -> crate::Result<()> {
+        let webhooks = self.get_webhooks().await?;
         let mut webhooks: Vec<&str> = webhooks.iter().map(|s| &**s).collect();
         webhooks.push(webhook);
-        self.set_webhooks(&webhooks)
+        self.set_webhooks(&webhooks).await
     }
 
     /// Deletes provided URL from webhooks list.
-    pub fn del_webhook(&self, webhook: &str) -> crate::Result<()> {
-        let webhooks: Vec<String> = self.get_webhooks()?;
+    pub async fn del_webhook(&self, webhook: &str) -> crate::Result<()> {
+        let webhooks: Vec<String> = self.get_webhooks().await?;
         let original_len = webhooks.len();
         let new_webhooks: Vec<&str> = webhooks
             .iter()
@@ -68,7 +68,7 @@ impl MyPlexAccount {
             // TODO: Better errors
             Err(crate::error::PlexApiError {})
         } else {
-            self.set_webhooks(&new_webhooks)
+            self.set_webhooks(&new_webhooks).await
         }
     }
 }

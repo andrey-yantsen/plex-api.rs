@@ -27,19 +27,19 @@ const PRIVACY_URL: &str = "api/v2/user/privacy";
 
 impl MyPlexAccount {
     /// Returns current privacy settings, see [Privacy Preferences on plex.tv](https://www.plex.tv/about/privacy-legal/privacy-preferences/#opd).
-    pub fn get_privacy(&self) -> crate::Result<Privacy> {
-        let mut response = self.get(PRIVACY_URL)?;
+    pub async fn get_privacy(&self) -> crate::Result<Privacy> {
+        let response = self.get(PRIVACY_URL).await?;
         if response.status() == StatusCode::OK {
-            let p: Privacy = response.json()?;
+            let p: Privacy = response.json().await?;
             Ok(p)
         } else {
-            let err: MyPlexApiErrorResponse = response.json()?;
+            let err: MyPlexApiErrorResponse = response.json().await?;
             Err(crate::error::PlexApiError::from(err))
         }
     }
 
     /// Changes privacy settings, see [Privacy Preferences on plex.tv](https://www.plex.tv/about/privacy-legal/privacy-preferences/#opd).
-    pub fn set_privacy(
+    pub async fn set_privacy(
         &self,
         opt_out_playback: bool,
         opt_out_library_stats: bool,
@@ -50,7 +50,7 @@ impl MyPlexAccount {
             "optOutLibraryStats",
             if opt_out_library_stats { "1" } else { "0" },
         );
-        self.put_form(PRIVACY_URL, &params)?;
+        self.put_form(PRIVACY_URL, &params).await?;
         Ok(())
     }
 }

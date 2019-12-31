@@ -1,10 +1,14 @@
-use crate::serde_helpers::option_bool_from_int;
-use crate::server::Server;
-use crate::{HasDeleteUrl, HasMyPlexToken};
-use chrono::{DateTime, Utc};
-use serde_with::CommaSeparator;
 use std::sync::mpsc;
 use std::thread;
+
+use chrono::{DateTime, Utc};
+use serde_with::CommaSeparator;
+
+use async_std::task::block_on;
+
+use crate::serde_helpers::option_bool_from_int;
+use crate::server::Server;
+use crate::{CanMakeRequests, HasBaseUrl, HasDeleteUrl, HasMyPlexToken};
 
 #[derive(Debug, Deserialize, Clone)]
 #[cfg_attr(test, serde(deny_unknown_fields))]
@@ -86,6 +90,7 @@ struct Connection {
 
 impl Device {
     pub fn connect_to_server(&self) -> crate::Result<Server> {
+        // TODO: Make async
         if !self.provides.contains(&String::from("server")) {
             // TODO: Return descriptive error
             return Err(crate::error::PlexApiError {});
@@ -104,9 +109,9 @@ impl Device {
             let auth_token_clone = self.auth_token.clone();
             let handler = thread::spawn(move || {
                 let srv = if auth_token_clone.is_empty() {
-                    Server::connect(&c.uri)
+                    block_on(Server::connect(&c.uri))
                 } else {
-                    Server::login(&c.uri, &auth_token_clone)
+                    block_on(Server::login(&c.uri, &auth_token_clone))
                 };
                 tx_clone.send(srv)
             });
@@ -117,8 +122,7 @@ impl Device {
 
         loop {
             let thread_result = rx.recv();
-            if thread_result.is_ok() {
-                let srv = thread_result.unwrap();
+            if let Ok(srv) = thread_result {
                 if srv.is_ok() {
                     return srv;
                 }
@@ -152,5 +156,11 @@ impl HasDeleteUrl for Device {
     fn get_delete_url(&self) -> Option<String> {
         self.id
             .map(|id| format!("https://plex.tv/devices/{}.xml", id))
+    }
+}
+
+impl HasBaseUrl for Device {
+    fn get_base_url(&self) -> String {
+        unimplemented!()
     }
 }

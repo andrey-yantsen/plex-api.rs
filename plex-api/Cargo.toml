@@ -8,18 +8,20 @@ license = "MIT"
 repository = "https://github.com/andrey-yantsen/plex-api.rs"
 
 [dependencies]
-reqwest = "0.9.8"
-uname = "0.1.1"
-uuid = "0.7.1"
-log = "0.4.6"
-serde = "1.0.84"
-serde_derive = "1.0.84"
-serde_json = "1.0.35"
-serde-xml-rs = "0.3.0"
-serde_with = "0.2.5"
+reqwest = { version = "0.10", features = ["json"] }
+uname = "0.1"
+uuid = { version = "0.8", features = ["v4", "serde"] }
+log = "0.4"
+serde = "1.0"
+serde_derive = "1.0"
+serde_json = "1.0"
+serde-xml-rs = "0.3"
+serde_with = "1.3"
 chrono = { version = "0.4", features = ["serde"] }
-lazy_static = "1.2.0"
-url = "1.7.2"
+lazy_static = "1.4"
+url = "2.1"
+async-trait = "0.1"
+async-std = "0.99"
 
 [features]
 default = []

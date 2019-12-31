@@ -20,12 +20,12 @@ impl MyPlexAccount {
     ///
     /// See [https://www.plex.tv/claim](https://www.plex.tv/claim/),
     /// [docker:plexinc/pms-docker](https://hub.docker.com/r/plexinc/pms-docker/).
-    pub fn get_claim_token(&self) -> crate::Result<String> {
-        let mut response = self.get(CLAIM_TOKEN_URL)?;
+    pub async fn get_claim_token(&self) -> crate::Result<String> {
+        let response = self.get(CLAIM_TOKEN_URL).await?;
         match response.status() {
-            StatusCode::OK => Ok((response.json::<SuccessResponse>()?).token.clone()),
+            StatusCode::OK => Ok((response.json::<SuccessResponse>()).await?.token),
             _ => Err(crate::error::PlexApiError::from(
-                response.json::<ErrorResponse>()?,
+                response.json::<ErrorResponse>().await?,
             )),
         }
     }

@@ -1,3 +1,4 @@
+use async_std::task::block_on;
 use plex_api::MyPlexAccount;
 
 extern crate chrono;
@@ -20,7 +21,7 @@ fn main() {
         .unwrap();
 
     let token = std::env::var("PLEX_API_AUTH_TOKEN").expect("Auth token not specified");
-    let myplex = MyPlexAccount::by_token(&token).unwrap();
+    let myplex = block_on(MyPlexAccount::by_token(&token)).unwrap();
 
-    dbg!(myplex.get_webhooks().expect("Unable to get webhooks"));
+    dbg!(block_on(myplex.get_webhooks()).expect("Unable to get webhooks"));
 }
