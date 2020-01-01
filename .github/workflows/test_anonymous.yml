@@ -2,7 +2,7 @@
 
 on: push
 
-name: Test authenticated
+name: Test anonymous
 
 jobs:
   test:
