@@ -1,4 +1,5 @@
 use crate::media_container::MediaContainer;
+use async_std::task::block_on;
 use serde_xml_rs::from_str;
 
 #[test]
@@ -65,10 +66,10 @@ fn decode_devices_online() {
     use std::env;
     let acc: Result<MyPlexAccount, _> = {
         let auth_token = env::var("PLEX_API_AUTH_TOKEN").expect("Auth token not specified");
-        MyPlexAccount::by_token(&auth_token).await
+        block_on(MyPlexAccount::by_token(&auth_token))
     };
     assert!(acc.is_ok(), "Unable to authenticate");
-    let devices = acc.unwrap().get_devices().await;
+    let devices = block_on(acc.unwrap().get_devices());
     assert!(
         devices.is_ok(),
         "Unable to get devices: {:?}",
