@@ -2,7 +2,7 @@
 
 on: [push, pull_request]
 
-name: Common
+name: Syntax & linting checks with serverless tests
 
 jobs:
   check:
@@ -38,17 +38,11 @@ jobs:
           toolchain: stable
           override: true
 
-      - name: Prepare env
-        uses: actions-rs/cargo@v1
-        with:
-          command: run
-          args: -p tools-bootstrap-plex -- --anonymous
-
-      - name: Test against real server [anonymous]
+      - name: Rus tests
         uses: actions-rs/cargo@v1
         with:
           command: test
-          args: --manifest-path plex-api/Cargo.toml --features 'test_connect_anonymous'
+          args: --all
 
   lints:
     name: Lints
