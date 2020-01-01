@@ -8,7 +8,7 @@ use async_std::task::block_on;
 
 use crate::serde_helpers::option_bool_from_int;
 use crate::server::Server;
-use crate::{CanMakeRequests, HasBaseUrl, HasDeleteUrl, HasMyPlexToken};
+use crate::{HasBaseUrl, HasDeleteUrl, HasMyPlexToken};
 
 #[derive(Debug, Deserialize, Clone)]
 #[cfg_attr(test, serde(deny_unknown_fields))]
@@ -142,8 +142,8 @@ impl Device {
 
 impl HasMyPlexToken for Device {
     /// Returns authentication token for current account.
-    fn get_auth_token(&self) -> String {
-        self.auth_token.clone()
+    fn get_auth_token(&self) -> &str {
+        &self.auth_token
     }
 
     /// Sets authentication token for current account.
@@ -159,6 +159,7 @@ impl HasDeleteUrl for Device {
     }
 }
 
+// Required to have default implementation of CanMakeRequests for Device
 impl HasBaseUrl for Device {
     fn get_base_url(&self) -> String {
         unimplemented!()

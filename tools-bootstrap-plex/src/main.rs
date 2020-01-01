@@ -1,10 +1,10 @@
-use async_std::task::block_on;
 use plex_api::MyPlexAccount;
 
 extern crate chrono;
 extern crate fern;
 
-fn main() {
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
     fern::Dispatch::new()
         .format(|out, message, record| {
             out.finish(format_args!(
@@ -21,7 +21,9 @@ fn main() {
         .unwrap();
 
     let token = std::env::var("PLEX_API_AUTH_TOKEN").expect("Auth token not specified");
-    let myplex = block_on(MyPlexAccount::by_token(&token)).unwrap();
+    let myplex = MyPlexAccount::by_token(&token).await.unwrap();
 
-    dbg!(block_on(myplex.get_webhooks()).expect("Unable to get webhooks"));
+    dbg!(myplex.get_webhooks().await.expect("Unable to get webhooks"));
+
+    Ok(())
 }

@@ -1,5 +1,6 @@
 use crate::{
-    base_headers, get_http_client,
+    http::base_headers,
+    http::get_http_client,
     my_plex::{MyPlexAccount, MyPlexApiErrorResponse},
 };
 

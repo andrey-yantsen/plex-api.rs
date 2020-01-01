@@ -12,8 +12,8 @@ pub struct Server {
 
 impl HasMyPlexToken for Server {
     /// Returns authentication token for current server.
-    fn get_auth_token(&self) -> String {
-        self.auth_token.clone()
+    fn get_auth_token(&self) -> &str {
+        &self.auth_token
     }
 
     /// Sets authentication token for current server.

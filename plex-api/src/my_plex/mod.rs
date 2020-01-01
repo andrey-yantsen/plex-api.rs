@@ -7,7 +7,7 @@ mod users;
 mod webhooks;
 
 use crate::serde_helpers::bool_from_int;
-use crate::{base_headers, HasPlexHeaders};
+use crate::{http::base_headers, HasPlexHeaders};
 use chrono::DateTime;
 use chrono::Utc;
 use reqwest::header::HeaderMap;
@@ -114,7 +114,7 @@ struct MyPlexApiErrorResponse {
 }
 
 pub trait HasMyPlexToken {
-    fn get_auth_token(&self) -> String;
+    fn get_auth_token(&self) -> &str;
     fn set_auth_token(&mut self, auth_token: &str);
 }
 
@@ -137,8 +137,8 @@ where
 
 impl HasMyPlexToken for MyPlexAccount {
     /// Returns authentication token for current account.
-    fn get_auth_token(&self) -> String {
-        self.auth_token.clone()
+    fn get_auth_token(&self) -> &str {
+        &self.auth_token
     }
 
     /// Sets authentication token for current account.

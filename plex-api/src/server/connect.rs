@@ -1,6 +1,6 @@
+use crate::http::{base_headers, get_http_client};
 use crate::media_container::MediaContainer;
 use crate::server::Server;
-use crate::{base_headers, get_http_client};
 
 impl Server {
     /// Establish a connection with the server server by provided url.

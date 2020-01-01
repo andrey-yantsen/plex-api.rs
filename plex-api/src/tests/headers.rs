@@ -1,4 +1,4 @@
-use crate::base_headers;
+use crate::http::base_headers;
 
 #[test]
 fn base_headers_contains_required_headers() {
@@ -55,12 +55,13 @@ fn base_headers_use_provided_values() {
     let device = X_PLEX_DEVICE.read().unwrap();
     let device_name = X_PLEX_DEVICE_NAME.read().unwrap();
     let client_identifier = X_PLEX_CLIENT_IDENTIFIER.read().unwrap();
+    let plex_sync_version = X_PLEX_SYNC_VERSION.read().unwrap();
 
     assert_eq!(*provides, headers.get("x-plex-provides").unwrap());
     assert_eq!(*product, headers.get("x-plex-product").unwrap());
     assert_eq!(*version, headers.get("x-plex-version").unwrap());
     assert_eq!(
-        X_PLEX_SYNC_VERSION,
+        *plex_sync_version,
         headers.get("x-plex-sync-version").unwrap()
     );
     assert_eq!(*platform, headers.get("x-plex-platform").unwrap());
