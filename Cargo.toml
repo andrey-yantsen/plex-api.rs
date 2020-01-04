@@ -2,5 +2,5 @@
 
 members = [
     "plex-api",
-    "tools-bootstrap-plex",
+    "plex-cli",
 ]

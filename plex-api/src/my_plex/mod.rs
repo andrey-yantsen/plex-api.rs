@@ -11,6 +11,7 @@ use crate::{http::base_headers, HasPlexHeaders};
 use chrono::DateTime;
 use chrono::Utc;
 use reqwest::header::HeaderMap;
+use serde_repr::Deserialize_repr;
 
 #[derive(Deserialize, Debug)]
 #[cfg_attr(test, serde(deny_unknown_fields))]
@@ -25,13 +26,20 @@ struct SubscriptionSummary {
     features: Vec<String>,
 }
 
+#[derive(Deserialize_repr, Debug)]
+#[repr(u8)]
+enum AutoSelectSubtitleMode {
+    ManuallySelected = 0,
+    ShownWithForeignAudio = 1,
+    AlwaysEnabled = 2,
+}
+
 #[derive(Deserialize, Debug)]
 #[cfg_attr(test, serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 struct Profile {
     auto_select_audio: bool,
-    #[serde(deserialize_with = "bool_from_int")]
-    auto_select_subtitle: bool,
+    auto_select_subtitle: AutoSelectSubtitleMode,
     #[serde(deserialize_with = "bool_from_int")]
     default_subtitle_accessibility: bool,
     #[serde(deserialize_with = "bool_from_int")]
@@ -87,6 +95,7 @@ pub struct MyPlexAccount {
     home: bool,
     guest: bool,
     queue_email: String,
+    #[serde(skip)] // skipping this field because of unknown purpose
     queue_uid: String,
     home_size: i32,
     max_home_size: i32,

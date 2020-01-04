@@ -1,5 +1,5 @@
 [package]
-name = "tools-bootstrap-plex"
+name = "plex-cli"
 version = "0.1.0"
 authors = ["Andrey Yantsen <andrey@janzen.su>"]
 edition = "2018"
