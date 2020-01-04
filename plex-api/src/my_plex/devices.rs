@@ -13,7 +13,7 @@ impl MyPlexAccount {
     pub async fn get_devices(&self) -> crate::Result<Vec<Device>> {
         let response = self.get(DEVICES_URL).await?;
         if response.status() == StatusCode::OK {
-            let mc: MediaContainer = serde_xml_rs::from_str(response.text().await?.as_str())?;
+            let mc: MediaContainer = serde_xml_rs::from_str(dbg!(response.text().await?.as_str()))?;
             let mut devices: Vec<Device> = mc.get_devices().unwrap_or_default();
             devices
                 .iter_mut()

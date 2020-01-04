@@ -1,4 +1,4 @@
-use plex_api::{HasMyPlexToken, MyPlexAccount};
+use plex_api::MyPlexAccount;
 
 extern crate chrono;
 extern crate fern;
@@ -23,7 +23,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let token = std::env::var("PLEX_API_AUTH_TOKEN").expect("Auth token not specified");
     let myplex = MyPlexAccount::by_token(&token).await.unwrap();
 
-    dbg!(myplex.get_auth_token());
+    dbg!(&myplex);
+    dbg!(&myplex.get_claim_token().await.unwrap());
 
     dbg!(myplex.get_webhooks().await.expect("Unable to get webhooks"));
 

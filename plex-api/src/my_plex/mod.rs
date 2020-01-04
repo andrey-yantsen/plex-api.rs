@@ -12,6 +12,7 @@ use chrono::DateTime;
 use chrono::Utc;
 use reqwest::header::HeaderMap;
 use serde_repr::Deserialize_repr;
+use std::collections::HashMap;
 
 #[derive(Deserialize, Debug)]
 #[cfg_attr(test, serde(deny_unknown_fields))]
@@ -57,7 +58,9 @@ struct Subscription {
     state: String,
     renews_at: Option<DateTime<Utc>>,
     ends_at: Option<DateTime<Utc>>,
+    #[serde(rename = "type")]
     subscription_type: Option<String>,
+    transfer: bool,
 }
 
 #[derive(Deserialize, Debug)]
@@ -95,8 +98,7 @@ pub struct MyPlexAccount {
     home: bool,
     guest: bool,
     queue_email: String,
-    #[serde(skip)] // skipping this field because of unknown purpose
-    queue_uid: String,
+    queue_uid: HashMap<String, String>,
     home_size: i32,
     max_home_size: i32,
     certificate_version: i32,
@@ -107,6 +109,15 @@ pub struct MyPlexAccount {
     roles: Vec<String>,
     subscriptions: Vec<Subscription>,
     services: Vec<Service>,
+    protected: bool,
+    country: String,
+    home_admin: bool,
+    trials: Vec<String>,
+    ads_consent: bool,
+    #[serde(with = "chrono::serde::ts_seconds")]
+    ads_consent_set_at: DateTime<Utc>,
+    #[serde(with = "chrono::serde::ts_seconds")]
+    ads_consent_reminder_at: DateTime<Utc>,
 }
 
 #[derive(Deserialize, Debug)]

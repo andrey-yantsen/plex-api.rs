@@ -1,5 +1,4 @@
 use crate::media_container::MediaContainer;
-use async_std::task::block_on;
 use serde_xml_rs::from_str;
 
 #[test]
@@ -40,17 +39,17 @@ fn decode_server() {
     feature = "test_connect_authenticated",
     feature = "test_connect_anonymous"
 ))]
-#[test]
-fn decode_server_online() {
+#[tokio::test]
+async fn decode_server_online() {
     use crate::Server;
     use std::env;
     let srv: Result<Server, _> = {
         let server_url = env::var("PLEX_API_SERVER_URL").expect("Server url not specified");
         if cfg!(feature = "test_connect_authenticated") {
             let auth_token = env::var("PLEX_API_AUTH_TOKEN").expect("Auth token not specified");
-            block_on(Server::login(&server_url, &auth_token))
+            Server::login(&server_url, &auth_token).await
         } else {
-            block_on(Server::connect(&server_url))
+            Server::connect(&server_url).await
         }
     };
     assert!(srv.is_ok(), "Unable to connect to server: {:?}", srv.err());

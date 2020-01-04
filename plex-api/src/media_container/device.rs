@@ -45,7 +45,7 @@ pub struct Device {
         deserialize_with = "serde_with::rust::string_empty_as_none::deserialize",
         default
     )]
-    screen_density: Option<u8>,
+    screen_density: Option<u16>,
     #[serde(rename = "Connection")]
     connections: Option<Vec<Connection>>,
     #[serde(deserialize_with = "option_bool_from_int", default)]
@@ -64,6 +64,8 @@ pub struct Device {
     sync_list: Option<SyncList>,
     #[serde(default)]
     auth_token: String,
+    dns_rebinding_protection: Option<bool>,
+    nat_loopback_supported: Option<bool>,
 }
 
 #[derive(Debug, Deserialize, Clone)]

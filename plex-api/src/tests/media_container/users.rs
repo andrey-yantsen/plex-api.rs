@@ -1,5 +1,4 @@
 use crate::media_container::MediaContainer;
-use async_std::task::block_on;
 use serde_xml_rs::from_str;
 
 #[test]
@@ -23,15 +22,15 @@ fn decode_users() {
 }
 
 #[cfg(feature = "test_connect_authenticated")]
-#[test]
-fn decode_users_online() {
+#[tokio::test]
+async fn decode_users_online() {
     use crate::MyPlexAccount;
     use std::env;
     let acc: Result<MyPlexAccount, _> = {
         let auth_token = env::var("PLEX_API_AUTH_TOKEN").expect("Auth token not specified");
-        block_on(MyPlexAccount::by_token(&auth_token))
+        MyPlexAccount::by_token(&auth_token).await
     };
     assert!(acc.is_ok(), "Unable to authenticate");
-    let users = block_on(acc.unwrap().get_users());
+    let users = acc.unwrap().get_users().await;
     assert!(users.is_ok(), "Unable to get users: {:?}", users.err());
 }

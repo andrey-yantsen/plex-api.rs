@@ -122,6 +122,8 @@ pub struct MediaContainer {
     max_upload_bitrate_reason_message: Option<String>,
     #[serde(rename = "Setting", default)]
     settings: Option<Vec<Setting>>,
+    #[serde(default, deserialize_with = "option_bool_from_int")]
+    push_notifications: Option<bool>,
 }
 
 impl MediaContainer {
