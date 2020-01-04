@@ -3,7 +3,7 @@ use crate::{media_container::MediaContainer, HasBaseUrl, HasMyPlexToken};
 mod connect;
 
 #[derive(Deserialize, Debug)]
-#[cfg_attr(test, serde(deny_unknown_fields))]
+#[cfg_attr(all(test, feature = "test_new_attributes"), serde(deny_unknown_fields))]
 pub struct Server {
     info: MediaContainer,
     url: String,

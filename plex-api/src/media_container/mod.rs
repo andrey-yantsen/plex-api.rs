@@ -9,7 +9,7 @@ use crate::serde_helpers::{
 use chrono::{DateTime, Utc};
 
 #[derive(Debug, Deserialize, Clone)]
-#[cfg_attr(test, serde(deny_unknown_fields))]
+#[cfg_attr(all(test, feature = "test_new_attributes"), serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct MediaContainerWrapper {
     #[serde(rename = "MediaContainer")]
@@ -23,7 +23,7 @@ impl MediaContainerWrapper {
 }
 
 #[derive(Debug, Deserialize, Clone)]
-#[cfg_attr(test, serde(deny_unknown_fields))]
+#[cfg_attr(all(test, feature = "test_new_attributes"), serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct MediaContainer {
     size: Option<u32>,
@@ -143,7 +143,7 @@ impl From<MediaContainerWrapper> for MediaContainer {
 }
 
 #[derive(Debug, Deserialize, Clone)]
-#[cfg_attr(test, serde(deny_unknown_fields))]
+#[cfg_attr(all(test, feature = "test_new_attributes"), serde(deny_unknown_fields))]
 pub struct Directory {
     count: u16,
     key: String,
@@ -151,7 +151,7 @@ pub struct Directory {
 }
 
 #[derive(Debug, Deserialize, Clone)]
-#[cfg_attr(test, serde(deny_unknown_fields))]
+#[cfg_attr(all(test, feature = "test_new_attributes"), serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct User {
     id: u32,
@@ -183,7 +183,7 @@ pub struct User {
 }
 
 #[derive(Debug, Deserialize, Clone)]
-#[cfg_attr(test, serde(deny_unknown_fields))]
+#[cfg_attr(all(test, feature = "test_new_attributes"), serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 struct Server {
     id: u32,

@@ -8,7 +8,7 @@ use serde_json;
 const WEBHOOKS_URL: &str = "api/v2/user/webhooks";
 
 #[derive(Debug, Deserialize)]
-#[cfg_attr(test, serde(deny_unknown_fields))]
+#[cfg_attr(all(test, feature = "test_new_attributes"), serde(deny_unknown_fields))]
 struct Webhook {
     url: String,
 }

@@ -11,7 +11,7 @@ use crate::server::Server;
 use crate::{HasBaseUrl, HasDeleteUrl, HasMyPlexToken};
 
 #[derive(Debug, Deserialize, Clone)]
-#[cfg_attr(test, serde(deny_unknown_fields))]
+#[cfg_attr(all(test, feature = "test_new_attributes"), serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct Device {
     name: String,
@@ -69,7 +69,7 @@ pub struct Device {
 }
 
 #[derive(Debug, Deserialize, Clone)]
-#[cfg_attr(test, serde(deny_unknown_fields))]
+#[cfg_attr(all(test, feature = "test_new_attributes"), serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 struct SyncList {
     items_complete_count: u32,
@@ -78,7 +78,7 @@ struct SyncList {
 }
 
 #[derive(Debug, Deserialize, Clone)]
-#[cfg_attr(test, serde(deny_unknown_fields))]
+#[cfg_attr(all(test, feature = "test_new_attributes"), serde(deny_unknown_fields))]
 struct Connection {
     uri: String,
     protocol: Option<String>,

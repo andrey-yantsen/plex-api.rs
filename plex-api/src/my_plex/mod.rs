@@ -15,7 +15,7 @@ use serde_repr::Deserialize_repr;
 use std::collections::HashMap;
 
 #[derive(Deserialize, Debug)]
-#[cfg_attr(test, serde(deny_unknown_fields))]
+#[cfg_attr(all(test, feature = "test_new_attributes"), serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 struct SubscriptionSummary {
     active: bool,
@@ -36,7 +36,7 @@ enum AutoSelectSubtitleMode {
 }
 
 #[derive(Deserialize, Debug)]
-#[cfg_attr(test, serde(deny_unknown_fields))]
+#[cfg_attr(all(test, feature = "test_new_attributes"), serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 struct Profile {
     auto_select_audio: bool,
@@ -50,7 +50,7 @@ struct Profile {
 }
 
 #[derive(Deserialize, Debug)]
-#[cfg_attr(test, serde(deny_unknown_fields))]
+#[cfg_attr(all(test, feature = "test_new_attributes"), serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 struct Subscription {
     id: Option<i32>,
@@ -64,7 +64,7 @@ struct Subscription {
 }
 
 #[derive(Deserialize, Debug)]
-#[cfg_attr(test, serde(deny_unknown_fields))]
+#[cfg_attr(all(test, feature = "test_new_attributes"), serde(deny_unknown_fields))]
 struct Service {
     identifier: String,
     endpoint: String,
@@ -74,7 +74,7 @@ struct Service {
 }
 
 #[derive(Deserialize, Debug)]
-#[cfg_attr(test, serde(deny_unknown_fields))]
+#[cfg_attr(all(test, feature = "test_new_attributes"), serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct MyPlexAccount {
     id: i32,
@@ -121,14 +121,14 @@ pub struct MyPlexAccount {
 }
 
 #[derive(Deserialize, Debug)]
-#[cfg_attr(test, serde(deny_unknown_fields))]
+#[cfg_attr(all(test, feature = "test_new_attributes"), serde(deny_unknown_fields))]
 struct MyPlexApiError {
     code: i32,
     message: String,
 }
 
 #[derive(Deserialize, Debug)]
-#[cfg_attr(test, serde(deny_unknown_fields))]
+#[cfg_attr(all(test, feature = "test_new_attributes"), serde(deny_unknown_fields))]
 struct MyPlexApiErrorResponse {
     errors: Vec<MyPlexApiError>,
 }

@@ -30,3 +30,4 @@ tokio = { version = "0.2", features = ["macros"] }
 default = []
 test_connect_authenticated = []
 test_connect_anonymous = []
+test_new_attributes = ["test_connect_authenticated", "test_connect_anonymous"]

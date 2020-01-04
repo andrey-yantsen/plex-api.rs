@@ -6,7 +6,7 @@ use reqwest::StatusCode;
 use std::collections::HashMap;
 
 #[derive(Debug, Deserialize)]
-#[cfg_attr(test, serde(deny_unknown_fields))]
+#[cfg_attr(all(test, feature = "test_new_attributes"), serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct Privacy {
     opt_out_playback: bool,
@@ -17,7 +17,7 @@ pub struct Privacy {
 }
 
 #[derive(Debug, Deserialize)]
-#[cfg_attr(test, serde(deny_unknown_fields))]
+#[cfg_attr(all(test, feature = "test_new_attributes"), serde(deny_unknown_fields))]
 struct Metric {
     event: String,
     status: String,

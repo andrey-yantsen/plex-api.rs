@@ -4,13 +4,13 @@ use reqwest::StatusCode;
 const CLAIM_TOKEN_URL: &str = "api/claim/token.json";
 
 #[derive(Serialize, Deserialize)]
-#[cfg_attr(test, serde(deny_unknown_fields))]
+#[cfg_attr(all(test, feature = "test_new_attributes"), serde(deny_unknown_fields))]
 struct SuccessResponse {
     token: String,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
-#[cfg_attr(test, serde(deny_unknown_fields))]
+#[cfg_attr(all(test, feature = "test_new_attributes"), serde(deny_unknown_fields))]
 struct ErrorResponse {
     error: String,
 }
