@@ -1,5 +1,5 @@
-use crate::media_container::MediaContainer;
-use serde_xml_rs::from_str;
+use crate::media_container::UsersMediaContainer;
+use quick_xml::de::from_str;
 
 #[test]
 fn decode_users() {
@@ -17,7 +17,7 @@ fn decode_users() {
 </MediaContainer>
     "##;
 
-    let mc = from_str::<MediaContainer>(s);
+    let mc = from_str::<UsersMediaContainer>(s);
     assert!(mc.is_ok(), "Unable to deserialize users: {:?}", mc.err());
 }
 

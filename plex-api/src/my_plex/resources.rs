@@ -1,10 +1,10 @@
-use crate::media_container::{Device, MediaContainer};
+use crate::media_container::{Device, DevicesMediaContainer};
 use crate::{
     my_plex::{HasMyPlexToken, MyPlexAccount, MyPlexApiErrorResponse},
     InternalHttpApi,
 };
+use quick_xml;
 use reqwest::StatusCode;
-use serde_xml_rs;
 
 const RESOURCES_URL: &str = "api/resources";
 
@@ -15,7 +15,8 @@ impl MyPlexAccount {
     pub async fn get_resources(&self) -> crate::Result<Vec<Device>> {
         let response = self.get(RESOURCES_URL).await?;
         if response.status() == StatusCode::OK {
-            let mc: MediaContainer = serde_xml_rs::from_str(response.text().await?.as_str())?;
+            let mc: DevicesMediaContainer =
+                quick_xml::de::from_str(response.text().await?.as_str())?;
             let mut devices: Vec<Device> = mc.get_devices().unwrap_or_default();
             devices
                 .iter_mut()
@@ -23,7 +24,7 @@ impl MyPlexAccount {
             Ok(devices)
         } else {
             let err: MyPlexApiErrorResponse =
-                serde_xml_rs::from_str(response.text().await?.as_str())?;
+                quick_xml::de::from_str(response.text().await?.as_str())?;
             Err(crate::error::PlexApiError::from(err))
         }
     }

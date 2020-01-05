@@ -8,7 +8,26 @@ use async_std::task::block_on;
 
 use crate::serde_helpers::option_bool_from_int;
 use crate::server::Server;
-use crate::{HasBaseUrl, HasDeleteUrl, HasMyPlexToken};
+use crate::{HasBaseUrl, HasDeleteUrl, HasMyPlexToken, MediaContainer};
+
+#[derive(Debug, Deserialize, Clone)]
+#[cfg_attr(all(test, feature = "test_new_attributes"), serde(deny_unknown_fields))]
+#[serde(rename_all = "camelCase")]
+pub struct DevicesMediaContainer {
+    #[serde(rename = "Device")]
+    devices: Option<Vec<Device>>,
+    #[serde(flatten)]
+    media_container: MediaContainer,
+}
+
+impl DevicesMediaContainer {
+    pub fn get_media_container(self) -> MediaContainer {
+        self.media_container
+    }
+    pub fn get_devices(self) -> Option<Vec<Device>> {
+        self.devices
+    }
+}
 
 #[derive(Debug, Deserialize, Clone)]
 #[cfg_attr(all(test, feature = "test_new_attributes"), serde(deny_unknown_fields))]
@@ -163,7 +182,7 @@ impl HasDeleteUrl for Device {
 
 // Required to have default implementation of CanMakeRequests for Device
 impl HasBaseUrl for Device {
-    fn get_base_url(&self) -> String {
+    fn get_base_url(&self) -> &str {
         unimplemented!()
     }
 }

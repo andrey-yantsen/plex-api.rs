@@ -19,12 +19,12 @@ use uuid::Uuid;
 /// use reqwest::{Client, Proxy};
 /// use std::time::Duration;
 ///
-///     set_http_client(Client::builder()
-///                         .timeout(Duration::from_secs(1))
-///                         .proxy(Proxy::http("http://example.com").expect("Proxy failed"))
-///                         .build()
-///                         .expect("Build failed")
-///     ).expect("Mutex poisoned");
+/// set_http_client(Client::builder()
+///                     .timeout(Duration::from_secs(1))
+///                     .proxy(Proxy::http("http://example.com").expect("Proxy failed"))
+///                     .build()
+///                     .expect("Build failed")
+/// ).expect("Mutex poisoned");
 /// ```
 pub fn set_http_client(
     c: Client,

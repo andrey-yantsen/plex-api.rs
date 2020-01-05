@@ -1,5 +1,5 @@
 use crate::http::{base_headers, get_http_client};
-use crate::media_container::MediaContainer;
+use crate::media_container::ServerMediaContainer;
 use crate::server::Server;
 
 impl Server {
@@ -13,7 +13,8 @@ impl Server {
             .send()
             .await?;
         if response.status() == reqwest::StatusCode::OK {
-            let mc: MediaContainer = serde_xml_rs::from_str(response.text().await?.as_str())?;
+            let mc: ServerMediaContainer =
+                quick_xml::de::from_str(response.text().await?.as_str())?;
             Ok(Server {
                 info: mc,
                 url: String::from(url),
@@ -36,7 +37,8 @@ impl Server {
             .send()
             .await?;
         if response.status() == reqwest::StatusCode::OK {
-            let mc: MediaContainer = serde_xml_rs::from_str(response.text().await?.as_str())?;
+            let mc: ServerMediaContainer =
+                quick_xml::de::from_str(response.text().await?.as_str())?;
             Ok(Server {
                 info: mc,
                 url: String::from(url),

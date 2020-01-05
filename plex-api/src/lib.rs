@@ -3,9 +3,10 @@ extern crate chrono;
 extern crate lazy_static;
 #[macro_use]
 extern crate log;
-extern crate serde;
 #[macro_use]
-extern crate serde_derive;
+extern crate serde;
+extern crate quick_xml;
+extern crate serde_aux;
 extern crate serde_json;
 extern crate serde_with;
 
@@ -67,7 +68,7 @@ pub trait HasPlexHeaders {
 }
 
 pub trait HasBaseUrl {
-    fn get_base_url(&self) -> String;
+    fn get_base_url(&self) -> &str;
 }
 
 pub trait CanMakeRequests {
@@ -106,7 +107,7 @@ impl<T: HasPlexHeaders + HasBaseUrl> CanMakeRequests for T {
                 Ok(u) => Ok(u),
                 Err(e) => match e {
                     url::ParseError::RelativeUrlWithoutBase => {
-                        let mut request_url = self.get_base_url();
+                        let mut request_url = String::from(self.get_base_url());
                         if !request_url.ends_with('/') {
                             request_url.push('/');
                         }

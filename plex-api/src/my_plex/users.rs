@@ -1,10 +1,10 @@
-use crate::media_container::{MediaContainer, User};
+use crate::media_container::{User, UsersMediaContainer};
 use crate::{
     my_plex::{MyPlexAccount, MyPlexApiErrorResponse},
     InternalHttpApi,
 };
+use quick_xml;
 use reqwest::StatusCode;
-use serde_xml_rs;
 
 const USERS_URL: &str = "api/users/";
 
@@ -13,12 +13,12 @@ impl MyPlexAccount {
     pub async fn get_users(&self) -> crate::Result<Vec<User>> {
         let response = self.get(USERS_URL).await?;
         if response.status() == StatusCode::OK {
-            let mc: MediaContainer = serde_xml_rs::from_str(response.text().await?.as_str())?;
+            let mc: UsersMediaContainer = quick_xml::de::from_str(response.text().await?.as_str())?;
             let users = mc.get_users();
             Ok(users.unwrap_or_default())
         } else {
             let err: MyPlexApiErrorResponse =
-                serde_xml_rs::from_str(response.text().await?.as_str())?;
+                quick_xml::de::from_str(response.text().await?.as_str())?;
             Err(crate::error::PlexApiError::from(err))
         }
     }

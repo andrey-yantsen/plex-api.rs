@@ -6,7 +6,6 @@ mod resources;
 mod users;
 mod webhooks;
 
-use crate::serde_helpers::bool_from_int;
 use crate::{http::base_headers, HasPlexHeaders};
 use chrono::DateTime;
 use chrono::Utc;
@@ -41,9 +40,9 @@ enum AutoSelectSubtitleMode {
 struct Profile {
     auto_select_audio: bool,
     auto_select_subtitle: AutoSelectSubtitleMode,
-    #[serde(deserialize_with = "bool_from_int")]
+    #[serde(deserialize_with = "serde_aux::prelude::deserialize_bool_from_anything")]
     default_subtitle_accessibility: bool,
-    #[serde(deserialize_with = "bool_from_int")]
+    #[serde(deserialize_with = "serde_aux::prelude::deserialize_bool_from_anything")]
     default_subtitle_forced: bool,
     default_audio_language: String,
     default_subtitle_language: String,
@@ -175,8 +174,8 @@ impl MyPlexAccount {
 }
 
 impl crate::HasBaseUrl for MyPlexAccount {
-    fn get_base_url(&self) -> String {
-        String::from("https://plex.tv/")
+    fn get_base_url(&self) -> &str {
+        "https://plex.tv/"
     }
 }
 

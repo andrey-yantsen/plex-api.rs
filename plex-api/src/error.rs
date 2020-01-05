@@ -10,8 +10,8 @@ impl From<reqwest::Error> for PlexApiError {
 }
 
 // TODO: Implement error conversion
-impl From<serde_xml_rs::Error> for PlexApiError {
-    fn from(e: serde_xml_rs::Error) -> Self {
+impl From<quick_xml::de::DeError> for PlexApiError {
+    fn from(e: quick_xml::de::DeError) -> Self {
         eprintln!("{:#?}", e);
         Self {}
     }

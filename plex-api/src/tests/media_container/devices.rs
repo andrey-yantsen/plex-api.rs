@@ -1,5 +1,5 @@
-use crate::media_container::MediaContainer;
-use serde_xml_rs::from_str;
+use crate::DevicesMediaContainer;
+use quick_xml::de::from_str;
 
 #[test]
 fn decode_devices() {
@@ -54,7 +54,7 @@ fn decode_devices() {
 </MediaContainer>
     "##;
 
-    let mc = from_str::<MediaContainer>(s);
+    let mc = from_str::<DevicesMediaContainer>(s);
     assert!(mc.is_ok(), "Unable to deserialize devices: {:?}", mc.err());
 }
 

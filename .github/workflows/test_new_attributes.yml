@@ -31,4 +31,4 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: test
-          args: --manifest-path plex-api/Cargo.toml --features 'test_new_attributes'
+          args: --manifest-path plex-api/Cargo.toml --features 'test_new_attributes,test_connect_authenticated,test_connect_anonymous'

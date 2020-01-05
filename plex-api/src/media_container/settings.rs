@@ -1,3 +1,22 @@
+use crate::MediaContainer;
+
+#[derive(Debug, Deserialize, Clone)]
+#[cfg_attr(all(test, feature = "test_new_attributes"), serde(deny_unknown_fields))]
+#[serde(rename_all = "camelCase")]
+pub struct SettingsMediaContainer {
+    #[serde(rename = "Setting")]
+    settings: Vec<Setting>,
+    #[serde(flatten)]
+    media_container: MediaContainer,
+}
+
+impl SettingsMediaContainer {
+    pub fn get_media_container(self) -> MediaContainer {
+        self.media_container
+    }
+}
+
+// TODO: enable `serde(deny_unknown_fields)`
 #[derive(Debug, Deserialize, Clone)]
 pub struct Setting {
     id: String,
@@ -12,7 +31,6 @@ pub struct Setting {
 
 #[derive(Debug, Deserialize, Clone)]
 #[serde(tag = "type", rename_all = "lowercase")]
-#[cfg_attr(all(test, feature = "test_new_attributes"), serde(deny_unknown_fields))]
 pub enum Payload {
     Bool {
         default: bool,
