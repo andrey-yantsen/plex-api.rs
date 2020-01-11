@@ -1,10 +1,5 @@
-use std::sync::mpsc;
-use std::thread;
-
 use chrono::{DateTime, Utc};
 use serde_with::CommaSeparator;
-
-use async_std::task::block_on;
 
 use crate::serde_helpers::option_bool_from_int;
 use crate::server::Server;
@@ -110,8 +105,8 @@ struct Connection {
 }
 
 impl Device {
-    pub fn connect_to_server(&self) -> crate::Result<Server> {
-        // TODO: Make async
+    pub async fn connect_to_server(&self) -> crate::Result<Server> {
+        // TODO: Make async and fast
         if !self.provides.contains(&String::from("server")) {
             // TODO: Return descriptive error
             return Err(crate::error::PlexApiError {});
@@ -122,38 +117,22 @@ impl Device {
             return Err(crate::error::PlexApiError {});
         }
 
-        let (tx, rx) = mpsc::channel();
-        let mut handlers = vec![];
-        let connections = self.connections.clone().unwrap();
+        let connections = self.connections.as_ref().unwrap();
+
         for c in connections {
-            let tx_clone = mpsc::Sender::clone(&tx);
-            let auth_token_clone = self.auth_token.clone();
-            let handler = thread::spawn(move || {
-                let srv = if auth_token_clone.is_empty() {
-                    block_on(Server::connect(&c.uri))
-                } else {
-                    block_on(Server::login(&c.uri, &auth_token_clone))
-                };
-                tx_clone.send(srv)
-            });
-            handlers.push(handler);
-        }
+            let srv = if self.auth_token.is_empty() {
+                Server::connect(dbg!(&c.uri)).await
+            } else {
+                Server::login(dbg!(&c.uri), &self.auth_token).await
+            };
 
-        let mut left = handlers.len();
-
-        loop {
-            let thread_result = rx.recv();
-            if let Ok(srv) = thread_result {
-                if srv.is_ok() {
-                    return srv;
-                }
-            }
-            left -= 1;
-            if left == 0 {
-                // TODO: Return descriptive error
-                return Err(crate::error::PlexApiError {});
+            if dbg!(&srv).is_ok() {
+                return srv;
             }
         }
+
+        // TODO: Return descriptive error
+        Err(crate::error::PlexApiError {})
     }
 
     pub fn get_name(&self) -> &str {
