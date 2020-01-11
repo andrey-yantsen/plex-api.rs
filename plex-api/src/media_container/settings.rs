@@ -35,8 +35,11 @@ pub struct Setting {
 pub enum SettingParsingError {
     #[error("Provided string incorrectly formatted")]
     IncorrectFormat,
-    #[error("Unable to convert provided key to integer")]
-    UnableToParseInt,
+    #[error("Unable to convert provided key to integer: {source}")]
+    UnableToParseInt {
+        #[from]
+        source: std::num::ParseIntError,
+    },
 }
 
 #[derive(Debug, Clone)]
@@ -61,14 +64,6 @@ impl std::str::FromStr for SettingEnumValueString {
 
 #[derive(Debug, Clone)]
 pub struct SettingEnumValueInt(i32, String);
-
-// TODO: Better error conversion
-impl From<std::num::ParseIntError> for SettingParsingError {
-    fn from(e: std::num::ParseIntError) -> Self {
-        println!("{:#?}", e);
-        Self::UnableToParseInt
-    }
-}
 
 impl std::str::FromStr for SettingEnumValueInt {
     type Err = SettingParsingError;

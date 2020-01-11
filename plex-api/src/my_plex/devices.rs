@@ -14,7 +14,7 @@ impl MyPlexAccount {
         let response = self.get(DEVICES_URL).await?;
         if response.status() == StatusCode::OK {
             let mc: DevicesMediaContainer =
-                quick_xml::de::from_str(dbg!(response.text().await?.as_str()))?;
+                quick_xml::de::from_str(response.text().await?.as_str())?;
             let mut devices: Vec<Device> = mc.get_devices().unwrap_or_default();
             devices
                 .iter_mut()
