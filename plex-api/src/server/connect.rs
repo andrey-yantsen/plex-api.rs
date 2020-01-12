@@ -6,9 +6,9 @@ impl Server {
     /// Establish a connection with the server server by provided url.
     ///
     /// This call will fail if anonymous access is denied.
-    pub async fn connect(url: &str) -> crate::Result<Self> {
+    pub async fn connect<U: reqwest::IntoUrl + crate::AsStr + Send>(url: U) -> crate::Result<Self> {
         let response = get_http_client()?
-            .get(url)
+            .get(url.as_str())
             .headers(base_headers())
             .send()
             .await?;
@@ -17,7 +17,7 @@ impl Server {
                 quick_xml::de::from_str(response.text().await?.as_str())?;
             Ok(Server {
                 info: mc,
-                url: String::from(url),
+                url: url.into_url()?,
                 auth_token: String::from(""),
             })
         } else {
@@ -29,9 +29,12 @@ impl Server {
     /// Establish a connection with the server server by provided url and [`authentication token`].
     ///
     /// [`authentication token`]: struct.MyPlexAccount.html#method.get_auth_token
-    pub async fn login(url: &str, auth_token: &str) -> crate::Result<Self> {
+    pub async fn login<U: reqwest::IntoUrl + crate::AsStr + Send>(
+        url: U,
+        auth_token: &str,
+    ) -> crate::Result<Self> {
         let response = get_http_client()?
-            .get(url)
+            .get(url.as_str())
             .headers(base_headers())
             .header("X-Plex-Token", auth_token)
             .send()
@@ -41,7 +44,7 @@ impl Server {
                 quick_xml::de::from_str(response.text().await?.as_str())?;
             Ok(Server {
                 info: mc,
-                url: String::from(url),
+                url: url.into_url()?,
                 auth_token: String::from(auth_token),
             })
         } else {

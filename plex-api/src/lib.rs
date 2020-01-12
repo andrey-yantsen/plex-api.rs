@@ -23,6 +23,7 @@ pub use self::http::set_http_client;
 pub use self::media_container::*;
 pub use self::my_plex::*;
 pub use self::server::*;
+use url::Url;
 
 mod config;
 mod error;
@@ -86,6 +87,12 @@ pub trait AsStr {
 impl AsStr for &str {
     fn as_str(&self) -> &str {
         self
+    }
+}
+
+impl AsStr for Url {
+    fn as_str(&self) -> &str {
+        self.as_str()
     }
 }
 

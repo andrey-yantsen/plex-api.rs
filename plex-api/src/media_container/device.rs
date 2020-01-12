@@ -4,6 +4,8 @@ use serde_with::CommaSeparator;
 use crate::serde_helpers::option_bool_from_int;
 use crate::server::Server;
 use crate::{HasBaseUrl, HasDeleteUrl, HasMyPlexToken, MediaContainer};
+use std::net::IpAddr;
+use url::Url;
 
 #[derive(Debug, Deserialize, Clone)]
 #[cfg_attr(all(test, feature = "test_new_attributes"), serde(deny_unknown_fields))]
@@ -94,9 +96,9 @@ struct SyncList {
 #[derive(Debug, Deserialize, Clone)]
 #[cfg_attr(all(test, feature = "test_new_attributes"), serde(deny_unknown_fields))]
 struct Connection {
-    uri: String,
+    uri: Url,
     protocol: Option<String>,
-    address: Option<String>,
+    address: Option<IpAddr>,
     port: Option<u32>,
     #[serde(deserialize_with = "option_bool_from_int", default)]
     local: Option<bool>,
@@ -106,7 +108,7 @@ struct Connection {
 
 impl Device {
     pub async fn connect_to_server(&self) -> crate::Result<Server> {
-        // TODO: Make async and fast
+        // TODO: Try servers in parallel
         if !self.provides.contains(&String::from("server")) {
             // TODO: Return descriptive error
             return Err(crate::error::PlexApiError {});
@@ -117,16 +119,18 @@ impl Device {
             return Err(crate::error::PlexApiError {});
         }
 
-        let connections = self.connections.as_ref().unwrap();
+        let mut connections = self.connections.clone().unwrap();
+
+        connections.sort_by(|a, b| a.local.cmp(&b.local));
 
         for c in connections {
             let srv = if self.auth_token.is_empty() {
-                Server::connect(dbg!(&c.uri)).await
+                Server::connect(c.uri).await
             } else {
-                Server::login(dbg!(&c.uri), &self.auth_token).await
+                Server::login(dbg!(c.uri), &self.auth_token).await
             };
 
-            if dbg!(&srv).is_ok() {
+            if srv.is_ok() {
                 return srv;
             }
         }

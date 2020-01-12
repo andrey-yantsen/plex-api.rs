@@ -1,4 +1,5 @@
 use crate::{media_container::ServerMediaContainer, HasBaseUrl, HasMyPlexToken};
+use url::Url;
 
 mod connect;
 
@@ -6,7 +7,7 @@ mod connect;
 #[cfg_attr(all(test, feature = "test_new_attributes"), serde(deny_unknown_fields))]
 pub struct Server {
     info: ServerMediaContainer,
-    url: String,
+    url: Url,
     auth_token: String,
 }
 
@@ -24,6 +25,6 @@ impl HasMyPlexToken for Server {
 
 impl HasBaseUrl for Server {
     fn get_base_url(&self) -> &str {
-        &self.url
+        self.url.as_str()
     }
 }
