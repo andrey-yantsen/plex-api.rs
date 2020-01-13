@@ -12,6 +12,9 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@v1
 
+      - name: Run Plex Server
+        run: docker run -d --network=host -e TZ=UTC plexinc/pms-docker
+
       - name: Install stable toolchain
         uses: actions-rs/toolchain@v1
         with:
@@ -32,11 +35,3 @@ jobs:
         with:
           command: test
           args: --manifest-path plex-api/Cargo.toml --features 'test_connect_anonymous'
-
-    services:
-      plex:
-        image: plexinc/pms-docker
-        ports:
-          - 32400:32400
-        env:
-          TZ: UTC
