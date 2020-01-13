@@ -1,7 +1,7 @@
 mod settings;
-mod wait;
 mod token;
+mod wait;
 
 pub(crate) use settings::*;
-pub(crate) use wait::*;
 pub(crate) use token::*;
+pub(crate) use wait::*;
