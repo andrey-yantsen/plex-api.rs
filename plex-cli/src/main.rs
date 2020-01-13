@@ -37,7 +37,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         ("wait", subcommand_matches) => subcommand_wait(auth_token, subcommand_matches).await,
         ("settings", subcommand_matches) => {
             subcommand_settings(auth_token, subcommand_matches).await
-        }
+        },
+        ("token", subcommand_matches) => subcommand_token(auth_token, subcommand_matches).await,
         _ => {
             // Unexpected subcommand called, we shouldn't even be here
             unimplemented!();

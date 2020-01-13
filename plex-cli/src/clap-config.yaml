@@ -46,3 +46,5 @@ subcommands:
             help: Option name
             required: true
             index: 1
+  - token:
+      about: Request a claim token for a new server
