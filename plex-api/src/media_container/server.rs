@@ -29,10 +29,14 @@ pub struct ServerMediaContainer {
     allow_tuners: bool,
     #[serde(deserialize_with = "serde_aux::prelude::deserialize_bool_from_anything")]
     background_processing: bool,
-    #[serde(deserialize_with = "serde_aux::prelude::deserialize_bool_from_anything")]
+    #[serde(
+        deserialize_with = "serde_aux::prelude::deserialize_bool_from_anything",
+        default
+    )]
     certificate: bool,
     #[serde(deserialize_with = "serde_aux::prelude::deserialize_bool_from_anything")]
     companion_proxy: bool,
+    #[serde(default)]
     country_code: String,
     livetv: u8,
     #[serde(default, deserialize_with = "option_comma_separated_to_vec")]
