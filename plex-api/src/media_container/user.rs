@@ -41,13 +41,13 @@ pub struct User {
     filter_photos: String,
     filter_television: String,
     #[serde(rename = "Server")]
-    servers: Option<Vec<Server>>,
+    servers: Option<Vec<UserServer>>,
 }
 
 #[derive(Debug, Deserialize, Clone)]
 #[cfg_attr(all(test, feature = "test_new_attributes"), serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
-struct Server {
+struct UserServer {
     id: u32,
     server_id: u32,
     machine_identifier: String,

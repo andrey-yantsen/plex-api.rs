@@ -2,6 +2,7 @@ use crate::{media_container::ServerMediaContainer, HasBaseUrl, HasMyPlexToken};
 use url::Url;
 
 mod connect;
+mod settings;
 
 #[derive(Deserialize, Debug)]
 #[cfg_attr(all(test, feature = "test_new_attributes"), serde(deny_unknown_fields))]

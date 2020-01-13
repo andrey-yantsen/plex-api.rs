@@ -29,7 +29,7 @@ impl Server {
     /// Establish a connection with the server server by provided url and [`authentication token`].
     ///
     /// [`authentication token`]: struct.MyPlexAccount.html#method.get_auth_token
-    pub async fn login<U: reqwest::IntoUrl + crate::AsStr + Send>(
+    pub async fn connect_auth<U: reqwest::IntoUrl + crate::AsStr + Send>(
         url: U,
         auth_token: &str,
     ) -> crate::Result<Self> {

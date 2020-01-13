@@ -127,7 +127,7 @@ impl Device {
             let srv = if self.auth_token.is_empty() {
                 Server::connect(c.uri).await
             } else {
-                Server::login(dbg!(c.uri), &self.auth_token).await
+                Server::connect_auth(c.uri, &self.auth_token).await
             };
 
             if srv.is_ok() {

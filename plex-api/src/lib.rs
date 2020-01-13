@@ -32,17 +32,18 @@ mod media_container;
 mod my_plex;
 mod serde_helpers;
 mod server;
+
 #[cfg(test)]
 mod tests;
 
 pub type Result<T> = std::result::Result<T, crate::error::PlexApiError>;
 
 #[async_trait]
-pub trait CanBeDeleted {
+trait CanBeDeleted {
     async fn delete(&mut self) -> Result<reqwest::Response>;
 }
 
-pub trait HasDeleteUrl {
+trait HasDeleteUrl {
     fn get_delete_url(&self) -> Option<String>;
 }
 
@@ -64,15 +65,15 @@ impl<T: HasDeleteUrl + CanMakeRequests + Send + Sync> CanBeDeleted for T {
     }
 }
 
-pub trait HasPlexHeaders {
+trait HasPlexHeaders {
     fn headers(&self) -> HeaderMap;
 }
 
-pub trait HasBaseUrl {
+trait HasBaseUrl {
     fn get_base_url(&self) -> &str;
 }
 
-pub trait CanMakeRequests {
+trait CanMakeRequests {
     fn prepare_query<P: reqwest::IntoUrl + AsStr>(
         &self,
         url: P,

@@ -1,5 +1,17 @@
+use serde::export::Formatter;
+use std::error::Error;
+use std::fmt::Display;
+
 #[derive(Debug, Clone)]
 pub struct PlexApiError {}
+
+impl Error for PlexApiError {}
+
+impl Display for PlexApiError {
+    fn fmt(&self, _: &mut Formatter<'_>) -> std::fmt::Result {
+        unimplemented!()
+    }
+}
 
 // TODO: Implement error conversion
 impl From<reqwest::Error> for PlexApiError {

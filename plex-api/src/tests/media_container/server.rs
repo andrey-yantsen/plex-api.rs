@@ -1,4 +1,8 @@
 use crate::media_container::ServerMediaContainer;
+#[cfg(feature = "test_connect_anonymous")]
+use crate::tests::get_server_anonymous;
+#[cfg(feature = "test_connect_authenticated")]
+use crate::tests::get_server_authenticated;
 use quick_xml::de::from_str;
 
 #[test]
@@ -38,24 +42,11 @@ fn decode_server() {
 #[cfg(feature = "test_connect_authenticated")]
 #[tokio::test]
 async fn decode_server_online_authenticated() {
-    use crate::Server;
-    use std::env;
-    let srv: Result<Server, _> = {
-        let server_url = env::var("PLEX_API_SERVER_URL").expect("Server url not specified");
-        let auth_token = env::var("PLEX_API_AUTH_TOKEN").expect("Auth token not specified");
-        Server::login(&server_url, &auth_token).await
-    };
-    assert!(srv.is_ok(), "Unable to connect to server: {:?}", srv.err());
+    get_server_authenticated().await;
 }
 
 #[cfg(feature = "test_connect_anonymous")]
 #[tokio::test]
 async fn decode_server_online_anonymous() {
-    use crate::Server;
-    use std::env;
-    let srv: Result<Server, _> = {
-        let server_url = env::var("PLEX_API_SERVER_URL").expect("Server url not specified");
-        Server::connect(&server_url).await
-    };
-    assert!(srv.is_ok(), "Unable to connect to server: {:?}", srv.err());
+    get_server_anonymous().await;
 }

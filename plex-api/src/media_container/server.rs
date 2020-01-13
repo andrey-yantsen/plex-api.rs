@@ -16,7 +16,10 @@ pub struct ServerMediaContainer {
     allow_camera_upload: bool,
     #[serde(deserialize_with = "serde_aux::prelude::deserialize_bool_from_anything")]
     allow_channel_access: bool,
-    #[serde(deserialize_with = "serde_aux::prelude::deserialize_bool_from_anything")]
+    #[serde(
+        deserialize_with = "serde_aux::prelude::deserialize_bool_from_anything",
+        default
+    )]
     allow_media_deletion: bool,
     #[serde(deserialize_with = "serde_aux::prelude::deserialize_bool_from_anything")]
     allow_sharing: bool,
