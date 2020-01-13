@@ -19,14 +19,24 @@ jobs:
           toolchain: stable
           override: true
 
-      - name: Prepare env
+      - name: Wait for plex-server to boot
         uses: actions-rs/cargo@v1
         with:
           command: run
-          args: -p plex-cli -- --anonymous
+          args: -p plex-cli wait --server-url http://127.0.0.1:32400 -s
 
       - name: Test against real server [anonymous]
         uses: actions-rs/cargo@v1
+        env:
+          PLEX_API_SERVER_URL: http://127.0.0.1:32400
         with:
           command: test
           args: --manifest-path plex-api/Cargo.toml --features 'test_connect_anonymous'
+
+    services:
+      plex:
+        image: plexinc/pms-docker
+        ports:
+          - 32400:32400
+        env:
+          TZ: UTC

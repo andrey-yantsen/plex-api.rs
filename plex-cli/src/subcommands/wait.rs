@@ -2,6 +2,7 @@ use async_std::future;
 use clap::ArgMatches;
 use plex_api::Server;
 use std::time::Duration;
+use std::{thread, time};
 
 pub(crate) async fn subcommand_wait(
     token: &str,
@@ -32,6 +33,8 @@ pub(crate) async fn subcommand_wait(
                 } else {
                     break;
                 }
+            } else {
+                thread::sleep(time::Duration::from_secs(1));
             }
         }
     })
