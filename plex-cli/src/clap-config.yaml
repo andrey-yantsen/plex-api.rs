@@ -1,0 +1,48 @@
+name: Plex CLI
+author: Andrey Yantsen <andrey@janzen.su>
+about: Sample application to demonstrate usage of Plex API crate
+args:
+  - auth-token:
+      short: t
+      help: An auth token to use with Plex API (you can also provide the token with ENV variable PLEX_API_AUTH_TOKEN)
+      takes_value: true
+subcommands:
+  - wait:
+      about: Waits while the server would become available
+      args:
+        - timeout:
+            short: t
+            long: timeout
+            help: The time-limit in seconds before exiting with error
+            takes_value: true
+        - server-url:
+            short: u
+            long: server-url
+            help: Url to a plex server, e.g. http://127.0.0.1:32400
+            takes_value: true
+            required: true
+        - wait-for-settings:
+            short: s
+            long: wait-for-settings
+            help: Wait until Plex Server is able to respond properly
+  - settings:
+      about: Operate server's settings
+      args:
+        - server-url:
+            short: u
+            long: server-url
+            help: Url to a plex server, e.g. http://127.0.0.1:32400
+            takes_value: true
+            required: true
+        - get:
+            long: get
+            help: Get the value
+            takes_value: false
+        - set:
+            long: set
+            help: Sets value
+            takes_value: true
+        - name:
+            help: Option name
+            required: true
+            index: 1

@@ -1,7 +1,12 @@
-use plex_api::MyPlexAccount;
-
 extern crate chrono;
 extern crate fern;
+#[macro_use]
+extern crate clap;
+
+mod subcommands;
+
+use clap::App;
+use subcommands::*;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -20,13 +25,22 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .apply()
         .unwrap();
 
-    let token = std::env::var("PLEX_API_AUTH_TOKEN").expect("Auth token not specified");
-    let myplex = MyPlexAccount::by_token(&token).await.unwrap();
+    let yaml = load_yaml!("clap-config.yaml");
+    let matches = App::from_yaml(yaml)
+        .version(env!("CARGO_PKG_VERSION"))
+        .get_matches();
 
-    dbg!(&myplex);
-    dbg!(&myplex.get_claim_token().await.unwrap());
+    let token_from_env = std::env::var("PLEX_API_AUTH_TOKEN").unwrap_or_else(|_| String::from(""));
+    let auth_token = matches.value_of("auth-token").unwrap_or(&token_from_env);
 
-    dbg!(myplex.get_webhooks().await.expect("Unable to get webhooks"));
-
-    Ok(())
+    match matches.subcommand() {
+        ("wait", subcommand_matches) => subcommand_wait(auth_token, subcommand_matches).await,
+        ("settings", subcommand_matches) => {
+            subcommand_settings(auth_token, subcommand_matches).await
+        }
+        _ => {
+            // Unexpected subcommand called, we shouldn't even be here
+            unimplemented!();
+        }
+    }
 }
