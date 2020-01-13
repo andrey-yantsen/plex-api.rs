@@ -59,6 +59,8 @@ jobs:
           docker run -d --network=host -e PLEX_CLAIM=$PLEX_CLAIM -e TZ=UTC plexinc/pms-docker
 
       - name: Wait for plex-server to boot
+        env:
+          PLEX_API_AUTH_TOKEN: ${{ secrets.PLEX_API_AUTH_TOKEN }}
         run: target/debug/plex-cli wait --server-url http://127.0.0.1:32400 -s
 
       - name: Test against real server [authenticated]
