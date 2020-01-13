@@ -8,6 +8,8 @@ jobs:
   test:
     name: Test Suite
     runs-on: ubuntu-latest
+    env:
+      X_PLEX_CLIENT_IDENTIFIER: ${{ secrets.X_PLEX_CLIENT_IDENTIFIER }}
     steps:
       - name: Checkout sources
         uses: actions/checkout@v1
@@ -31,10 +33,12 @@ jobs:
       - name: Get claim-token
         env:
           PLEX_API_AUTH_TOKEN: ${{ secrets.PLEX_API_AUTH_TOKEN }}
-        run: echo "::set-env name=PLEX_CLAIM::$(target/debug/plex-cli token)"
+        run: |
+          echo ::set-env name=PLEX_CLAIM::$(target/debug/plex-cli token)
 
       - name: Run Plex Server
-        run: docker run -d --network=host -e PLEX_CLAIM=${PLEX_CLAIM} -e TZ=UTC plexinc/pms-docker
+        run: |
+          docker run -d --network=host -e PLEX_CLAIM=$PLEX_CLAIM -e TZ=UTC plexinc/pms-docker
 
       - name: Wait for plex-server to boot
         run: target/debug/plex-cli wait --server-url http://127.0.0.1:32400 -s
