@@ -19,14 +19,31 @@ jobs:
           toolchain: stable
           override: true
 
-      - name: Prepare env
+      - name: Pull docker image for Plex
+        run: docker pull plexinc/pms-docker
+
+      - name: Build plex-cli binary
         uses: actions-rs/cargo@v1
         with:
-          command: run
-          args: -p plex-cli -- --authenticated
+          command: build
+          args: -p plex-cli
+
+      - name: Get claim-token
+        env:
+          PLEX_API_AUTH_TOKEN: ${{ secrets.PLEX_API_AUTH_TOKEN }}
+        run: echo "::set-env name=PLEX_CLAIM::$(target/debug/plex-cli token)"
+
+      - name: Run Plex Server
+        run: docker run -d --network=host -e PLEX_CLAIM=${PLEX_CLAIM} -e TZ=UTC plexinc/pms-docker
+
+      - name: Wait for plex-server to boot
+        run: target/debug/plex-cli wait --server-url http://127.0.0.1:32400 -s
 
       - name: Test against real server [authenticated]
         uses: actions-rs/cargo@v1
+        env:
+          PLEX_API_SERVER_URL: http://127.0.0.1:32400
+          PLEX_API_AUTH_TOKEN: ${{ secrets.PLEX_API_AUTH_TOKEN }}
         with:
           command: test
-          args: --manifest-path plex-api/Cargo.toml --features 'test_connect_authenticated'
+          args: --manifest-path plex-api/Cargo.toml --features 'test_new_attributes,test_connect_authenticated'
