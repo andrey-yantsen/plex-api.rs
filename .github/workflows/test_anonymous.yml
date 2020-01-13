@@ -58,3 +58,12 @@ jobs:
         with:
           command: test
           args: --manifest-path plex-api/Cargo.toml --features 'test_connect_anonymous'
+
+      - name: Run the same tests with checks for new attributes
+        uses: actions-rs/cargo@v1
+        continue-on-error: true
+        env:
+          PLEX_API_SERVER_URL: http://127.0.0.1:32400
+        with:
+          command: test
+          args: --manifest-path plex-api/Cargo.toml --features 'test_new_attributes,test_connect_anonymous'
