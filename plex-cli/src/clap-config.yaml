@@ -1,6 +1,12 @@
 name: Plex CLI
 author: Andrey Yantsen <andrey@janzen.su>
 about: Sample application to demonstrate usage of Plex API crate
+settings:
+  - versionlesssubcommands
+  - subcommandrequiredelsehelp
+  - disablehelpsubcommand
+  - colorauto
+  - coloredhelp
 args:
   - auth-token:
       short: t
