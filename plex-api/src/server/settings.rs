@@ -14,16 +14,14 @@ impl Server {
                 response.json::<SettingsMediaContainerOuter>().await?,
             ))
         } else {
-            // TODO: Error handling
-            eprintln!("{:?}", response.text().await?);
-            Err(crate::error::PlexApiError {})
+            Err(PlexApiError::UnexpectedApiResponse(response.text().await?))
         }
     }
 
     pub async fn update_settings(&self, settings: &SettingsMediaContainer) -> Result<()> {
         let changed = settings.get_changed();
         if changed.is_empty() {
-            Err(PlexApiError {})
+            Err(PlexApiError::NoChangedSettingsFound)
         } else {
             let mut uri = Url::parse(&(self.get_base_url().to_owned() + SETTINGS_URL)).unwrap();
 
@@ -43,7 +41,7 @@ impl Server {
             if response.status() == 200 {
                 Ok(())
             } else {
-                unimplemented!("{}", response.text().await?);
+                Err(PlexApiError::UnexpectedApiResponse(response.text().await?))
             }
         }
     }

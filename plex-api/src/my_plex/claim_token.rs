@@ -1,4 +1,4 @@
-use crate::{my_plex::MyPlexAccount, InternalHttpApi};
+use crate::{my_plex::MyPlexAccount, InternalHttpApi, PlexApiError};
 use reqwest::StatusCode;
 
 const CLAIM_TOKEN_URL: &str = "api/claim/token.json";
@@ -24,17 +24,10 @@ impl MyPlexAccount {
         let response = self.get(CLAIM_TOKEN_URL).await?;
         match response.status() {
             StatusCode::OK => Ok((response.json::<SuccessResponse>()).await?.token),
-            _ => Err(crate::error::PlexApiError::from(
-                response.json::<ErrorResponse>().await?,
-            )),
+            _ => {
+                let error = response.json::<ErrorResponse>().await?;
+                Err(PlexApiError::FailedToGetClaimToken(error.error))
+            }
         }
-    }
-}
-
-// TODO: Implement error conversion
-impl From<ErrorResponse> for crate::error::PlexApiError {
-    fn from(e: ErrorResponse) -> Self {
-        eprintln!("{:#?}", e);
-        Self {}
     }
 }

@@ -1,12 +1,12 @@
 mod auth;
-mod claim_token;
+pub(crate) mod claim_token;
 mod devices;
 mod privacy;
 mod resources;
 mod users;
 mod webhooks;
 
-use crate::{http::base_headers, HasPlexHeaders};
+use crate::{http::base_headers, HasPlexHeaders, PlexApiError};
 use chrono::DateTime;
 use chrono::Utc;
 use reqwest::header::HeaderMap;
@@ -119,17 +119,31 @@ pub struct MyPlexAccount {
     ads_consent_reminder_at: DateTime<Utc>,
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Debug, Clone)]
 #[cfg_attr(all(test, feature = "test_new_attributes"), serde(deny_unknown_fields))]
 struct MyPlexApiError {
     code: i32,
     message: String,
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Debug, Clone)]
 #[cfg_attr(all(test, feature = "test_new_attributes"), serde(deny_unknown_fields))]
 struct MyPlexApiErrorResponse {
     errors: Vec<MyPlexApiError>,
+}
+
+impl From<MyPlexApiErrorResponse> for PlexApiError {
+    fn from(r: MyPlexApiErrorResponse) -> Self {
+        let mut errors = vec![];
+        for err in r.errors {
+            errors.push(PlexApiError::MyPlexApiError {
+                code: err.code,
+                message: err.message,
+            })
+        }
+
+        PlexApiError::MyPlexErrorResponse { errors }
+    }
 }
 
 pub trait HasMyPlexToken {
@@ -176,13 +190,5 @@ impl MyPlexAccount {
 impl crate::HasBaseUrl for MyPlexAccount {
     fn get_base_url(&self) -> &str {
         "https://plex.tv/"
-    }
-}
-
-// TODO: Implement error conversion
-impl From<MyPlexApiErrorResponse> for crate::error::PlexApiError {
-    fn from(e: MyPlexApiErrorResponse) -> Self {
-        eprintln!("{:#?}", e);
-        Self {}
     }
 }

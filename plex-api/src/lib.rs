@@ -59,8 +59,7 @@ impl<T: HasDeleteUrl + CanMakeRequests + Send + Sync> CanBeDeleted for T {
                 .await
                 .map_err(From::from)
         } else {
-            // TODO: Better error
-            Err(crate::error::PlexApiError {})
+            Err(PlexApiError::DeleteUrlIsNotProvided)
         }
     }
 }
@@ -120,7 +119,7 @@ impl<T: HasPlexHeaders + HasBaseUrl> CanMakeRequests for T {
                             request_url.push('/');
                         }
                         request_url.push_str(s);
-                        url::Url::parse(&request_url).map_err(PlexApiError::from)
+                        url::Url::parse(&request_url).map_err(core::convert::From::from)
                     }
                     _ => Err(PlexApiError::from(e)),
                 },

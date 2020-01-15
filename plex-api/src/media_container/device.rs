@@ -3,7 +3,8 @@ use serde_with::CommaSeparator;
 
 use crate::serde_helpers::option_bool_from_int;
 use crate::server::Server;
-use crate::{HasBaseUrl, HasDeleteUrl, HasMyPlexToken, MediaContainer};
+use crate::{HasBaseUrl, HasDeleteUrl, HasMyPlexToken, MediaContainer, PlexApiError};
+use std::collections::HashMap;
 use std::net::IpAddr;
 use url::Url;
 
@@ -110,33 +111,36 @@ impl Device {
     pub async fn connect_to_server(&self) -> crate::Result<Server> {
         // TODO: Try servers in parallel
         if !self.provides.contains(&String::from("server")) {
-            // TODO: Return descriptive error
-            return Err(crate::error::PlexApiError {});
+            return Err(PlexApiError::CurrentDeviceIsNotServer {
+                provides: self.provides.clone(),
+            });
         }
 
         if self.connections.is_none() {
-            // TODO: Return descriptive error
-            return Err(crate::error::PlexApiError {});
+            return Err(PlexApiError::EmptyConnectionsList);
         }
 
         let mut connections = self.connections.clone().unwrap();
 
         connections.sort_by(|a, b| a.local.cmp(&b.local));
 
+        let mut errors = HashMap::new();
+
         for c in connections {
             let srv = if self.auth_token.is_empty() {
-                Server::connect(c.uri).await
+                Server::connect(c.uri.clone()).await
             } else {
-                Server::connect_auth(c.uri, &self.auth_token).await
+                Server::connect_auth(c.uri.clone(), &self.auth_token).await
             };
 
             if srv.is_ok() {
                 return srv;
+            } else {
+                errors.insert(c.uri.clone(), srv.err().unwrap());
             }
         }
 
-        // TODO: Return descriptive error
-        Err(crate::error::PlexApiError {})
+        Err(PlexApiError::ConnectionFailed { errors })
     }
 
     pub fn get_name(&self) -> &str {

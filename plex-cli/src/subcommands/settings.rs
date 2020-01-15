@@ -56,7 +56,7 @@ pub(crate) async fn subcommand_settings(
                     SettingValue::Int(_) => SettingValue::Int(value.parse().unwrap()),
                     SettingValue::Double(_) => SettingValue::Double(value.parse().unwrap()),
                 };
-                match settings.set(String::from(setting_name), new_value) {
+                match settings.set(setting_name, new_value) {
                     Ok(_) => match srv.update_settings(&settings).await {
                         Ok(_) => {
                             println!("Updated successfully");

@@ -25,23 +25,39 @@ impl SettingsMediaContainer {
         } else if self.settings.contains_key(name) {
             Ok(&self.settings[name])
         } else {
-            // TODO: Better errors
-            Err(PlexApiError {})
+            Err(PlexApiError::UnknownSettingRequested {
+                key: String::from(name),
+                known: self
+                    .settings
+                    .keys()
+                    .map(String::from)
+                    .collect::<Vec<String>>()
+                    .join(", "),
+            })
         }
     }
 
-    pub fn set(&mut self, name: String, value: SettingValue) -> crate::Result<()> {
-        if let Some(current_value) = self.settings.get(&name) {
-            let mut new_value = current_value.clone();
-            return if let Err(e) = new_value.set(value) {
-                Err(e)
-            } else {
-                self.updated.insert(name, new_value);
-                Ok(())
-            };
+    pub fn set(&mut self, name: &str, value: SettingValue) -> crate::Result<()> {
+        match self.settings.get(name) {
+            Some(current_value) => {
+                let mut new_value = current_value.clone();
+                if let Err(e) = new_value.set(value) {
+                    Err(e)
+                } else {
+                    self.updated.insert(String::from(name), new_value);
+                    Ok(())
+                }
+            }
+            None => Err(PlexApiError::UnknownSettingRequested {
+                key: String::from(name),
+                known: self
+                    .settings
+                    .keys()
+                    .map(String::from)
+                    .collect::<Vec<String>>()
+                    .join(", "),
+            }),
         }
-        // TODO: Better errors
-        Err(PlexApiError {})
     }
 
     pub fn get_changed(&self) -> &HashMap<String, Setting> {
@@ -188,7 +204,9 @@ impl Payload {
                     *current_value = value;
                     Ok(())
                 }
-                _ => Err(PlexApiError {}),
+                _ => Err(PlexApiError::ExpectedSettingValueBool {
+                    provided: new_value,
+                }),
             },
             Payload::Int {
                 value: ref mut current_value,
@@ -198,7 +216,9 @@ impl Payload {
                     *current_value = value;
                     Ok(())
                 }
-                _ => Err(PlexApiError {}),
+                _ => Err(PlexApiError::ExpectedSettingValueInt {
+                    provided: new_value,
+                }),
             },
             Payload::Text {
                 value: ref mut current_value,
@@ -208,7 +228,9 @@ impl Payload {
                     *current_value = value;
                     Ok(())
                 }
-                _ => Err(PlexApiError {}),
+                _ => Err(PlexApiError::ExpectedSettingValueText {
+                    provided: new_value,
+                }),
             },
             Payload::Double {
                 value: ref mut current_value,
@@ -218,7 +240,9 @@ impl Payload {
                     *current_value = value.to_string();
                     Ok(())
                 }
-                _ => Err(PlexApiError {}),
+                _ => Err(PlexApiError::ExpectedSettingValueDouble {
+                    provided: new_value,
+                }),
             },
         }
     }

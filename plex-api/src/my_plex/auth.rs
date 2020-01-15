@@ -44,7 +44,7 @@ impl MyPlexAccount {
             reqwest::StatusCode::OK | reqwest::StatusCode::CREATED => {
                 Ok(r.json::<MyPlexAccount>().await?)
             }
-            _ => Err(crate::error::PlexApiError::from(
+            _ => Err(core::convert::From::from(
                 r.json::<MyPlexApiErrorResponse>().await?,
             )),
         }

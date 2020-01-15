@@ -25,7 +25,7 @@ impl MyPlexAccount {
         } else {
             let err: MyPlexApiErrorResponse =
                 quick_xml::de::from_str(response.text().await?.as_str())?;
-            Err(crate::error::PlexApiError::from(err))
+            Err(core::convert::From::from(err))
         }
     }
 }

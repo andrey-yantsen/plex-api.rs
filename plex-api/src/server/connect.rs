@@ -1,6 +1,7 @@
 use crate::http::{base_headers, get_http_client};
 use crate::media_container::ServerMediaContainer;
 use crate::server::Server;
+use crate::PlexApiError;
 
 impl Server {
     /// Establish a connection with the server server by provided url.
@@ -21,8 +22,7 @@ impl Server {
                 auth_token: String::from(""),
             })
         } else {
-            eprintln!("{:?}", response.text().await?);
-            Err(crate::error::PlexApiError {})
+            Err(PlexApiError::UnexpectedApiResponse(response.text().await?))
         }
     }
 
@@ -48,8 +48,7 @@ impl Server {
                 auth_token: String::from(auth_token),
             })
         } else {
-            eprintln!("{:?}", response.text().await?);
-            Err(crate::error::PlexApiError {})
+            Err(PlexApiError::UnexpectedApiResponse(response.text().await?))
         }
     }
 }

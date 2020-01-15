@@ -1,6 +1,6 @@
 use crate::{
     my_plex::{MyPlexAccount, MyPlexApiErrorResponse},
-    InternalHttpApi,
+    InternalHttpApi, PlexApiError,
 };
 use reqwest::StatusCode;
 use serde_json;
@@ -26,7 +26,7 @@ impl MyPlexAccount {
             Ok(ret)
         } else {
             let err: MyPlexApiErrorResponse = response.json().await?;
-            Err(crate::error::PlexApiError::from(err))
+            Err(core::convert::From::from(err))
         }
     }
 
@@ -43,7 +43,7 @@ impl MyPlexAccount {
             Ok(())
         } else {
             let err: MyPlexApiErrorResponse = response.json().await?;
-            Err(crate::error::PlexApiError::from(err))
+            Err(core::convert::From::from(err))
         }
     }
 
@@ -65,8 +65,9 @@ impl MyPlexAccount {
             .map(|s| &**s)
             .collect();
         if original_len == new_webhooks.len() {
-            // TODO: Better errors
-            Err(crate::error::PlexApiError {})
+            Err(PlexApiError::WebhookNotFound {
+                url: String::from(webhook),
+            })
         } else {
             self.set_webhooks(&new_webhooks).await
         }

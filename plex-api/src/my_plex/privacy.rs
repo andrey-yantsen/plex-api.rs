@@ -34,7 +34,7 @@ impl MyPlexAccount {
             Ok(p)
         } else {
             let err: MyPlexApiErrorResponse = response.json().await?;
-            Err(crate::error::PlexApiError::from(err))
+            Err(core::convert::From::from(err))
         }
     }
 
