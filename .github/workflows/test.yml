@@ -196,7 +196,7 @@ jobs:
           args: --manifest-path plex-api/Cargo.toml --features 'test_new_attributes,test_connect_anonymous'
 
   test_on_real_server_authenticated:
-    if: ${{ github.ref == 'master' }}
+    if: github.ref == 'master'
     needs: test_offline
     name: Test on a real server (authenticated)
     runs-on: ubuntu-latest
