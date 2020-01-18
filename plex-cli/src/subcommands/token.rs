@@ -1,5 +1,5 @@
 use clap::ArgMatches;
-use plex_api::MyPlexAccount;
+use plex_api::prelude::*;
 
 pub(crate) async fn subcommand_token(
     token: &str,

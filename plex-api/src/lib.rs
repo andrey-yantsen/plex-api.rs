@@ -30,6 +30,7 @@ mod error;
 mod http;
 mod media_container;
 mod my_plex;
+pub mod prelude;
 mod serde_helpers;
 mod server;
 

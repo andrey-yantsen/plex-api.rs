@@ -1,5 +1,5 @@
 use clap::ArgMatches;
-use plex_api::{PlexApiError, Server, SettingValue};
+use plex_api::prelude::*;
 use thiserror::Error;
 
 #[derive(Error, Debug)]

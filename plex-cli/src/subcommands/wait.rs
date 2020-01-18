@@ -1,6 +1,6 @@
 use async_std::future;
 use clap::ArgMatches;
-use plex_api::Server;
+use plex_api::prelude::*;
 use std::thread;
 use std::time::Duration;
 

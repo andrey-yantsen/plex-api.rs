@@ -1,5 +1,5 @@
 use clap::ArgMatches;
-use plex_api::Server;
+use plex_api::prelude::*;
 
 pub(crate) async fn subcommand_unclaim(
     token: &str,
