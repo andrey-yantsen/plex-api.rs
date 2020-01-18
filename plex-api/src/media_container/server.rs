@@ -25,7 +25,7 @@ pub struct ServerMediaContainer {
     allow_sharing: bool,
     #[serde(deserialize_with = "serde_aux::prelude::deserialize_bool_from_anything")]
     allow_sync: bool,
-    #[serde(deserialize_with = "serde_aux::prelude::deserialize_bool_from_anything")]
+    #[serde(deserialize_with = "serde_aux::prelude::deserialize_bool_from_anything", default)]
     allow_tuners: bool,
     #[serde(deserialize_with = "serde_aux::prelude::deserialize_bool_from_anything")]
     background_processing: bool,
