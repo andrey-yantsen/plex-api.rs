@@ -1,8 +1,4 @@
 use crate::media_container::ServerMediaContainer;
-#[cfg(feature = "test_connect_anonymous")]
-use crate::tests::get_server_anonymous;
-#[cfg(feature = "test_connect_authenticated")]
-use crate::tests::get_server_authenticated;
 use quick_xml::de::from_str;
 
 #[test]
@@ -37,16 +33,4 @@ fn decode_server() {
 
     let mc = from_str::<ServerMediaContainer>(s);
     assert!(mc.is_ok(), "Unable to deserialize server: {:?}", mc.err());
-}
-
-#[cfg(feature = "test_connect_authenticated")]
-#[tokio::test]
-async fn decode_server_online_authenticated() {
-    get_server_authenticated().await;
-}
-
-#[cfg(feature = "test_connect_anonymous")]
-#[tokio::test]
-async fn decode_server_online_anonymous() {
-    get_server_anonymous().await;
 }

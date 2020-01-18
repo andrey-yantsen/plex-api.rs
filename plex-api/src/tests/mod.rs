@@ -7,6 +7,18 @@ use crate::Server;
 mod headers;
 mod media_container;
 
+#[cfg(any(
+    feature = "test_connect_authenticated",
+    feature = "test_connect_anonymous"
+))]
+mod my_plex;
+
+#[cfg(any(
+    feature = "test_connect_authenticated",
+    feature = "test_connect_anonymous"
+))]
+mod server;
+
 #[cfg(feature = "test_connect_authenticated")]
 async fn get_server_authenticated() -> Server {
     use std::env;
