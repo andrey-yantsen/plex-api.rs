@@ -18,7 +18,5 @@ async fn decode_users_online() {
     .await;
     if let Err(e) = users {
         assert!(false, "Unable to get users: {:?}", e);
-    } else {
-        assert!(true);
     }
 }

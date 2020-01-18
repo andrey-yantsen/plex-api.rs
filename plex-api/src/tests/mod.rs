@@ -58,7 +58,7 @@ pub(crate) mod retry {
     }
 
     impl<D> FutureRetryHandler<D> {
-        pub fn new(max_attempts: usize, display_name: D) -> Self {
+        pub const fn new(max_attempts: usize, display_name: D) -> Self {
             FutureRetryHandler {
                 max_attempts,
                 current_attempt: 0,

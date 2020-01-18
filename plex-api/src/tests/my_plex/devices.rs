@@ -18,7 +18,5 @@ async fn decode_devices_online() {
     .await;
     if let Err(e) = devices {
         assert!(false, "Unable to get devices: {:?}", e);
-    } else {
-        assert!(true);
     }
 }

@@ -18,7 +18,5 @@ async fn decode_resources_online() {
     .await;
     if let Err(e) = resources {
         assert!(false, "Unable to get resources: {:?}", e);
-    } else {
-        assert!(true);
     }
 }
