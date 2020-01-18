@@ -261,10 +261,10 @@ jobs:
 
       - name: Run Plex Server
         run: |
-          DOCKER_MACHINE_NAME="plex-test-docker-$(uuidgen)"
-          echo ::set-env name=DOCKER_MACHINE_NAME::${DOCKER_MACHINE_NAME}
-          docker run -d --name=$DOCKER_MACHINE_NAME --network=host -e PLEX_CLAIM=$PLEX_CLAIM \
-            -h "$DOCKER_MACHINE_NAME" -e TZ=UTC \
+          PLEX_DOCKER_MACHINE_NAME="plex-test-docker-$(uuidgen)"
+          echo ::set-env name=PLEX_DOCKER_MACHINE_NAME::${PLEX_DOCKER_MACHINE_NAME}
+          docker run -d --name "${PLEX_DOCKER_MACHINE_NAME}" --network=host -e PLEX_CLAIM "${PLEX_CLAIM}" \
+            -h "${DOCKER_MACHINE_NAME}" -e TZ=UTC \
             plexinc/pms-docker:${{ matrix.plex_server_version }}
 
       - name: Wait for plex-server to boot
@@ -293,5 +293,10 @@ jobs:
 
       - name: Remove the server from the account
         if: always()
+        env:
+          PLEX_API_AUTH_TOKEN: ${{ secrets.PLEX_API_AUTH_TOKEN }}
         run: |
-          set
+          if [ -n "PLEX_CLAIM" ] && [ -n "$PLEX_DOCKER_MACHINE_NAME" ]
+          then
+            target/debug/plex-cli unclaim --server-url http://127.0.0.1:32400
+          fi
