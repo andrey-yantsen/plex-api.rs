@@ -75,7 +75,7 @@ jobs:
           toolchain: stable
           override: true
 
-      - name: Rus tests
+      - name: Run tests
         uses: actions-rs/cargo@v1
         with:
           command: test
