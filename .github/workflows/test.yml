@@ -184,7 +184,7 @@ jobs:
           args: -p plex-cli
 
       - name: Wait for plex-server to boot
-        run: target/debug/plex-cli wait --timeout 60 --server-url http://127.0.0.1:32400 -s
+        run: target/debug/plex-cli wait --timeout 120 --server-url http://127.0.0.1:32400 -s
 
       - name: Test against real server [anonymous]
         uses: actions-rs/cargo@v1
@@ -270,7 +270,7 @@ jobs:
       - name: Wait for plex-server to boot
         env:
           PLEX_API_AUTH_TOKEN: ${{ secrets.PLEX_API_AUTH_TOKEN }}
-        run: target/debug/plex-cli wait --timeout 60 --server-url http://127.0.0.1:32400 -s
+        run: target/debug/plex-cli wait --timeout 120 --server-url http://127.0.0.1:32400 -s
 
       - name: Test against real server [authenticated]
         uses: actions-rs/cargo@v1
