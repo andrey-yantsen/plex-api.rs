@@ -293,6 +293,7 @@ jobs:
 
       - name: Remove the server from the account
         if: always()
+        continue-on-error: true
         env:
           PLEX_API_AUTH_TOKEN: ${{ secrets.PLEX_API_AUTH_TOKEN }}
         run: |
