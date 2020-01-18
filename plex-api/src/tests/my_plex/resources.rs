@@ -6,10 +6,13 @@ async fn decode_resources_online() {
     use futures_retry::FutureRetry;
     use std::env;
 
-    let acc = {
-        let auth_token = env::var("PLEX_API_AUTH_TOKEN").expect("Auth token not specified");
-        MyPlexAccount::by_token(&auth_token).await.unwrap()
-    };
+    let auth_token = &env::var("PLEX_API_AUTH_TOKEN").expect("Auth token not specified");
+    let acc = FutureRetry::new(
+        move || MyPlexAccount::by_token(auth_token),
+        FutureRetryHandler::new(5, "Log-in by token"),
+    )
+    .await
+    .unwrap();
     let acc = &acc;
     let resources = FutureRetry::new(
         move || acc.get_resources(),

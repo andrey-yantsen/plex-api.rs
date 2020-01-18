@@ -28,7 +28,7 @@ async fn get_server_authenticated() -> Server {
         Server::connect_auth(&server_url, &auth_token).await
     };
     assert!(srv.is_ok(), "Unable to connect to server: {:?}", srv.err());
-    srv.ok().unwrap()
+    srv.unwrap()
 }
 
 #[cfg(feature = "test_connect_anonymous")]
@@ -39,7 +39,7 @@ async fn get_server_anonymous() -> Server {
         Server::connect(&server_url).await
     };
     assert!(srv.is_ok(), "Unable to connect to server: {:?}", srv.err());
-    srv.ok().unwrap()
+    srv.unwrap()
 }
 
 #[cfg(any(
