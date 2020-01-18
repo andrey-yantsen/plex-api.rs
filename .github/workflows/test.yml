@@ -255,7 +255,9 @@ jobs:
         env:
           PLEX_API_AUTH_TOKEN: ${{ secrets.PLEX_API_AUTH_TOKEN }}
         run: |
-          echo ::set-env name=PLEX_CLAIM::$(target/debug/plex-cli token)
+          PLEX_CLAIM=$(target/debug/plex-cli token)
+          echo ::add-mask::${PLEX_CLAIM}
+          echo ::set-env name=PLEX_CLAIM::${PLEX_CLAIM}
 
       - name: Run Plex Server
         run: |
