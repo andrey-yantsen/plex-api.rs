@@ -127,11 +127,11 @@ jobs:
           args: --all-targets --all-features -- -D warnings
 
       - name: Clippy with nursery & tests
-          uses: actions-rs/cargo@v1
-          continue-on-error: true
-          with:
-            command: clippy
-            args: --all-targets --tests --all-features -- -D clippy::nursery -D warnings
+        uses: actions-rs/cargo@v1
+        continue-on-error: true
+        with:
+          command: clippy
+          args: --all-targets --tests --all-features -- -D clippy::nursery -D warnings
 
   test_on_real_server_anonymous:
     needs: test_offline
