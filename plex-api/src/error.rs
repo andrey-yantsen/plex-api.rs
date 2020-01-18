@@ -58,6 +58,8 @@ pub enum PlexApiError {
     ExpectedSettingValueText { provided: SettingValue },
     #[error("SettingValue::Double was expected, but provided another: {provided:?}")]
     ExpectedSettingValueDouble { provided: SettingValue },
+    #[error("Unexpected error occurred during unclaiming the server: {0}")]
+    UnexpectedUnclaimError(String),
 }
 
 impl From<std::sync::PoisonError<std::sync::RwLockReadGuard<'_, reqwest::Client>>>

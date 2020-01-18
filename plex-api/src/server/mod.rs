@@ -2,6 +2,7 @@ use crate::{media_container::ServerMediaContainer, HasBaseUrl, HasMyPlexToken};
 use url::Url;
 
 mod connect;
+mod my_plex;
 mod settings;
 
 #[derive(Deserialize, Debug)]

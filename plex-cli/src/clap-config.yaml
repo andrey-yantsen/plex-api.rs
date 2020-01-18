@@ -59,3 +59,12 @@ subcommands:
             index: 1
   - token:
       about: Request a claim token for a new server
+  - unclaim:
+      about: Unclaim a plex server
+      args:
+        - server-url:
+            short: u
+            long: server-url
+            help: Url to a plex server, e.g. http://127.0.0.1:32400
+            takes_value: true
+            required: true
