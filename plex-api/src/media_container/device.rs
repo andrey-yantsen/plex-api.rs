@@ -136,7 +136,7 @@ impl Device {
             if srv.is_ok() {
                 return srv;
             } else {
-                errors.insert(c.uri.clone(), srv.unwrap_err());
+                errors.insert(c.uri.clone(), srv.err().unwrap());
             }
         }
 
