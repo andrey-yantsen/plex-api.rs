@@ -163,11 +163,15 @@ impl std::str::FromStr for SettingEnumValueInt {
 #[serde(tag = "type", rename_all = "lowercase")]
 pub(crate) enum Payload {
     Bool {
+        #[serde(deserialize_with = "serde_aux::prelude::deserialize_bool_from_anything")]
         default: bool,
+        #[serde(deserialize_with = "serde_aux::prelude::deserialize_bool_from_anything")]
         value: bool,
     },
     Int {
+        #[serde(deserialize_with = "serde_aux::prelude::deserialize_number_from_string")]
         default: i32,
+        #[serde(deserialize_with = "serde_aux::prelude::deserialize_number_from_string")]
         value: i32,
         #[serde(
             rename = "enumValues",
