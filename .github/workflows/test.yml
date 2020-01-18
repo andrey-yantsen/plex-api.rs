@@ -1,0 +1,273 @@
+# Based on https://github.com/actions-rs/meta/blob/master/recipes/quickstart.md
+
+on: [push, pull_request]
+
+name: Test everything
+
+strategy:
+  matrix:
+    plex_server_version:
+      - latest
+      - 1.10.1.4602-f54242b6b
+
+jobs:
+  check:
+    name: Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v1
+
+      - name: Cache cargo registry
+        uses: actions/cache@v1
+        with:
+          path: ~/.cargo/registry
+          key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Cache cargo index
+        uses: actions/cache@v1
+        with:
+          path: ~/.cargo/git
+          key: ${{ runner.os }}-cargo-index-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Cache cargo build
+        uses: actions/cache@v1
+        with:
+          path: target
+          key: ${{ runner.os }}-cargo-build-target-check-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Install stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+
+      - name: Run cargo check
+        uses: actions-rs/cargo@v1
+        with:
+          command: check
+
+  test_offline:
+    needs: check
+    name: Offline tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v1
+
+      - name: Cache cargo registry
+        uses: actions/cache@v1
+        with:
+          path: ~/.cargo/registry
+          key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Cache cargo index
+        uses: actions/cache@v1
+        with:
+          path: ~/.cargo/git
+          key: ${{ runner.os }}-cargo-index-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Cache cargo build
+        uses: actions/cache@v1
+        with:
+          path: target
+          key: ${{ runner.os }}-cargo-build-target-test-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Install stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+
+      - name: Rus tests
+        uses: actions-rs/cargo@v1
+        with:
+          command: test
+          args: --all
+
+  lints:
+    name: Lints
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v1
+
+      - name: Cache cargo registry
+        uses: actions/cache@v1
+        with:
+          path: ~/.cargo/registry
+          key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Cache cargo index
+        uses: actions/cache@v1
+        with:
+          path: ~/.cargo/git
+          key: ${{ runner.os }}-cargo-index-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Cache cargo build
+        uses: actions/cache@v1
+        with:
+          path: target
+          key: ${{ runner.os }}-cargo-build-target-clippy-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Install stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+          components: rustfmt, clippy
+
+      - name: Run cargo fmt
+        uses: actions-rs/cargo@v1
+        with:
+          command: fmt
+          args: --all -- --check
+
+      - name: Run cargo clippy
+        uses: actions-rs/cargo@v1
+        with:
+          command: clippy
+          args: --all-targets --all-features -- -D warnings
+
+  test_on_real_server_anonymous:
+    needs: test_offline
+    name: Test on a real server (anonymous)
+    runs-on: ubuntu-latest
+    env:
+      X_PLEX_CLIENT_IDENTIFIER: ${{ secrets.X_PLEX_CLIENT_IDENTIFIER }}
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v1
+
+      - name: Cache cargo registry
+        uses: actions/cache@v1
+        with:
+          path: ~/.cargo/registry
+          key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Cache cargo index
+        uses: actions/cache@v1
+        with:
+          path: ~/.cargo/git
+          key: ${{ runner.os }}-cargo-index-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Cache cargo build
+        uses: actions/cache@v1
+        with:
+          path: target
+          key: ${{ runner.os }}-cargo-build-target-test-online-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Run Plex Server
+        run: docker run -d --network=host -e TZ=UTC plexinc/pms-docker:${{ matrix.plex_server_version }}
+
+      - name: Install stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+
+      - name: Build plex-cli binary
+        uses: actions-rs/cargo@v1
+        with:
+          command: build
+          args: -p plex-cli
+
+      - name: Wait for plex-server to boot
+        run: target/debug/plex-cli wait --server-url http://127.0.0.1:32400 -s
+
+      - name: Test against real server [anonymous]
+        uses: actions-rs/cargo@v1
+        env:
+          PLEX_API_SERVER_URL: http://127.0.0.1:32400
+        with:
+          command: test
+          args: --manifest-path plex-api/Cargo.toml --features 'test_connect_anonymous'
+
+      - name: Run the same tests with checks for new attributes
+        uses: actions-rs/cargo@v1
+        continue-on-error: true
+        env:
+          PLEX_API_SERVER_URL: http://127.0.0.1:32400
+        with:
+          command: test
+          args: --manifest-path plex-api/Cargo.toml --features 'test_new_attributes,test_connect_anonymous'
+
+  test_on_real_server_authenticated:
+    if: ${{ github.ref == 'master' }}
+    needs: test_offline
+    name: Test on a real server (authenticated)
+    runs-on: ubuntu-latest
+    env:
+      X_PLEX_CLIENT_IDENTIFIER: ${{ secrets.X_PLEX_CLIENT_IDENTIFIER }}
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v1
+
+      - name: Cache cargo registry
+        uses: actions/cache@v1
+        with:
+          path: ~/.cargo/registry
+          key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Cache cargo index
+        uses: actions/cache@v1
+        with:
+          path: ~/.cargo/git
+          key: ${{ runner.os }}-cargo-index-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Cache cargo build
+        uses: actions/cache@v1
+        with:
+          path: target
+          key: ${{ runner.os }}-cargo-build-target-test-online-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Install stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+
+      - name: Build plex-cli binary
+        uses: actions-rs/cargo@v1
+        with:
+          command: build
+          args: -p plex-cli
+
+      - name: Get claim-token
+        env:
+          PLEX_API_AUTH_TOKEN: ${{ secrets.PLEX_API_AUTH_TOKEN }}
+        run: |
+          echo ::set-env name=PLEX_CLAIM::$(target/debug/plex-cli token)
+
+      - name: Run Plex Server
+        run: |
+          docker run -d --network=host -e PLEX_CLAIM=$PLEX_CLAIM -e TZ=UTC plexinc/pms-docker:${{ matrix.plex_server_version }}
+
+      - name: Wait for plex-server to boot
+        env:
+          PLEX_API_AUTH_TOKEN: ${{ secrets.PLEX_API_AUTH_TOKEN }}
+        run: target/debug/plex-cli wait --server-url http://127.0.0.1:32400 -s
+
+      - name: Test against real server [authenticated]
+        uses: actions-rs/cargo@v1
+        env:
+          PLEX_API_SERVER_URL: http://127.0.0.1:32400
+          PLEX_API_AUTH_TOKEN: ${{ secrets.PLEX_API_AUTH_TOKEN }}
+        with:
+          command: test
+          args: --manifest-path plex-api/Cargo.toml --features 'test_new_attributes,test_connect_authenticated'
+
+      - name: Run the same tests with checks for new attributes
+        uses: actions-rs/cargo@v1
+        continue-on-error: true
+        env:
+          PLEX_API_SERVER_URL: http://127.0.0.1:32400
+          PLEX_API_AUTH_TOKEN: ${{ secrets.PLEX_API_AUTH_TOKEN }}
+        with:
+          command: test
+          args: --manifest-path plex-api/Cargo.toml --features 'test_new_attributes,test_connect_authenticated'
