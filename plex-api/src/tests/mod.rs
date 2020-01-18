@@ -41,3 +41,55 @@ async fn get_server_anonymous() -> Server {
     assert!(srv.is_ok(), "Unable to connect to server: {:?}", srv.err());
     srv.ok().unwrap()
 }
+
+#[cfg(any(
+    feature = "test_connect_authenticated",
+    feature = "test_connect_anonymous"
+))]
+pub(crate) mod retry {
+    use crate::PlexApiError;
+    use futures_retry::{ErrorHandler, RetryPolicy};
+    use std::time::Duration;
+
+    pub(crate) struct FutureRetryHandler<D> {
+        max_attempts: usize,
+        current_attempt: usize,
+        display_name: D,
+    }
+
+    impl<D> FutureRetryHandler<D> {
+        pub fn new(max_attempts: usize, display_name: D) -> Self {
+            FutureRetryHandler {
+                max_attempts,
+                current_attempt: 0,
+                display_name,
+            }
+        }
+    }
+
+    impl<D> ErrorHandler<PlexApiError> for FutureRetryHandler<D>
+    where
+        D: ::std::fmt::Display,
+    {
+        type OutError = PlexApiError;
+
+        fn handle(&mut self, e: PlexApiError) -> RetryPolicy<PlexApiError> {
+            self.current_attempt += 1;
+            if self.current_attempt >= self.max_attempts {
+                eprintln!(
+                    "[{}] All attempts ({}) have been used",
+                    self.display_name, self.max_attempts
+                );
+                return RetryPolicy::ForwardError(e);
+            }
+            eprintln!(
+                "[{}] Attempt {}/{} has failed",
+                self.display_name, self.current_attempt, self.max_attempts
+            );
+            match e {
+                PlexApiError::ReqwestError { .. } => RetryPolicy::WaitRetry(Duration::from_secs(5)),
+                _ => RetryPolicy::ForwardError(e),
+            }
+        }
+    }
+}

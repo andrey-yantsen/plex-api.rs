@@ -27,6 +27,7 @@ serde-aux = "0.6"
 
 [dev-dependencies]
 tokio = { version = "0.2", features = ["macros"] }
+futures-retry = "0.4"
 
 [features]
 default = []
