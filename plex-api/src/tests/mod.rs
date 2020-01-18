@@ -42,10 +42,7 @@ async fn get_server_anonymous() -> Server {
     srv.unwrap()
 }
 
-#[cfg(any(
-    feature = "test_connect_authenticated",
-    feature = "test_connect_anonymous"
-))]
+#[cfg(any(feature = "test_connect_authenticated"))]
 pub(crate) mod retry {
     use crate::PlexApiError;
     use futures_retry::{ErrorHandler, RetryPolicy};
