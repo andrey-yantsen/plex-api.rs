@@ -48,6 +48,7 @@ jobs:
 
   cargo_publish:
     needs: test_offline
+    name: Publish to cargo
     runs-on: ubuntu-latest
     steps:
       - name: Checkout sources
