@@ -263,7 +263,7 @@ jobs:
         run: |
           PLEX_DOCKER_MACHINE_NAME="plex-test-docker-$(uuidgen)"
           echo ::set-env name=PLEX_DOCKER_MACHINE_NAME::${PLEX_DOCKER_MACHINE_NAME}
-          docker run -d --name "${PLEX_DOCKER_MACHINE_NAME}" --network=host -e PLEX_CLAIM "${PLEX_CLAIM}" \
+          docker run -d --name="${PLEX_DOCKER_MACHINE_NAME}" --network=host -e PLEX_CLAIM="${PLEX_CLAIM}" \
             -h "${DOCKER_MACHINE_NAME}" -e TZ=UTC \
             plexinc/pms-docker:${{ matrix.plex_server_version }}
 
