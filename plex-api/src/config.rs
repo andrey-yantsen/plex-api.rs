@@ -63,7 +63,7 @@ lazy_static! {
             use std::time::Duration;
             RwLock::new(
                 Client::builder()
-                    .timeout(Duration::from_secs(5))
+                    .timeout(Duration::from_secs(30))
                     .build()
                     .expect("HTTP_CLIENT init")
             )
