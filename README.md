@@ -1,3 +1,5 @@
+[![crates](https://img.shields.io/crates/v/plex-api.svg)](https://crates.io/crates/plex-api) [![dependency status](https://deps.rs/repo/github/andrey-yantsen/plex-api.rs/status.svg)](https://deps.rs/repo/github/andrey-yantsen/plex-api.rs) [![tests status](https://github.com/andrey-yantsen/plex-api.rs/workflows/Test%20authenticated/badge.svg)](https://github.com/andrey-yantsen/plex-api.rs/actions?query=workflow%3A%22Test+authenticated%22) [![tests status](https://github.com/andrey-yantsen/plex-api.rs/workflows/Test%20anonymous/badge.svg)](https://github.com/andrey-yantsen/plex-api.rs/actions?query=workflow%3A%22Test+anonymous%22)
+
 # Work in progress
 
 Sorry, if you're looking for a ready-to-use API, it's definitely not this one.
