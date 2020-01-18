@@ -135,6 +135,7 @@ jobs:
         plex_server_version:
           - latest
           - 1.13.9.5456-ecd600442
+          - 1.10.1.4602-f54242b6b
     env:
       X_PLEX_CLIENT_IDENTIFIER: ${{ secrets.X_PLEX_CLIENT_IDENTIFIER }}
     steps:
@@ -205,6 +206,7 @@ jobs:
         plex_server_version:
           - latest
           - 1.13.9.5456-ecd600442
+          - 1.10.1.4602-f54242b6b
     env:
       X_PLEX_CLIENT_IDENTIFIER: ${{ secrets.X_PLEX_CLIENT_IDENTIFIER }}
     steps:
