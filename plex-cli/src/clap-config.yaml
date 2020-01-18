@@ -21,6 +21,11 @@ subcommands:
             long: timeout
             help: The time-limit in seconds before exiting with error
             takes_value: true
+        - delay:
+            short: d
+            long: delay
+            help: Delay between retries (default — 3 seconds)
+            takes_value: true
         - server-url:
             short: u
             long: server-url
