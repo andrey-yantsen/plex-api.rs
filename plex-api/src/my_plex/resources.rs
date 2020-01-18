@@ -17,7 +17,7 @@ impl MyPlexAccount {
         if response.status() == StatusCode::OK {
             let mc: DevicesMediaContainer =
                 quick_xml::de::from_str(response.text().await?.as_str())?;
-            let mut devices: Vec<Device> = mc.get_devices().unwrap_or_default();
+            let mut devices: Vec<Device> = mc.get_devices().to_owned();
             devices
                 .iter_mut()
                 .for_each(|d| d.set_auth_token(&self.auth_token));

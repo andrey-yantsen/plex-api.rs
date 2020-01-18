@@ -12,18 +12,18 @@ use url::Url;
 #[cfg_attr(all(test, feature = "test_new_attributes"), serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct DevicesMediaContainer {
-    #[serde(rename = "Device")]
-    devices: Option<Vec<Device>>,
+    #[serde(rename = "Device", default)]
+    devices: Vec<Device>,
     #[serde(flatten)]
     media_container: MediaContainer,
 }
 
 impl DevicesMediaContainer {
-    pub fn get_media_container(self) -> MediaContainer {
-        self.media_container
+    pub const fn get_media_container(&self) -> &MediaContainer {
+        &self.media_container
     }
-    pub fn get_devices(self) -> Option<Vec<Device>> {
-        self.devices
+    pub const fn get_devices(&self) -> &Vec<Device> {
+        &self.devices
     }
 }
 

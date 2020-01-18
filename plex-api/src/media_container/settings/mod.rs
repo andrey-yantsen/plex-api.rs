@@ -60,7 +60,7 @@ impl SettingsMediaContainer {
         }
     }
 
-    pub fn get_changed(&self) -> &HashMap<String, Setting> {
+    pub const fn get_changed(&self) -> &HashMap<String, Setting> {
         &self.updated
     }
 }
@@ -187,9 +187,10 @@ pub(crate) enum Payload {
         enum_values: Option<Vec<SettingEnumValueString>>,
     },
     Double {
-        // TODO: use f64, current problem that `TranscoderH264MinimumCRF` stored as string in JSON
-        default: String,
-        value: String,
+        #[serde(deserialize_with = "serde_aux::prelude::deserialize_number_from_string")]
+        default: f64,
+        #[serde(deserialize_with = "serde_aux::prelude::deserialize_number_from_string")]
+        value: f64,
     },
 }
 
@@ -237,7 +238,7 @@ impl Payload {
                 ..
             } => match new_value {
                 SettingValue::Double(value) => {
-                    *current_value = value.to_string();
+                    *current_value = value;
                     Ok(())
                 }
                 _ => Err(PlexApiError::ExpectedSettingValueDouble {
@@ -292,7 +293,7 @@ impl From<&Payload> for SettingValue {
             Payload::Bool { value, .. } => SettingValue::Bool(*value),
             Payload::Int { value, .. } => SettingValue::Int(*value),
             Payload::Text { value, .. } => SettingValue::Text(value.to_string()),
-            Payload::Double { value, .. } => SettingValue::Double(value.parse().unwrap()),
+            Payload::Double { value, .. } => SettingValue::Double(*value),
         }
     }
 }

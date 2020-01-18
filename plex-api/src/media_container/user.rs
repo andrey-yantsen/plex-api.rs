@@ -6,8 +6,8 @@ use chrono::{DateTime, Utc};
 #[serde(rename_all = "camelCase")]
 pub struct UsersMediaContainer {
     machine_identifier: String,
-    #[serde(rename = "User")]
-    users: Option<Vec<User>>,
+    #[serde(rename = "User", default)]
+    users: Vec<User>,
     #[serde(flatten)]
     media_container: MediaContainer,
 }
@@ -64,10 +64,10 @@ struct UserServer {
 }
 
 impl UsersMediaContainer {
-    pub fn get_media_container(self) -> MediaContainer {
-        self.media_container
+    pub const fn get_media_container(&self) -> &MediaContainer {
+        &self.media_container
     }
-    pub fn get_users(self) -> Option<Vec<User>> {
-        self.users
+    pub const fn get_users(&self) -> &Vec<User> {
+        &self.users
     }
 }

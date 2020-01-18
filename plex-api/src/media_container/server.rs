@@ -112,7 +112,7 @@ pub struct ServerMediaContainer {
 }
 
 impl ServerMediaContainer {
-    pub fn get_media_container(self) -> MediaContainer {
-        self.media_container
+    pub const fn get_media_container(&self) -> &MediaContainer {
+        &self.media_container
     }
 }

@@ -14,8 +14,7 @@ impl MyPlexAccount {
         let response = self.get(USERS_URL).await?;
         if response.status() == StatusCode::OK {
             let mc: UsersMediaContainer = quick_xml::de::from_str(response.text().await?.as_str())?;
-            let users = mc.get_users();
-            Ok(users.unwrap_or_default())
+            Ok(mc.get_users().to_owned())
         } else {
             let err: MyPlexApiErrorResponse =
                 quick_xml::de::from_str(response.text().await?.as_str())?;
