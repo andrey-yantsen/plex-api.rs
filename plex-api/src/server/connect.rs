@@ -10,7 +10,7 @@ impl Server {
     pub async fn connect<U: reqwest::IntoUrl + crate::AsStr + Send>(url: U) -> crate::Result<Self> {
         let response = get_http_client()?
             .get(url.as_str())
-            .headers(base_headers())
+            .headers(base_headers()?)
             .send()
             .await?;
         if response.status() == reqwest::StatusCode::OK {
@@ -35,7 +35,7 @@ impl Server {
     ) -> crate::Result<Self> {
         let response = get_http_client()?
             .get(url.as_str())
-            .headers(base_headers())
+            .headers(base_headers()?)
             .header("X-Plex-Token", auth_token)
             .send()
             .await?;

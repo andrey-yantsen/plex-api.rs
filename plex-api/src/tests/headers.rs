@@ -2,7 +2,7 @@ use crate::http::base_headers;
 
 #[test]
 fn base_headers_contains_required_headers() {
-    let headers = base_headers();
+    let headers = base_headers().unwrap();
     assert_eq!(true, headers.contains_key("x-plex-provides"));
     assert_eq!(true, headers.contains_key("x-plex-product"));
     assert_eq!(true, headers.contains_key("x-plex-version"));
@@ -45,7 +45,7 @@ fn base_headers_use_provided_values() {
         *client_identifier = "plex_client_identifier";
     }
 
-    let headers = base_headers();
+    let headers = base_headers().unwrap();
 
     let provides = X_PLEX_PROVIDES.read().unwrap();
     let platform = X_PLEX_PLATFORM.read().unwrap();

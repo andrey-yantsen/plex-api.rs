@@ -66,7 +66,7 @@ impl<T: HasDeleteUrl + CanMakeRequests + Send + Sync> CanBeDeleted for T {
 }
 
 trait HasPlexHeaders {
-    fn headers(&self) -> HeaderMap;
+    fn headers(&self) -> Result<HeaderMap>;
 }
 
 trait HasBaseUrl {
@@ -129,7 +129,7 @@ impl<T: HasPlexHeaders + HasBaseUrl> CanMakeRequests for T {
 
         Ok(http::get_http_client()?
             .request(method, request_url?)
-            .headers(self.headers()))
+            .headers(self.headers()?))
     }
 }
 

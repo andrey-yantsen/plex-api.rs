@@ -1,6 +1,7 @@
 use crate::SettingValue;
+use reqwest::header::InvalidHeaderValue;
 use std::collections::HashMap;
-use std::sync::{PoisonError, RwLockReadGuard};
+use std::sync::{PoisonError, RwLockReadGuard, RwLockWriteGuard};
 use thiserror::Error;
 use url::Url;
 
@@ -21,8 +22,10 @@ pub enum PlexApiError {
         #[from]
         source: serde_json::Error,
     },
-    #[error("RwLock was poisoned")]
-    LockReadPoison,
+    #[error("RwLock was poisoned (reading)")]
+    RWLockReadPoison,
+    #[error("RwLock was poisoned (writing)")]
+    RWLockWritePoison,
     #[error("Error while communicating with MyPlexApi: {errors:?}")]
     MyPlexErrorResponse { errors: Vec<PlexApiError> },
     #[error("Error occurred while communicating to MyPlex API: #{code} - {message}")]
@@ -60,12 +63,32 @@ pub enum PlexApiError {
     ExpectedSettingValueDouble { provided: SettingValue },
     #[error("Unexpected error occurred during unclaiming the server: {0}")]
     UnexpectedUnclaimError(String),
+    #[error("Unable to parser header values")]
+    InvalidHeaderValue {
+        #[from]
+        source: InvalidHeaderValue,
+    },
+    #[error("I/O-error occurred: {source}")]
+    IOError {
+        #[from]
+        source: std::io::Error,
+    },
 }
 
-impl From<std::sync::PoisonError<std::sync::RwLockReadGuard<'_, reqwest::Client>>>
-    for PlexApiError
-{
+impl From<std::sync::PoisonError<RwLockReadGuard<'_, reqwest::Client>>> for PlexApiError {
     fn from(_: PoisonError<RwLockReadGuard<'_, reqwest::Client>>) -> Self {
-        PlexApiError::LockReadPoison
+        PlexApiError::RWLockReadPoison
+    }
+}
+
+impl From<std::sync::PoisonError<RwLockWriteGuard<'_, reqwest::Client>>> for PlexApiError {
+    fn from(_: PoisonError<RwLockWriteGuard<'_, reqwest::Client>>) -> Self {
+        PlexApiError::RWLockWritePoison
+    }
+}
+
+impl From<std::sync::PoisonError<std::sync::RwLockReadGuard<'_, &str>>> for PlexApiError {
+    fn from(_: PoisonError<RwLockReadGuard<'_, &str>>) -> Self {
+        PlexApiError::RWLockReadPoison
     }
 }

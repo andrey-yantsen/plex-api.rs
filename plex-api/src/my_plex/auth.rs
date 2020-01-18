@@ -19,7 +19,7 @@ impl MyPlexAccount {
         let response = get_http_client()?
             .post(MYPLEX_LOGIN_URL)
             .form(&params)
-            .headers(base_headers())
+            .headers(base_headers()?)
             .header(reqwest::header::ACCEPT, "application/json")
             .send()
             .await?;
@@ -30,7 +30,7 @@ impl MyPlexAccount {
     pub async fn by_token(auth_token: &str) -> crate::Result<Self> {
         let response = get_http_client()?
             .get(MYPLEX_ACCOUNT_INFO_URL)
-            .headers(base_headers())
+            .headers(base_headers()?)
             .header(reqwest::header::ACCEPT, "application/json")
             .header("X-Plex-Token", auth_token)
             .send()

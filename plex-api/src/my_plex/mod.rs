@@ -6,7 +6,7 @@ mod resources;
 mod users;
 mod webhooks;
 
-use crate::{http::base_headers, HasPlexHeaders, PlexApiError};
+use crate::{http::base_headers, HasPlexHeaders, PlexApiError, Result};
 use chrono::DateTime;
 use chrono::Utc;
 use reqwest::header::HeaderMap;
@@ -155,16 +155,16 @@ impl<T> HasPlexHeaders for T
 where
     T: HasMyPlexToken,
 {
-    fn headers(&self) -> HeaderMap {
-        let mut headers = base_headers();
+    fn headers(&self) -> Result<HeaderMap> {
+        let mut headers = base_headers()?;
 
         if !self.get_auth_token().is_empty() {
-            headers.insert("X-Plex-Token", self.get_auth_token().parse().unwrap());
+            headers.insert("X-Plex-Token", self.get_auth_token().parse()?);
         }
 
-        headers.insert("Accept", "application/json".parse().unwrap());
+        headers.insert("Accept", "application/json".parse()?);
 
-        headers
+        Ok(headers)
     }
 }
 
