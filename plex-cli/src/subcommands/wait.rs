@@ -12,7 +12,7 @@ pub(crate) async fn subcommand_wait(
     let timeout = Duration::from_secs(matches.value_of("timeout").unwrap_or("30").parse().unwrap());
     let server_url = matches.value_of("server-url").unwrap();
     let wait_for_settings = matches.is_present("wait-for-settings");
-    let delay = Duration::from_secs(matches.value_of("delay").unwrap_or("30").parse().unwrap());
+    let delay = Duration::from_secs(matches.value_of("delay").unwrap_or("3").parse().unwrap());
 
     let result = future::timeout(timeout, async {
         loop {
