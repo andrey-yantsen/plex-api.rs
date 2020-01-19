@@ -166,6 +166,11 @@ jobs:
         with:
           path: target
           key: ${{ runner.os }}-cargo-build-target-test-online-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-build-target-test-${{ hashFiles('**/Cargo.lock') }}
+            ${{ runner.os }}-cargo-build-target-test-online-
+            ${{ runner.os }}-cargo-build-target-test-
+            ${{ runner.os }}-cargo-build-target-
 
       - name: Run Plex Server
         run: docker run -d --network=host -e TZ=UTC plexinc/pms-docker:${{ matrix.plex_server_version }}
@@ -237,6 +242,11 @@ jobs:
         with:
           path: target
           key: ${{ runner.os }}-cargo-build-target-test-online-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-build-target-test-${{ hashFiles('**/Cargo.lock') }}
+            ${{ runner.os }}-cargo-build-target-test-online-
+            ${{ runner.os }}-cargo-build-target-test-
+            ${{ runner.os }}-cargo-build-target-
 
       - name: Install stable toolchain
         uses: actions-rs/toolchain@v1

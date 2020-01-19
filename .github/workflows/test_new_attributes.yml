@@ -10,6 +10,14 @@ jobs:
   test:
     name: Test Suite
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        plex_server_version:
+          - latest
+          - 1.13.9.5456-ecd600442
+          - 1.10.1.4602-f54242b6b
+    env:
+      X_PLEX_CLIENT_IDENTIFIER: ${{ secrets.X_PLEX_CLIENT_IDENTIFIER }}
     steps:
       - name: Checkout sources
         uses: actions/checkout@v1
@@ -31,9 +39,14 @@ jobs:
         with:
           path: target
           key: ${{ runner.os }}-cargo-build-target-test-online-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-build-target-test-${{ hashFiles('**/Cargo.lock') }}
+            ${{ runner.os }}-cargo-build-target-test-online-
+            ${{ runner.os }}-cargo-build-target-test-
+            ${{ runner.os }}-cargo-build-target-
 
       - name: Run Plex Server
-        run: docker run -d --network=host -e TZ=UTC plexinc/pms-docker
+        run: docker run -d --network=host -e TZ=UTC plexinc/pms-docker:${{ matrix.plex_server_version }}
 
       - name: Install stable toolchain
         uses: actions-rs/toolchain@v1
@@ -49,7 +62,7 @@ jobs:
           args: -p plex-cli
 
       - name: Wait for plex-server to boot
-        run: target/debug/plex-cli wait --server-url http://127.0.0.1:32400 -s
+        run: target/debug/plex-cli wait --timeout 120 --server-url http://127.0.0.1:32400 -s
 
       - name: Test against real server [anonymous]
         uses: actions-rs/cargo@v1
