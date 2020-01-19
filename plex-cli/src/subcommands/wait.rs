@@ -11,13 +11,7 @@ async fn wait(
     delay: &Duration,
 ) -> Result<(), Box<dyn std::error::Error>> {
     loop {
-        let srv = {
-            if token.is_empty() {
-                Server::connect(server_url).await
-            } else {
-                Server::connect_auth(server_url, token).await
-            }
-        };
+        let srv = Server::connect(server_url, token).await;
         match srv {
             Ok(srv) => {
                 if wait_for_settings {

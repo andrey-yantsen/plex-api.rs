@@ -1,4 +1,4 @@
-use crate::{my_plex::MyPlexAccount, InternalHttpApi, PlexApiError};
+use crate::{my_plex::MyPlexAccount, InternalHttpApi, PlexApiError, Result};
 use reqwest::StatusCode;
 
 const CLAIM_TOKEN_URL: &str = "api/claim/token.json";
@@ -20,7 +20,7 @@ impl MyPlexAccount {
     ///
     /// See [https://www.plex.tv/claim](https://www.plex.tv/claim/),
     /// [docker:plexinc/pms-docker](https://hub.docker.com/r/plexinc/pms-docker/).
-    pub async fn get_claim_token(&self) -> crate::Result<String> {
+    pub async fn get_claim_token(&self) -> Result<String> {
         let response = self.get(CLAIM_TOKEN_URL).await?;
         match response.status() {
             StatusCode::OK => Ok((response.json::<SuccessResponse>()).await?.token),

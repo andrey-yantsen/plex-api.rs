@@ -40,11 +40,7 @@ impl Server {
     }
 
     async fn refresh(&mut self) -> Result<()> {
-        let new_server = if self.auth_token.is_empty() {
-            Server::connect(&self.url.as_str().to_string()).await
-        } else {
-            Server::connect_auth(&self.url.as_str().to_string(), &self.auth_token).await
-        };
+        let new_server = Server::connect(&self.url.as_str().to_string(), &self.auth_token).await;
         match new_server {
             Ok(srv) => {
                 *self = srv;

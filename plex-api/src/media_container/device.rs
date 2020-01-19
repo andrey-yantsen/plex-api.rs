@@ -127,11 +127,7 @@ impl Device {
         let mut errors = HashMap::new();
 
         for c in connections {
-            let srv = if self.auth_token.is_empty() {
-                Server::connect(c.uri.clone()).await
-            } else {
-                Server::connect_auth(c.uri.clone(), &self.auth_token).await
-            };
+            let srv = Server::connect(c.uri.clone(), &self.auth_token).await;
 
             if srv.is_ok() {
                 return srv;

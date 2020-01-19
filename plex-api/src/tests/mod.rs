@@ -25,7 +25,7 @@ async fn get_server_authenticated() -> Server {
     let srv: Result<Server, _> = {
         let server_url = env::var("PLEX_API_SERVER_URL").expect("Server url not specified");
         let auth_token = env::var("PLEX_API_AUTH_TOKEN").expect("Auth token not specified");
-        Server::connect_auth(&server_url, &auth_token).await
+        Server::connect(&server_url, &auth_token).await
     };
     assert!(srv.is_ok(), "Unable to connect to server: {:?}", srv.err());
     srv.unwrap()
@@ -36,7 +36,7 @@ async fn get_server_anonymous() -> Server {
     use std::env;
     let srv: Result<Server, _> = {
         let server_url = env::var("PLEX_API_SERVER_URL").expect("Server url not specified");
-        Server::connect(&server_url).await
+        Server::connect(&server_url, "").await
     };
     assert!(srv.is_ok(), "Unable to connect to server: {:?}", srv.err());
     srv.unwrap()

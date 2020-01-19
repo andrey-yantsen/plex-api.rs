@@ -10,6 +10,7 @@ settings:
 args:
   - auth-token:
       short: t
+      long: auth-token
       help: An auth token to use with Plex API (you can also provide the token with ENV variable PLEX_API_AUTH_TOKEN)
       takes_value: true
 subcommands:
