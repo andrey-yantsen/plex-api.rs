@@ -339,3 +339,69 @@ jobs:
           then
             target/debug/plex-cli unclaim --server-url http://127.0.0.1:32400
           fi
+
+  collect_coverage:
+    needs: check
+    name: Collect code coverage (with anonymous server)
+    runs-on: ubuntu-latest
+    env:
+      X_PLEX_CLIENT_IDENTIFIER: ${{ secrets.X_PLEX_CLIENT_IDENTIFIER }}
+    steps:
+      - name: Run Plex Server
+        run: docker run -d --network=host -e TZ=UTC plexinc/pms-docker:latest
+
+      - name: Checkout sources
+        uses: actions/checkout@v1
+
+      - name: Cache cargo registry
+        uses: actions/cache@v1
+        with:
+          path: ~/.cargo/registry
+          key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-registry-
+
+      - name: Cache cargo index
+        uses: actions/cache@v1
+        with:
+          path: ~/.cargo/git
+          key: ${{ runner.os }}-cargo-index-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-index-
+
+      - name: Install nightly toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: nightly
+          override: true
+
+      - name: Wait for plex-server to boot
+        uses: actions-rs/cargo@v1
+        with:
+          command: run
+          args: -p plex-cli -- wait --timeout 120 --server-url http://127.0.0.1:32400 -s
+
+      - name: Clean cargo cache
+        uses: actions-rs/cargo@v1
+        with:
+          command: clean
+
+      - name: Test against real server [anonymous]
+        uses: actions-rs/cargo@v1
+        env:
+          PLEX_API_SERVER_URL: http://127.0.0.1:32400
+          CARGO_INCREMENTAL: '0'
+          RUSTFLAGS: '-Zprofile -Ccodegen-units=1 -Cinline-threshold=0 -Clink-dead-code -Coverflow-checks=off -Zno-landing-pads'
+        with:
+          command: test
+          args: --manifest-path plex-api/Cargo.toml  --no-fail-fast --features 'test_connect_anonymous'
+
+      - id: coverage
+        name: Run grcov
+        uses: actions-rs/grcov@v0.1
+
+      - name: Coveralls upload
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path-to-lcov: ${{ steps.coverage.outputs.report }}
