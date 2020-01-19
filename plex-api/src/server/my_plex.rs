@@ -1,5 +1,5 @@
 use crate::server::Server;
-use crate::{CanMakeRequests, InternalHttpApi, PlexApiError, Result};
+use crate::{CanMakeRequests, PlexApiError, Result};
 use url::form_urlencoded;
 
 const MYPLEX_ACCOUNT_URL: &str = "myplex/account";
@@ -30,7 +30,7 @@ impl Server {
             .append_pair("token", claim_token)
             .finish();
         let uri = MYPLEX_CLAIM_URL.to_owned() + "?" + &params;
-        let response = self.get(&uri).await?;
+        let response = self.prepare_query(&uri, reqwest::Method::POST)?.send().await?;
 
         if response.status() == 200 {
             self.refresh().await
