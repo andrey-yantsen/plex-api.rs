@@ -161,6 +161,7 @@ jobs:
       matrix:
         plex_server_version:
           - latest
+          - 1.16.6.1592-b9d49bdb7
           - 1.13.9.5456-ecd600442
           - 1.10.1.4602-f54242b6b
     env:
@@ -241,6 +242,7 @@ jobs:
       matrix:
         plex_server_version:
           - latest
+          - 1.16.6.1592-b9d49bdb7
           - 1.13.9.5456-ecd600442
           - 1.10.1.4602-f54242b6b
     env:
