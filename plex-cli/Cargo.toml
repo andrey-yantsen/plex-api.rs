@@ -1,6 +1,6 @@
 [package]
 name = "plex-cli"
-version = "0.1.1"
+version = "0.0.2"
 authors = ["Andrey Yantsen <andrey@janzen.su>"]
 edition = "2018"
 
