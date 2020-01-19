@@ -3,15 +3,15 @@ use crate::http::base_headers;
 #[test]
 fn base_headers_contains_required_headers() {
     let headers = base_headers().unwrap();
-    assert_eq!(true, headers.contains_key("x-plex-provides"));
-    assert_eq!(true, headers.contains_key("x-plex-product"));
-    assert_eq!(true, headers.contains_key("x-plex-version"));
-    assert_eq!(true, headers.contains_key("x-plex-sync-version"));
-    assert_eq!(true, headers.contains_key("x-plex-platform"));
-    assert_eq!(true, headers.contains_key("x-plex-platform-version"));
-    assert_eq!(true, headers.contains_key("x-plex-client-identifier"));
-    assert_eq!(true, headers.contains_key("x-plex-device"));
-    assert_eq!(true, headers.contains_key("x-plex-device-name"));
+    assert!(headers.contains_key("x-plex-provides"));
+    assert!(headers.contains_key("x-plex-product"));
+    assert!(headers.contains_key("x-plex-version"));
+    assert!(headers.contains_key("x-plex-sync-version"));
+    assert!(headers.contains_key("x-plex-platform"));
+    assert!(headers.contains_key("x-plex-platform-version"));
+    assert!(headers.contains_key("x-plex-client-identifier"));
+    assert!(headers.contains_key("x-plex-device"));
+    assert!(headers.contains_key("x-plex-device-name"));
 }
 
 #[cfg(not(any(
