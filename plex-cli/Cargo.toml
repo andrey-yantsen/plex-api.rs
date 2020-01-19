@@ -11,5 +11,4 @@ fern = "0.5"
 chrono = "0.4"
 tokio = { version = "0.2", features = ["macros"] }
 clap = { version = "2.33", features = ["yaml", "color"] }
-async-std = { version = "1.4", features = ["unstable"] }
 thiserror = "1.0"
