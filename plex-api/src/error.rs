@@ -63,6 +63,12 @@ pub enum PlexApiError {
     ExpectedSettingValueDouble { provided: SettingValue },
     #[error("Unexpected error occurred during unclaiming the server: {0}")]
     UnexpectedUnclaimError(String),
+    #[error("Unexpected error occurred during claiming the server: {0}")]
+    UnexpectedClaimError(String),
+    #[error("Claim token must be provided")]
+    ClaimTokenEmpty,
+    #[error("Incorrect claim token provided")]
+    IncorrectClaimToken,
     #[error("Unable to parser header values")]
     InvalidHeaderValue {
         #[from]
