@@ -1,8 +1,8 @@
 use crate::{
-    CanMakeRequests, HasBaseUrl, InternalHttpApi, PlexApiError, Result, Server,
-    SettingsMediaContainer, SettingsMediaContainerOuter,
+    CanMakeRequests, InternalHttpApi, PlexApiError, Result, Server, SettingsMediaContainer,
+    SettingsMediaContainerOuter,
 };
-use url::Url;
+use url::form_urlencoded;
 
 const SETTINGS_URL: &str = ":/prefs";
 
@@ -23,18 +23,15 @@ impl Server {
         if changed.is_empty() {
             Err(PlexApiError::NoChangedSettingsFound)
         } else {
-            let mut uri = Url::parse(&(self.get_base_url().to_owned() + SETTINGS_URL)).unwrap();
-
-            {
-                let mut pairs = uri.query_pairs_mut();
-
-                for (key, s) in changed {
-                    pairs.append_pair(key, &s.get_value().to_string());
-                }
+            let mut params = form_urlencoded::Serializer::new(String::new());
+            for (key, s) in changed {
+                params.append_pair(key, &s.get_value().to_string());
             }
 
+            let uri = SETTINGS_URL.to_owned() + "?" + &params.finish();
+
             let response = self
-                .prepare_query(uri, reqwest::Method::PUT)?
+                .prepare_query(&uri, reqwest::Method::PUT)?
                 .send()
                 .await?;
 
