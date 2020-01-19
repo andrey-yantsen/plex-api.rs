@@ -40,6 +40,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
         ("token", subcommand_matches) => subcommand_token(auth_token, subcommand_matches).await,
         ("unclaim", subcommand_matches) => subcommand_unclaim(auth_token, subcommand_matches).await,
+        ("claim", subcommand_matches) => subcommand_claim(auth_token, subcommand_matches).await,
         _ => {
             // Unexpected subcommand called, we shouldn't even be here
             unimplemented!();

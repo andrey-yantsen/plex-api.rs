@@ -8,7 +8,10 @@ impl Server {
     /// If you need an anonymous connection — just provide an empty token.
     ///
     /// This call will fail if if token is empty and anonymous access is denied.
-    pub async fn connect<U: reqwest::IntoUrl + crate::AsStr + Send>(url: U, auth_token: &str) -> crate::Result<Self> {
+    pub async fn connect<U: reqwest::IntoUrl + crate::AsStr + Send>(
+        url: U,
+        auth_token: &str,
+    ) -> crate::Result<Self> {
         let response = get_http_client()?
             .get(url.as_str())
             .headers(base_headers()?)

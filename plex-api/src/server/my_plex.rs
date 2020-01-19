@@ -30,7 +30,10 @@ impl Server {
             .append_pair("token", claim_token)
             .finish();
         let uri = MYPLEX_CLAIM_URL.to_owned() + "?" + &params;
-        let response = self.prepare_query(&uri, reqwest::Method::POST)?.send().await?;
+        let response = self
+            .prepare_query(&uri, reqwest::Method::POST)?
+            .send()
+            .await?;
 
         if response.status() == 200 {
             self.refresh().await

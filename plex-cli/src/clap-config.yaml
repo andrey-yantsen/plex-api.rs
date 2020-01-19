@@ -69,3 +69,17 @@ subcommands:
             help: Url to a plex server, e.g. http://127.0.0.1:32400
             takes_value: true
             required: true
+  - claim:
+      about: Unclaim a plex server
+      args:
+        - server-url:
+            short: u
+            long: server-url
+            help: Url to a plex server, e.g. http://127.0.0.1:32400
+            takes_value: true
+            required: true
+        - claim-token:
+            short: c
+            long: claim-token
+            help: A claim token. You must provide either this (from https://www.plex.tv/claim) or an authentication token
+            takes_value: true
