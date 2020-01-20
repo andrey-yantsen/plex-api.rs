@@ -4,6 +4,8 @@ use crate::serde_helpers::{
     option_bool_from_int, option_comma_separated_to_vec, option_seconds_to_datetime,
 };
 use chrono::{DateTime, Utc};
+use semver::Version;
+use serde::Deserialize;
 
 #[derive(Debug, Deserialize, Clone)]
 #[cfg_attr(all(test, feature = "test_new_attributes"), serde(deny_unknown_fields))]
@@ -102,7 +104,8 @@ pub struct ServerMediaContainer {
     transcoder_video_resolutions: Option<Vec<u16>>,
     #[serde(default, deserialize_with = "option_seconds_to_datetime")]
     updated_at: Option<DateTime<Utc>>,
-    version: Option<String>,
+    #[serde(deserialize_with = "plex_version_deserialize")]
+    version: Version,
 
     max_upload_bitrate: Option<u16>,
     max_upload_bitrate_reason: Option<String>,
@@ -117,5 +120,33 @@ pub struct ServerMediaContainer {
 impl ServerMediaContainer {
     pub const fn get_media_container(&self) -> &MediaContainer {
         &self.media_container
+    }
+}
+
+fn plex_version_deserialize<'de, D>(d: D) -> Result<Version, D::Error>
+where
+    D: serde::de::Deserializer<'de>,
+{
+    match String::deserialize(d) {
+        Ok(version_string) => {
+            let split_version: Vec<&str> = version_string.split('.').collect();
+
+            if split_version.len() != 4 {
+                Err(serde::de::Error::custom(
+                    "Value expected to contain 3 dots only, e.g. 1.14.1.5488-cc260c476",
+                ))
+            } else {
+                let fixed_version = format!(
+                    "{}.{}.{}+{}",
+                    split_version[0], split_version[1], split_version[2], split_version[3]
+                );
+                if let Ok(version) = Version::parse(&fixed_version) {
+                    Ok(version)
+                } else {
+                    Err(serde::de::Error::custom("Unable to parse version"))
+                }
+            }
+        }
+        Err(e) => Err(e),
     }
 }
