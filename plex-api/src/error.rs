@@ -79,6 +79,17 @@ pub enum PlexApiError {
         #[from]
         source: std::io::Error,
     },
+    #[error("Unable to parse version requirement")]
+    ReqSemverParsingError {
+        #[from]
+        source: semver::ReqParseError,
+    },
+    #[error("{message} (current server version: {current_version})")]
+    ServerVersionLessThanRequired {
+        message: String,
+        required_version: String,
+        current_version: String,
+    },
 }
 
 impl From<std::sync::PoisonError<RwLockReadGuard<'_, reqwest::Client>>> for PlexApiError {

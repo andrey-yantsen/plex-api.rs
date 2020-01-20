@@ -121,6 +121,9 @@ impl ServerMediaContainer {
     pub const fn get_media_container(&self) -> &MediaContainer {
         &self.media_container
     }
+    pub const fn get_version(&self) -> &Version {
+        &self.version
+    }
 }
 
 fn plex_version_deserialize<'de, D>(d: D) -> Result<Version, D::Error>

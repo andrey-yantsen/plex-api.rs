@@ -7,6 +7,9 @@ const MYPLEX_CLAIM_URL: &str = "myplex/claim";
 
 impl Server {
     pub async fn unclaim(&mut self) -> Result<()> {
+        // Not sure whether it's true — I just wanted to use the macros
+        required_server_version!(self, ">= 1.10", "Unclaim is available from 1.10 only");
+
         let response = self
             .prepare_query(MYPLEX_ACCOUNT_URL, reqwest::Method::DELETE)?
             .send()
@@ -20,6 +23,9 @@ impl Server {
     }
 
     pub async fn claim(&mut self, claim_token: &str) -> Result<()> {
+        // Not sure whether it's true — I just wanted to use the macros
+        required_server_version!(self, ">= 1.10", "Claim is available from 1.10 only");
+
         if claim_token.is_empty() {
             return Err(PlexApiError::ClaimTokenEmpty);
         } else if !claim_token.starts_with("claim-") {
@@ -39,17 +45,6 @@ impl Server {
             self.refresh().await
         } else {
             Err(PlexApiError::UnexpectedClaimError(response.text().await?))
-        }
-    }
-
-    async fn refresh(&mut self) -> Result<()> {
-        let new_server = Server::connect(&self.url.as_str().to_string(), &self.auth_token).await;
-        match new_server {
-            Ok(srv) => {
-                *self = srv;
-                Ok(())
-            }
-            Err(e) => Err(e),
         }
     }
 }

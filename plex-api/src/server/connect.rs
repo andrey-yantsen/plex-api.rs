@@ -1,7 +1,7 @@
 use crate::http::{base_headers, get_http_client};
 use crate::media_container::ServerMediaContainer;
 use crate::server::Server;
-use crate::PlexApiError;
+use crate::{PlexApiError, Result};
 
 impl Server {
     /// Establish a connection with the server server by provided url and [`authentication token`].
@@ -11,7 +11,7 @@ impl Server {
     pub async fn connect<U: reqwest::IntoUrl + crate::AsStr + Send>(
         url: U,
         auth_token: &str,
-    ) -> crate::Result<Self> {
+    ) -> Result<Self> {
         let response = get_http_client()?
             .get(url.as_str())
             .headers(base_headers()?)
@@ -29,6 +29,17 @@ impl Server {
             })
         } else {
             Err(PlexApiError::UnexpectedApiResponse(response.text().await?))
+        }
+    }
+
+    pub async fn refresh(&mut self) -> Result<()> {
+        let new_server = Server::connect(&self.url.as_str().to_string(), &self.auth_token).await;
+        match new_server {
+            Ok(srv) => {
+                *self = srv;
+                Ok(())
+            }
+            Err(e) => Err(e),
         }
     }
 }
