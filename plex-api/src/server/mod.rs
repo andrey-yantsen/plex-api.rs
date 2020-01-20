@@ -23,7 +23,8 @@ mod connect;
 mod my_plex;
 mod settings;
 
-use crate::{media_container::ServerMediaContainer, HasBaseUrl, HasMyPlexToken};
+use crate::library::Library;
+use crate::{media_container::ServerMediaContainer, HasBaseUrl, HasMyPlexToken, Result};
 use semver::Version;
 use url::Url;
 
@@ -35,9 +36,21 @@ pub struct Server {
     auth_token: String,
 }
 
-impl Server {
+impl<'a> Server {
     pub const fn get_version(&self) -> &Version {
         self.info.get_version()
+    }
+    pub async fn get_library(&'a self) -> Result<Library<'a>> {
+        Library::new(self).await
+    }
+    pub async fn get_sections(&'a self) -> Result<Library<'a>> {
+        Library::sections(self).await
+    }
+    pub async fn get_recently_added(&'a self) -> Result<Library<'a>> {
+        Library::recently_added(self).await
+    }
+    pub async fn get_on_deck(&'a self) -> Result<Library<'a>> {
+        Library::on_deck(self).await
     }
 }
 

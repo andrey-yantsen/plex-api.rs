@@ -28,6 +28,7 @@ use url::Url;
 mod config;
 mod error;
 mod http;
+mod library;
 mod media_container;
 mod my_plex;
 pub mod prelude;

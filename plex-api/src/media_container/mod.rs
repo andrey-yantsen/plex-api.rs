@@ -1,9 +1,11 @@
 mod device;
+mod library;
 mod server;
 mod settings;
 mod user;
 
 pub use self::device::*;
+pub use self::library::*;
 pub use self::server::*;
 pub use self::settings::*;
 pub use self::user::*;
