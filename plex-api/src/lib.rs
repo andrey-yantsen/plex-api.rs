@@ -19,7 +19,7 @@ pub use self::config::{
     X_PLEX_PLATFORM_VERSION, X_PLEX_PRODUCT, X_PLEX_PROVIDES, X_PLEX_SYNC_VERSION, X_PLEX_VERSION,
 };
 pub use self::error::*;
-pub use self::http::set_http_client;
+pub use self::http::{clear_headers_cache, set_http_client};
 pub use self::media_container::*;
 pub use self::my_plex::*;
 pub use self::server::*;

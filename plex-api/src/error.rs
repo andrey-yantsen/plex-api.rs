@@ -104,6 +104,22 @@ impl From<std::sync::PoisonError<RwLockWriteGuard<'_, reqwest::Client>>> for Ple
     }
 }
 
+impl From<std::sync::PoisonError<RwLockReadGuard<'_, reqwest::header::HeaderMap>>>
+    for PlexApiError
+{
+    fn from(_: PoisonError<RwLockReadGuard<'_, reqwest::header::HeaderMap>>) -> Self {
+        PlexApiError::RWLockReadPoison
+    }
+}
+
+impl From<std::sync::PoisonError<RwLockWriteGuard<'_, reqwest::header::HeaderMap>>>
+    for PlexApiError
+{
+    fn from(_: PoisonError<RwLockWriteGuard<'_, reqwest::header::HeaderMap>>) -> Self {
+        PlexApiError::RWLockWritePoison
+    }
+}
+
 impl From<std::sync::PoisonError<std::sync::RwLockReadGuard<'_, &str>>> for PlexApiError {
     fn from(_: PoisonError<RwLockReadGuard<'_, &str>>) -> Self {
         PlexApiError::RWLockReadPoison

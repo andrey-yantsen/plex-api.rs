@@ -2,7 +2,7 @@ use crate::config;
 use crate::Result;
 use reqwest::{header::HeaderMap, Client};
 use std::env;
-use std::sync::{LockResult, RwLockReadGuard};
+use std::sync::{LockResult, RwLock, RwLockReadGuard};
 use uname::uname;
 use uuid::Uuid;
 
@@ -36,7 +36,24 @@ pub fn get_http_client() -> LockResult<RwLockReadGuard<'static, Client>> {
     config::HTTP_CLIENT.read()
 }
 
+lazy_static! {
+    static ref HEADERS_CACHE: RwLock<HeaderMap> = { RwLock::new(HeaderMap::new()) };
+}
+
+pub fn clear_headers_cache() -> Result<()> {
+    let mut cache = HEADERS_CACHE.write()?;
+    *cache = HeaderMap::new();
+    Ok(())
+}
+
 pub fn base_headers() -> Result<HeaderMap> {
+    {
+        let cache = HEADERS_CACHE.read()?;
+        if !cache.is_empty() {
+            return Ok(cache.clone());
+        }
+    }
+
     let mut headers = HeaderMap::new();
     let i = uname()?;
 
@@ -103,6 +120,9 @@ pub fn base_headers() -> Result<HeaderMap> {
     }
 
     headers.insert("X-Plex-Device-Name", device_name.parse()?);
+
+    let mut cache = HEADERS_CACHE.write()?;
+    *cache = headers.clone();
 
     Ok(headers)
 }
