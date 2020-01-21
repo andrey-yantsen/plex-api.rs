@@ -1,13 +1,9 @@
-#[cfg(feature = "test_connect_authenticated")]
-#[tokio::test]
-async fn decode_server_online_authenticated() {
-    use crate::tests::get_server_authenticated;
-    get_server_authenticated().await;
-}
+test_case_online_all!(
+    _decode_server_online,
+    decode_server_online_anonymous,
+    decode_server_online_authenticated
+);
 
-#[cfg(feature = "test_connect_anonymous")]
-#[tokio::test]
-async fn decode_server_online_anonymous() {
-    use crate::tests::get_server_anonymous;
-    get_server_anonymous().await;
-}
+// If methods get_server_authenticated() / get_server_anonymous() will not fail — then everything's
+// fine
+async fn _decode_server_online(_srv: crate::Server) {}
