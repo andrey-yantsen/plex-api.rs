@@ -64,6 +64,7 @@ lazy_static! {
             RwLock::new(
                 Client::builder()
                     .timeout(Duration::from_secs(30))
+                    .connect_timeout(Duration::from_secs(5))
                     .build()
                     .expect("HTTP_CLIENT init")
             )
