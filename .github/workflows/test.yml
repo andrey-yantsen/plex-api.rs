@@ -201,12 +201,14 @@ jobs:
 
       - name: Run Plex Server
         run: |
+          ./plex-stub-data/media/configure.sh
+
           docker run -d \
             --network=host \
             -e TZ=UTC \
-            -v `pwd`/config:/config \
-            -v `pwd`/transcode:/transcode \
-            -v `pwd`/media:/data
+            -v `pwd`/plex-stub-data/config:/config \
+            -v `pwd`/plex-stub-data/transcode:/transcode \
+            -v `pwd`/plex-stub-data/media:/data \
             plexinc/pms-docker:${{ matrix.plex_server_version }}
 
       - name: Install stable toolchain
@@ -314,14 +316,17 @@ jobs:
         run: |
           PLEX_DOCKER_MACHINE_NAME="plex-test-docker-$(uuidgen)"
           echo ::set-env name=PLEX_DOCKER_MACHINE_NAME::${PLEX_DOCKER_MACHINE_NAME}
+
+          ./plex-stub-data/media/configure.sh
+
           docker run -d \
             --name="${PLEX_DOCKER_MACHINE_NAME}" \
             --network=host \
             -e TZ=UTC \
             -e PLEX_CLAIM="${PLEX_CLAIM}" \
-            -v `pwd`/config:/config \
-            -v `pwd`/transcode:/transcode \
-            -v `pwd`/media:/data
+            -v `pwd`/plex-stub-data/config:/config \
+            -v `pwd`/plex-stub-data/transcode:/transcode \
+            -v `pwd`/plex-stub-data/media:/data \
             plexinc/pms-docker:${{ matrix.plex_server_version }}
 
       - name: Wait for plex-server to boot
@@ -373,12 +378,14 @@ jobs:
 
       - name: Run Plex Server
         run: |
+          ./plex-stub-data/media/configure.sh
+
           docker run -d \
             --network=host \
             -e TZ=UTC \
-            -v `pwd`/config:/config \
-            -v `pwd`/transcode:/transcode \
-            -v `pwd`/media:/data
+            -v `pwd`/plex-stub-data/config:/config \
+            -v `pwd`/plex-stub-data/transcode:/transcode \
+            -v `pwd`/plex-stub-data/media:/data \
             plexinc/pms-docker:${{ matrix.plex_server_version }}
 
       - name: Cache cargo registry

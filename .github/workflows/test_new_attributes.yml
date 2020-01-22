@@ -53,7 +53,16 @@ jobs:
             ${{ runner.os }}-cargo-build-target-
 
       - name: Run Plex Server
-        run: docker run -d --network=host -e TZ=UTC plexinc/pms-docker:${{ matrix.plex_server_version }}
+        run: |
+          ./plex-stub-data/media/configure.sh
+
+          docker run -d \
+            --network=host \
+            -e TZ=UTC \
+            -v `pwd`/plex-stub-data/config:/config \
+            -v `pwd`/plex-stub-data/transcode:/transcode \
+            -v `pwd`/plex-stub-data/media:/data \
+            plexinc/pms-docker:${{ matrix.plex_server_version }}
 
       - name: Install stable toolchain
         uses: actions-rs/toolchain@v1
