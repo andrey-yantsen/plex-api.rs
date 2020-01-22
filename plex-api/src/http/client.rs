@@ -33,6 +33,18 @@ pub fn set_http_client(c: Client) -> Result<()> {
 }
 
 pub fn get_http_client() -> LockResult<RwLockReadGuard<'static, Client>> {
+    // override http-client in tests, to prevent using cached connections across different tokio runtimes
+    #[cfg(test)]
+    {
+        warn!("Resetting HTTP_CLIENT to default value to prevent connections caching");
+        set_http_client(
+            Client::builder()
+                .timeout(std::time::Duration::from_secs(30))
+                .build()
+                .expect("Build failed"),
+        )
+        .expect("Failed to reset http-client");
+    }
     config::HTTP_CLIENT.read()
 }
 
