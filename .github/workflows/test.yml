@@ -169,6 +169,8 @@ jobs:
     steps:
       - name: Checkout sources
         uses: actions/checkout@v1
+        with:
+          lfs: true
 
       - name: Cache cargo registry
         uses: actions/cache@v1
@@ -198,7 +200,14 @@ jobs:
             ${{ runner.os }}-cargo-build-target-
 
       - name: Run Plex Server
-        run: docker run -d --network=host -e TZ=UTC plexinc/pms-docker:${{ matrix.plex_server_version }}
+        run: |
+          docker run -d \
+            --network=host \
+            -e TZ=UTC \
+            -v `pwd`/config:/config \
+            -v `pwd`/transcode:/transcode \
+            -v `pwd`/media:/data
+            plexinc/pms-docker:${{ matrix.plex_server_version }}
 
       - name: Install stable toolchain
         uses: actions-rs/toolchain@v1
@@ -250,6 +259,8 @@ jobs:
     steps:
       - name: Checkout sources
         uses: actions/checkout@v1
+        with:
+          lfs: true
 
       - name: Cache cargo registry
         uses: actions/cache@v1
@@ -303,8 +314,14 @@ jobs:
         run: |
           PLEX_DOCKER_MACHINE_NAME="plex-test-docker-$(uuidgen)"
           echo ::set-env name=PLEX_DOCKER_MACHINE_NAME::${PLEX_DOCKER_MACHINE_NAME}
-          docker run -d --name="${PLEX_DOCKER_MACHINE_NAME}" --network=host -e PLEX_CLAIM="${PLEX_CLAIM}" \
-            -h "${DOCKER_MACHINE_NAME}" -e TZ=UTC \
+          docker run -d \
+            --name="${PLEX_DOCKER_MACHINE_NAME}" \
+            --network=host \
+            -e TZ=UTC \
+            -e PLEX_CLAIM="${PLEX_CLAIM}" \
+            -v `pwd`/config:/config \
+            -v `pwd`/transcode:/transcode \
+            -v `pwd`/media:/data
             plexinc/pms-docker:${{ matrix.plex_server_version }}
 
       - name: Wait for plex-server to boot
@@ -349,11 +366,20 @@ jobs:
     env:
       X_PLEX_CLIENT_IDENTIFIER: ${{ secrets.X_PLEX_CLIENT_IDENTIFIER }}
     steps:
-      - name: Run Plex Server
-        run: docker run -d --network=host -e TZ=UTC plexinc/pms-docker:latest
-
       - name: Checkout sources
         uses: actions/checkout@v1
+        with:
+          lfs: true
+
+      - name: Run Plex Server
+        run: |
+          docker run -d \
+            --network=host \
+            -e TZ=UTC \
+            -v `pwd`/config:/config \
+            -v `pwd`/transcode:/transcode \
+            -v `pwd`/media:/data
+            plexinc/pms-docker:${{ matrix.plex_server_version }}
 
       - name: Cache cargo registry
         uses: actions/cache@v1
