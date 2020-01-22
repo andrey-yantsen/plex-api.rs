@@ -1,0 +1,4 @@
+plex-stub-data/media/*.mkv filter=lfs diff=lfs merge=lfs -text
+plex-stub-data/media/*.jpg filter=lfs diff=lfs merge=lfs -text
+plex-stub-data/media/*.aac filter=lfs diff=lfs merge=lfs -text
+plex-stub-data/config/Library/Application[[:space:]]Support/Plex[[:space:]]Media[[:space:]]Server/**/* filter=lfs diff=lfs merge=lfs -text
