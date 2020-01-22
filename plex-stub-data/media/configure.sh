@@ -2,6 +2,8 @@
 
 set -e
 
+cd $(dirname $0)
+
 mkdir -p "TV-Shows/Game of Thrones"
 for s in $(seq 1 2)
 do
