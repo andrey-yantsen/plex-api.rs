@@ -13,14 +13,14 @@ pub struct LibraryMediaContainer {
     title1: Option<String>,
     title2: Option<String>,
     #[serde(rename = "Directory")]
-    directory: Option<Vec<DirectoryMediaContainer>>,
+    pub(crate) directory: Option<Vec<DirectoryMediaContainer>>,
     #[serde(flatten)]
     media_container: MediaContainer,
 }
 
 #[derive(Debug, Deserialize, Clone)]
 #[cfg_attr(all(test, feature = "test_new_attributes"), serde(deny_unknown_fields))]
-pub(crate) struct LibraryMediaContainerOuter {
+pub struct LibraryMediaContainerOuter {
     #[serde(rename = "MediaContainer")]
     media_container: LibraryMediaContainer,
 }
@@ -35,6 +35,6 @@ impl From<LibraryMediaContainerOuter> for LibraryMediaContainer {
 #[cfg_attr(all(test, feature = "test_new_attributes"), serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct DirectoryMediaContainer {
-    key: String,
-    title: String,
+    pub(crate) key: String,
+    pub(crate) title: String,
 }

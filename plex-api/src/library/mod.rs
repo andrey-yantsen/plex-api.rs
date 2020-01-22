@@ -1,4 +1,4 @@
-use crate::Result;
+use crate::{DirectoryMediaContainer, Result};
 use crate::{
     InternalHttpApi, LibraryMediaContainer, LibraryMediaContainerOuter, PlexApiError, Server,
 };
@@ -40,5 +40,9 @@ impl<'a> Library<'a> {
         } else {
             Err(PlexApiError::UnexpectedApiResponse(response.text().await?))
         }
+    }
+
+    pub const fn get_directory(&self) -> &Option<Vec<DirectoryMediaContainer>> {
+        &self.info.directory
     }
 }

@@ -1,13 +1,3 @@
-#[cfg(any(
-    feature = "test_connect_authenticated",
-    feature = "test_connect_anonymous"
-))]
-use crate::Server;
-
-#[cfg(any(
-    feature = "test_connect_authenticated",
-    feature = "test_connect_anonymous"
-))]
 macro_rules! test_case_online_anonymous {
     ($testing_function_name:ident,$function_name:ident) => {
         #[cfg(feature = "test_connect_anonymous")]
@@ -19,10 +9,6 @@ macro_rules! test_case_online_anonymous {
     };
 }
 
-#[cfg(any(
-    feature = "test_connect_authenticated",
-    feature = "test_connect_anonymous"
-))]
 macro_rules! test_case_online_authenticated {
     ($testing_function_name:ident,$function_name:ident) => {
         #[cfg(feature = "test_connect_authenticated")]
@@ -34,10 +20,6 @@ macro_rules! test_case_online_authenticated {
     };
 }
 
-#[cfg(any(
-    feature = "test_connect_authenticated",
-    feature = "test_connect_anonymous"
-))]
 macro_rules! test_case_online_all {
     ($testing_function_name:ident,$anonymous_testing_function_name:ident,$authenticated_testing_function_name:ident) => {
         test_case_online_anonymous!($testing_function_name, $anonymous_testing_function_name);
@@ -51,36 +33,28 @@ macro_rules! test_case_online_all {
 mod headers;
 mod media_container;
 
-#[cfg(any(
-    feature = "test_connect_authenticated",
-    feature = "test_connect_anonymous"
-))]
+mod library;
 mod my_plex;
-
-#[cfg(any(
-    feature = "test_connect_authenticated",
-    feature = "test_connect_anonymous"
-))]
 mod server;
 
 #[cfg(feature = "test_connect_authenticated")]
-async fn get_server_authenticated() -> Server {
+async fn get_server_authenticated() -> crate::Server {
     use std::env;
-    let srv: Result<Server, _> = {
+    let srv: Result<crate::Server, _> = {
         let server_url = env::var("PLEX_API_SERVER_URL").expect("Server url not specified");
         let auth_token = env::var("PLEX_API_AUTH_TOKEN").expect("Auth token not specified");
-        Server::connect(&server_url, &auth_token).await
+        crate::Server::connect(&server_url, &auth_token).await
     };
     assert!(srv.is_ok(), "Unable to connect to server: {:?}", srv.err());
     srv.unwrap()
 }
 
 #[cfg(feature = "test_connect_anonymous")]
-async fn get_server_anonymous() -> Server {
+async fn get_server_anonymous() -> crate::Server {
     use std::env;
-    let srv: Result<Server, _> = {
+    let srv: Result<crate::Server, _> = {
         let server_url = env::var("PLEX_API_SERVER_URL").expect("Server url not specified");
-        Server::connect(&server_url, "").await
+        crate::Server::connect(&server_url, "").await
     };
     assert!(srv.is_ok(), "Unable to connect to server: {:?}", srv.err());
     srv.unwrap()
