@@ -131,10 +131,10 @@ impl<T: HasPlexHeaders + HasBaseUrl> CanMakeRequests for T {
         // in tests we can't use Client Singleton due to connections caching across different tokio
         // runtimes, and this leads to unexpected errors in requests
 
-        #[cfg(not(test))]
-        let client = http::get_http_client()?;
-
-        #[cfg(test)]
+        //        #[cfg(not(test))]
+        //        let client = http::get_http_client()?;
+        //
+        //        #[cfg(test)]
         let client = reqwest::Client::builder()
             .timeout(core::time::Duration::from_secs(30))
             .connect_timeout(core::time::Duration::from_secs(5))
