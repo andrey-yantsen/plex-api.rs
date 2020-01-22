@@ -386,7 +386,7 @@ jobs:
             -v `pwd`/plex-stub-data/config:/config \
             -v `pwd`/plex-stub-data/transcode:/transcode \
             -v `pwd`/plex-stub-data/media:/data \
-            plexinc/pms-docker:${{ matrix.plex_server_version }}
+            plexinc/pms-docker:latest
 
       - name: Cache cargo registry
         uses: actions/cache@v1
