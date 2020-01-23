@@ -36,9 +36,6 @@ jobs:
         with:
           path: target
           key: ${{ runner.os }}-cargo-build-target-test-${{ hashFiles('**/Cargo.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-cargo-build-target-test-
-            ${{ runner.os }}-cargo-build-target-
 
       - name: Install stable toolchain
         uses: actions-rs/toolchain@v1
@@ -84,7 +81,6 @@ jobs:
           key: ${{ runner.os }}-cargo-build-target-release-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: |
             ${{ runner.os }}-cargo-build-target-test-${{ hashFiles('**/Cargo.lock') }}
-            ${{ runner.os }}-cargo-build-target-
 
       - uses: actions/checkout@v1
 

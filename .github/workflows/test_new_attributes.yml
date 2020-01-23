@@ -48,9 +48,6 @@ jobs:
           key: ${{ runner.os }}-cargo-build-target-test-online-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: |
             ${{ runner.os }}-cargo-build-target-test-${{ hashFiles('**/Cargo.lock') }}
-            ${{ runner.os }}-cargo-build-target-test-online-
-            ${{ runner.os }}-cargo-build-target-test-
-            ${{ runner.os }}-cargo-build-target-
 
       - name: Run Plex Server
         run: |
