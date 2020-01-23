@@ -45,6 +45,7 @@ fn base_headers_use_provided_values() {
         *client_identifier = "plex_client_identifier";
     }
 
+    assert!(crate::clear_headers_cache().is_ok()); // ensure that there are no cached headers
     let headers = base_headers().unwrap();
 
     let provides = X_PLEX_PROVIDES.read().unwrap();
