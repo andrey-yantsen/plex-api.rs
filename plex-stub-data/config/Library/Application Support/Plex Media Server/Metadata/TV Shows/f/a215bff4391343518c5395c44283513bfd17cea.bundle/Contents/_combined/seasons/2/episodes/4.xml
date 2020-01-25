@@ -1,3 +1,21 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:6afead9dd3f632eb087c99e408ba92eecc412507f701e6cb0944050647046396
-size 1053
+<?xml version='1.0' encoding='utf-8'?>
+<Episode>
+  <directors/>
+  <guest_stars/>
+  <originally_available_at>2012-04-22</originally_available_at>
+  <producers/>
+  <rating>7.9</rating>
+  <summary>Joffrey punishes Sansa for Robb’s victories, and Tyrion scrambles to temper the king’s cruelty. Catelyn entreats Stannis and Renly to unite against the Lannisters. Dany and her khalasar arrive at the prosperous city of Qarth. Tyrion coerces a relative into being his eyes and ears. Arya and Gendry are taken to Harrenhal, where their lives are in the hands of Ser Gregor Clegane. Stannis orders Davos to smuggle Melisandre into a secret cove.</summary>
+  <tags/>
+  <thumbs>
+    <item external="True" url="https://thetvdb.com/banners/episodes/121361/4245773.jpg" provider="com.plexapp.agents.thetvdb" media="com.plexapp.agents.thetvdb_7fbc7a7a4309d3f38a7be3f60179bfc69749beaf"/>
+  </thumbs>
+  <title>Garden of Bones</title>
+  <writers>
+    <item index="0">
+      <photo/>
+      <role/>
+      <name>Vanessa Taylor</name>
+    </item>
+  </writers>
+</Episode>

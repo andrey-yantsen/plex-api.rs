@@ -1,3 +1,26 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:62b8f4a9e248d00878248ec4f869c3e0c252b937a8afe46548f4c5fd41efc3da
-size 1256
+<?xml version='1.0' encoding='utf-8'?>
+<Episode>
+  <directors/>
+  <guest_stars/>
+  <originally_available_at>2011-05-29</originally_available_at>
+  <producers/>
+  <rating>8.1</rating>
+  <summary>Explaining that the future of the Lannisters is at stake, Tywin presses Jaime to “be the man you were meant to be” as they prepare for battle. Ned confronts Cersei about the secrets that killed Jon Arryn. With the fate of the missing Benjen very much on his mind, Jon takes his Night’s Watch vows, though not with the assignment he coveted. After Ser Jorah saves Daenerys from treachery, an enraged Drogo vows to lead the Dothraki where they’ve never gone before. An injured Robert takes pains to ensure an orderly transition at King’s Landing.</summary>
+  <tags/>
+  <thumbs>
+    <item external="True" url="https://thetvdb.com/banners/episodes/121361/3436461.jpg" provider="com.plexapp.agents.thetvdb" media="com.plexapp.agents.thetvdb_59f65830b8143e286cba0f9321d8b7e85718b2af"/>
+  </thumbs>
+  <title>You Win or You Die</title>
+  <writers>
+    <item index="0">
+      <photo/>
+      <role/>
+      <name>D. B. Weiss</name>
+    </item>
+    <item index="1">
+      <photo/>
+      <role/>
+      <name>David Benioff</name>
+    </item>
+  </writers>
+</Episode>

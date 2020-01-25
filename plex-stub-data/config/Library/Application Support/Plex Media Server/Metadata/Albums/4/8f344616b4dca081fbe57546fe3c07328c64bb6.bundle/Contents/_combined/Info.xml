@@ -1,3 +1,34 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:72f37bc853a3ecd698cbd8a41058ceec91a830e17150bafcdaf3b57d9fdb4cdb
-size 1635
+<?xml version='1.0' encoding='utf-8'?>
+<LegacyAlbum>
+  <art/>
+  <collections/>
+  <countries/>
+  <genres/>
+  <posters>
+    <item external="True" url="https://lastfm.freetls.fastly.net/i/u/300x300/49dcdd6bca99ebd1656b2e46653e032d.png" media="com.plexapp.agents.lastfm_7fa3d32ce8637d1a9fc4649001ddfdd8db2cf221" provider="com.plexapp.agents.lastfm"/>
+  </posters>
+  <producers/>
+  <reviews/>
+  <tags/>
+  <title>Try It Out</title>
+  <tracks>
+    <item guid="local://160" path="tracks/5c968cbdbb3e1f189431b7bbaa77db65801c1215">
+      <lyrics/>
+      <moods/>
+      <tags/>
+    </item>
+    <item guid="local://158" path="tracks/b6465e7441982418bb4b1ab460b06c434afcbda1">
+      <lyrics>
+        <item external="True" url="http://127.0.0.1:32400/services/lyricfind/lyrics?id=001-30740996&amp;lrc=1&amp;artist=Skrillex%20and%20Alvin%20Risk&amp;album=Try%20It%20Out&amp;track=Try%20It%20Out%20%5BNeon%20Mix%5D" remote="com.plexapp.agents.lyricfind_6d37f4ae94addf931a3de54f3f3b813e0c1eb611" format="lrc" sort_order="1" provider="com.plexapp.agents.lyricfind"/>
+        <item external="True" url="http://127.0.0.1:32400/services/lyricfind/lyrics?id=001-30740996&amp;artist=Skrillex%20and%20Alvin%20Risk&amp;album=Try%20It%20Out&amp;track=Try%20It%20Out%20%5BNeon%20Mix%5D" remote="com.plexapp.agents.lyricfind_611861d802f58b9109b0400bc2ce29203fc7d7fa" format="txt" sort_order="2" provider="com.plexapp.agents.lyricfind"/>
+      </lyrics>
+      <moods/>
+      <tags/>
+    </item>
+    <item guid="local://159" path="tracks/74b96f98ca47abc87fac01799de5fb6a5173fb25">
+      <lyrics/>
+      <moods/>
+      <tags/>
+    </item>
+  </tracks>
+</LegacyAlbum>

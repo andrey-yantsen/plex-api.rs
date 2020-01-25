@@ -1,3 +1,21 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:0fb95a4bbf43f10be384b20879c747596cb5de04ea4cef118b7cd87cefcf3ecf
-size 855
+<?xml version='1.0' encoding='utf-8'?>
+<Episode>
+  <directors/>
+  <guest_stars/>
+  <originally_available_at>2014-11-19</originally_available_at>
+  <producers/>
+  <rating>7.6</rating>
+  <summary>Kane leads a mission to make peace with the Grounders. Meanwhile, Jasper agrees to participate in a risky experiment, Lincoln enters a world of pain and President Dante Wallace issues a warning. Finally, Finn’s search for Clarke takes a violent turn.</summary>
+  <tags/>
+  <thumbs>
+    <item external="True" url="https://thetvdb.com/banners/episodes/268592/5032892.jpg" provider="com.plexapp.agents.thetvdb" media="com.plexapp.agents.thetvdb_a673206f9650c4bd5563ae48a87e9f0854bbb50e"/>
+  </thumbs>
+  <title>Human Trials</title>
+  <writers>
+    <item index="0">
+      <photo/>
+      <role/>
+      <name>Charlie Craig</name>
+    </item>
+  </writers>
+</Episode>

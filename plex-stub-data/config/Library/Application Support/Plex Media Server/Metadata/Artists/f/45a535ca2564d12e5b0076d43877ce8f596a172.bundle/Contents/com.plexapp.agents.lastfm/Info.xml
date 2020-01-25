@@ -1,3 +1,53 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:39fd6b4eb165e72f9494c29a3b96556a348c1edcb313de5141057a7d18cde673
-size 1760
+<?xml version='1.0' encoding='utf-8'?>
+<Artist id="Skrillex">
+  <rating/>
+  <art/>
+  <themes/>
+  <duration/>
+  <genres>
+    <item index="0">Dubstep</item>
+    <item index="1">Electronic</item>
+    <item index="2">Breakcore</item>
+    <item index="3">Electro</item>
+    <item index="4">Electronica</item>
+  </genres>
+  <title>Skrillex</title>
+  <rating_count/>
+  <collections/>
+  <tags/>
+  <audience_rating_image/>
+  <rating_image/>
+  <audience_rating/>
+  <posters>
+    <item external="True" url="https://lastfm.freetls.fastly.net/i/u/300x300/a06acf03d01e412d8853558fc9292367.png" media="1fa3857fd898a59c721dfd84164eebe6e8ae76ac"/>
+  </posters>
+  <albums/>
+  <countries/>
+  <title_sort/>
+  <original_title/>
+  <summary>Skrillex is the pseudonym used by Los Angeles, California, USA musician Sonny Moore to differentiate his electronic solo work from his work with From First to Last and his other solo projects.</summary>
+  <reviews/>
+  <similar>
+    <item index="0">Zomboy</item>
+    <item index="1">Knife Party</item>
+    <item index="2">Dog Blood</item>
+    <item index="3">Kill the Noise</item>
+    <item index="4">Flux Pavilion</item>
+    <item index="5">Skrillex</item>
+    <item index="6">Skrillex &amp; Damian "Jr. Gong" Marley</item>
+    <item index="7">Excision</item>
+    <item index="8">Dillon Francis</item>
+    <item index="9">Eptic</item>
+    <item index="10">Getter</item>
+    <item index="11">Doctor P</item>
+    <item index="12">MUST DIE!</item>
+    <item index="13">SKisM</item>
+    <item index="14">deadmau5</item>
+    <item index="15">Pegboard Nerds</item>
+    <item index="16">Datsik</item>
+    <item index="17">Modestep</item>
+    <item index="18">Virtual Riot</item>
+    <item index="19">Nero</item>
+  </similar>
+  <concerts/>
+</Artist>

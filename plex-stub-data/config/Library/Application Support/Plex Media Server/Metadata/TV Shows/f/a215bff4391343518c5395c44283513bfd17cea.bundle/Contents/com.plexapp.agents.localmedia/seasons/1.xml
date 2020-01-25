@@ -1,3 +1,27 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:84fbd999c832dc50fdb6093897e4aed5d8cfee86a31120c33a747c49f8f6cb6c
-size 727
+<?xml version='1.0' encoding='utf-8'?>
+<Season>
+  <index>1</index>
+  <art/>
+  <thumb/>
+  <show/>
+  <title/>
+  <art_url/>
+  <episode_count/>
+  <summary/>
+  <episodes>
+    <item external="True" extension="xml" key="1"/>
+    <item external="True" extension="xml" key="3"/>
+    <item external="True" extension="xml" key="2"/>
+    <item external="True" extension="xml" key="5"/>
+    <item external="True" extension="xml" key="4"/>
+    <item external="True" extension="xml" key="7"/>
+    <item external="True" extension="xml" key="6"/>
+    <item external="True" extension="xml" key="9"/>
+    <item external="True" extension="xml" key="8"/>
+  </episodes>
+  <key/>
+  <posters/>
+  <banners/>
+  <rating_key/>
+  <source_title/>
+</Season>

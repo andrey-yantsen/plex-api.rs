@@ -1,3 +1,21 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:41d7215511e6d04b405a0f13f91f259f6a49895c083b3667fc40b6e634948311
-size 920
+<?xml version='1.0' encoding='utf-8'?>
+<Episode>
+  <directors/>
+  <guest_stars/>
+  <originally_available_at>2014-04-16</originally_available_at>
+  <producers/>
+  <rating>7.6</rating>
+  <summary>Clarke’s newfound romance with Finn is threatened. Octavia suffers a blow to the head and wakes up to find a Grounder watching her. On the Ark, Abby exposes Kane’s plan to reduce the population of the Ark. Jaha and Abby notice a signal and realize at least some of the 100 must still be alive on Earth.</summary>
+  <tags/>
+  <thumbs>
+    <item external="True" url="https://thetvdb.com/banners/episodes/268592/4740980.jpg" provider="com.plexapp.agents.thetvdb" media="com.plexapp.agents.thetvdb_b8fc578b76723a5a4f2bb5e6f1f2b9c70ef48331"/>
+  </thumbs>
+  <title>Twilight's Last Gleaming</title>
+  <writers>
+    <item index="0">
+      <photo/>
+      <role/>
+      <name>Bruce Miller</name>
+    </item>
+  </writers>
+</Episode>

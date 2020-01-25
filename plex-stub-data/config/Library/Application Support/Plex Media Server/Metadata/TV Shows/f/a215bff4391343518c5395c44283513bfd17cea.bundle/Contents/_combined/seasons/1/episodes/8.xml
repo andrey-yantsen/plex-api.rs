@@ -1,3 +1,21 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:f9df5923e84939a43d2b6b9a8ee39e25b9ddb1b6c0be9975edb8fc01f17fc80c
-size 1134
+<?xml version='1.0' encoding='utf-8'?>
+<Episode>
+  <directors/>
+  <guest_stars/>
+  <originally_available_at>2011-06-05</originally_available_at>
+  <producers/>
+  <rating>8.0</rating>
+  <summary>In the aftermath of Ned's capture, Syrio and Arya face off against Lannister guards, while Cersei manipulates Sansa to her own ends. Robb rallies his father's northern allies against Tywin Lannister and heads south to war. Tyrion forms an uneasy alliance with the hill tribes and reunites with his father. Jon lashes out at Ser Alliser Thorne and battles a mysterious attacker from beyond the Wall. Dany is forced to reconcile her desire to conquer Westeros with Drogo's savagery after the Dothraki raid a peaceful village.</summary>
+  <tags/>
+  <thumbs>
+    <item external="True" url="https://thetvdb.com/banners/episodes/121361/3360391.jpg" provider="com.plexapp.agents.thetvdb" media="com.plexapp.agents.thetvdb_6ec8fa5d95a6f74152d85e3eae1d2af4d2c60f80"/>
+  </thumbs>
+  <title>The Pointy End</title>
+  <writers>
+    <item index="0">
+      <photo/>
+      <role/>
+      <name>George R. R. Martin</name>
+    </item>
+  </writers>
+</Episode>

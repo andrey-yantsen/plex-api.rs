@@ -1,3 +1,26 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:3b019717af16252c023e85fd455c3c76e460f2140273e97f185aaf0dcc63bf0e
-size 422
+<?xml version='1.0' encoding='utf-8'?>
+<Album id="127">
+  <rating/>
+  <art/>
+  <duration/>
+  <genres/>
+  <title/>
+  <rating_count/>
+  <collections/>
+  <countries/>
+  <available_at/>
+  <tags/>
+  <audience_rating_image/>
+  <rating_image/>
+  <producers/>
+  <audience_rating/>
+  <tracks/>
+  <studio/>
+  <posters/>
+  <originally_available_at/>
+  <artist/>
+  <title_sort/>
+  <original_title/>
+  <summary/>
+  <reviews/>
+</Album>

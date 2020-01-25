@@ -1,3 +1,31 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:0c9c3cc2f58e44dc797634e2417a1ea0fc8d5b6e4a242f6f1c4c0cc9b22777b5
-size 1241
+<?xml version='1.0' encoding='utf-8'?>
+<Episode>
+  <directors/>
+  <guest_stars/>
+  <originally_available_at>2014-05-07</originally_available_at>
+  <producers/>
+  <rating>7.6</rating>
+  <summary>Clarke and Bellamy go on a mission to find supplies for approaching winter. Some of the 100 accidentally eat nuts with powerfully hallucinogenic properties and lose their grasp on reality. Meanwhile, Octavia seizes the opportunity to help a friend escape, and a terrifying event brings Clarke and Bellamy closer. On the Ark, Commander Shumway secretly assigns one of the 100 to kill one of his own, and the treacherous actions of Diane Sydney are revealed.</summary>
+  <tags/>
+  <thumbs>
+    <item external="True" url="https://thetvdb.com/banners/episodes/268592/4828425.jpg" provider="com.plexapp.agents.thetvdb" media="com.plexapp.agents.thetvdb_a086ef7ac3f3b7b1e91bda452a3f2ab507e1f019"/>
+  </thumbs>
+  <title>Day Trip</title>
+  <writers>
+    <item index="0">
+      <photo/>
+      <role/>
+      <name>Andrei Haq</name>
+    </item>
+    <item index="1">
+      <photo/>
+      <role/>
+      <name>Elizabeth Craft</name>
+    </item>
+    <item index="2">
+      <photo/>
+      <role/>
+      <name>Sarah Fain</name>
+    </item>
+  </writers>
+</Episode>

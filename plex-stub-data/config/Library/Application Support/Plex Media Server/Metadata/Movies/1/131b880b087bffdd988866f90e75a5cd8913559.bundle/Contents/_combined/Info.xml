@@ -1,3 +1,100 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:6579ec70ce4f16182eaec452034aae9aeaf07d8773cd838606a8dc63acf3f890
-size 6011
+<?xml version='1.0' encoding='utf-8'?>
+<Movie>
+  <art>
+    <item external="True" url="http://image.tmdb.org/t/p/original/6bOku5MQNLCnufoaJsGh4weoZCF.jpg" sort_order="1" provider="com.plexapp.agents.imdb" media="com.plexapp.agents.imdb_857081e0ef8cfd2db1330be629989e9d29b13b8d"/>
+    <item external="True" url="http://image.tmdb.org/t/p/original/cgCQGM3Ir2av5ihymK9SmPuAbf7.jpg" preview="com.plexapp.agents.imdb_2a2448a33dae8954e01fde33b69bfc703360b3d9" sort_order="2" provider="com.plexapp.agents.imdb"/>
+    <item external="True" url="http://image.tmdb.org/t/p/original/vp102ikTt10EWHsVFIUSyED4GFz.jpg" preview="com.plexapp.agents.imdb_9c74750d8b1eca4c99a7dba711921d1a4fa55cb4" sort_order="3" provider="com.plexapp.agents.imdb"/>
+    <item external="True" url="http://image.tmdb.org/t/p/original/xapNkrM5E7fS8JzQdJI6hyZ2oqo.jpg" preview="com.plexapp.agents.imdb_7991bd578b47ac182a7682cdde733a8f78636342" sort_order="4" provider="com.plexapp.agents.imdb"/>
+    <item external="True" url="http://image.tmdb.org/t/p/original/euNNlKoQwlJQeloTERkricxexF.jpg" preview="com.plexapp.agents.imdb_27757c6e24d6e545b9793746b30ac880d3432aea" sort_order="5" provider="com.plexapp.agents.imdb"/>
+    <item external="True" url="http://image.tmdb.org/t/p/original/2mHCeKFop7sHq12A911PlpuPcUu.jpg" preview="com.plexapp.agents.imdb_f7c370acfd45195865c9a4dbe0fbafda3a4cd83b" sort_order="6" provider="com.plexapp.agents.imdb"/>
+    <item external="True" url="http://image.tmdb.org/t/p/original/98LUfTnkn7YeQzwCavbygz9expG.jpg" preview="com.plexapp.agents.imdb_5e29443819c833f45d84c56a943680044f52dab0" sort_order="7" provider="com.plexapp.agents.imdb"/>
+    <item external="True" url="http://image.tmdb.org/t/p/original/8v98LXt8ecLTCl8fiIvBhCw7qZ9.jpg" preview="com.plexapp.agents.imdb_2d41204c53e84f4069ce59af671502eee102c078" sort_order="8" provider="com.plexapp.agents.imdb"/>
+    <item external="True" url="http://image.tmdb.org/t/p/original/xQ8Yt7ym9y8kXrAP6Jn4LZmlCqX.jpg" preview="com.plexapp.agents.imdb_5e2e3a52f3027a82d979cbb3e166aadcc2676d8a" sort_order="9" provider="com.plexapp.agents.imdb"/>
+  </art>
+  <banners/>
+  <chapters/>
+  <collections/>
+  <content_rating>PG</content_rating>
+  <countries>
+    <item index="0">Netherlands</item>
+  </countries>
+  <directors>
+    <item index="0">
+      <photo>http://image.tmdb.org/t/p/original/82OA969wEqz7EaS7zLsE6l6Xr89.jpg</photo>
+      <role/>
+      <name>Colin Levy</name>
+    </item>
+  </directors>
+  <duration>840000</duration>
+  <genres>
+    <item index="0">Animation</item>
+    <item index="1">Fantasy</item>
+  </genres>
+  <originally_available_at>2010-09-30</originally_available_at>
+  <posters>
+    <item external="True" url="http://image.tmdb.org/t/p/original/9kBupxzoWaNeNiFb41vuUphREO2.jpg" sort_order="1" provider="com.plexapp.agents.imdb" media="com.plexapp.agents.imdb_1f6a867ac716a4488757cd678c489eaa7aa9776d"/>
+    <item external="True" url="http://image.tmdb.org/t/p/original/bV1FokqAUeK69NBFsgOeWZQL6Fs.jpg" preview="com.plexapp.agents.imdb_944043373c39488664ac94d2edf6e5d4d569bc7a" sort_order="2" provider="com.plexapp.agents.imdb"/>
+    <item external="True" url="http://image.tmdb.org/t/p/original/iJQy5tF9eMRU1Id3OqCvimazJZl.jpg" preview="com.plexapp.agents.imdb_112cc1764956d86260d2829da3b6aaa5c0da63e6" sort_order="3" provider="com.plexapp.agents.imdb"/>
+    <item external="True" url="http://image.tmdb.org/t/p/original/hs4G1SVV5M7vz1eXB26hNXXRlES.jpg" preview="com.plexapp.agents.imdb_7f677e7d15560f9bf7e209fcc134740983f52894" sort_order="4" provider="com.plexapp.agents.imdb"/>
+    <item external="True" url="http://image.tmdb.org/t/p/original/2hwMOwcyyYWlHBldhonipg09kRm.jpg" preview="com.plexapp.agents.imdb_74790b4a3b05f2083bf5317af6b23ebc1f515c7c" sort_order="5" provider="com.plexapp.agents.imdb"/>
+  </posters>
+  <producers>
+    <item index="0">
+      <photo>http://image.tmdb.org/t/p/original/w5NbjQk0E14A5LMTtn5nm3oU5cD.jpg</photo>
+      <role/>
+      <name>Ton Roosendaal</name>
+    </item>
+  </producers>
+  <rating>7.6</rating>
+  <rating_image/>
+  <audience_rating/>
+  <audience_rating_image/>
+  <reviews/>
+  <roles>
+    <item index="0">
+      <photo>http://image.tmdb.org/t/p/original/wkXlorWKdVziK9h3g0Lizc8aO2J.jpg</photo>
+      <role>Sintel (voice)</role>
+      <name>Halina Reijn</name>
+    </item>
+    <item index="1">
+      <photo>http://image.tmdb.org/t/p/original/jUHJ3ettpi4nCTEO14W8fRfCsn3.jpg</photo>
+      <role>Shaman (voice)</role>
+      <name>Thom Hoffman</name>
+    </item>
+  </roles>
+  <similar>
+    <item index="0">Elephants Dream</item>
+    <item index="1">Big Buck Bunny</item>
+    <item index="2">Invention of Love</item>
+    <item index="3">Birthday Boy</item>
+    <item index="4">The Fox and the Hare</item>
+    <item index="5">ARK</item>
+    <item index="6">Muto</item>
+    <item index="7">Tuvalu</item>
+    <item index="8">Gideon's Army</item>
+    <item index="9">The Collected Shorts of Jan Svankmajer</item>
+    <item index="10">Sebastian's Voodoo</item>
+    <item index="11">Ocean Wonderland</item>
+    <item index="12">Cosmos Laundromat</item>
+    <item index="13">The Witch's Revenge</item>
+    <item index="14">Panorama from Top of a Moving Train</item>
+    <item index="15">Wild and Woolfy</item>
+    <item index="16">Cannon Fodder</item>
+    <item index="17">ABE</item>
+    <item index="18">The Royal Scandal</item>
+    <item index="19">Teen-Age Strangler</item>
+  </similar>
+  <studio>Blender Foundation</studio>
+  <summary>A wandering warrior finds an unlikely friend in the form of a young dragon. The two develop a close bond, until one day the dragon is snatched away. She then sets out on a relentless quest to reclaim her friend, finding in the end that her quest exacts a far greater price than she had ever imagined.</summary>
+  <tags/>
+  <themes/>
+  <title>Sintel</title>
+  <writers>
+    <item index="0">
+      <photo>http://image.tmdb.org/t/p/original/sN89hQog4HIM28lx3es8UlDQt0z.jpg</photo>
+      <role/>
+      <name>Esther Wouda</name>
+    </item>
+  </writers>
+  <year>2010</year>
+</Movie>

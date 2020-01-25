@@ -1,3 +1,26 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:3f539e563a179232c09fbfcb56f53937c6bb2ee0c944aaeffe7fea94965e3e14
-size 933
+<?xml version='1.0' encoding='utf-8'?>
+<Episode>
+  <directors/>
+  <guest_stars/>
+  <originally_available_at>2014-04-23</originally_available_at>
+  <producers/>
+  <rating>7.6</rating>
+  <summary>Bellamy leads his crew into Grounder territory as they search for Octavia. Raven can't help but notice the deep connection between Finn and Clarke. Meanwhile, flashbacks reveal Bellamy's and Octavia's childhood on the Ark.</summary>
+  <tags/>
+  <thumbs>
+    <item external="True" url="https://thetvdb.com/banners/episodes/268592/4828423.jpg" provider="com.plexapp.agents.thetvdb" media="com.plexapp.agents.thetvdb_e1b78abc3827408f8bf354ffcd5d8302fbeeb6fb"/>
+  </thumbs>
+  <title>His Sister's Keeper</title>
+  <writers>
+    <item index="0">
+      <photo/>
+      <role/>
+      <name>Dorothy Fortenberry</name>
+    </item>
+    <item index="1">
+      <photo/>
+      <role/>
+      <name>Tracy Bellomo</name>
+    </item>
+  </writers>
+</Episode>

@@ -1,3 +1,26 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:3c6b41f5cb8da7b15eef6bd81e351020e3dc6258ff9ec5b581f4b9601939a073
-size 1162
+<?xml version='1.0' encoding='utf-8'?>
+<Episode>
+  <directors/>
+  <guest_stars/>
+  <originally_available_at>2014-04-02</originally_available_at>
+  <producers/>
+  <rating>7.5</rating>
+  <summary>In a desperate attempt to treat Jasper’s festering wounds, Clarke, Finn and Wells set out in search of a seaweed antibiotic. Bellamy and his crew go hunting for food, and are joined by Charlotte, a lovable 13-year-old, who feels safe under Bellamy’s protection. A thick, acidic fog appears, forcing Clarke, Finn and Wells to seek shelter inside an ancient van. While they are trapped, Clarke confronts Wells on his betrayal that resulted in her father’s death.</summary>
+  <tags/>
+  <thumbs>
+    <item external="True" url="https://thetvdb.com/banners/episodes/268592/4735399.jpg" provider="com.plexapp.agents.thetvdb" media="com.plexapp.agents.thetvdb_317e0031f4533ee38cb1e3355109df49ad2e59f6"/>
+  </thumbs>
+  <title>Earth Kills</title>
+  <writers>
+    <item index="0">
+      <photo/>
+      <role/>
+      <name>Elizabeth Craft</name>
+    </item>
+    <item index="1">
+      <photo/>
+      <role/>
+      <name>Sarah Fain</name>
+    </item>
+  </writers>
+</Episode>

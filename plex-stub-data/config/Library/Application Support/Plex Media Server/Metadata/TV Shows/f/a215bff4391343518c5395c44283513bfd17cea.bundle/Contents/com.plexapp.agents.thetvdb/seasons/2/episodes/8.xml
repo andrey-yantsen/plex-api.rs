@@ -1,3 +1,38 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:ff8573ad9739a704a3e6b4dce90d1fb4db6f37378fff10ab6da9a16580e1dac6
-size 991
+<?xml version='1.0' encoding='utf-8'?>
+<Episode>
+  <rating>7.9</rating>
+  <art/>
+  <show/>
+  <absolute_index/>
+  <thumbs>
+    <item external="True" url="https://thetvdb.com/banners/episodes/121361/4245777.jpg" preview="e4ba49c31a475b8be7c6a6b366d6283e64564c63"/>
+  </thumbs>
+  <duration/>
+  <rating_key/>
+  <index/>
+  <source_title/>
+  <thumb/>
+  <title>The Prince of Winterfell</title>
+  <content_rating_age/>
+  <writers>
+    <item index="0">
+      <photo/>
+      <role/>
+      <name>D. B. Weiss</name>
+    </item>
+    <item index="1">
+      <photo/>
+      <role/>
+      <name>David Benioff</name>
+    </item>
+  </writers>
+  <tags/>
+  <season/>
+  <producers/>
+  <key/>
+  <originally_available_at>2012-05-20</originally_available_at>
+  <content_rating/>
+  <summary>Theon receives a visitor. Arya asks her third and last death from Jaqen. While Stannis' army is reaching its destination, Davos is offered a reward.  Betrayal befalls Robb.</summary>
+  <guest_stars/>
+  <directors/>
+</Episode>

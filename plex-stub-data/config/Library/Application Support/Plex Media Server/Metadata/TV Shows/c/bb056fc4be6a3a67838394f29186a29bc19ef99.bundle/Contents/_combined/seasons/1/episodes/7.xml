@@ -1,3 +1,26 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:3d2ffa9eaf0b2a927b03f24d644c891fe5ecb9a49aa7a77d576731d4280e17c0
-size 1125
+<?xml version='1.0' encoding='utf-8'?>
+<Episode>
+  <directors/>
+  <guest_stars/>
+  <originally_available_at>2014-04-30</originally_available_at>
+  <producers/>
+  <rating>7.7</rating>
+  <summary>Clarke and Raven make contact with the Ark, and Abby guides Clarke through a dangerous procedure in a desperate move to save one of their own. Meanwhile, on the Ark, Abby is removed from the council, and former Chancellor Diana Sydney takes her place. Jaha reveals to Abby that there are not enough drop ships for everyone on the Ark to go down to Earth, and Kane begins to deal with his guilt over his recent decision.</summary>
+  <tags/>
+  <thumbs>
+    <item external="True" url="https://thetvdb.com/banners/episodes/268592/4828424.jpg" provider="com.plexapp.agents.thetvdb" media="com.plexapp.agents.thetvdb_2e44a92efcd788f6e0765af8f63c13ff2f3a491f"/>
+  </thumbs>
+  <title>Contents Under Pressure</title>
+  <writers>
+    <item index="0">
+      <photo/>
+      <role/>
+      <name>Akela Cooper</name>
+    </item>
+    <item index="1">
+      <photo/>
+      <role/>
+      <name>Kira Snyder</name>
+    </item>
+  </writers>
+</Episode>

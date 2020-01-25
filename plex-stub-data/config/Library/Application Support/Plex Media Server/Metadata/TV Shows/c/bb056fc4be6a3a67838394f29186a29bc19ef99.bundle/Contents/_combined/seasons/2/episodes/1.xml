@@ -1,3 +1,21 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:995c36cb9ca19b718d64e37d908ac3c4dce207261d55185f9fd4da3a44f9f9b8
-size 1004
+<?xml version='1.0' encoding='utf-8'?>
+<Episode>
+  <directors/>
+  <guest_stars/>
+  <originally_available_at>2014-10-22</originally_available_at>
+  <producers/>
+  <rating>7.7</rating>
+  <summary>Clarke is still alone in the white room, frantically trying to make sense of her bizarre surroundings, while the fate of Bellamy, Finn and Raven is still unknown. Lincoln and Octavia’s daring plan is thwarted and an enemy returns. Meanwhile, Abby, Kane and the survivors of the Ark must face physical and moral dilemmas in their dangerous and beautiful new world. Finally, Jaha makes a heroic decision.</summary>
+  <tags/>
+  <thumbs>
+    <item external="True" url="https://thetvdb.com/banners/episodes/268592/4887576.jpg" provider="com.plexapp.agents.thetvdb" media="com.plexapp.agents.thetvdb_b03cbbce67ec845ce9f4ebb8515d70c6c6951084"/>
+  </thumbs>
+  <title>The 48</title>
+  <writers>
+    <item index="0">
+      <photo/>
+      <role/>
+      <name>Jason Rothenberg</name>
+    </item>
+  </writers>
+</Episode>

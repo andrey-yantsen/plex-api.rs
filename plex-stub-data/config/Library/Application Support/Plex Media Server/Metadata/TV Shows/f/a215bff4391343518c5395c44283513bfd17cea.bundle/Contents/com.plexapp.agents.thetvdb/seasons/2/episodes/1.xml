@@ -1,3 +1,38 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:2d5e694941e213b86c9f2255c8aae7dc219d56c81da93eafa5e4e4f23272f0d7
-size 1451
+<?xml version='1.0' encoding='utf-8'?>
+<Episode>
+  <rating>7.9</rating>
+  <art/>
+  <show/>
+  <absolute_index/>
+  <thumbs>
+    <item external="True" url="https://thetvdb.com/banners/episodes/121361/4161693.jpg" preview="a6d29977533202d2a4c30c7ba5f772e8077ce783"/>
+  </thumbs>
+  <duration/>
+  <rating_key/>
+  <index/>
+  <source_title/>
+  <thumb/>
+  <title>The North Remembers</title>
+  <content_rating_age/>
+  <writers>
+    <item index="0">
+      <photo/>
+      <role/>
+      <name>D. B. Weiss</name>
+    </item>
+    <item index="1">
+      <photo/>
+      <role/>
+      <name>David Benioff</name>
+    </item>
+  </writers>
+  <tags/>
+  <season/>
+  <producers/>
+  <key/>
+  <originally_available_at>2012-04-01</originally_available_at>
+  <content_rating/>
+  <summary>As Robb Stark and his northern army continue the war against the Lannisters, Tyrion arrives in King’s Landing to counsel Joffrey and temper the young king’s excesses.  On the island of Dragonstone, Stannis Baratheon plots an invasion to claim his late brother’s throne, allying himself with the fiery Melisandre, a strange priestess of a stranger god.  Across the sea, Daenerys, her three young dragons, and the khalasar trek through the Red Waste in search of allies, or water.  In the North, Bran presides over a threadbare Winterfell, while beyond the Wall, Jon Snow and the Night’s Watch must shelter with a devious wildling.</summary>
+  <guest_stars/>
+  <directors/>
+</Episode>

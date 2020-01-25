@@ -1,3 +1,39 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:86ac29eb4197e2b452812fd8f40bd64d2843401bddaef3f12fe41ecbae6bb6fd
-size 2270
+<?xml version='1.0' encoding='utf-8'?>
+<LegacyAlbum>
+  <art/>
+  <collections/>
+  <countries/>
+  <genres/>
+  <posters>
+    <item external="True" url="https://lastfm.freetls.fastly.net/i/u/300x300/6c4ee6a22457448f82af23ef5134cfa6.png" media="com.plexapp.agents.lastfm_6e8635b402aaf29bc08afbf017fd34145e949cff" provider="com.plexapp.agents.lastfm"/>
+  </posters>
+  <producers/>
+  <reviews/>
+  <tags/>
+  <title>Toxicity</title>
+  <tracks>
+    <item guid="local://150" path="tracks/74432d3179225f97ade3de7162608739b1efb801">
+      <lyrics>
+        <item external="True" url="http://127.0.0.1:32400/services/lyricfind/lyrics?id=001-4341544&amp;artist=System%20of%20a%20Down&amp;album=Toxicity&amp;track=Metro" remote="com.plexapp.agents.lyricfind_6a603aae19ab32f6e0b6f80dcae873736d6af21e" format="txt" sort_order="1" provider="com.plexapp.agents.lyricfind"/>
+      </lyrics>
+      <moods/>
+      <tags/>
+    </item>
+    <item guid="local://149" path="tracks/d5170f2ed5e639076b7855134a5b8ae416e1cd06">
+      <lyrics>
+        <item external="True" url="http://127.0.0.1:32400/services/lyricfind/lyrics?id=001-2448670&amp;artist=System%20of%20a%20Down&amp;album=Toxicity&amp;track=Marmalade" remote="com.plexapp.agents.lyricfind_2c353fc5111f820a40e9411c5941e7a4167f8b6d" format="txt" sort_order="1" provider="com.plexapp.agents.lyricfind"/>
+      </lyrics>
+      <moods/>
+      <tags/>
+    </item>
+    <item guid="local://148" path="tracks/c65b3190b958f7cc72288f07fa276b979e8caf7e">
+      <lyrics>
+        <item external="True" url="http://127.0.0.1:32400/services/lyricfind/lyrics?id=001-32235155&amp;lrc=1&amp;artist=System%20of%20a%20Down&amp;album=Toxicity&amp;track=Toxicity" remote="com.plexapp.agents.lyricfind_d1bd21003753e1131abf48fd091643460f9a24f6" format="lrc" sort_order="1" provider="com.plexapp.agents.lyricfind"/>
+        <item external="True" url="http://127.0.0.1:32400/services/lyricfind/lyrics?id=001-32235155&amp;artist=System%20of%20a%20Down&amp;album=Toxicity&amp;track=Toxicity" remote="com.plexapp.agents.lyricfind_805fb10fec028014cc2ac1a898d08873d51e0647" format="txt" sort_order="2" provider="com.plexapp.agents.lyricfind"/>
+      </lyrics>
+      <moods/>
+      <rating_count>9450651</rating_count>
+      <tags/>
+    </item>
+  </tracks>
+</LegacyAlbum>

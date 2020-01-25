@@ -1,3 +1,52 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:f5f1176789aa0b31bb5b86a3f4370444ea5ad23993fbf32d15895aca3500de1f
-size 1080
+<?xml version='1.0' encoding='utf-8'?>
+<Album id="System%20of%20a%20Down/Toxicity">
+  <rating/>
+  <art/>
+  <duration/>
+  <genres/>
+  <title>Toxicity</title>
+  <rating_count/>
+  <collections/>
+  <countries/>
+  <available_at/>
+  <tags/>
+  <audience_rating_image/>
+  <rating_image/>
+  <producers/>
+  <audience_rating/>
+  <tracks>
+    <item key="local://148">
+      <rating/>
+      <lyrics/>
+      <duration/>
+      <rating_key/>
+      <album/>
+      <index/>
+      <genres/>
+      <source_title/>
+      <thumb/>
+      <title/>
+      <rating_count>9450651</rating_count>
+      <tags/>
+      <tempo/>
+      <moods/>
+      <key/>
+      <originally_available_at/>
+      <name/>
+      <artist/>
+      <title_sort/>
+      <summary/>
+      <art_url/>
+    </item>
+  </tracks>
+  <studio/>
+  <posters>
+    <item external="True" url="https://lastfm.freetls.fastly.net/i/u/300x300/6c4ee6a22457448f82af23ef5134cfa6.png" media="6e8635b402aaf29bc08afbf017fd34145e949cff"/>
+  </posters>
+  <originally_available_at/>
+  <artist/>
+  <title_sort/>
+  <original_title/>
+  <summary/>
+  <reviews/>
+</Album>

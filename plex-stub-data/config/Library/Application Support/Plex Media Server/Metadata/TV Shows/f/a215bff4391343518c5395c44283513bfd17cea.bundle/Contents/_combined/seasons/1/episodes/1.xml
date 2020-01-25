@@ -1,3 +1,26 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:df2313f2857d934e174969e0a24728c203a1176c8c2cc79a2639ae986b837b85
-size 1044
+<?xml version='1.0' encoding='utf-8'?>
+<Episode>
+  <directors/>
+  <guest_stars/>
+  <originally_available_at>2011-04-17</originally_available_at>
+  <producers/>
+  <rating>7.9</rating>
+  <summary>Ned Stark, Lord of Winterfell learns that his mentor, Jon Arryn, has died and that King Robert is on his way north to offer Ned Arryn’s position as the King’s Hand. Across the Narrow Sea in Pentos, Viserys Targaryen plans to wed his sister Daenerys to the nomadic Dothraki warrior leader, Khal Drogo to forge an alliance to take the throne.</summary>
+  <tags/>
+  <thumbs>
+    <item external="True" url="https://thetvdb.com/banners/episodes/121361/3254641.jpg" provider="com.plexapp.agents.thetvdb" media="com.plexapp.agents.thetvdb_58c1d42274074f86b60ea0ac0d2841758ebaccd4"/>
+  </thumbs>
+  <title>Winter Is Coming</title>
+  <writers>
+    <item index="0">
+      <photo/>
+      <role/>
+      <name>D. B. Weiss</name>
+    </item>
+    <item index="1">
+      <photo/>
+      <role/>
+      <name>David Benioff</name>
+    </item>
+  </writers>
+</Episode>

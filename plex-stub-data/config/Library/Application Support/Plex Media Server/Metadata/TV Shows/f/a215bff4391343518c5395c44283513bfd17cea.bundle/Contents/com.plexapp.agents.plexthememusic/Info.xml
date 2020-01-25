@@ -1,3 +1,30 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:ce44840d65677619fd9229b7033eae68dc5961e3b36f0604635595850549629a
-size 588
+<?xml version='1.0' encoding='utf-8'?>
+<TV_Show id="121361">
+  <rating/>
+  <title_sort/>
+  <art/>
+  <themes>
+    <item external="True" url="https://tvthemes.plexapp.com/121361.mp3" media="ab7fe84c48c68137b27a0808f91e4e7e44c1810a"/>
+  </themes>
+  <posters/>
+  <duration/>
+  <genres/>
+  <title/>
+  <rating_count/>
+  <collections/>
+  <tags/>
+  <audience_rating_image/>
+  <rating_image/>
+  <audience_rating/>
+  <studio/>
+  <seasons/>
+  <originally_available_at/>
+  <roles/>
+  <countries/>
+  <content_rating/>
+  <original_title/>
+  <summary/>
+  <reviews/>
+  <banners/>
+  <similar/>
+</TV_Show>

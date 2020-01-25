@@ -1,3 +1,38 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:17b6037a63dc5f8892588d2e2f10a5d4fc849c9e7acaabe59219b2920eced412
-size 1318
+<?xml version='1.0' encoding='utf-8'?>
+<Episode>
+  <rating>7.8</rating>
+  <art/>
+  <show/>
+  <absolute_index/>
+  <thumbs>
+    <item external="True" url="https://thetvdb.com/banners/episodes/121361/4245774.jpg" preview="9c08ee8ae2410d207ad556f3d98a61f1b0fad1b8"/>
+  </thumbs>
+  <duration/>
+  <rating_key/>
+  <index/>
+  <source_title/>
+  <thumb/>
+  <title>The Ghost of Harrenhal</title>
+  <content_rating_age/>
+  <writers>
+    <item index="0">
+      <photo/>
+      <role/>
+      <name>D. B. Weiss</name>
+    </item>
+    <item index="1">
+      <photo/>
+      <role/>
+      <name>David Benioff</name>
+    </item>
+  </writers>
+  <tags/>
+  <season/>
+  <producers/>
+  <key/>
+  <originally_available_at>2012-04-29</originally_available_at>
+  <content_rating/>
+  <summary>The Baratheon rivalry ends, driving Catelyn to flee and Littlefinger to act. At King’s Landing, Tyrion’s source alerts him to Joffrey’s defense plan - and a mysterious secret weapon. Theon sails to the Stony Shore to prove he’s worthy to be called Ironborn. At Harrenhal, Arya receives a promise from Jaqen H’ghar, one of the prisoners she saved from the Gold Cloaks. The Night’s Watch arrive at the Fist of the First Men, an ancient ringfort where they hope to stem the wildings' advance.</summary>
+  <guest_stars/>
+  <directors/>
+</Episode>

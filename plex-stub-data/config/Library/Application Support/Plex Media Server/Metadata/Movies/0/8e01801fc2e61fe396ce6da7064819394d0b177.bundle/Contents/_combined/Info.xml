@@ -1,3 +1,227 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:23ca46cfc00960400c79dde30bbe0122522a191a9e788a1398b4d6c0d6ea9cb7
-size 10642
+<?xml version='1.0' encoding='utf-8'?>
+<Movie>
+  <art>
+    <item external="True" url="http://image.tmdb.org/t/p/original/liJQNtKLYTSfk0hWMyiSFrXPm9G.jpg" sort_order="1" provider="com.plexapp.agents.imdb" media="com.plexapp.agents.imdb_d50675d7616c9e707d41b20943b973a5a17875da"/>
+    <item external="True" url="http://image.tmdb.org/t/p/original/lyGLiwtqQKrgh8mu8SFlAnOo2Ar.jpg" preview="com.plexapp.agents.imdb_bd94cf087fa0ccd904314a5ba01de4576616a226" sort_order="2" provider="com.plexapp.agents.imdb"/>
+    <item external="True" url="http://image.tmdb.org/t/p/original/6Rx6Onu2PkTw1B86mVn9IGoaEO4.jpg" preview="com.plexapp.agents.imdb_ffbf737fffff96d1d419a8f7aec2a95183808185" sort_order="3" provider="com.plexapp.agents.imdb"/>
+    <item external="True" url="http://image.tmdb.org/t/p/original/tI9h4O5vTnhoOrdMQ6077nK8uoL.jpg" preview="com.plexapp.agents.imdb_bf5d7c71be93ea95acb1312d32a047ac45959d87" sort_order="4" provider="com.plexapp.agents.imdb"/>
+    <item external="True" url="http://image.tmdb.org/t/p/original/ejijyXPp1qnibaxOBQEtXACDlTZ.jpg" preview="com.plexapp.agents.imdb_46104966b052a219034863b0eb2d699cf80fe90d" sort_order="5" provider="com.plexapp.agents.imdb"/>
+  </art>
+  <banners/>
+  <chapters/>
+  <collections/>
+  <content_rating>R</content_rating>
+  <countries>
+    <item index="0">Canada</item>
+  </countries>
+  <directors>
+    <item index="0">
+      <photo>http://image.tmdb.org/t/p/original/3LMtxKoveYdhHQqHUBKdqK7SnIQ.jpg</photo>
+      <role/>
+      <name>Bob Gale</name>
+    </item>
+  </directors>
+  <duration>6960000</duration>
+  <genres>
+    <item index="0">Adventure</item>
+    <item index="1">Comedy</item>
+    <item index="2">Drama</item>
+    <item index="3">Fantasy</item>
+  </genres>
+  <originally_available_at>2002-04-13</originally_available_at>
+  <posters>
+    <item external="True" url="http://image.tmdb.org/t/p/original/x6YCgO1u4eIvt5PXNJyFeoxh1Lw.jpg" sort_order="1" provider="com.plexapp.agents.imdb" media="com.plexapp.agents.imdb_019a20dc419cb3159b227c4c9aec53879f5bfad9"/>
+    <item external="True" url="http://image.tmdb.org/t/p/original/wLNlzH24GH4B0u0dtinirpmXMif.jpg" preview="com.plexapp.agents.imdb_c9a26dc04b810e709c48bb96fa3eeed8d5df6a76" sort_order="2" provider="com.plexapp.agents.imdb"/>
+    <item external="True" url="http://image.tmdb.org/t/p/original/mRUCspCVyBxt6iRxeijKRbZgX1W.jpg" preview="com.plexapp.agents.imdb_d559918df0cf25880af4c5fcc2ba4c1caf1743f5" sort_order="3" provider="com.plexapp.agents.imdb"/>
+    <item external="True" url="http://image.tmdb.org/t/p/original/hDpTNEBnPgPMdGNp5B2cFDJZAJe.jpg" preview="com.plexapp.agents.imdb_10409781741e9fbd92e73b6292d4e096317814ee" sort_order="4" provider="com.plexapp.agents.imdb"/>
+    <item external="True" url="http://image.tmdb.org/t/p/original/tF9lGogwnAoURjSshnSUkItokiF.jpg" preview="com.plexapp.agents.imdb_6ba3d22315aeba502d48f29414da7676c04d7fd5" sort_order="5" provider="com.plexapp.agents.imdb"/>
+    <item external="True" url="http://image.tmdb.org/t/p/original/vkbRyKFoleXFK5Prlghe1aqrtmt.jpg" preview="com.plexapp.agents.imdb_9999b0bfb12df7e2ed19289507654923789a5134" sort_order="6" provider="com.plexapp.agents.imdb"/>
+    <item external="True" url="http://image.tmdb.org/t/p/original/gtexfAiHM6rqDNCSuiDw8joz9NY.jpg" preview="com.plexapp.agents.imdb_040c99c8c7d60b15f73d9fc1352b0e46fa8f7a36" sort_order="7" provider="com.plexapp.agents.imdb"/>
+    <item external="True" url="http://image.tmdb.org/t/p/original/gjB8pXfkPe8OB9tJ8z9HyRlSNMg.jpg" preview="com.plexapp.agents.imdb_e28601e30298d65aedba1b7062048e090a36fca8" sort_order="8" provider="com.plexapp.agents.imdb"/>
+    <item external="True" url="http://image.tmdb.org/t/p/original/u4AYKVluoLc5GYGA11Ccd93CvDq.jpg" preview="com.plexapp.agents.imdb_ef7c6266e813907a62468709d9dffe64880de524" sort_order="9" provider="com.plexapp.agents.imdb"/>
+    <item external="True" url="http://image.tmdb.org/t/p/original/68aSQlkwzzvA1ch1cH5XIwVrfZ3.jpg" preview="com.plexapp.agents.imdb_c964964ccb913548efb9ce174fe92f0b212150ef" sort_order="10" provider="com.plexapp.agents.imdb"/>
+    <item external="True" url="http://image.tmdb.org/t/p/original/qGTO4aQz9kZvvt4LcLcAx78JnnE.jpg" preview="com.plexapp.agents.imdb_bd2d5d6c78579ab1c9135d404a51e8a42a47a17d" sort_order="11" provider="com.plexapp.agents.imdb"/>
+    <item external="True" url="http://image.tmdb.org/t/p/original/r4e8YKRA28ODBhpcm1hPaDUw2Fc.jpg" preview="com.plexapp.agents.imdb_2cec9772b236e09c1771347132edeb614f13e0e8" sort_order="12" provider="com.plexapp.agents.imdb"/>
+    <item external="True" url="http://image.tmdb.org/t/p/original/eMWksNTHOUb26l8lRFIKUDGP6IB.jpg" preview="com.plexapp.agents.imdb_edfdc0e39a0e06763187b7ddc182e4390d8990c4" sort_order="13" provider="com.plexapp.agents.imdb"/>
+  </posters>
+  <producers>
+    <item index="0">
+      <photo>http://image.tmdb.org/t/p/original/3LMtxKoveYdhHQqHUBKdqK7SnIQ.jpg</photo>
+      <role/>
+      <name>Bob Gale</name>
+    </item>
+    <item index="1">
+      <photo/>
+      <role/>
+      <name>Neil Canton</name>
+    </item>
+    <item index="2">
+      <photo/>
+      <role/>
+      <name>Ira Deutchman</name>
+    </item>
+    <item index="3">
+      <photo/>
+      <role/>
+      <name>Peter Newman</name>
+    </item>
+    <item index="4">
+      <photo/>
+      <role/>
+      <name>Peter Bray</name>
+    </item>
+  </producers>
+  <rating>7.7</rating>
+  <rating_image>imdb://image.rating</rating_image>
+  <audience_rating>0.0</audience_rating>
+  <audience_rating_image/>
+  <reviews/>
+  <roles>
+    <item index="0">
+      <photo>http://image.tmdb.org/t/p/original/tJK1PbhcJj5cBNqnuFKHtAFPQKz.jpg</photo>
+      <role>Neal Oliver</role>
+      <name>James Marsden</name>
+    </item>
+    <item index="1">
+      <photo>http://image.tmdb.org/t/p/original/zvofPivWI5FASkmimoy3i8HPoDw.jpg</photo>
+      <role>O.W. Grant</role>
+      <name>Gary Oldman</name>
+    </item>
+    <item index="2">
+      <photo>http://image.tmdb.org/t/p/original/yTWkJVYq1wtn2NrnPIwXshTWqby.jpg</photo>
+      <role>Lynn Linden</role>
+      <name>Amy Smart</name>
+    </item>
+    <item index="3">
+      <photo>http://image.tmdb.org/t/p/original/iQzG9apaIsHnn7iGrer3YEDp8Zo.jpg</photo>
+      <role>Ray</role>
+      <name>Christopher Lloyd</name>
+    </item>
+    <item index="4">
+      <photo>http://image.tmdb.org/t/p/original/ytZY7YofdiAZyiyr4NyiB77lwwQ.jpg</photo>
+      <role>Bob Cody</role>
+      <name>Chris Cooper</name>
+    </item>
+    <item index="5">
+      <photo>http://image.tmdb.org/t/p/original/hYMwq4AP58Sr3YlmUeCMyFBUQdG.jpg</photo>
+      <role>Quincy</role>
+      <name>Matthew Edison</name>
+    </item>
+    <item index="6">
+      <photo/>
+      <role>Zack</role>
+      <name>Paul Brogren</name>
+    </item>
+    <item index="7">
+      <photo>http://image.tmdb.org/t/p/original/x1nuwmSBx49UXYxrVYyr8sZi12t.jpg</photo>
+      <role>Tolbert</role>
+      <name>Wayne Robson</name>
+    </item>
+    <item index="8">
+      <photo>http://image.tmdb.org/t/p/original/bGUjr2FSbhvCJeu6J8NPMASiH4S.jpg</photo>
+      <role>Mr. Baker</role>
+      <name>Michael J. Fox</name>
+    </item>
+    <item index="9">
+      <photo>http://image.tmdb.org/t/p/original/mJNxyU5kSAXhJOkdWSsKKTOp0ee.jpg</photo>
+      <role>Dad</role>
+      <name>John Bourgeois</name>
+    </item>
+    <item index="10">
+      <photo>http://image.tmdb.org/t/p/original/u7hK9hb2HOfqZ8ygifGcV0amX0R.jpg</photo>
+      <role>Sally</role>
+      <name>Melyssa Ade</name>
+    </item>
+    <item index="11">
+      <photo/>
+      <role>Mom</role>
+      <name>Roz Michaels</name>
+    </item>
+    <item index="12">
+      <photo>http://image.tmdb.org/t/p/original/s2oxa3wfJ13dYFP2s2aQygQfooa.jpg</photo>
+      <role>Nancy</role>
+      <name>Amy Stewart</name>
+    </item>
+    <item index="13">
+      <photo>http://image.tmdb.org/t/p/original/2Cng4sijH0HyFfWdUkvrjOdPgxO.jpg</photo>
+      <role>Frank</role>
+      <name>Mark Lutz</name>
+    </item>
+    <item index="14">
+      <photo/>
+      <role>Ann</role>
+      <name>Krista Leis</name>
+    </item>
+    <item index="15">
+      <photo/>
+      <role>Kirby</role>
+      <name>Michael Rhoades</name>
+    </item>
+    <item index="16">
+      <photo>http://image.tmdb.org/t/p/original/u4dOlRCMMcs4pzXjUeNCfzWUl8v.jpg</photo>
+      <role>Laura</role>
+      <name>Amy Jo Johnson</name>
+    </item>
+    <item index="17">
+      <photo/>
+      <role>Valerie McCabe</role>
+      <name>Deborah Odell</name>
+    </item>
+    <item index="18">
+      <photo>http://image.tmdb.org/t/p/original/dST9iLc2THBL4onErxrAo9XY1AS.jpg</photo>
+      <role>Dr. Craig</role>
+      <name>Jonathan Whittaker</name>
+    </item>
+    <item index="19">
+      <photo>http://image.tmdb.org/t/p/original/pr9e0R11px4BvNOvGQuGl0pN5B3.jpg</photo>
+      <role>Mrs. James</role>
+      <name>Ann-Margret</name>
+    </item>
+    <item index="20">
+      <photo>http://image.tmdb.org/t/p/original/oFxv6KQdXU30MY00ASwoMqbKVAg.jpg</photo>
+      <role>Otis</role>
+      <name>Art Evans</name>
+    </item>
+    <item index="21">
+      <photo>http://image.tmdb.org/t/p/original/rlnFuNkisPpuypARI7QaGCmOY6V.jpg</photo>
+      <role>Captain Ives</role>
+      <name>Kurt Russell</name>
+    </item>
+  </roles>
+  <similar>
+    <item index="0">Gentlemen of Fortune</item>
+    <item index="1">Brother 2</item>
+    <item index="2">Ivan Vasilyevich Changes His Profession</item>
+    <item index="3">Heart of a Dog</item>
+    <item index="4">Kidnapping, Caucasian Style</item>
+    <item index="5">Knockin' on Heaven's Door</item>
+    <item index="6">The Diamond Arm</item>
+    <item index="7">The White Sun of the Desert</item>
+    <item index="8">Six-String Samurai</item>
+    <item index="9">Operation Y and Other Shurik's Adventures</item>
+    <item index="10">Brother</item>
+    <item index="11">Night Watch</item>
+    <item index="12">The Thirteenth Floor</item>
+    <item index="13">What Men Talk About</item>
+    <item index="14">The Irony of Fate, or Enjoy Your Bath!</item>
+    <item index="15">The Jacket</item>
+    <item index="16">The Rifleman of the Voroshilov Regiment</item>
+    <item index="17">Cypher</item>
+    <item index="18">9th Company</item>
+    <item index="19">Bootleggers</item>
+  </similar>
+  <studio>Fireworks Pictures</studio>
+  <summary>An aspiring painter meets various characters and learns valuable lessons while traveling across America.</summary>
+  <tagline>It began as a wish, became an adventure, and ended as the ultimate road trip.</tagline>
+  <tags/>
+  <themes/>
+  <title>Interstate 60</title>
+  <writers>
+    <item index="0">
+      <photo>http://image.tmdb.org/t/p/original/3LMtxKoveYdhHQqHUBKdqK7SnIQ.jpg</photo>
+      <role/>
+      <name>Bob Gale</name>
+    </item>
+  </writers>
+  <year>2002</year>
+</Movie>

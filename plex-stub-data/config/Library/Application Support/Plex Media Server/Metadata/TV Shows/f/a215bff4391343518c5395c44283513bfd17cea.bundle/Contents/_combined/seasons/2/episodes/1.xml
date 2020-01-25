@@ -1,3 +1,26 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:108517cad85e0195bb83920b63beebabaefc22b05987b5d25c7d421cc0166a99
-size 1340
+<?xml version='1.0' encoding='utf-8'?>
+<Episode>
+  <directors/>
+  <guest_stars/>
+  <originally_available_at>2012-04-01</originally_available_at>
+  <producers/>
+  <rating>7.9</rating>
+  <summary>As Robb Stark and his northern army continue the war against the Lannisters, Tyrion arrives in King’s Landing to counsel Joffrey and temper the young king’s excesses.  On the island of Dragonstone, Stannis Baratheon plots an invasion to claim his late brother’s throne, allying himself with the fiery Melisandre, a strange priestess of a stranger god.  Across the sea, Daenerys, her three young dragons, and the khalasar trek through the Red Waste in search of allies, or water.  In the North, Bran presides over a threadbare Winterfell, while beyond the Wall, Jon Snow and the Night’s Watch must shelter with a devious wildling.</summary>
+  <tags/>
+  <thumbs>
+    <item external="True" url="https://thetvdb.com/banners/episodes/121361/4161693.jpg" provider="com.plexapp.agents.thetvdb" media="com.plexapp.agents.thetvdb_a6d29977533202d2a4c30c7ba5f772e8077ce783"/>
+  </thumbs>
+  <title>The North Remembers</title>
+  <writers>
+    <item index="0">
+      <photo/>
+      <role/>
+      <name>D. B. Weiss</name>
+    </item>
+    <item index="1">
+      <photo/>
+      <role/>
+      <name>David Benioff</name>
+    </item>
+  </writers>
+</Episode>

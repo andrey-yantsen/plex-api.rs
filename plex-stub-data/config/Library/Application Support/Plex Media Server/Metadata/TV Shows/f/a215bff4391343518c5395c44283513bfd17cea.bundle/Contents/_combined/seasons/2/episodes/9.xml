@@ -1,3 +1,21 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:bccb203b63fd15d76a70ab445922fdf55e839818f5826c437b5619f63828388f
-size 701
+<?xml version='1.0' encoding='utf-8'?>
+<Episode>
+  <directors/>
+  <guest_stars/>
+  <originally_available_at>2012-05-27</originally_available_at>
+  <producers/>
+  <rating>8.3</rating>
+  <summary>Tyrion and the Lannisters fight for their lives as Stannis’ fleet assaults King’s Landing.</summary>
+  <tags/>
+  <thumbs>
+    <item external="True" url="https://thetvdb.com/banners/episodes/121361/4245778.jpg" provider="com.plexapp.agents.thetvdb" media="com.plexapp.agents.thetvdb_fc41fd10659d96ed7ee01bb43ee6de0fd20853f4"/>
+  </thumbs>
+  <title>Blackwater</title>
+  <writers>
+    <item index="0">
+      <photo/>
+      <role/>
+      <name>George R. R. Martin</name>
+    </item>
+  </writers>
+</Episode>

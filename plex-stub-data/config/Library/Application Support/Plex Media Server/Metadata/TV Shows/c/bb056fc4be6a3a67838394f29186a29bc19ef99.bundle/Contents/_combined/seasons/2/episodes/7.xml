@@ -1,3 +1,21 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:100c92bc991a948d9d6416e1745ff4fbb3505c0f4557cff59dbb139e4f8a9989
-size 842
+<?xml version='1.0' encoding='utf-8'?>
+<Episode>
+  <directors/>
+  <guest_stars/>
+  <originally_available_at>2014-12-10</originally_available_at>
+  <producers/>
+  <rating>7.8</rating>
+  <summary>As Abby and Jaha each try to establish their authority, Clarke comes up with a plan to stop the Grounders' attack. At Mount Weather, Jasper, Monty, Miller and Harper plan their escape, as Dr. Tsing and Cage conduct deadly experiments.</summary>
+  <tags/>
+  <thumbs>
+    <item external="True" url="https://thetvdb.com/banners/episodes/268592/5044972.jpg" provider="com.plexapp.agents.thetvdb" media="com.plexapp.agents.thetvdb_add744b3ae153f02ee4968f585f6b93c97acb18b"/>
+  </thumbs>
+  <title>Long Into an Abyss</title>
+  <writers>
+    <item index="0">
+      <photo/>
+      <role/>
+      <name>James Thorpe</name>
+    </item>
+  </writers>
+</Episode>

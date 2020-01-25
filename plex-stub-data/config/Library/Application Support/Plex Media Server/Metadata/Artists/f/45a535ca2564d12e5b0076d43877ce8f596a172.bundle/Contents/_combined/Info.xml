@@ -1,3 +1,45 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:33eba595a8290688266ff969f0476a3a9a9f6e3eed2f034cc25e421e1dc30cfd
-size 1675
+<?xml version='1.0' encoding='utf-8'?>
+<LegacyArtist>
+  <albums/>
+  <art/>
+  <collections/>
+  <concerts/>
+  <countries/>
+  <genres>
+    <item index="0">Dubstep</item>
+    <item index="1">Electronic</item>
+    <item index="2">Breakcore</item>
+    <item index="3">Electro</item>
+    <item index="4">Electronica</item>
+  </genres>
+  <posters>
+    <item external="True" url="https://lastfm.freetls.fastly.net/i/u/300x300/a06acf03d01e412d8853558fc9292367.png" media="com.plexapp.agents.lastfm_1fa3857fd898a59c721dfd84164eebe6e8ae76ac" provider="com.plexapp.agents.lastfm"/>
+  </posters>
+  <reviews/>
+  <similar>
+    <item index="0">Zomboy</item>
+    <item index="1">Knife Party</item>
+    <item index="2">Dog Blood</item>
+    <item index="3">Kill the Noise</item>
+    <item index="4">Flux Pavilion</item>
+    <item index="5">Skrillex</item>
+    <item index="6">Skrillex &amp; Damian "Jr. Gong" Marley</item>
+    <item index="7">Excision</item>
+    <item index="8">Dillon Francis</item>
+    <item index="9">Eptic</item>
+    <item index="10">Getter</item>
+    <item index="11">Doctor P</item>
+    <item index="12">MUST DIE!</item>
+    <item index="13">SKisM</item>
+    <item index="14">deadmau5</item>
+    <item index="15">Pegboard Nerds</item>
+    <item index="16">Datsik</item>
+    <item index="17">Modestep</item>
+    <item index="18">Virtual Riot</item>
+    <item index="19">Nero</item>
+  </similar>
+  <summary>Skrillex is the pseudonym used by Los Angeles, California, USA musician Sonny Moore to differentiate his electronic solo work from his work with From First to Last and his other solo projects.</summary>
+  <tags/>
+  <themes/>
+  <title>Skrillex</title>
+</LegacyArtist>

@@ -1,3 +1,38 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:dc70ccabf231eca61c7ace75f16c36581a003ef315a4e68f0e25fd3d3538a7ce
-size 2257
+<?xml version='1.0' encoding='utf-8'?>
+<Season>
+  <index/>
+  <art/>
+  <thumb/>
+  <show/>
+  <title/>
+  <art_url/>
+  <episode_count/>
+  <summary/>
+  <episodes>
+    <item external="True" extension="xml" key="1"/>
+    <item external="True" extension="xml" key="3"/>
+    <item external="True" extension="xml" key="2"/>
+    <item external="True" extension="xml" key="5"/>
+    <item external="True" extension="xml" key="4"/>
+    <item external="True" extension="xml" key="7"/>
+    <item external="True" extension="xml" key="6"/>
+    <item external="True" extension="xml" key="9"/>
+    <item external="True" extension="xml" key="8"/>
+  </episodes>
+  <key/>
+  <posters>
+    <item external="True" url="https://thetvdb.com/banners/seasons/268592-2.jpg" preview="4b3537809e47692282c533499cea55e74268ee93" sort_order="96"/>
+    <item external="True" url="https://thetvdb.com/banners/seasons/268592-2-2.jpg" preview="ca2e9932907d97fc539c5196a2f1030aa55c53d4" sort_order="97"/>
+    <item external="True" url="https://thetvdb.com/banners/seasons/268592-2-3.jpg" preview="3f8d2170c882fe55ea6c60f530172c1ad5a552d6" sort_order="98"/>
+    <item external="True" url="https://thetvdb.com/banners/seasons/268592-2-4.jpg" preview="d1c9b888fb9d59089e06501a71130448478f88ad" sort_order="99"/>
+    <item external="True" url="https://thetvdb.com/banners/seasons/268592-2-5.jpg" preview="2cb0b9fd62a86a67dfe3f3ff4d0d2c8f72ca4a49" sort_order="100"/>
+    <item external="True" url="https://thetvdb.com/banners/seasons/268592-2-6.jpg" preview="109ef28219049d83e228f7550b6f4e1a851e7ffe" sort_order="101"/>
+    <item external="True" url="https://thetvdb.com/banners/seasons/268592-2-7.jpg" preview="a574a84ce17109bab448cac62535433410cbe1ff" sort_order="102"/>
+    <item external="True" url="https://thetvdb.com/banners/seasons/268592-2-11.jpg" preview="06166526a72227bf9583dd26b0f5310389a83dc9" sort_order="104"/>
+    <item external="True" url="https://thetvdb.com/banners/seasons/268592-2-8.jpg" preview="ed3f8989a43a34a1044d886cda8f3afe1d314ead" sort_order="139"/>
+    <item external="True" url="https://thetvdb.com/banners/seasons/268592-2-12.jpg" preview="0804521e324bb658506382a31cd6b2741f89fde3" sort_order="141"/>
+  </posters>
+  <banners/>
+  <rating_key/>
+  <source_title/>
+</Season>

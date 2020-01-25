@@ -1,3 +1,21 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:a2374c21213b80379d2567c60511874caf3d09136b9bd1bc5a85d6de1634b98d
-size 1509
+<?xml version='1.0' encoding='utf-8'?>
+<Episode>
+  <directors/>
+  <guest_stars/>
+  <originally_available_at>2014-03-19</originally_available_at>
+  <producers/>
+  <rating>7.4</rating>
+  <summary>Ninety-seven years ago, nuclear Armageddon decimated planet Earth, destroying civilization. The only survivors were the 400 inhabitants of 12 international space stations that were in orbit at the time. Three generations have been born in space, the survivors now number 4,000, and resources are running out on their dying "Ark." Among the 100 young exiles are Clarke, the bright teenage daughter of the Ark’s chief medical officer; the daredevil Finn; the brother/sister duo of Bellamy and Octavia, whose illegal sibling status has always led them to flaunt the rules, the lighthearted Jasper and the resourceful Monty. Technologically blind to what’s happening on the planet below them, the Ark’s leaders — Clarke’s widowed mother, Abby; Chancellor Jaha; and his shadowy second in command, Kane — are faced with difficult decisions about life, death and the continued existence of the human race.</summary>
+  <tags/>
+  <thumbs>
+    <item external="True" url="https://thetvdb.com/banners/episodes/268592/4543295.jpg" provider="com.plexapp.agents.thetvdb" media="com.plexapp.agents.thetvdb_66dd977b9af55575c98e46e73e88a51ff9ae2096"/>
+  </thumbs>
+  <title>Pilot</title>
+  <writers>
+    <item index="0">
+      <photo/>
+      <role/>
+      <name>Jason Rothenberg</name>
+    </item>
+  </writers>
+</Episode>

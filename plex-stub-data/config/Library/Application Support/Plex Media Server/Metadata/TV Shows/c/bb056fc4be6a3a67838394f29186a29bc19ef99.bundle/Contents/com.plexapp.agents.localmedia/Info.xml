@@ -1,3 +1,31 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:d9c8cc610774b40f8da7ee72902513bc6205ba0d3a112a9ca4bbcb83fd5b6149
-size 568
+<?xml version='1.0' encoding='utf-8'?>
+<TV_Show id="null">
+  <rating/>
+  <title_sort/>
+  <art/>
+  <themes/>
+  <posters/>
+  <duration/>
+  <genres/>
+  <title/>
+  <rating_count/>
+  <collections/>
+  <tags/>
+  <audience_rating_image/>
+  <rating_image/>
+  <audience_rating/>
+  <studio/>
+  <seasons>
+    <item external="True" extension="xml" key="1"/>
+    <item external="True" extension="xml" key="2"/>
+  </seasons>
+  <originally_available_at/>
+  <roles/>
+  <countries/>
+  <content_rating/>
+  <original_title/>
+  <summary/>
+  <reviews/>
+  <banners/>
+  <similar/>
+</TV_Show>

@@ -1,3 +1,21 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:f8a511fb03a2d99df29d16c4d2ad4f7126dae35bceef61542be51a69d68c1d81
-size 1123
+<?xml version='1.0' encoding='utf-8'?>
+<Episode>
+  <directors/>
+  <guest_stars/>
+  <originally_available_at>2011-05-08</originally_available_at>
+  <producers/>
+  <rating>7.9</rating>
+  <summary>Ned looks for clues to the death of his predecessor, and uncovers one of King Robert’s bastards. Robert and his guests witness a tournament honoring Ned. Jon takes measures to protect Sam from further abuse at Castle Black; a frustrated Viserys clashes with Daenerys in Vaes Dothrak; Sansa imagines her future as a queen, while Arya envisions a far different future. Catelyn rallies her husband’s allies to make a point, while Tyrion finds himself caught in the wrong place at the wrong time.</summary>
+  <tags/>
+  <thumbs>
+    <item external="True" url="https://thetvdb.com/banners/episodes/121361/3436431.jpg" provider="com.plexapp.agents.thetvdb" media="com.plexapp.agents.thetvdb_899fe4b9e522e46bf4e71001a410feb9c50c37bf"/>
+  </thumbs>
+  <title>Cripples, Bastards, and Broken Things</title>
+  <writers>
+    <item index="0">
+      <photo/>
+      <role/>
+      <name>Bryan Cogman</name>
+    </item>
+  </writers>
+</Episode>

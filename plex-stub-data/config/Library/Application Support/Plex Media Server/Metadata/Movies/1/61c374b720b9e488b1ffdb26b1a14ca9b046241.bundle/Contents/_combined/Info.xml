@@ -1,3 +1,185 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:00387469a4febe8c3b7187957d3d98d08f0b1a41de9a5d4882314c347aa6f5cd
-size 7989
+<?xml version='1.0' encoding='utf-8'?>
+<Movie>
+  <art/>
+  <banners/>
+  <chapters/>
+  <collections/>
+  <content_rating>Not Rated</content_rating>
+  <countries>
+    <item index="0">USA</item>
+  </countries>
+  <directors>
+    <item index="0">
+      <photo/>
+      <role/>
+      <name>Nina Paley</name>
+    </item>
+  </directors>
+  <duration>4920000</duration>
+  <genres>
+    <item index="0">Animation</item>
+    <item index="1">Comedy</item>
+    <item index="2">Fantasy</item>
+    <item index="3">Musical</item>
+    <item index="4">Romance</item>
+  </genres>
+  <originally_available_at>2008-02-11</originally_available_at>
+  <posters/>
+  <producers/>
+  <rating>10.0</rating>
+  <rating_image>rottentomatoes://image.rating.ripe</rating_image>
+  <audience_rating>8.5</audience_rating>
+  <audience_rating_image>rottentomatoes://image.rating.upright</audience_rating_image>
+  <reviews>
+    <item index="0">
+      <text>Paley's beguiling, consistently inventive visuals and sly yet melancholy tone are about as warm and winning as heartbreak-fueled empowerment gets.</text>
+      <source>Village Voice</source>
+      <image>rottentomatoes://image.review.fresh</image>
+      <link>http://www.villagevoice.com/2009-12-22/film/sita-sings-the-blues-a-charm-offensive/</link>
+      <author>Michelle Orange</author>
+    </item>
+    <item index="1">
+      <text>Captivating, mesmerizing, spellbinding -- I'll throw everything in the movie-critic book at this animated feature by Nina Paley</text>
+      <source>Chicago Reader</source>
+      <image>rottentomatoes://image.review.fresh</image>
+      <link>http://onfilm.chicagoreader.com/movies/capsules/34322_SITA_SINGS_THE_BLUES</link>
+      <author>J. R. Jones</author>
+    </item>
+    <item index="2">
+      <text>An almost indescribable pleasure from Brooklyn-based cartoonist and animator Nina Paley. The film, dazzling and poignant and five years in the making, retells the ancient Indian epic The Ramayana from a gentle but insistent feminist perspective.</text>
+      <source>Boston Globe</source>
+      <image>rottentomatoes://image.review.fresh</image>
+      <link>http://www.boston.com/ae/movies/articles/2009/03/12/an_ancient_tale_gets_a_colorful_retelling</link>
+      <author>Ty Burr</author>
+    </item>
+    <item index="3">
+      <text>Constitutes an irrefutable argument for classic 2-D animation as a viable, vibrant low-budget arthouse medium for adults.</text>
+      <source>Variety</source>
+      <image>rottentomatoes://image.review.fresh</image>
+      <link>http://www.variety.com/review/VE1117937118.html?categoryid=31&amp;cs=1</link>
+      <author>Ronnie Scheib</author>
+    </item>
+    <item index="4">
+      <text>A spellbinding film that charms with its quirkiness in almost every sequence.</text>
+      <source>Movie Metropolis</source>
+      <image>rottentomatoes://image.review.fresh</image>
+      <link>http://moviemet.com/review/sita-sings-blues-dvd-review</link>
+      <author>James Plath</author>
+    </item>
+    <item index="5">
+      <text>The more love changes the more it stays the same. History itself falls prey to love in this delightful retelling of the Ramayana.</text>
+      <source>Monsters and Critics</source>
+      <image>rottentomatoes://image.review.fresh</image>
+      <link>http://www.monstersandcritics.com/movies/reviews/article_1552639.php/Sita-Sings-the-Blues-Movie-Review</link>
+      <author>Ron Wilkinson</author>
+    </item>
+    <item index="6">
+      <text>... beautiful and often densely detailed images ...</text>
+      <source>Brand X</source>
+      <image>rottentomatoes://image.review.fresh</image>
+      <link>http://www.thisisbrandx.com/2010/04/andy-klein-reviews-sita-sings-the-blues.html</link>
+      <author>Andy Klein</author>
+    </item>
+    <item index="7">
+      <text>A very creative and poignant animated film about the heartbreaks experienced by a Hindu goddess and a contemporary woman who share the universal pain and sadness that accompany the end of an intimate relationship.</text>
+      <source>Spirituality and Practice</source>
+      <image>rottentomatoes://image.review.fresh</image>
+      <link>http://www.spiritualityandpractice.com/films/films.php?id=19815</link>
+      <author>Frederic and Mary Ann Brussat</author>
+    </item>
+    <item index="8">
+      <text>It's akin to watching creativity just explode onscreen -- part abstract, part musical, part improvisation-style comedy, and, most compellingly, all inspired by real-life pain.</text>
+      <source>ReelTalk Movie Reviews</source>
+      <image>rottentomatoes://image.review.fresh</image>
+      <link>http://www.reeltalkreviews.com/browse/viewitem.asp?type=review&amp;id=3340</link>
+      <author>Jeffrey Chen</author>
+    </item>
+    <item index="9">
+      <text>The story makes little sense to those unfamiliar with Indian culture and literary traditions, but it is made accessible for westerners by the use of a kind of Greek Chorus of shadow puppets who help interpret the story.</text>
+      <source>Laramie Movie Scope</source>
+      <image>rottentomatoes://image.review.fresh</image>
+      <link>http://www.lariat.org/AtTheMovies/new/sitasings.html</link>
+      <author>Robert Roten</author>
+    </item>
+    <item index="10">
+      <text>[Filmmaker Nina] Paley adapts the original 1922 story, The Ramayana, by Valmiki and, wearing many hats, produces a work that is fun, entertaining, educational, colorful and imaginative.</text>
+      <source>Reeling Reviews</source>
+      <image>rottentomatoes://image.review.fresh</image>
+      <link>http://www.reelingreviews.com/sitasingstheblues.htm</link>
+      <author>Robin Clifford</author>
+    </item>
+    <item index="11">
+      <text>Romantic breakups have provided inspiration to artists through the ages, but never have lemons been made into such a sparkling lemonade as Paley's done here.</text>
+      <source>Reeling Reviews</source>
+      <image>rottentomatoes://image.review.fresh</image>
+      <link>http://www.reelingreviews.com/sitasingstheblues.htm</link>
+      <author>Laura Clifford</author>
+    </item>
+    <item index="12">
+      <text>The story shifts effortlessly between the two-dimensional collage style of the narrator segments, the classical artistic design of the Rama-Sita story, the pencil sketch style of the modern story, and finally Hanshaw's musical numbers in a two-dimensional</text>
+      <source>Cinemalogue</source>
+      <image>rottentomatoes://image.review.fresh</image>
+      <link>http://www.cinemalogue.com/2009/05/22/sita-sings-the-blues/</link>
+      <author>Rubin Safaya</author>
+    </item>
+  </reviews>
+  <roles>
+    <item index="0">
+      <photo/>
+      <role>Sita (singing)</role>
+      <name>Annette Hanshaw</name>
+    </item>
+    <item index="1">
+      <photo/>
+      <role>Narrator - Shadow Puppet 1</role>
+      <name>Aseem Chhabra</name>
+    </item>
+    <item index="2">
+      <photo/>
+      <role>Narrator - Shadow Puppet 2</role>
+      <name>Bhavana Nagulapally</name>
+    </item>
+    <item index="3">
+      <photo/>
+      <role>Narrator - Shadow Puppet 3</role>
+      <name>Manish Acharya</name>
+    </item>
+    <item index="4">
+      <photo/>
+      <role>Sita</role>
+      <name>Reena Shah</name>
+    </item>
+    <item index="5">
+      <photo/>
+      <role>Dave</role>
+      <name>Sanjiv Jhaveri</name>
+    </item>
+    <item index="6">
+      <photo/>
+      <role>Surphanaka</role>
+      <name>Pooja Kumar</name>
+    </item>
+    <item index="7">
+      <photo/>
+      <role>Rama</role>
+      <name>Debargo Sanyal</name>
+    </item>
+    <item index="8">
+      <photo/>
+      <role>Mareecha</role>
+      <name>Aladdin Ullah</name>
+    </item>
+    <item index="9">
+      <photo/>
+      <role>Luv</role>
+      <name>Nitya Vidyasagar</name>
+    </item>
+  </roles>
+  <similar/>
+  <summary>An animated version of the epic Indian tale of Ramayana set to the 1920s jazz vocals of Annette Hanshaw.</summary>
+  <tags/>
+  <themes/>
+  <title>Sita Sings the Blues</title>
+  <writers/>
+  <year>2008</year>
+</Movie>

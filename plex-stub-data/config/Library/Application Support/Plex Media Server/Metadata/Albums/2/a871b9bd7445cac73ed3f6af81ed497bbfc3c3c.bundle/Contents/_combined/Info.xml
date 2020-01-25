@@ -1,3 +1,36 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:63ae848eaad0d4dd548ee598f9db8b174df2c07bec86d2b422c9330db74a7573
-size 2055
+<?xml version='1.0' encoding='utf-8'?>
+<LegacyAlbum>
+  <art/>
+  <collections/>
+  <countries/>
+  <genres/>
+  <posters/>
+  <producers/>
+  <reviews/>
+  <tags/>
+  <tracks>
+    <item guid="local://150" path="tracks/74432d3179225f97ade3de7162608739b1efb801">
+      <lyrics>
+        <item external="True" url="http://127.0.0.1:32400/services/lyricfind/lyrics?id=001-4341544&amp;artist=System%20of%20a%20Down&amp;album=Toxicity%20%281999%29&amp;track=Metro" remote="com.plexapp.agents.lyricfind_cec8328fd556380feafb9091d6f779b10669a2b5" format="txt" sort_order="1" provider="com.plexapp.agents.lyricfind"/>
+      </lyrics>
+      <moods/>
+      <tags/>
+    </item>
+    <item guid="local://149" path="tracks/d5170f2ed5e639076b7855134a5b8ae416e1cd06">
+      <lyrics>
+        <item external="True" url="http://127.0.0.1:32400/services/lyricfind/lyrics?id=001-2448670&amp;artist=System%20of%20a%20Down&amp;album=Toxicity%20%281999%29&amp;track=Marmalade" remote="com.plexapp.agents.lyricfind_66a09233e900623db07002c8cb371eff10dc4e0e" format="txt" sort_order="1" provider="com.plexapp.agents.lyricfind"/>
+      </lyrics>
+      <moods/>
+      <tags/>
+    </item>
+    <item guid="local://148" path="tracks/c65b3190b958f7cc72288f07fa276b979e8caf7e">
+      <lyrics>
+        <item external="True" url="http://127.0.0.1:32400/services/lyricfind/lyrics?id=001-32235155&amp;lrc=1&amp;artist=System%20of%20a%20Down&amp;album=Toxicity%20%281999%29&amp;track=Toxicity" remote="com.plexapp.agents.lyricfind_24c7410d66bdc2c929bff56ad3b104f47def7c6f" format="lrc" sort_order="1" provider="com.plexapp.agents.lyricfind"/>
+        <item external="True" url="http://127.0.0.1:32400/services/lyricfind/lyrics?id=001-32235155&amp;artist=System%20of%20a%20Down&amp;album=Toxicity%20%281999%29&amp;track=Toxicity" remote="com.plexapp.agents.lyricfind_ce15dc3445fc6da1852b03a73fb71b0b851d1bcc" format="txt" sort_order="2" provider="com.plexapp.agents.lyricfind"/>
+      </lyrics>
+      <moods/>
+      <rating_count>9453976</rating_count>
+      <tags/>
+    </item>
+  </tracks>
+</LegacyAlbum>

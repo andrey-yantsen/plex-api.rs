@@ -1,3 +1,21 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:9e54dda21f66c9fcf965af551db7dd578c2af0fbbfd1b50e56993488ad7b22fb
-size 905
+<?xml version='1.0' encoding='utf-8'?>
+<Episode>
+  <directors/>
+  <guest_stars/>
+  <originally_available_at>2012-04-15</originally_available_at>
+  <producers/>
+  <rating>7.9</rating>
+  <summary>At the Red Keep, Tyrion plots three alliances through the promise of marriage.  Catelyn arrives in the Stormlands to forge an alliance of her own, but King Renly, his new wife Margaery, and her brother Loras Tyrell have other plans.  At Winterfell, Luwin tries to decipher Bran’s dreams.</summary>
+  <tags/>
+  <thumbs>
+    <item external="True" url="https://thetvdb.com/banners/episodes/121361/4245772.jpg" provider="com.plexapp.agents.thetvdb" media="com.plexapp.agents.thetvdb_bcb096b838fd0c97a612797488bbc68ca2671c99"/>
+  </thumbs>
+  <title>What is Dead May Never Die</title>
+  <writers>
+    <item index="0">
+      <photo/>
+      <role/>
+      <name>Bryan Cogman</name>
+    </item>
+  </writers>
+</Episode>

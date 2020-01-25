@@ -1,3 +1,26 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:db1c6345e477d55e91433b4c25dd55546301a0e703d2dcb3e3b03a49a93ee10d
-size 1052
+<?xml version='1.0' encoding='utf-8'?>
+<Episode>
+  <directors/>
+  <guest_stars/>
+  <originally_available_at>2014-11-05</originally_available_at>
+  <producers/>
+  <rating>7.8</rating>
+  <summary>When Clarke discovers a horrifying project being carried out in Mount Weather’s medical ward, she joins forces with an unlikely ally. After Abby confesses to committing a crime, Kane issues an order to have her brutally punished. Meanwhile, Monty warns a distracted Jasper that Clarke could be in trouble, and Octavia continues to fight for Lincoln.</summary>
+  <tags/>
+  <thumbs>
+    <item external="True" url="https://thetvdb.com/banners/episodes/268592/5018484.jpg" provider="com.plexapp.agents.thetvdb" media="com.plexapp.agents.thetvdb_a8e958a486ce5d70cbc9abff905b3ac4fd224273"/>
+  </thumbs>
+  <title>Reapercussions</title>
+  <writers>
+    <item index="0">
+      <photo/>
+      <role/>
+      <name>Aaron Ginsburg</name>
+    </item>
+    <item index="1">
+      <photo/>
+      <role/>
+      <name>Wade McIntyre</name>
+    </item>
+  </writers>
+</Episode>

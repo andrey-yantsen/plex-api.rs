@@ -1,3 +1,103 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:0699db026c10fc4233f98fa5afffd6c66b32e9fc3bd3afa104d6487454d3e1df
-size 2712
+<?xml version='1.0' encoding='utf-8'?>
+<Album id="null">
+  <rating/>
+  <art/>
+  <duration/>
+  <genres/>
+  <title/>
+  <rating_count/>
+  <collections/>
+  <countries/>
+  <available_at/>
+  <tags/>
+  <audience_rating_image/>
+  <rating_image/>
+  <producers/>
+  <audience_rating/>
+  <tracks>
+    <item key="local://150">
+      <rating/>
+      <lyrics>
+        <item external="True" url="http://127.0.0.1:32400/services/lyricfind/lyrics?id=001-4341544&amp;artist=System%20of%20a%20Down&amp;album=Toxicity&amp;track=Metro" remote="6a603aae19ab32f6e0b6f80dcae873736d6af21e" format="txt" sort_order="1"/>
+      </lyrics>
+      <duration/>
+      <rating_key/>
+      <album/>
+      <index/>
+      <genres/>
+      <source_title/>
+      <thumb/>
+      <title/>
+      <rating_count/>
+      <tags/>
+      <tempo/>
+      <moods/>
+      <key/>
+      <originally_available_at/>
+      <name/>
+      <artist/>
+      <title_sort/>
+      <summary/>
+      <art_url/>
+    </item>
+    <item key="local://149">
+      <rating/>
+      <lyrics>
+        <item external="True" url="http://127.0.0.1:32400/services/lyricfind/lyrics?id=001-2448670&amp;artist=System%20of%20a%20Down&amp;album=Toxicity&amp;track=Marmalade" remote="2c353fc5111f820a40e9411c5941e7a4167f8b6d" format="txt" sort_order="1"/>
+      </lyrics>
+      <duration/>
+      <rating_key/>
+      <album/>
+      <index/>
+      <genres/>
+      <source_title/>
+      <thumb/>
+      <title/>
+      <rating_count/>
+      <tags/>
+      <tempo/>
+      <moods/>
+      <key/>
+      <originally_available_at/>
+      <name/>
+      <artist/>
+      <title_sort/>
+      <summary/>
+      <art_url/>
+    </item>
+    <item key="local://148">
+      <rating/>
+      <lyrics>
+        <item external="True" url="http://127.0.0.1:32400/services/lyricfind/lyrics?id=001-32235155&amp;lrc=1&amp;artist=System%20of%20a%20Down&amp;album=Toxicity&amp;track=Toxicity" remote="d1bd21003753e1131abf48fd091643460f9a24f6" format="lrc" sort_order="1"/>
+        <item external="True" url="http://127.0.0.1:32400/services/lyricfind/lyrics?id=001-32235155&amp;artist=System%20of%20a%20Down&amp;album=Toxicity&amp;track=Toxicity" remote="805fb10fec028014cc2ac1a898d08873d51e0647" format="txt" sort_order="2"/>
+      </lyrics>
+      <duration/>
+      <rating_key/>
+      <album/>
+      <index/>
+      <genres/>
+      <source_title/>
+      <thumb/>
+      <title/>
+      <rating_count/>
+      <tags/>
+      <tempo/>
+      <moods/>
+      <key/>
+      <originally_available_at/>
+      <name/>
+      <artist/>
+      <title_sort/>
+      <summary/>
+      <art_url/>
+    </item>
+  </tracks>
+  <studio/>
+  <posters/>
+  <originally_available_at/>
+  <artist/>
+  <title_sort/>
+  <original_title/>
+  <summary/>
+  <reviews/>
+</Album>

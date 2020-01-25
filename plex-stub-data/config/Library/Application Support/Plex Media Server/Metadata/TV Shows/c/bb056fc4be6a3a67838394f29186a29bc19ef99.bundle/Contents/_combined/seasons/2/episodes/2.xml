@@ -1,3 +1,21 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:47451b34fb730ccba23ab180934283c02e0be9886a69865c05b9db837fbb9177
-size 810
+<?xml version='1.0' encoding='utf-8'?>
+<Episode>
+  <directors/>
+  <guest_stars/>
+  <originally_available_at>2014-10-29</originally_available_at>
+  <producers/>
+  <rating>7.8</rating>
+  <summary>A suspicious Clarke confronts President Dante Wallace and demands answers. Kane interrogates one of The 100, and Abby performs emergency surgery. Meanwhile, Octavia resorts to violence to find Lincoln.</summary>
+  <tags/>
+  <thumbs>
+    <item external="True" url="https://thetvdb.com/banners/episodes/268592/5013666.jpg" provider="com.plexapp.agents.thetvdb" media="com.plexapp.agents.thetvdb_18ae6630d6e97e10c09445567ec8825d0e1a3cfe"/>
+  </thumbs>
+  <title>Inclement Weather</title>
+  <writers>
+    <item index="0">
+      <photo/>
+      <role/>
+      <name>Michael Angeli</name>
+    </item>
+  </writers>
+</Episode>

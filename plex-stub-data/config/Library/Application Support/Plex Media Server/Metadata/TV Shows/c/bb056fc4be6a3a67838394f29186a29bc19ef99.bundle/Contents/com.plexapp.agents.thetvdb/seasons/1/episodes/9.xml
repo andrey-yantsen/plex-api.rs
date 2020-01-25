@@ -1,3 +1,38 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:0a138ad88c8b5ca76d9d95e16e2e81559486b771cd7485123e0ee1018a66e395
-size 1058
+<?xml version='1.0' encoding='utf-8'?>
+<Episode>
+  <rating>7.5</rating>
+  <art/>
+  <show/>
+  <absolute_index/>
+  <thumbs>
+    <item external="True" url="https://thetvdb.com/banners/episodes/268592/4828426.jpg" preview="154c33282027637c2d87a7a0e6cca7b4a22b6f49"/>
+  </thumbs>
+  <duration/>
+  <rating_key/>
+  <index/>
+  <source_title/>
+  <thumb/>
+  <title>Unity Day</title>
+  <content_rating_age/>
+  <writers>
+    <item index="0">
+      <photo/>
+      <role/>
+      <name>Kim Shumway</name>
+    </item>
+    <item index="1">
+      <photo/>
+      <role/>
+      <name>Kira Snyder</name>
+    </item>
+  </writers>
+  <tags/>
+  <season/>
+  <producers/>
+  <key/>
+  <originally_available_at>2014-05-14</originally_available_at>
+  <content_rating/>
+  <summary>Clarke and Finn attempt to broker peace with the Grounders but all hell breaks loose when Bellamy, Jasper and Raven show up armed and ready for battle. Octavia and Lincoln grow closer. Meanwhile, tragedy strikes during the Unity Day celebration on the Ark.</summary>
+  <guest_stars/>
+  <directors/>
+</Episode>

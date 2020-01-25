@@ -1,3 +1,26 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:144ad03f46165b769689d349e099d09cffe192264965f43209e35d7cdf7e2b21
-size 1109
+<?xml version='1.0' encoding='utf-8'?>
+<Episode>
+  <directors/>
+  <guest_stars/>
+  <originally_available_at>2011-05-15</originally_available_at>
+  <producers/>
+  <rating>8.0</rating>
+  <summary>Incensed over news of Daenerys’ alliance with the Dothrakis, Robert orders a preemptive strike on the Targaryens that drives a wedge in his relationship with Ned. A captive Tyrion helps Catelyn, but receives a cold reception at the Eyrie from her sister, Jon Arryn’s widow Lysa. Sansa is charmed by the dashing Ser Loras Tyrell, a.k.a. the Knight of Flowers. Arya overhears a plot against her father.</summary>
+  <tags/>
+  <thumbs>
+    <item external="True" url="https://thetvdb.com/banners/episodes/121361/3436441.jpg" provider="com.plexapp.agents.thetvdb" media="com.plexapp.agents.thetvdb_2a21394b89b69e497e30f04a30bc28f459d15851"/>
+  </thumbs>
+  <title>The Wolf and the Lion</title>
+  <writers>
+    <item index="0">
+      <photo/>
+      <role/>
+      <name>D. B. Weiss</name>
+    </item>
+    <item index="1">
+      <photo/>
+      <role/>
+      <name>David Benioff</name>
+    </item>
+  </writers>
+</Episode>

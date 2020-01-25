@@ -1,3 +1,88 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:4e86ad786e2a70eaef569acbb300ae9e7a09dbe3d5e889018b18086c5b136d2c
-size 4343
+<?xml version='1.0' encoding='utf-8'?>
+<Movie id="tt1254207">
+  <rating>6.2</rating>
+  <title_sort/>
+  <art>
+    <item external="True" url="http://image.tmdb.org/t/p/original/aHLST0g8sOE1ixCxRDgM35SKwwp.jpg" preview="934a937d3a56d59f2d633f2f7ca351b899880688" sort_order="1"/>
+    <item external="True" url="http://image.tmdb.org/t/p/original/jR4RmWQRq2BP1SGBUXjroU963HP.jpg" preview="bfc7865bbe7b112314bf49ced5ba93e3eae1a26a" sort_order="2"/>
+    <item external="True" url="http://image.tmdb.org/t/p/original/1O3tFuQsVgmjwx47xGKBjkSUiU6.jpg" preview="dcd4fac2b222ffdec47b6945e1fcc55d0ec3e1d1" sort_order="3"/>
+    <item external="True" url="http://image.tmdb.org/t/p/original/rIK10zkOKfJ1j6W0nhYjQR5skBg.jpg" preview="b4a9396a0940b2fa98b38ef31fdbb7400d1b83ef" sort_order="4"/>
+    <item external="True" url="http://image.tmdb.org/t/p/original/rjB4V9dBuepG7gnHS1Exm1llbSS.jpg" preview="b41f8ce18b0b9eb509899be79df55f8302af6b53" sort_order="5"/>
+    <item external="True" url="http://image.tmdb.org/t/p/original/oYdqt7nyP18JZIhNtQSvLXeSVGL.jpg" preview="7052b34d49d3476853050ed003b395c3e58b9f7b" sort_order="6"/>
+    <item external="True" url="http://image.tmdb.org/t/p/original/nuQGw5xmkNg0sz3eEUPmCc2cWFM.jpg" preview="33f9fce0f8db90c211d8e3dbf96aa7e29449cc8f" sort_order="7"/>
+  </art>
+  <writers/>
+  <chapters/>
+  <themes/>
+  <quotes/>
+  <year>2008</year>
+  <duration>480000</duration>
+  <genres>
+    <item index="0">Animation</item>
+    <item index="1">Comedy</item>
+    <item index="2">Family</item>
+  </genres>
+  <title>Big Buck Bunny</title>
+  <tagline></tagline>
+  <content_rating_age/>
+  <rating_count/>
+  <collections/>
+  <trivia/>
+  <tags/>
+  <audience_rating_image/>
+  <rating_image/>
+  <producers>
+    <item index="0">
+      <photo>http://image.tmdb.org/t/p/original/w5NbjQk0E14A5LMTtn5nm3oU5cD.jpg</photo>
+      <role/>
+      <name>Ton Roosendaal</name>
+    </item>
+  </producers>
+  <audience_rating/>
+  <studio>Blender Foundation</studio>
+  <posters>
+    <item external="True" url="http://image.tmdb.org/t/p/original/pzUAeshAqvnLnICU4rYB0WtDFg3.jpg" preview="3c50a4b54f0a8872fca5144bf6402f374220ffa0" sort_order="1"/>
+    <item external="True" url="http://image.tmdb.org/t/p/original/uVEFQvFMMsg4e6yb03xOfVsDz4o.jpg" preview="767e5e79cbe06e7e41043c26bea1b5e4d4813c5d" sort_order="2"/>
+    <item external="True" url="http://image.tmdb.org/t/p/original/qbiQujPdB9JIuEC2bJDKIReGYV6.jpg" preview="01dad8d12db9b5868bce6921da3d3673cde45faf" sort_order="3"/>
+    <item external="True" url="http://image.tmdb.org/t/p/original/vKipMuCVwfPsPljCCbvz2FUHIJz.jpg" preview="7a521c81c21e773c6420446bfa4938645e533e4e" sort_order="4"/>
+  </posters>
+  <originally_available_at>2008-04-10</originally_available_at>
+  <roles/>
+  <countries>
+    <item index="0">Netherlands</item>
+  </countries>
+  <content_rating>G</content_rating>
+  <original_title/>
+  <summary>Follow a day of the life of Big Buck Bunny when he meets three bullying rodents: Frank, Rinky, and Gamera. The rodents amuse themselves by harassing helpless creatures by throwing fruits, nuts and rocks at them. After the deaths of two of Bunny's favorite butterflies, and an offensive attack on Bunny himself, Bunny sets aside his gentle nature and orchestrates a complex plan for revenge.</summary>
+  <reviews/>
+  <directors>
+    <item index="0">
+      <photo/>
+      <role/>
+      <name>Sacha Goedegebure</name>
+    </item>
+  </directors>
+  <banners/>
+  <similar>
+    <item index="0">Elephants Dream</item>
+    <item index="1">Sintel</item>
+    <item index="2">Oktapodi</item>
+    <item index="3">Sebastian's Voodoo</item>
+    <item index="4">Rocks</item>
+    <item index="5">The Magic of Méliès</item>
+    <item index="6">Lightheaded</item>
+    <item index="7">Jet Pink</item>
+    <item index="8">Strangers</item>
+    <item index="9">The Wandering Jew</item>
+    <item index="10">Iblard Jikan</item>
+    <item index="11">ARK</item>
+    <item index="12">BAGMAN Profession: Meurtrier</item>
+    <item index="13">New York: Broadway at Union Square</item>
+    <item index="14">Gone Nutty</item>
+    <item index="15">Scrub Me Mama with a Boogie Beat</item>
+    <item index="16">Kick-Heart</item>
+    <item index="17">Madame Tutli-Putli</item>
+    <item index="18">Forever Hardcore: The Documentary</item>
+    <item index="19">Tetris: From Russia with Love</item>
+  </similar>
+</Movie>

@@ -1,3 +1,26 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:3fcd00171f2fbb59ecd16b76308c92d353e7d1c66447dd869cf686ef32a1297b
-size 883
+<?xml version='1.0' encoding='utf-8'?>
+<Episode>
+  <directors/>
+  <guest_stars/>
+  <originally_available_at>2012-05-13</originally_available_at>
+  <producers/>
+  <rating>7.9</rating>
+  <summary>Jamie meets a distant relative. Daenerys receives an invitation to the House of the Undying. Theon leads a search party. Jon loses his way in the wilderness. Cersei counsels Sansa.</summary>
+  <tags/>
+  <thumbs>
+    <item external="True" url="https://thetvdb.com/banners/episodes/121361/4245776.jpg" provider="com.plexapp.agents.thetvdb" media="com.plexapp.agents.thetvdb_69736b12ae447adefb1402d01740ed9476c776d7"/>
+  </thumbs>
+  <title>A Man Without Honor</title>
+  <writers>
+    <item index="0">
+      <photo/>
+      <role/>
+      <name>D. B. Weiss</name>
+    </item>
+    <item index="1">
+      <photo/>
+      <role/>
+      <name>David Benioff</name>
+    </item>
+  </writers>
+</Episode>

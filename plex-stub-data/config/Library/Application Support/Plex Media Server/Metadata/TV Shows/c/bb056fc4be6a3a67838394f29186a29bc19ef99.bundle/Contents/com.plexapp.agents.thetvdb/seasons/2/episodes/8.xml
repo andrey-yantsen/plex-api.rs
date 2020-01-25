@@ -1,3 +1,33 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:762a15e797276b0076ed1c3a73b35552faec756a04600caedc205463ee14e490
-size 960
+<?xml version='1.0' encoding='utf-8'?>
+<Episode>
+  <rating>8.0</rating>
+  <art/>
+  <show/>
+  <absolute_index/>
+  <thumbs>
+    <item external="True" url="https://thetvdb.com/banners/episodes/268592/5044973.jpg" preview="3a69b11990f5ecfdaac16011db657ba84285b2b0"/>
+  </thumbs>
+  <duration/>
+  <rating_key/>
+  <index/>
+  <source_title/>
+  <thumb/>
+  <title>Spacewalker</title>
+  <content_rating_age/>
+  <writers>
+    <item index="0">
+      <photo/>
+      <role/>
+      <name>Bruce Miller</name>
+    </item>
+  </writers>
+  <tags/>
+  <season/>
+  <producers/>
+  <key/>
+  <originally_available_at>2014-12-17</originally_available_at>
+  <content_rating/>
+  <summary>Clarke returns to Camp Jaha with devastating news. Finn struggles with the aftermath of his actions. Abby gathers information from an unlikely source and prepares for a fight. Meanwhile, flashbacks reveal Finn and Raven’s relationship on the Ark.</summary>
+  <guest_stars/>
+  <directors/>
+</Episode>

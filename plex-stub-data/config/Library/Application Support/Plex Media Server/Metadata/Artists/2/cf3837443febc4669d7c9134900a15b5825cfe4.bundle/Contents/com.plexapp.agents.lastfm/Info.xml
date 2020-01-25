@@ -1,3 +1,207 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:de16cd0b051e155b9e32c2735e85ef9b2e4072b13000347bf6313dc4a5fd2050
-size 9487
+<?xml version='1.0' encoding='utf-8'?>
+<Artist id="System%20of%20a%20Down">
+  <rating/>
+  <art/>
+  <themes/>
+  <duration/>
+  <genres>
+    <item index="0">Metal</item>
+    <item index="1">Alternative metal</item>
+    <item index="2">Rock</item>
+    <item index="3">Nu metal</item>
+    <item index="4">Alternative</item>
+  </genres>
+  <title>System of a Down</title>
+  <rating_count/>
+  <collections/>
+  <tags/>
+  <audience_rating_image/>
+  <rating_image/>
+  <audience_rating/>
+  <posters>
+    <item external="True" url="https://lastfm.freetls.fastly.net/i/u/300x300/05d78b59cf1242f09fab2176c8bf07df.png" media="c05f511c4cedfacdb5752f1d296df74b53a32eda"/>
+  </posters>
+  <albums/>
+  <countries/>
+  <title_sort/>
+  <original_title/>
+  <summary>System of a Down is an Armenian American alternative metal band, formed in 1994 in Los Angeles, California, USA. All four members are of Armenian descent, and are widely known for their outspoken views expressed in many of their songs confronting the Armenian Genocide of 1915 by the Ottoman Empire and the ongoing War on Terror by the US government. The band consists of Serj Tankian (vocals), Daron Malakian (vocals, guitar), Shavo Odadjian (bass, vocals) and John Dolmayan (drums).
+System of a Down has achieved commercial success with five albums, and many singles such as their breakout hit "Chop Suey!", "Toxicity", "Aerials", "B.Y.O.B.", "Question!", "Hypnotize" and "Lonely Day". Their works have earned them one Grammy Award amongst three nominations.</summary>
+  <reviews/>
+  <similar>
+    <item index="0">Serj Tankian</item>
+    <item index="1">Scars on Broadway</item>
+    <item index="2">Slipknot</item>
+    <item index="3">Korn</item>
+    <item index="4">Disturbed</item>
+    <item index="5">Avenged Sevenfold</item>
+    <item index="6">Stone Sour</item>
+    <item index="7">Mudvayne</item>
+    <item index="8">Deftones</item>
+    <item index="9">Rage Against the Machine</item>
+    <item index="10">Linkin Park</item>
+    <item index="11">Limp Bizkit</item>
+    <item index="12">Metallica</item>
+    <item index="13">Drowning Pool</item>
+    <item index="14">Marilyn Manson</item>
+    <item index="15">Godsmack</item>
+    <item index="16">Static-X</item>
+    <item index="17">Tool</item>
+    <item index="18">Dope</item>
+    <item index="19">Mushroomhead</item>
+  </similar>
+  <concerts>
+    <item index="0">
+      <city>Amsterdam</city>
+      <title>System of a Down with Ego Kill Talent at Ziggo Dome (June 3, 2020)</title>
+      <url>http://www.songkick.com/concerts/39177102-system-of-a-down-at-ziggo-dome?utm_source=38767&amp;utm_medium=partner</url>
+      <country>Netherlands</country>
+      <venue>Ziggo Dome</venue>
+      <date>2020-06-03 00:00:00</date>
+    </item>
+    <item index="1">
+      <city>Nürburg</city>
+      <title>Rock am Ring 2020</title>
+      <url>http://www.songkick.com/festivals/1237-rock-am-ring/id/39144521-rock-am-ring-2020?utm_source=38767&amp;utm_medium=partner</url>
+      <country>Germany</country>
+      <venue>Rock Am Ring</venue>
+      <date>2020-06-05 00:00:00</date>
+    </item>
+    <item index="2">
+      <city>Nuremberg</city>
+      <title>Rock im Park 2020</title>
+      <url>http://www.songkick.com/festivals/19-rock-im-park/id/39144526-rock-im-park-2020?utm_source=38767&amp;utm_medium=partner</url>
+      <country>Germany</country>
+      <venue>Rock im Park</venue>
+      <date>2020-06-05 00:00:00</date>
+    </item>
+    <item index="3">
+      <city>Berlin</city>
+      <title>System of a Down with Ego Kill Talent at Waldbühne (June 8, 2020)</title>
+      <url>http://www.songkick.com/concerts/39177103-system-of-a-down-at-waldbuhne?utm_source=38767&amp;utm_medium=partner</url>
+      <country>Germany</country>
+      <venue>Waldbühne</venue>
+      <date>2020-06-08 00:00:00</date>
+    </item>
+    <item index="4">
+      <city>Nickelsdorf</city>
+      <title>Nova Rock Festival 2020</title>
+      <url>http://www.songkick.com/festivals/1165-nova-rock/id/39238976-nova-rock-festival-2020?utm_source=38767&amp;utm_medium=partner</url>
+      <country>Austria</country>
+      <venue>Pannonia Fields</venue>
+      <date>2020-06-10 00:00:00</date>
+    </item>
+    <item index="5">
+      <city>Derby</city>
+      <title>Download Festival 2020</title>
+      <url>http://www.songkick.com/festivals/1948-download/id/39165775-download-festival-2020?utm_source=38767&amp;utm_medium=partner</url>
+      <country>UK</country>
+      <venue>Donington Park</venue>
+      <date>2020-06-12 00:00:00</date>
+    </item>
+    <item index="6">
+      <city>Milan</city>
+      <title>System of a Down and Korn at MIND Milano Innovation District (June 12, 2020)</title>
+      <url>http://www.songkick.com/concerts/39237673-system-of-a-down-at-mind-milano-innovation-district?utm_source=38767&amp;utm_medium=partner</url>
+      <country>Italy</country>
+      <venue>MIND Milano Innovation District</venue>
+      <date>2020-06-12 00:00:00</date>
+    </item>
+    <item index="7">
+      <city>Prague</city>
+      <title>System of a Down with Ego Kill Talent at O2 arena (June 16, 2020)</title>
+      <url>http://www.songkick.com/concerts/39177105-system-of-a-down-at-o2-arena?utm_source=38767&amp;utm_medium=partner</url>
+      <country>Czech Republic</country>
+      <venue>O2 arena</venue>
+      <date>2020-06-16 00:00:00</date>
+    </item>
+    <item index="8">
+      <city>Budapest</city>
+      <title>System of a Down with Ego Kill Talent at Budapest Sport Arena (June 17, 2020)</title>
+      <url>http://www.songkick.com/concerts/39177107-system-of-a-down-at-budapest-sport-arena?utm_source=38767&amp;utm_medium=partner</url>
+      <country>Hungary</country>
+      <venue>Budapest Sport Arena</venue>
+      <date>2020-06-17 00:00:00</date>
+    </item>
+    <item index="9">
+      <city>Zürich</city>
+      <title>System of a Down with O.R.k. at Hallenstadion (June 19, 2020)</title>
+      <url>http://www.songkick.com/concerts/39177109-system-of-a-down-at-hallenstadion?utm_source=38767&amp;utm_medium=partner</url>
+      <country>Switzerland</country>
+      <venue>Hallenstadion</venue>
+      <date>2020-06-19 00:00:00</date>
+    </item>
+    <item index="10">
+      <city>Nantes</city>
+      <title>Hellfest 2020</title>
+      <url>http://www.songkick.com/festivals/1488-hellfest/id/39303395-hellfest-2020?utm_source=38767&amp;utm_medium=partner</url>
+      <country>France</country>
+      <venue>Hellfest</venue>
+      <date>2020-06-19 00:00:00</date>
+    </item>
+    <item index="11">
+      <city>Stockholm</city>
+      <title>System of a Down with O.R.k. at ERICSSON GLOBE/Stockholm Live (June 23, 2020)</title>
+      <url>http://www.songkick.com/concerts/39177111-system-of-a-down-at-ericsson-globestockholm-live?utm_source=38767&amp;utm_medium=partner</url>
+      <country>Sweden</country>
+      <venue>ERICSSON GLOBE/Stockholm Live</venue>
+      <date>2020-06-23 00:00:00</date>
+    </item>
+    <item index="12">
+      <city>Seinäjoki</city>
+      <title>Provinssi Festival 2020</title>
+      <url>http://www.songkick.com/festivals/1192423-provinssi/id/39144854-provinssi-festival-2020?utm_source=38767&amp;utm_medium=partner</url>
+      <country>Finland</country>
+      <venue>Unknown venue</venue>
+      <date>2020-06-25 00:00:00</date>
+    </item>
+    <item index="13">
+      <city>Krakow</city>
+      <title>System of a Down with O.R.k. at TAURON Arena Kraków (June 30, 2020)</title>
+      <url>http://www.songkick.com/concerts/39177114-system-of-a-down-at-tauron-arena-krakow?utm_source=38767&amp;utm_medium=partner</url>
+      <country>Poland</country>
+      <venue>TAURON Arena Kraków</venue>
+      <date>2020-06-30 00:00:00</date>
+    </item>
+    <item index="14">
+      <city>Ferrol</city>
+      <title>Resurrection Fest 2020</title>
+      <url>http://www.songkick.com/festivals/71471-resurrection-fest/id/39151151-resurrection-fest-2020?utm_source=38767&amp;utm_medium=partner</url>
+      <country>Spain</country>
+      <venue>Campo de Fútbol Celeiro</venue>
+      <date>2020-07-01 00:00:00</date>
+    </item>
+    <item index="15">
+      <city>Werchter</city>
+      <title>Rock Werchter 2020</title>
+      <url>http://www.songkick.com/festivals/1249-rock-werchter/id/39140081-rock-werchter-2020?utm_source=38767&amp;utm_medium=partner</url>
+      <country>Belgium</country>
+      <venue>Unknown venue</venue>
+      <date>2020-07-02 00:00:00</date>
+    </item>
+    <item index="16">
+      <city>Lisbon</city>
+      <title>VOA Festival 2020</title>
+      <url>http://www.songkick.com/festivals/1500169-voa/id/39152060-voa-festival-2020?utm_source=38767&amp;utm_medium=partner</url>
+      <country>Portugal</country>
+      <venue>Estadio Nacional</venue>
+      <date>2020-07-02 00:00:00</date>
+    </item>
+    <item index="17">
+      <city>Lisbon</city>
+      <title>VOA heavy Rock Festival 2020</title>
+      <url>http://www.songkick.com/festivals/1873519-voa-heavy-rock/id/39194857-voa-heavy-rock-festival-2020?utm_source=38767&amp;utm_medium=partner</url>
+      <country>Portugal</country>
+      <venue>Estadio Nacional</venue>
+      <date>2020-07-02 00:00:00</date>
+    </item>
+    <item index="18">
+      <city>Werchter</city>
+      <title>System of a Down and Yungblud at Festivalpark (July 5, 2020)</title>
+      <url>http://www.songkick.com/concerts/39324090-system-of-a-down-at-festivalpark?utm_source=38767&amp;utm_medium=partner</url>
+      <country>Belgium</country>
+      <venue>Festivalpark</venue>
+      <date>2020-07-05 00:00:00</date>
+    </item>
+  </concerts>
+</Artist>

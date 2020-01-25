@@ -1,3 +1,38 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:f9448ee7bceb4f376d3f8462a44a28047199beb9b5c7b8d5ada1e695e9331608
-size 1288
+<?xml version='1.0' encoding='utf-8'?>
+<LegacyArtist>
+  <albums/>
+  <art/>
+  <collections/>
+  <concerts/>
+  <countries/>
+  <genres/>
+  <posters>
+    <item external="True" url="https://lastfm.freetls.fastly.net/i/u/300x300/a0d793f6733cf03ad15535d0446db035.png" media="com.plexapp.agents.lastfm_c4e14def8e37317ddf3eb8fea5c8bb53ba7e4b51" provider="com.plexapp.agents.lastfm"/>
+  </posters>
+  <reviews/>
+  <similar>
+    <item index="0">2015</item>
+    <item index="1">2017</item>
+    <item index="2">2014</item>
+    <item index="3">2018</item>
+    <item index="4">2013</item>
+    <item index="5">Burak Yeter Ft. Danelle Sandoval</item>
+    <item index="6">Tomsize &amp; Simeon</item>
+    <item index="7">The Chainsmokers ft. Daya</item>
+    <item index="8">2012</item>
+    <item index="9">2019</item>
+    <item index="10">2009</item>
+    <item index="11">2011</item>
+    <item index="12">1966</item>
+    <item index="13">2010</item>
+    <item index="14">Deorro feat. Elvis Crespo</item>
+    <item index="15">Аркадий Кобяков</item>
+    <item index="16">2001</item>
+    <item index="17">Martin Solveig feat. Sam White</item>
+    <item index="18">2008</item>
+    <item index="19">Виталя[Джа]</item>
+  </similar>
+  <tags/>
+  <themes/>
+  <title>2016</title>
+</LegacyArtist>

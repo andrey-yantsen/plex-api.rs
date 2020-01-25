@@ -1,3 +1,33 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:21d674d47d36e499e80617ac005888902088b3eda206659a67034066218586b4
-size 1100
+<?xml version='1.0' encoding='utf-8'?>
+<Episode>
+  <rating>7.8</rating>
+  <art/>
+  <show/>
+  <absolute_index/>
+  <thumbs>
+    <item external="True" url="https://thetvdb.com/banners/episodes/268592/5045682.jpg" preview="96e5a245282c8ea6d3040338dd29e11ada1a943a"/>
+  </thumbs>
+  <duration/>
+  <rating_key/>
+  <index/>
+  <source_title/>
+  <thumb/>
+  <title>Remember Me</title>
+  <content_rating_age/>
+  <writers>
+    <item index="0">
+      <photo/>
+      <role/>
+      <name>Dorothy Fortenberry</name>
+    </item>
+  </writers>
+  <tags/>
+  <season/>
+  <producers/>
+  <key/>
+  <originally_available_at>2015-01-21</originally_available_at>
+  <content_rating/>
+  <summary>Clarke strikes a deal with Lexa and Indra. Abby and Kane begin to realize that decision making powers are out of their hands. A seething Raven is unable to control her emotions. A bold move threatens to destroy the newly formed alliance between the sky people and the Grounders, and a familiar face haunts Clarke. Meanwhile, back at Mount Weather, Monty comes up with a risky plan.</summary>
+  <guest_stars/>
+  <directors/>
+</Episode>

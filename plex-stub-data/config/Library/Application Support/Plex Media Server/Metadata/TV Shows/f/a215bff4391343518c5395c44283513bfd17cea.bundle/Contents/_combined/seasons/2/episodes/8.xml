@@ -1,3 +1,26 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:ab0211bfa196751b8f83f7e37308692fc238d1140a823e9bac883d442c8f9363
-size 880
+<?xml version='1.0' encoding='utf-8'?>
+<Episode>
+  <directors/>
+  <guest_stars/>
+  <originally_available_at>2012-05-20</originally_available_at>
+  <producers/>
+  <rating>7.9</rating>
+  <summary>Theon receives a visitor. Arya asks her third and last death from Jaqen. While Stannis' army is reaching its destination, Davos is offered a reward.  Betrayal befalls Robb.</summary>
+  <tags/>
+  <thumbs>
+    <item external="True" url="https://thetvdb.com/banners/episodes/121361/4245777.jpg" provider="com.plexapp.agents.thetvdb" media="com.plexapp.agents.thetvdb_e4ba49c31a475b8be7c6a6b366d6283e64564c63"/>
+  </thumbs>
+  <title>The Prince of Winterfell</title>
+  <writers>
+    <item index="0">
+      <photo/>
+      <role/>
+      <name>D. B. Weiss</name>
+    </item>
+    <item index="1">
+      <photo/>
+      <role/>
+      <name>David Benioff</name>
+    </item>
+  </writers>
+</Episode>

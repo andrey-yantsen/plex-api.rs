@@ -1,3 +1,33 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:a33b83bf612608d8e026038c449ee412da473caeea1b4b841882c61658fd2cac
-size 1382
+<?xml version='1.0' encoding='utf-8'?>
+<LegacyAlbum>
+  <art/>
+  <collections/>
+  <countries/>
+  <genres/>
+  <posters/>
+  <producers/>
+  <reviews/>
+  <tags/>
+  <title>Aerials [MCD]</title>
+  <tracks>
+    <item guid="local://146" path="tracks/4eb9fa422a4e64e31ae339f62c69fc3a2fad2fdd">
+      <lyrics/>
+      <moods/>
+      <tags/>
+    </item>
+    <item guid="local://145" path="tracks/02d2b815365ac72ba50e88722ad8f7dc00eae36c">
+      <lyrics/>
+      <moods/>
+      <tags/>
+    </item>
+    <item guid="local://144" path="tracks/30e8f239604a0c5f86de332af13e089eba462eec">
+      <lyrics>
+        <item external="True" url="http://127.0.0.1:32400/services/lyricfind/lyrics?id=001-4951959&amp;lrc=1&amp;artist=System%20of%20a%20Down&amp;album=Aerials%20%5BMCD%5D&amp;track=Aerials" remote="com.plexapp.agents.lyricfind_7ebb5e8bae9c8007d089598929c04216b2e1c318" format="lrc" sort_order="1" provider="com.plexapp.agents.lyricfind"/>
+        <item external="True" url="http://127.0.0.1:32400/services/lyricfind/lyrics?id=001-4951959&amp;artist=System%20of%20a%20Down&amp;album=Aerials%20%5BMCD%5D&amp;track=Aerials" remote="com.plexapp.agents.lyricfind_5318753b193afe4177ac23ea7eaea7f7f18b4ccd" format="txt" sort_order="2" provider="com.plexapp.agents.lyricfind"/>
+      </lyrics>
+      <moods/>
+      <rating_count>6841184</rating_count>
+      <tags/>
+    </item>
+  </tracks>
+</LegacyAlbum>

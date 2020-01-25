@@ -1,3 +1,23 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:0fd173ea62af6425110cc90596a0d5d3ba577f6bb3b6d624ccb290a7fc0665d4
-size 2510
+<?xml version='1.0' encoding='utf-8'?>
+<MediaContainer size="1" identifier="com.plexapp.agents.imdb" mediaTagPrefix="/system/bundle/media/flags/" prefsKey="/:/plugins/com.plexapp.agents.imdb/prefs">
+  <Video url="iva://api.internetvideoarchive.com/2.0/DataService/VideoAssets(999795)?lang=en&amp;bitrates=80,212,450,750,1500,8000&amp;duration=97&amp;adaptive=1&amp;dts=0" key="/system/services/url/lookup?url=iva%3A%2F%2Fapi.internetvideoarchive.com%2F2.0%2FDataService%2FVideoAssets%28999795%29%3Flang%3Den%26bitrates%3D80%2C212%2C450%2C750%2C1500%2C8000%26duration%3D97%26adaptive%3D1%26dts%3D0" type="clip" relationType="trailer" year="2015" title="Interstate 60" originallyAvailableAt="2015-02-26" thumb="https://iva-images.plex.tv/content/hdphotos/9447/009447/009447_642x361_999795_003.jpg" ratingKey="iva://api.internetvideoarchive.com/2.0/DataService/VideoAssets(999795)?lang=en&amp;bitrates=80,212,450,750,1500,8000&amp;duration=97&amp;adaptive=1&amp;dts=0">
+    <Media container="mp4" height="720" width="1280" audioCodec="aac" duration="97000" videoCodec="h264" bitrate="1500">
+      <Part duration="97000" key="/services/iva/assets/999795/video.mp4?bitrate=1500" container="mp4" optimizedForStreaming="1" file="">
+        <Stream index="0" selected="1" streamType="1" height="720" width="1280" codec="h264" bitrate="1500" id="1"/>
+        <Stream index="1" selected="1" streamType="2" channels="2" codec="aac" languageCode="en" id="2"/>
+      </Part>
+    </Media>
+    <Media container="mp4" height="480" width="640" audioCodec="aac" duration="97000" videoCodec="h264" bitrate="750">
+      <Part duration="97000" key="/services/iva/assets/999795/video.mp4?bitrate=750" container="mp4" optimizedForStreaming="1" file="">
+        <Stream index="0" selected="1" streamType="1" height="480" width="640" codec="h264" bitrate="750" id="1"/>
+        <Stream index="1" selected="1" streamType="2" channels="2" codec="aac" languageCode="en" id="2"/>
+      </Part>
+    </Media>
+    <Media container="mp4" height="480" width="640" audioCodec="aac" duration="97000" videoCodec="h264" bitrate="450">
+      <Part duration="97000" key="/services/iva/assets/999795/video.mp4?bitrate=450" container="mp4" optimizedForStreaming="1" file="">
+        <Stream index="0" selected="1" streamType="1" height="480" width="640" codec="h264" bitrate="450" id="1"/>
+        <Stream index="1" selected="1" streamType="2" channels="2" codec="aac" languageCode="en" id="2"/>
+      </Part>
+    </Media>
+  </Video>
+</MediaContainer>

@@ -1,3 +1,25 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:b5d49530bfff54e90ba8ad635a2ab129915e32b6fe01650db956ca1782499e31
-size 381
+<?xml version='1.0' encoding='utf-8'?>
+<Episode>
+  <rating/>
+  <art/>
+  <show/>
+  <absolute_index/>
+  <thumbs/>
+  <duration/>
+  <rating_key/>
+  <index/>
+  <source_title/>
+  <thumb/>
+  <title/>
+  <content_rating_age/>
+  <writers/>
+  <tags/>
+  <season/>
+  <producers/>
+  <key/>
+  <originally_available_at/>
+  <content_rating/>
+  <summary/>
+  <guest_stars/>
+  <directors/>
+</Episode>

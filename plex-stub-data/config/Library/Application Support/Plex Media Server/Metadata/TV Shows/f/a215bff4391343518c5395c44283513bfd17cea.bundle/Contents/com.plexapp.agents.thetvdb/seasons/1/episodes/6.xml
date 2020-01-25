@@ -1,3 +1,43 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:6ac9722ddc1ee8321e3edade06375b604f9af5532076a6a32793efc82b6d27b4
-size 1253
+<?xml version='1.0' encoding='utf-8'?>
+<Episode>
+  <rating>8.2</rating>
+  <art/>
+  <show/>
+  <absolute_index/>
+  <thumbs>
+    <item external="True" url="https://thetvdb.com/banners/episodes/121361/3436451.jpg" preview="1d9f82158d6e8c66456031e061a58051606d50b4"/>
+  </thumbs>
+  <duration/>
+  <rating_key/>
+  <index/>
+  <source_title/>
+  <thumb/>
+  <title>A Golden Crown</title>
+  <content_rating_age/>
+  <writers>
+    <item index="0">
+      <photo/>
+      <role/>
+      <name>D. B. Weiss</name>
+    </item>
+    <item index="1">
+      <photo/>
+      <role/>
+      <name>David Benioff</name>
+    </item>
+    <item index="2">
+      <photo/>
+      <role/>
+      <name>Jane Espenson</name>
+    </item>
+  </writers>
+  <tags/>
+  <season/>
+  <producers/>
+  <key/>
+  <originally_available_at>2011-05-22</originally_available_at>
+  <content_rating/>
+  <summary>Reinstated as the Hand, Ned sits for the King while Robert is on a hunt. Ned issues a decree that could have long-term consequences throughout the Seven Kingdoms. At the Eyrie, Tyrion confesses to his "crimes," and demands that Lysa give him a trial by combat. Joffrey apologizes to Sansa. Viserys receives his final payment for Daenerys from Drogo.</summary>
+  <guest_stars/>
+  <directors/>
+</Episode>

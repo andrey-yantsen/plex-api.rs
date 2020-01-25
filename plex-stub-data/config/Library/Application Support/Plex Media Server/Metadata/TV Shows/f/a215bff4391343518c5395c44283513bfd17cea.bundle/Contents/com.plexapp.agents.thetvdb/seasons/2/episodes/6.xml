@@ -1,3 +1,33 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:53c86958c4410e6855ffdf2829b6feaac9f45b34489302426bcd28011ff92c94
-size 992
+<?xml version='1.0' encoding='utf-8'?>
+<Episode>
+  <rating>7.9</rating>
+  <art/>
+  <show/>
+  <absolute_index/>
+  <thumbs>
+    <item external="True" url="https://thetvdb.com/banners/episodes/121361/4245775.jpg" preview="91dc9f95e55fae1b8f1564877445b84ebe374d4e"/>
+  </thumbs>
+  <duration/>
+  <rating_key/>
+  <index/>
+  <source_title/>
+  <thumb/>
+  <title>The Old Gods and the New</title>
+  <content_rating_age/>
+  <writers>
+    <item index="0">
+      <photo/>
+      <role/>
+      <name>Vanessa Taylor</name>
+    </item>
+  </writers>
+  <tags/>
+  <season/>
+  <producers/>
+  <key/>
+  <originally_available_at>2012-05-06</originally_available_at>
+  <content_rating/>
+  <summary>Theon completes his master stroke. In King's Landing, the Lannisters send Myrcella off to be married. Arya comes face to face with a surprise visitor. Dany vows to take what is hers. Robb and Catelyn receive crucial news. Qhorin gives Jon a chance to prove himself.</summary>
+  <guest_stars/>
+  <directors/>
+</Episode>

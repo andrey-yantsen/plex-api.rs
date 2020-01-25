@@ -1,3 +1,26 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:103a0d8676db72dbbc0f8581252937cb98c5fccc074f5ee99951e4df93427cf0
-size 1241
+<?xml version='1.0' encoding='utf-8'?>
+<Episode>
+  <directors/>
+  <guest_stars/>
+  <originally_available_at>2012-04-08</originally_available_at>
+  <producers/>
+  <rating>7.9</rating>
+  <summary>In the wake of a bloody purge in the capital, Tyrion chastens Cersei for alienating the king’s subjects.  On the road north, Arya shares a secret with Gendry, a Night’s Watch recruit.  With supplies dwindling, one of Dany’s scouts returns with news of their position.  After nine years as a Stark ward, Theon Greyjoy reunites with his father Balon, who wants to restore the ancient Kingdom of the Iron Islands.  Davos enlists Salladhor Saan, a pirate, to join forces with Stannis and Melisandre for a naval invasion of King’s Landing.</summary>
+  <tags/>
+  <thumbs>
+    <item external="True" url="https://thetvdb.com/banners/episodes/121361/4245771.jpg" provider="com.plexapp.agents.thetvdb" media="com.plexapp.agents.thetvdb_9313cadd0737f5f419550c0838b1a530e0e4d337"/>
+  </thumbs>
+  <title>The Night Lands</title>
+  <writers>
+    <item index="0">
+      <photo/>
+      <role/>
+      <name>D. B. Weiss</name>
+    </item>
+    <item index="1">
+      <photo/>
+      <role/>
+      <name>David Benioff</name>
+    </item>
+  </writers>
+</Episode>

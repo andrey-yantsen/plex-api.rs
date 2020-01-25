@@ -1,3 +1,28 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:cab794e35adbed62bcdb78360a66bd6102d345a5f58b3242483e176086d8d516
-size 621
+<?xml version='1.0' encoding='utf-8'?>
+<LegacyAlbum>
+  <art/>
+  <collections/>
+  <countries/>
+  <genres/>
+  <posters/>
+  <producers/>
+  <reviews/>
+  <tags/>
+  <tracks>
+    <item guid="local://154" path="tracks/fec5bf9b62d42a48ec4d991f9c8e627bb0f7cc92">
+      <lyrics/>
+      <moods/>
+      <tags/>
+    </item>
+    <item guid="local://155" path="tracks/b47ff44e25bc75dd30b7349e89d7f5fe0be36a3e">
+      <lyrics/>
+      <moods/>
+      <tags/>
+    </item>
+    <item guid="local://153" path="tracks/aa7b5e81639560dff43a4b476bfa294d42670c60">
+      <lyrics/>
+      <moods/>
+      <tags/>
+    </item>
+  </tracks>
+</LegacyAlbum>

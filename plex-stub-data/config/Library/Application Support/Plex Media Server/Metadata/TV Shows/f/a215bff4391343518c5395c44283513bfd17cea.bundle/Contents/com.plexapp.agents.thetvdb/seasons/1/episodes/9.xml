@@ -1,3 +1,38 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:af4ec2a7f21af65319b750cbd9eec7fd818c636613dc0cd472be2021ad17ad1b
-size 1268
+<?xml version='1.0' encoding='utf-8'?>
+<Episode>
+  <rating>8.2</rating>
+  <art/>
+  <show/>
+  <absolute_index/>
+  <thumbs>
+    <item external="True" url="https://thetvdb.com/banners/episodes/121361/4063481.jpg" preview="54cb444aeaabb18adf6b141a8ed6413d39243432"/>
+  </thumbs>
+  <duration/>
+  <rating_key/>
+  <index/>
+  <source_title/>
+  <thumb/>
+  <title>Baelor</title>
+  <content_rating_age/>
+  <writers>
+    <item index="0">
+      <photo/>
+      <role/>
+      <name>D. B. Weiss</name>
+    </item>
+    <item index="1">
+      <photo/>
+      <role/>
+      <name>David Benioff</name>
+    </item>
+  </writers>
+  <tags/>
+  <season/>
+  <producers/>
+  <key/>
+  <originally_available_at>2011-06-12</originally_available_at>
+  <content_rating/>
+  <summary>With Sansa's life in danger, Ned makes a fateful decision. Catelyn brokers an unsavory deal with the slippery Walder Frey. Tyrion acquires a mistress and is forced by his father to fight on the front lines. Robb wins his first major victory and captures a prized prisoner. Jon is rewarded for his valor and discovers a dark secret about Maester Aemon. As Drogo's wound festers, Dany defies her bloodrider Qotho and puts her trust in the enslaved witch Mirri Maz Duur.</summary>
+  <guest_stars/>
+  <directors/>
+</Episode>

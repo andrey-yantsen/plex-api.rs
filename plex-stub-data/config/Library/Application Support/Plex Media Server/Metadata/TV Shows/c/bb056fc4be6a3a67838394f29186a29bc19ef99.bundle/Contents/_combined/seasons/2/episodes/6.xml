@@ -1,3 +1,21 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:c0a25648f6607122344c7f65c1ca841b046488d5fa508f1acae8f163142145a4
-size 958
+<?xml version='1.0' encoding='utf-8'?>
+<Episode>
+  <directors/>
+  <guest_stars/>
+  <originally_available_at>2014-12-03</originally_available_at>
+  <producers/>
+  <rating>7.8</rating>
+  <summary>Tensions run high between Clarke and Finn, while Raven discovers that Mount Weather is interfering with their communication systems. Meanwhile, Jasper and Monty discover the truth about what’s going on at Mount Weather and Octavia comes face-to-face with her worst nightmare. Finally, President Dante Wallace is about to be betrayed by those closest to him.</summary>
+  <tags/>
+  <thumbs>
+    <item external="True" url="https://thetvdb.com/banners/episodes/268592/5044970.jpg" provider="com.plexapp.agents.thetvdb" media="com.plexapp.agents.thetvdb_5bc8a8b0b967acad3552b286af53ce510f2e2b57"/>
+  </thumbs>
+  <title>Fog of War</title>
+  <writers>
+    <item index="0">
+      <photo/>
+      <role/>
+      <name>Kira Snyder</name>
+    </item>
+  </writers>
+</Episode>

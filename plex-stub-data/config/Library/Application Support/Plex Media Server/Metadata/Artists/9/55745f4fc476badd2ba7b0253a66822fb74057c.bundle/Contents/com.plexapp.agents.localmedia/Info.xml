@@ -1,3 +1,24 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:cf5eb16ae67363e3c1d7a23e0d7189d358fdf067c4cc25d5c15d5087bdcbc31a
-size 377
+<?xml version='1.0' encoding='utf-8'?>
+<Artist id="126">
+  <rating/>
+  <art/>
+  <themes/>
+  <duration/>
+  <genres/>
+  <title/>
+  <rating_count/>
+  <collections/>
+  <tags/>
+  <audience_rating_image/>
+  <rating_image/>
+  <audience_rating/>
+  <posters/>
+  <albums/>
+  <countries/>
+  <title_sort/>
+  <original_title/>
+  <summary/>
+  <reviews/>
+  <similar/>
+  <concerts/>
+</Artist>

@@ -1,3 +1,26 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:dc8a39b74d87ce859da48e0a812872def105fcc57b6f58b61c25da0886653b0e
-size 1053
+<?xml version='1.0' encoding='utf-8'?>
+<Episode>
+  <directors/>
+  <guest_stars/>
+  <originally_available_at>2014-04-09</originally_available_at>
+  <producers/>
+  <rating>7.5</rating>
+  <summary>After the shocking death of one of their own, Clarke and Finn grow closer as they try to figure out a way to communicate with the Ark. Bellamy must keep the group from turning on one another as life on Earth takes a desperate turn. Meanwhile, Abby risks having herself floated in order to give Raven the chance to stow-away in the escape pod bound for Earth.</summary>
+  <tags/>
+  <thumbs>
+    <item external="True" url="https://thetvdb.com/banners/episodes/268592/4740979.jpg" provider="com.plexapp.agents.thetvdb" media="com.plexapp.agents.thetvdb_7a568547c0c652dae29a1115f8e76d4a416e4d22"/>
+  </thumbs>
+  <title>Murphy's Law</title>
+  <writers>
+    <item index="0">
+      <photo/>
+      <role/>
+      <name>Rasheed Newson</name>
+    </item>
+    <item index="1">
+      <photo/>
+      <role/>
+      <name>T.J Brady</name>
+    </item>
+  </writers>
+</Episode>

@@ -1,3 +1,21 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:48c032d44e9d90e2110f4adbe2e3158600945488cbcd5c9891cc4e51bd5e2328
-size 928
+<?xml version='1.0' encoding='utf-8'?>
+<Episode>
+  <directors/>
+  <guest_stars/>
+  <originally_available_at>2014-11-12</originally_available_at>
+  <producers/>
+  <rating>7.7</rating>
+  <summary>After being betrayed by someone she thought she could trust, Clarke takes matters into her own hands and proves she’s not going down without a flight. Bellamy, Finn and Murphy race against time to save a stranger. Meanwhile, tensions rise between Raven and Wick while working together, and an unexpected reunion occurs.</summary>
+  <tags/>
+  <thumbs>
+    <item external="True" url="https://thetvdb.com/banners/episodes/268592/5025919.jpg" provider="com.plexapp.agents.thetvdb" media="com.plexapp.agents.thetvdb_d54c074a7b446a56f51df8add4bb62f7205be0e6"/>
+  </thumbs>
+  <title>Many Happy Returns</title>
+  <writers>
+    <item index="0">
+      <photo/>
+      <role/>
+      <name>Kim Shumway</name>
+    </item>
+  </writers>
+</Episode>

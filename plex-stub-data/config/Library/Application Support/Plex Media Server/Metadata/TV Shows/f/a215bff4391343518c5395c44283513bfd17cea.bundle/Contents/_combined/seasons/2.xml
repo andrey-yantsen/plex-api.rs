@@ -1,3 +1,36 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:4dd561b90ed15573c8be5e933b9d61c1557643fdfd59d23b60489c0ea0c7571c
-size 4801
+<?xml version='1.0' encoding='utf-8'?>
+<Season>
+  <art/>
+  <banners/>
+  <episodes>
+    <item external="True" key="1" originally_available_at="2012-04-01"/>
+    <item external="True" key="3" originally_available_at="2012-04-15"/>
+    <item external="True" key="2" originally_available_at="2012-04-08"/>
+    <item external="True" key="5" originally_available_at="2012-04-29"/>
+    <item external="True" key="4" originally_available_at="2012-04-22"/>
+    <item external="True" key="7" originally_available_at="2012-05-13"/>
+    <item external="True" key="6" originally_available_at="2012-05-06"/>
+    <item external="True" key="9" originally_available_at="2012-05-27"/>
+    <item external="True" key="8" originally_available_at="2012-05-20"/>
+  </episodes>
+  <posters>
+    <item external="True" url="https://thetvdb.com/banners/seasons/121361-2.jpg" sort_order="155" provider="com.plexapp.agents.thetvdb" media="com.plexapp.agents.thetvdb_5826d9473a1290577a3509f150293f541c06a4eb"/>
+    <item external="True" url="https://thetvdb.com/banners/seasons/121361-2-4.jpg" preview="com.plexapp.agents.thetvdb_27485d9ddfce0c284b6861a1ada268f798ccadde" sort_order="262" provider="com.plexapp.agents.thetvdb"/>
+    <item external="True" url="https://thetvdb.com/banners/seasons/121361-2-3.jpg" preview="com.plexapp.agents.thetvdb_917a2823ee89033ba0faabe680ac56a662016492" sort_order="263" provider="com.plexapp.agents.thetvdb"/>
+    <item external="True" url="https://thetvdb.com/banners/seasons/121361-2-7.jpg" preview="com.plexapp.agents.thetvdb_f5cbbb8c31b69595a5fe08fd4c6cf490c1ffda4f" sort_order="264" provider="com.plexapp.agents.thetvdb"/>
+    <item external="True" url="https://thetvdb.com/banners/seasons/121361-2-9.jpg" preview="com.plexapp.agents.thetvdb_c238d7453c8c13d60b4966a7812663252b5dff16" sort_order="265" provider="com.plexapp.agents.thetvdb"/>
+    <item external="True" url="https://thetvdb.com/banners/seasons/121361-2-13.jpg" preview="com.plexapp.agents.thetvdb_da92b6afa7bac004723bcd7b6b64edcece3952a3" sort_order="266" provider="com.plexapp.agents.thetvdb"/>
+    <item external="True" url="https://thetvdb.com/banners/seasons/121361-2-14.jpg" preview="com.plexapp.agents.thetvdb_2aecd6f6ea795de8aa3466828d073efd20d08e02" sort_order="267" provider="com.plexapp.agents.thetvdb"/>
+    <item external="True" url="https://thetvdb.com/banners/seasons/121361-2-20.jpg" preview="com.plexapp.agents.thetvdb_ce7545eeaa9ff50e52fd6a1dbc6bcd5baaa312f5" sort_order="269" provider="com.plexapp.agents.thetvdb"/>
+    <item external="True" url="https://thetvdb.com/banners/seasons/121361-2-22.jpg" preview="com.plexapp.agents.thetvdb_56b1a6a497db98d7453545b13753f0ac22468262" sort_order="270" provider="com.plexapp.agents.thetvdb"/>
+    <item external="True" url="https://thetvdb.com/banners/seasons/121361-2-23.jpg" preview="com.plexapp.agents.thetvdb_cbf6fd33707c6ad6d056a1926756833f62db024e" sort_order="271" provider="com.plexapp.agents.thetvdb"/>
+    <item external="True" url="https://thetvdb.com/banners/seasons/121361-2-2.jpg" preview="com.plexapp.agents.thetvdb_b66c9e1cddffcd0404f2b0cdda981942cd6199f3" sort_order="272" provider="com.plexapp.agents.thetvdb"/>
+    <item external="True" url="https://thetvdb.com/banners/seasons/121361-2-28.jpg" preview="com.plexapp.agents.thetvdb_4271863848489fba40468cf9ba96e508b60c46bf" sort_order="273" provider="com.plexapp.agents.thetvdb"/>
+    <item external="True" url="https://thetvdb.com/banners/seasons/121361-2-29.jpg" preview="com.plexapp.agents.thetvdb_964813e606c1e2e7dfc9e4b8cb9a18d07c2f859d" sort_order="274" provider="com.plexapp.agents.thetvdb"/>
+    <item external="True" url="https://thetvdb.com/banners/seasons/5cc751f2f3b33.jpg" preview="com.plexapp.agents.thetvdb_322dcd6f450d5826fe1078a700cdd9d66393a46a" sort_order="275" provider="com.plexapp.agents.thetvdb"/>
+    <item external="True" url="https://thetvdb.com/banners/seasons/121361-2-17.jpg" preview="com.plexapp.agents.thetvdb_0f2cf296bcecfdb550024026e4f003c23f73488a" sort_order="416" provider="com.plexapp.agents.thetvdb"/>
+    <item external="True" url="https://thetvdb.com/banners/series/121361/seasons/473271/posters/62035564.jpg" preview="com.plexapp.agents.thetvdb_abfdd38e71d095858d95bf26a33e6dda908602a0" sort_order="444" provider="com.plexapp.agents.thetvdb"/>
+    <item external="True" url="https://thetvdb.com/banners/series/121361/seasons/473271/posters/62035574.jpg" preview="com.plexapp.agents.thetvdb_7e50d8cc49c027ea5e26e81b8406abf504dc6098" sort_order="452" provider="com.plexapp.agents.thetvdb"/>
+    <item external="True" url="https://thetvdb.com/banners/series/121361/seasons/473271/posters/62035575.jpg" preview="com.plexapp.agents.thetvdb_babd359adb2187ec27d1c64012a407e33e3c0a13" sort_order="453" provider="com.plexapp.agents.thetvdb"/>
+  </posters>
+</Season>

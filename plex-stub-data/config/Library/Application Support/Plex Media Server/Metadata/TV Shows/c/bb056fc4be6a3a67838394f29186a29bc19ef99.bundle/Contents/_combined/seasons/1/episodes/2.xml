@@ -1,3 +1,21 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:d4549d6168a12aa546fc0ff0d481ec98ea07612843abfa852be11e69da8ba44d
-size 876
+<?xml version='1.0' encoding='utf-8'?>
+<Episode>
+  <directors/>
+  <guest_stars/>
+  <originally_available_at>2014-03-26</originally_available_at>
+  <producers/>
+  <rating>7.6</rating>
+  <summary>Having discovered that Jasper may still be alive, Clarke, Bellamy, Octavia, Finn and Monty set out on a mission to locate their friend and are shocked at what they find. Meanwhile, on the Ark, Abby is determined to get to Earth, and enlists Raven to craft an escape pod.</summary>
+  <tags/>
+  <thumbs>
+    <item external="True" url="https://thetvdb.com/banners/episodes/268592/4735398.jpg" provider="com.plexapp.agents.thetvdb" media="com.plexapp.agents.thetvdb_20dcfa74a3ab7f9985f483be72789ec8106352f7"/>
+  </thumbs>
+  <title>Earth Skills</title>
+  <writers>
+    <item index="0">
+      <photo/>
+      <role/>
+      <name>Jason Rothenberg</name>
+    </item>
+  </writers>
+</Episode>
