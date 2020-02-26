@@ -27,7 +27,7 @@ semver = { version = "0.9", features = ["serde"] }
 
 [dev-dependencies]
 tokio = { version = "0.2", features = ["macros"] }
-futures-retry = "0.4"
+futures-retry = "0.5"
 
 [features]
 default = []
