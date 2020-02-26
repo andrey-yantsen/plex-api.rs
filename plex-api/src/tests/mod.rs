@@ -68,7 +68,6 @@ pub(crate) mod retry {
 
     pub(crate) struct FutureRetryHandler<D> {
         max_attempts: usize,
-        current_attempt: usize,
         display_name: D,
     }
 
@@ -76,7 +75,6 @@ pub(crate) mod retry {
         pub const fn new(max_attempts: usize, display_name: D) -> Self {
             FutureRetryHandler {
                 max_attempts,
-                current_attempt: 0,
                 display_name,
             }
         }
@@ -88,9 +86,8 @@ pub(crate) mod retry {
     {
         type OutError = PlexApiError;
 
-        fn handle(&mut self, e: PlexApiError) -> RetryPolicy<PlexApiError> {
-            self.current_attempt += 1;
-            if self.current_attempt >= self.max_attempts {
+        fn handle(&mut self, current_attempt: usize, e: PlexApiError) -> RetryPolicy<PlexApiError> {
+            if current_attempt >= self.max_attempts {
                 eprintln!(
                     "[{}] All attempts ({}) have been used",
                     self.display_name, self.max_attempts
@@ -99,7 +96,7 @@ pub(crate) mod retry {
             }
             eprintln!(
                 "[{}] Attempt {}/{} has failed",
-                self.display_name, self.current_attempt, self.max_attempts
+                self.display_name, current_attempt, self.max_attempts
             );
             match e {
                 PlexApiError::ReqwestError { .. } => RetryPolicy::WaitRetry(Duration::from_secs(5)),

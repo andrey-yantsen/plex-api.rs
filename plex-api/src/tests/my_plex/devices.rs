@@ -7,19 +7,17 @@ async fn decode_devices_online() {
     use std::env;
 
     let auth_token = &env::var("PLEX_API_AUTH_TOKEN").expect("Auth token not specified");
-    let acc = FutureRetry::new(
+    let (acc, _) = FutureRetry::new(
         move || MyPlexAccount::by_token(auth_token),
         FutureRetryHandler::new(5, "Log-in by token"),
     )
     .await
     .unwrap();
     let acc = &acc;
-    let devices = FutureRetry::new(
+    let (_devices, _) = FutureRetry::new(
         move || acc.get_devices(),
         FutureRetryHandler::new(5, "Getting devices"),
     )
-    .await;
-    if let Err(e) = devices {
-        assert!(false, "Unable to get devices: {:?}", e);
-    }
+    .await
+    .unwrap();
 }

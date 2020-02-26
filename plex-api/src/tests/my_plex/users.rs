@@ -7,19 +7,17 @@ async fn decode_users_online() {
     use std::env;
 
     let auth_token = &env::var("PLEX_API_AUTH_TOKEN").expect("Auth token not specified");
-    let acc = FutureRetry::new(
+    let (acc, _) = FutureRetry::new(
         move || MyPlexAccount::by_token(auth_token),
         FutureRetryHandler::new(5, "Log-in by token"),
     )
     .await
     .unwrap();
     let acc = &acc;
-    let users = FutureRetry::new(
+    let (_users, _) = FutureRetry::new(
         move || acc.get_users(),
         FutureRetryHandler::new(5, "Getting users"),
     )
-    .await;
-    if let Err(e) = users {
-        assert!(false, "Unable to get users: {:?}", e);
-    }
+    .await
+    .unwrap();
 }
