@@ -6,7 +6,7 @@ use std::sync::{LockResult, RwLock, RwLockReadGuard};
 use uname::uname;
 use uuid::Uuid;
 
-/// A method to set custom HTTP-client, e.g. to change request timeout or to set a proxy.
+/// Sets custom HTTP-client, e.g. to change request timeout or to set a proxy.
 ///
 /// Error would be returned if [`RwLock`] had been poisoned.
 ///
@@ -52,6 +52,9 @@ lazy_static! {
     static ref HEADERS_CACHE: RwLock<HeaderMap> = { RwLock::new(HeaderMap::new()) };
 }
 
+/// Resets cached headers
+///
+/// Useful when you need to change headers at the runtime.
 pub fn clear_headers_cache() -> Result<()> {
     let mut cache = HEADERS_CACHE.write()?;
     *cache = HeaderMap::new();

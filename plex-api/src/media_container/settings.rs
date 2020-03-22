@@ -313,7 +313,7 @@ impl ToString for SettingValue {
     }
 }
 
-pub fn deserialize_settings_as_hashmap<'de, D>(
+fn deserialize_settings_as_hashmap<'de, D>(
     deserializer: D,
 ) -> Result<HashMap<String, Setting>, D::Error>
 where

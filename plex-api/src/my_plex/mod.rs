@@ -146,7 +146,7 @@ impl From<MyPlexApiErrorResponse> for PlexApiError {
     }
 }
 
-pub trait HasMyPlexToken {
+pub(crate) trait HasMyPlexToken {
     fn get_auth_token(&self) -> &str;
     fn set_auth_token(&mut self, auth_token: &str);
 }
