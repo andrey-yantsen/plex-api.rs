@@ -49,7 +49,7 @@ pub fn get_http_client() -> LockResult<RwLockReadGuard<'static, Client>> {
 }
 
 lazy_static! {
-    static ref HEADERS_CACHE: RwLock<HeaderMap> = RwLock::new(HeaderMap::new());
+    static ref HEADERS_CACHE: RwLock<HeaderMap> = { RwLock::new(HeaderMap::new()) };
 }
 
 /// Resets cached headers
