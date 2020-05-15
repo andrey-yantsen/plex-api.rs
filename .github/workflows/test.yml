@@ -413,6 +413,7 @@ jobs:
           PLEX_API_SERVER_URL: http://127.0.0.1:32400
           CARGO_INCREMENTAL: '0'
           RUSTFLAGS: '-Zprofile -Ccodegen-units=1 -Cinline-threshold=0 -Clink-dead-code -Coverflow-checks=off -Cpanic=abort -Zpanic_abort_tests'
+          RUSTDOCFLAGS: '-Cpanic=abort'
         with:
           command: test
           args: --manifest-path plex-api/Cargo.toml  --no-fail-fast --features 'test_connect_anonymous'
