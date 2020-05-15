@@ -3,7 +3,6 @@ use crate::{
     my_plex::{MyPlexAccount, MyPlexApiErrorResponse},
     InternalHttpApi,
 };
-use quick_xml;
 use reqwest::StatusCode;
 
 const USERS_URL: &str = "api/users/";

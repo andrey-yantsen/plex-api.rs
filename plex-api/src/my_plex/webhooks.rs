@@ -3,7 +3,6 @@ use crate::{
     InternalHttpApi, PlexApiError,
 };
 use reqwest::StatusCode;
-use serde_json;
 
 const WEBHOOKS_URL: &str = "api/v2/user/webhooks";
 

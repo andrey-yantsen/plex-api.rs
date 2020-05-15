@@ -3,7 +3,6 @@ use crate::{
     my_plex::{HasMyPlexToken, MyPlexAccount, MyPlexApiErrorResponse},
     InternalHttpApi,
 };
-use quick_xml;
 use reqwest::StatusCode;
 
 const DEVICES_URL: &str = "devices.xml";
