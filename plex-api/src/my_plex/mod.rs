@@ -117,6 +117,7 @@ pub struct MyPlexAccount {
     ads_consent_set_at: DateTime<Utc>,
     #[serde(with = "chrono::serde::ts_seconds")]
     ads_consent_reminder_at: DateTime<Utc>,
+    anonymous: Option<bool>,
 }
 
 #[derive(Deserialize, Debug, Clone)]
