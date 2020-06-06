@@ -1,19 +1,4 @@
 test_case_online_all!(
-    _get_library_online,
-    get_library_online_anonymous,
-    get_library_online_authenticated
-);
-
-async fn _get_library_online(srv: crate::Server) {
-    let library = srv.get_library().await;
-    assert!(
-        library.is_ok(),
-        "Unable to get library: {:?}",
-        library.err()
-    );
-}
-
-test_case_online_all!(
     _get_sections_online,
     get_sections_online_anonymous,
     get_sections_online_authenticated

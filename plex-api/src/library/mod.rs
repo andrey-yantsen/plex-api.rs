@@ -9,16 +9,11 @@ pub struct Library<'a> {
     info: LibraryMediaContainer,
 }
 
-const LIBRARY_URL: &str = "library";
 const LIBRARY_SECTIONS_URL: &str = "library/sections";
 const LIBRARY_RECENTLY_ADDED_URL: &str = "library/recentlyAdded";
 const LIBRARY_ON_DECK_URL: &str = "library/onDeck";
 
 impl<'a> Library<'a> {
-    pub(crate) async fn new(server: &'a Server) -> Result<Library<'a>> {
-        Self::load(server, LIBRARY_URL).await
-    }
-
     pub(crate) async fn sections(server: &'a Server) -> Result<Library<'a>> {
         Self::load(server, LIBRARY_SECTIONS_URL).await
     }

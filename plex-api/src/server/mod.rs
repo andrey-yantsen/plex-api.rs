@@ -40,9 +40,6 @@ impl<'a> Server {
     pub const fn get_version(&self) -> &Version {
         self.info.get_version()
     }
-    pub async fn get_library(&'a self) -> Result<Library<'a>> {
-        Library::new(self).await
-    }
     pub async fn get_sections(&'a self) -> Result<Library<'a>> {
         Library::sections(self).await
     }

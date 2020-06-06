@@ -2,20 +2,6 @@ use crate::LibraryMediaContainer;
 use serde_json::from_str;
 
 #[test]
-fn decode_library_root() {
-    let s = r##"
-{"size":3,"allowSync":false,"art":"/:/resources/library-art.png","content":"","identifier":"com.plexapp.plugins.library","mediaTagPrefix":"/system/bundle/media/flags/","mediaTagVersion":1578431856,"title1":"Plex Library","title2":"","Directory":[{"key":"sections","title":"Library Sections"},{"key":"recentlyAdded","title":"Recently Added Content"},{"key":"onDeck","title":"On Deck Content"}]}
-    "##;
-
-    let mc = from_str::<LibraryMediaContainer>(s);
-    assert!(
-        dbg!(&mc).is_ok(),
-        "Unable to deserialize library root: {:?}",
-        mc.err()
-    );
-}
-
-#[test]
 fn decode_library_sections() {
     let s = r##"
 {"size":3,"allowSync":false,"identifier":"com.plexapp.plugins.library","mediaTagPrefix":"/system/bundle/media/flags/","mediaTagVersion":1578431856,"title1":"Plex Library","Directory":[{"allowSync":true,"art":"/:/resources/movie-fanart.jpg","composite":"/library/sections/1/composite/1579536593","filters":true,"refreshing":false,"thumb":"/:/resources/movie.png","key":"1","type":"movie","title":"Movies","agent":"com.plexapp.agents.imdb","scanner":"Plex Movie Scanner","language":"en","uuid":"5ac3b52d-e852-488e-9f9c-ca6988daa269","updatedAt":1579536650,"createdAt":1506579881,"scannedAt":1579536593,"content":true,"directory":true,"contentChangedAt":1690867,"Location":[{"id":1,"path":"/Volumes/External/Movies"}]},{"allowSync":true,"art":"/:/resources/movie-fanart.jpg","composite":"/library/sections/14/composite/1579536595","filters":true,"refreshing":false,"thumb":"/:/resources/movie.png","key":"14","type":"movie","title":"Stand-ups","agent":"com.plexapp.agents.imdb","scanner":"Plex Movie Scanner","language":"en","uuid":"4554e3e4-a8f0-4b2c-9406-0144e22b7e64","updatedAt":1579536650,"createdAt":1548180402,"scannedAt":1579536595,"content":true,"directory":true,"contentChangedAt":1688871,"Location":[{"id":15,"path":"/Volumes/External/Stand-ups"}]},{"allowSync":true,"art":"/:/resources/show-fanart.jpg","composite":"/library/sections/2/composite/1579536598","filters":true,"refreshing":false,"thumb":"/:/resources/show.png","key":"2","type":"show","title":"TV Shows","agent":"com.plexapp.agents.thetvdb","scanner":"Plex Series Scanner","language":"en","uuid":"cbf5ffe4-8b58-4019-81b8-60aaeceb0f78","updatedAt":1579536650,"createdAt":1506579911,"scannedAt":1579536598,"content":true,"directory":true,"contentChangedAt":1692548,"Location":[{"id":2,"path":"/Volumes/External/TV Shows"}]}]}
