@@ -220,6 +220,7 @@ jobs:
         run: target/debug/plex-cli wait --timeout 120 --server-url http://127.0.0.1:32400 -s
 
       - name: Test against real server [anonymous]
+        if: matrix.plex_server_version == 'latest'
         uses: actions-rs/cargo@v1
         env:
           PLEX_API_SERVER_URL: http://127.0.0.1:32400
@@ -227,7 +228,8 @@ jobs:
           command: test
           args: --manifest-path plex-api/Cargo.toml --features 'test_connect_anonymous'
 
-      - name: Run the same tests with checks for new attributes
+      - name: Test against real server [anonymous + new attributes]
+        if: matrix.plex_server_version != 'latest'
         uses: actions-rs/cargo@v1
         continue-on-error: true
         env:
@@ -321,6 +323,7 @@ jobs:
         run: target/debug/plex-cli wait --timeout 120 --server-url http://127.0.0.1:32400 -s
 
       - name: Test against real server [authenticated]
+        if: matrix.plex_server_version == 'latest'
         uses: actions-rs/cargo@v1
         env:
           PLEX_API_SERVER_URL: http://127.0.0.1:32400
@@ -329,7 +332,8 @@ jobs:
           command: test
           args: --manifest-path plex-api/Cargo.toml --features 'test_connect_authenticated'
 
-      - name: Run the same tests with checks for new attributes
+      - name: Test against real server [authenticated + new attributes]
+        if: matrix.plex_server_version != 'latest'
         uses: actions-rs/cargo@v1
         continue-on-error: true
         env:
