@@ -74,15 +74,20 @@ pub struct DirectoryMediaContainer {
     updated_at: DateTime<Utc>,
     #[serde(with = "chrono::serde::ts_seconds")]
     created_at: DateTime<Utc>,
-    #[serde(with = "chrono::serde::ts_seconds")]
-    scanned_at: DateTime<Utc>,
-    content: bool,
-    directory: bool,
-    content_changed_at: u64,
-    #[serde(deserialize_with = "serde_aux::prelude::deserialize_bool_from_anything")]
-    hidden: bool,
-    #[serde(default)]
-    #[serde(rename = "Location")]
+    #[serde(
+        default,
+        deserialize_with = "crate::serde_helpers::option_seconds_to_datetime"
+    )]
+    scanned_at: Option<DateTime<Utc>>,
+    content: Option<bool>,
+    directory: Option<bool>,
+    content_changed_at: Option<u64>,
+    #[serde(
+        default,
+        deserialize_with = "crate::serde_helpers::option_bool_from_int"
+    )]
+    hidden: Option<bool>,
+    #[serde(default, rename = "Location")]
     location: Vec<DirectoryLocation>,
     #[serde(skip_serializing_if = "Option::is_none")]
     enable_auto_photo_tags: Option<bool>,
