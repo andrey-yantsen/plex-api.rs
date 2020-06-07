@@ -1,4 +1,4 @@
-use crate::MediaContainer;
+use crate::{MediaContainer, MediaMetadata, MediaType};
 use chrono::{DateTime, Utc};
 use uuid::Uuid;
 
@@ -16,6 +16,9 @@ pub struct LibraryMediaContainer {
     title2: Option<String>,
     #[serde(rename = "Directory")]
     pub(crate) directory: Option<Vec<DirectoryMediaContainer>>,
+    mixed_parents: Option<bool>,
+    #[serde(rename = "Metadata")]
+    metadata: Option<Vec<MediaMetadata>>,
     #[serde(flatten)]
     media_container: MediaContainer,
 }
@@ -31,17 +34,6 @@ impl From<LibraryMediaContainerOuter> for LibraryMediaContainer {
     fn from(mc: LibraryMediaContainerOuter) -> Self {
         mc.media_container
     }
-}
-
-#[derive(Debug, Deserialize, Clone)]
-#[cfg_attr(all(test, feature = "test_new_attributes"), serde(deny_unknown_fields))]
-#[serde(rename_all = "lowercase")]
-enum DirectoryType {
-    Movie,
-    Show,
-    #[serde(rename = "artist")]
-    Music,
-    Photo,
 }
 
 #[derive(Debug, Deserialize, Clone)]
@@ -65,7 +57,7 @@ pub struct DirectoryMediaContainer {
     refreshing: bool,
     thumb: String,
     #[serde(rename = "type")]
-    directory_type: String,
+    media_type: MediaType,
     agent: String,
     scanner: String,
     language: String,
@@ -84,7 +76,7 @@ pub struct DirectoryMediaContainer {
     content_changed_at: Option<u64>,
     #[serde(
         default,
-        deserialize_with = "crate::serde_helpers::option_bool_from_int"
+        deserialize_with = "crate::serde_helpers::option_bool_from_anything"
     )]
     hidden: Option<bool>,
     #[serde(default, rename = "Location")]

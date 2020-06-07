@@ -1,11 +1,13 @@
 mod device;
 mod library;
+mod media;
 mod server;
 mod settings;
 mod user;
 
 pub use self::device::*;
 pub use self::library::*;
+pub use self::media::*;
 pub use self::server::*;
 pub use self::settings::*;
 pub use self::user::*;
@@ -31,4 +33,17 @@ pub struct Directory {
     count: u16,
     key: String,
     title: String,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+#[cfg_attr(all(test, feature = "test_new_attributes"), serde(deny_unknown_fields))]
+#[serde(rename_all = "lowercase")]
+pub enum MediaType {
+    Movie,
+    Show,
+    Artist,
+    Album,
+    Photo,
+    Episode,
+    Season,
 }

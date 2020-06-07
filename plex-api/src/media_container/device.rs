@@ -1,7 +1,7 @@
 use chrono::{DateTime, Utc};
 use serde_with::CommaSeparator;
 
-use crate::serde_helpers::option_bool_from_int;
+use crate::serde_helpers::option_bool_from_anything;
 use crate::server::Server;
 use crate::{HasBaseUrl, HasDeleteUrl, HasMyPlexToken, MediaContainer, PlexApiError};
 use std::collections::HashMap;
@@ -65,17 +65,17 @@ pub struct Device {
     screen_density: Option<u16>,
     #[serde(rename = "Connection")]
     connections: Option<Vec<Connection>>,
-    #[serde(deserialize_with = "option_bool_from_int", default)]
+    #[serde(deserialize_with = "option_bool_from_anything", default)]
     https_required: Option<bool>,
-    #[serde(deserialize_with = "option_bool_from_int", default)]
+    #[serde(deserialize_with = "option_bool_from_anything", default)]
     synced: Option<bool>,
-    #[serde(deserialize_with = "option_bool_from_int", default)]
+    #[serde(deserialize_with = "option_bool_from_anything", default)]
     relay: Option<bool>,
-    #[serde(deserialize_with = "option_bool_from_int", default)]
+    #[serde(deserialize_with = "option_bool_from_anything", default)]
     public_address_matches: Option<bool>,
-    #[serde(deserialize_with = "option_bool_from_int", default)]
+    #[serde(deserialize_with = "option_bool_from_anything", default)]
     presence: Option<bool>,
-    #[serde(deserialize_with = "option_bool_from_int", default)]
+    #[serde(deserialize_with = "option_bool_from_anything", default)]
     owned: Option<bool>,
     #[serde(rename = "SyncList")]
     sync_list: Option<SyncList>,
@@ -101,9 +101,9 @@ struct Connection {
     protocol: Option<String>,
     address: Option<IpAddr>,
     port: Option<u32>,
-    #[serde(deserialize_with = "option_bool_from_int", default)]
+    #[serde(deserialize_with = "option_bool_from_anything", default)]
     local: Option<bool>,
-    #[serde(deserialize_with = "option_bool_from_int", default)]
+    #[serde(deserialize_with = "option_bool_from_anything", default)]
     relay: Option<bool>,
 }
 

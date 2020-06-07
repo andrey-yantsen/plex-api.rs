@@ -9,7 +9,7 @@ fn decode_library_sections() {
 
     let mc = from_str::<LibraryMediaContainer>(s);
     assert!(
-        dbg!(&mc).is_ok(),
+        mc.is_ok(),
         "Unable to deserialize library sections: {:?}",
         mc.err()
     );
@@ -23,7 +23,7 @@ fn decode_library_on_deck() {
 
     let mc = from_str::<LibraryMediaContainer>(s);
     assert!(
-        dbg!(&mc).is_ok(),
+        mc.is_ok(),
         "Unable to deserialize library on deck: {:?}",
         mc.err()
     );

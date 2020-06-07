@@ -144,9 +144,5 @@ fn decode_prefs() {
     "##;
 
     let mc = from_str::<SettingsMediaContainer>(s);
-    assert!(
-        dbg!(&mc).is_ok(),
-        "Unable to deserialize prefs: {:?}",
-        mc.err()
-    );
+    assert!(mc.is_ok(), "Unable to deserialize prefs: {:?}", mc.err());
 }

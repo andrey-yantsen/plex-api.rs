@@ -17,7 +17,7 @@ async fn _directory_populated(srv: crate::Server) {
     let directory = library.get_directory();
     assert!(directory.is_some(), "Directory not found");
 
-    let directory = dbg!(directory.as_ref().unwrap());
+    let directory = directory.as_ref().unwrap();
     assert!(!directory.is_empty(), "Directory is empty");
 
     let mut m: std::collections::HashMap<&str, &str> = std::collections::HashMap::new();

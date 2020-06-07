@@ -1,7 +1,7 @@
 use crate::{Directory, MediaContainer};
 
 use crate::serde_helpers::{
-    option_bool_from_int, option_comma_separated_to_vec, option_seconds_to_datetime,
+    option_bool_from_anything, option_comma_separated_to_vec, option_seconds_to_datetime,
 };
 use chrono::{DateTime, Utc};
 use semver::Version;
@@ -46,13 +46,13 @@ pub struct ServerMediaContainer {
     livetv: u8,
     #[serde(default, deserialize_with = "option_comma_separated_to_vec")]
     diagnostics: Option<Vec<String>>,
-    #[serde(default, deserialize_with = "option_bool_from_int")]
+    #[serde(default, deserialize_with = "option_bool_from_anything")]
     media_providers: Option<bool>,
-    #[serde(default, deserialize_with = "option_bool_from_int")]
+    #[serde(default, deserialize_with = "option_bool_from_anything")]
     multiuser: Option<bool>,
-    #[serde(default, deserialize_with = "option_bool_from_int")]
+    #[serde(default, deserialize_with = "option_bool_from_anything")]
     my_plex: Option<bool>,
-    #[serde(default, deserialize_with = "option_bool_from_int")]
+    #[serde(default, deserialize_with = "option_bool_from_anything")]
     my_plex_subscription: Option<bool>,
     my_plex_mapping_state: Option<String>,
     my_plex_signin_state: Option<String>,
@@ -110,7 +110,7 @@ pub struct ServerMediaContainer {
     max_upload_bitrate: Option<u16>,
     max_upload_bitrate_reason: Option<String>,
     max_upload_bitrate_reason_message: Option<String>,
-    #[serde(default, deserialize_with = "option_bool_from_int")]
+    #[serde(default, deserialize_with = "option_bool_from_anything")]
     push_notifications: Option<bool>,
 
     #[serde(flatten)]
