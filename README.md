@@ -1,4 +1,6 @@
-[![crates](https://img.shields.io/crates/v/plex-api.svg)](https://crates.io/crates/plex-api) [![dependency status](https://deps.rs/repo/github/andrey-yantsen/plex-api.rs/status.svg)](https://deps.rs/repo/github/andrey-yantsen/plex-api.rs) [![tests status](https://github.com/andrey-yantsen/plex-api.rs/workflows/Test%20everything/badge.svg)](https://github.com/andrey-yantsen/plex-api.rs/actions?query=workflow%3A%22Test+everything%22) [![Coverage Status](https://coveralls.io/repos/github/andrey-yantsen/plex-api.rs/badge.svg?branch=master)](https://coveralls.io/github/andrey-yantsen/plex-api.rs?branch=master)
+[![crates](https://img.shields.io/crates/v/plex-api.svg)](https://crates.io/crates/plex-api)
+[![tests status](https://github.com/andrey-yantsen/plex-api.rs/workflows/Test%20everything/badge.svg)](https://github.com/andrey-yantsen/plex-api.rs/actions?query=workflow%3A%22Test+everything%22)
+[![Coverage Status](https://coveralls.io/repos/github/andrey-yantsen/plex-api.rs/badge.svg?branch=master)](https://coveralls.io/github/andrey-yantsen/plex-api.rs?branch=master)
 
 # Work in progress
 
