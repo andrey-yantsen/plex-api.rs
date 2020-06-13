@@ -1,58 +1,5 @@
-use crate::MediaType;
-use serde_repr::Deserialize_repr;
+use crate::{MediaStream, MediaType};
 use uuid::Uuid;
-
-#[derive(Debug, Deserialize_repr, Clone)]
-#[repr(u8)]
-enum MediaStreamType {
-    Video = 1,
-    Audio = 2,
-    Subtitles = 3,
-}
-
-#[derive(Debug, Deserialize, Clone)]
-#[cfg_attr(all(test, feature = "test_new_attributes"), serde(deny_unknown_fields))]
-#[serde(rename_all = "camelCase")]
-pub struct MediaStream {
-    id: u32,
-    stream_type: MediaStreamType,
-    default: Option<bool>,
-    selected: Option<bool>,
-    codec: String,
-    index: u8,
-    bitrate: u32,
-    chroma_subsampling: Option<String>,
-    chroma_location: Option<String>,
-    closed_captions: Option<String>,
-    coded_height: Option<String>,
-    coded_width: Option<String>,
-    color_primaries: Option<String>,
-    color_space: Option<String>,
-    color_range: Option<String>,
-    color_trc: Option<String>,
-    frame_rate: Option<f32>,
-    height: Option<u16>,
-    width: Option<u16>,
-    level: Option<u16>,
-    profile: Option<String>,
-    ref_frames: Option<u64>,
-    display_title: String,
-    has_scaling_matrix: Option<bool>,
-    scan_type: Option<String>,
-    bit_depth: Option<u16>,
-    sampling_rate: Option<u32>,
-    channels: Option<u8>,
-    audio_channel_layout: Option<String>,
-    key: Option<String>,
-    title: Option<String>,
-    language: Option<String>,
-    language_code: Option<String>,
-    #[serde(
-        default,
-        deserialize_with = "crate::serde_helpers::option_bool_from_anything"
-    )]
-    embedded_in_video: Option<bool>,
-}
 
 #[derive(Debug, Deserialize, Clone)]
 #[cfg_attr(all(test, feature = "test_new_attributes"), serde(deny_unknown_fields))]
