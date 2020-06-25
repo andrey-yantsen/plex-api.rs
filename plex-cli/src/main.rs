@@ -6,6 +6,7 @@ extern crate clap;
 mod subcommands;
 
 use clap::App;
+use std::env;
 use subcommands::*;
 
 #[tokio::main]
@@ -29,6 +30,13 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let matches = App::from_yaml(yaml)
         .version(env!("CARGO_PKG_VERSION"))
         .get_matches();
+
+    let client_id = env::var("X_PLEX_CLIENT_IDENTIFIER");
+    if let Ok(client_id) = client_id {
+        use plex_api::X_PLEX_CLIENT_IDENTIFIER;
+        let mut client_identifier = X_PLEX_CLIENT_IDENTIFIER.write().unwrap();
+        *client_identifier = client_id;
+    }
 
     let token_from_env = std::env::var("PLEX_API_AUTH_TOKEN").unwrap_or_else(|_| String::from(""));
     let auth_token = matches.value_of("auth-token").unwrap_or(&token_from_env);

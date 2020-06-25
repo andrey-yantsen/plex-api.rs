@@ -51,8 +51,8 @@ lazy_static! {
     /// UUID, serial number, or other number unique per device. Random value would be generated
     /// if not set. Can be set by providing ENV-value `X_PLEX_CLIENT_IDENTIFIER`.
     ///
-    /// **N.B.** Should be unique across all your devices.
-    pub static ref X_PLEX_CLIENT_IDENTIFIER: RwLock<&'static str> = RwLock::new("");
+    /// **N.B.** Should be unique for each of your devices.
+    pub static ref X_PLEX_CLIENT_IDENTIFIER: RwLock<String> = RwLock::new(String::new());
     pub static ref HTTP_CLIENT: RwLock<Client> = {
         #[cfg(all(test, not(any(feature = "test_connect_authenticated", feature = "test_connect_anonymous"))))]
         {

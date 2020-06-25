@@ -92,36 +92,14 @@ pub enum PlexApiError {
     },
 }
 
-impl From<std::sync::PoisonError<RwLockReadGuard<'_, reqwest::Client>>> for PlexApiError {
-    fn from(_: PoisonError<RwLockReadGuard<'_, reqwest::Client>>) -> Self {
-        PlexApiError::RWLockReadPoison
-    }
-}
-
-impl From<std::sync::PoisonError<RwLockWriteGuard<'_, reqwest::Client>>> for PlexApiError {
-    fn from(_: PoisonError<RwLockWriteGuard<'_, reqwest::Client>>) -> Self {
+impl<T> From<std::sync::PoisonError<RwLockWriteGuard<'_, T>>> for PlexApiError {
+    fn from(_: PoisonError<RwLockWriteGuard<'_, T>>) -> Self {
         PlexApiError::RWLockWritePoison
     }
 }
 
-impl From<std::sync::PoisonError<RwLockReadGuard<'_, reqwest::header::HeaderMap>>>
-    for PlexApiError
-{
-    fn from(_: PoisonError<RwLockReadGuard<'_, reqwest::header::HeaderMap>>) -> Self {
-        PlexApiError::RWLockReadPoison
-    }
-}
-
-impl From<std::sync::PoisonError<RwLockWriteGuard<'_, reqwest::header::HeaderMap>>>
-    for PlexApiError
-{
-    fn from(_: PoisonError<RwLockWriteGuard<'_, reqwest::header::HeaderMap>>) -> Self {
-        PlexApiError::RWLockWritePoison
-    }
-}
-
-impl From<std::sync::PoisonError<std::sync::RwLockReadGuard<'_, &str>>> for PlexApiError {
-    fn from(_: PoisonError<RwLockReadGuard<'_, &str>>) -> Self {
+impl<T> From<std::sync::PoisonError<std::sync::RwLockReadGuard<'_, T>>> for PlexApiError {
+    fn from(_: PoisonError<RwLockReadGuard<'_, T>>) -> Self {
         PlexApiError::RWLockReadPoison
     }
 }

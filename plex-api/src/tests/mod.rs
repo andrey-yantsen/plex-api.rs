@@ -37,12 +37,28 @@ mod library;
 mod my_plex;
 mod server;
 
+#[cfg(any(
+    feature = "test_connect_authenticated",
+    feature = "test_connect_anonymous"
+))]
+fn set_client_identifier_from_env() {
+    use std::env;
+
+    let client_id = env::var("X_PLEX_CLIENT_IDENTIFIER");
+    if let Ok(client_id) = client_id {
+        use crate::X_PLEX_CLIENT_IDENTIFIER;
+        let mut client_identifier = X_PLEX_CLIENT_IDENTIFIER.write().unwrap();
+        *client_identifier = client_id;
+    }
+}
+
 #[cfg(feature = "test_connect_authenticated")]
 async fn get_server_authenticated() -> crate::Server {
     use std::env;
     let srv: Result<crate::Server, _> = {
         let server_url = env::var("PLEX_API_SERVER_URL").expect("Server url not specified");
         let auth_token = env::var("PLEX_API_AUTH_TOKEN").expect("Auth token not specified");
+        set_client_identifier_from_env();
         crate::Server::connect(&server_url, &auth_token).await
     };
     assert!(srv.is_ok(), "Unable to connect to server: {:?}", srv.err());
@@ -54,6 +70,7 @@ async fn get_server_anonymous() -> crate::Server {
     use std::env;
     let srv: Result<crate::Server, _> = {
         let server_url = env::var("PLEX_API_SERVER_URL").expect("Server url not specified");
+        set_client_identifier_from_env();
         crate::Server::connect(&server_url, "").await
     };
     assert!(srv.is_ok(), "Unable to connect to server: {:?}", srv.err());

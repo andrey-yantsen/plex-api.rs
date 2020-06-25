@@ -1,7 +1,6 @@
 use crate::config;
 use crate::Result;
 use reqwest::{header::HeaderMap, Client};
-use std::env;
 use std::sync::{LockResult, RwLock, RwLockReadGuard};
 use uname::uname;
 use uuid::Uuid;
@@ -36,7 +35,7 @@ pub fn get_http_client() -> LockResult<RwLockReadGuard<'static, Client>> {
     // override http-client in tests, to prevent using cached connections across different tokio runtimes
     #[cfg(test)]
     {
-        warn!("Resetting HTTP_CLIENT to default value to prevent connections caching");
+        debug!("Resetting HTTP_CLIENT to default value to prevent connections caching");
         set_http_client(
             Client::builder()
                 .timeout(std::time::Duration::from_secs(30))
@@ -107,17 +106,11 @@ pub fn base_headers() -> Result<HeaderMap> {
 
     headers.insert("X-Plex-Platform-Version", platform_version.parse()?);
 
-    let mut client_identifier: String = String::from(*config::X_PLEX_CLIENT_IDENTIFIER.read()?);
+    let mut client_identifier: String = String::from(&*config::X_PLEX_CLIENT_IDENTIFIER.read()?);
     if client_identifier == "" {
-        let client_id = env::var("X_PLEX_CLIENT_IDENTIFIER");
-        client_identifier = match client_id {
-            Ok(id) => id,
-            Err(_) => {
-                warn!(target: "plex-api", "Generating random identifier for the machine! Set X_PLEX_CLIENT_IDENTIFIER to avoid this");
-                let random_uuid = Uuid::new_v4();
-                random_uuid.to_string()
-            }
-        };
+        warn!("Generating random identifier for the machine! Set X_PLEX_CLIENT_IDENTIFIER to avoid this");
+        let random_uuid = Uuid::new_v4();
+        client_identifier = random_uuid.to_string();
     }
 
     headers.insert("X-Plex-Client-Identifier", client_identifier.parse()?);

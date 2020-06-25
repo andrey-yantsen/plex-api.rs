@@ -42,7 +42,7 @@ fn base_headers_use_provided_values() {
         let mut device_name = X_PLEX_DEVICE_NAME.write().unwrap();
         *device_name = "plex_device_name";
         let mut client_identifier = X_PLEX_CLIENT_IDENTIFIER.write().unwrap();
-        *client_identifier = "plex_client_identifier";
+        *client_identifier = "plex_client_identifier".to_owned();
     }
 
     assert!(crate::clear_headers_cache().is_ok()); // ensure that there are no cached headers
@@ -71,7 +71,7 @@ fn base_headers_use_provided_values() {
         headers.get("x-plex-platform-version").unwrap()
     );
     assert_eq!(
-        *client_identifier,
+        client_identifier.as_str(),
         headers.get("x-plex-client-identifier").unwrap()
     );
     assert_eq!(*device, headers.get("x-plex-device").unwrap());
