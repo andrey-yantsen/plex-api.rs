@@ -59,7 +59,7 @@ struct Subscription {
     ends_at: Option<DateTime<Utc>>,
     #[serde(rename = "type")]
     subscription_type: Option<String>,
-    transfer: bool,
+    transfer: Option<bool>,
 }
 
 #[derive(Deserialize, Debug)]
