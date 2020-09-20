@@ -1,8 +1,4 @@
-test_case_online_all!(
-    _directory_populated,
-    directory_populated_anonymous,
-    directory_populated_authenticated
-);
+test_case_online_all!(_directory_populated);
 
 async fn _directory_populated(srv: crate::Server) {
     let library = srv.get_sections().await;

@@ -1,32 +1,33 @@
 macro_rules! test_case_online_anonymous {
-    ($testing_function_name:ident,$function_name:ident) => {
-        #[cfg(feature = "test_connect_anonymous")]
-        #[tokio::test]
-        async fn $function_name() {
-            let srv = crate::tests::get_server_anonymous().await;
-            $testing_function_name(srv).await;
+    ($testing_function_name:ident) => {
+        paste! {
+            #[cfg(feature = "test_connect_anonymous")]
+            #[tokio::test]
+            async fn [<$testing_function_name _anonymous>]() {
+                let srv = crate::tests::get_server_anonymous().await;
+                $testing_function_name(srv).await;
+            }
         }
     };
 }
 
 macro_rules! test_case_online_authenticated {
-    ($testing_function_name:ident,$function_name:ident) => {
-        #[cfg(feature = "test_connect_authenticated")]
-        #[tokio::test]
-        async fn $function_name() {
-            let srv = crate::tests::get_server_authenticated().await;
-            $testing_function_name(srv).await;
+    ($testing_function_name:ident) => {
+        paste! {
+            #[cfg(feature = "test_connect_authenticated")]
+            #[tokio::test]
+            async fn [<$testing_function_name _authenticated>]() {
+                let srv = crate::tests::get_server_authenticated().await;
+                $testing_function_name(srv).await;
+            }
         }
     };
 }
 
 macro_rules! test_case_online_all {
-    ($testing_function_name:ident,$anonymous_testing_function_name:ident,$authenticated_testing_function_name:ident) => {
-        test_case_online_anonymous!($testing_function_name, $anonymous_testing_function_name);
-        test_case_online_authenticated!(
-            $testing_function_name,
-            $authenticated_testing_function_name
-        );
+    ($testing_function_name:ident) => {
+        test_case_online_anonymous!($testing_function_name);
+        test_case_online_authenticated!($testing_function_name);
     };
 }
 

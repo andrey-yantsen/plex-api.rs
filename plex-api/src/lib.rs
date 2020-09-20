@@ -38,6 +38,10 @@ mod server;
 #[cfg(test)]
 mod tests;
 
+#[cfg(test)]
+#[macro_use]
+extern crate paste;
+
 pub type Result<T> = std::result::Result<T, crate::error::PlexApiError>;
 
 #[async_trait]

@@ -1,8 +1,4 @@
-test_case_online_all!(
-    _get_sections_online,
-    get_sections_online_anonymous,
-    get_sections_online_authenticated
-);
+test_case_online_all!(_get_sections_online);
 
 async fn _get_sections_online(srv: crate::Server) {
     let library = srv.get_sections().await;
@@ -13,11 +9,7 @@ async fn _get_sections_online(srv: crate::Server) {
     );
 }
 
-test_case_online_all!(
-    _get_recently_added_online,
-    get_recently_added_online_anonymous,
-    get_recently_added_online_authenticated
-);
+test_case_online_all!(_get_recently_added_online);
 
 async fn _get_recently_added_online(srv: crate::Server) {
     let library = srv.get_recently_added().await;
@@ -28,11 +20,7 @@ async fn _get_recently_added_online(srv: crate::Server) {
     );
 }
 
-test_case_online_all!(
-    _get_on_deck_online,
-    get_on_deck_online_anonymous,
-    get_on_deck_online_authenticated
-);
+test_case_online_all!(_get_on_deck_online);
 
 async fn _get_on_deck_online(srv: crate::Server) {
     let library = srv.get_on_deck().await;
