@@ -14,7 +14,7 @@ uuid = { version = "0.8", features = ["v4", "serde"] }
 log = "0.4"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
-quick-xml = { version = "0.18", features = [ "serialize" ] }
+quick-xml = { version = "0.19", features = [ "serialize" ] }
 serde_with = "1.4"
 serde_repr = "0.1"
 chrono = { version = "0.4", features = ["serde"] }
