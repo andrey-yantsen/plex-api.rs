@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
 
       - name: Cache cargo registry
         uses: actions/cache@v1
@@ -58,7 +58,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
 
       - name: Cache cargo registry
         uses: actions/cache@v1
@@ -100,7 +100,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
 
       - name: Cache cargo registry
         uses: actions/cache@v1
@@ -165,7 +165,7 @@ jobs:
       X_PLEX_CLIENT_IDENTIFIER: ${{ secrets.X_PLEX_CLIENT_IDENTIFIER }}
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
 
       - name: Cache cargo registry
         uses: actions/cache@v1
@@ -253,7 +253,7 @@ jobs:
       X_PLEX_CLIENT_IDENTIFIER: ${{ secrets.X_PLEX_CLIENT_IDENTIFIER }}
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
 
       - name: Cache cargo registry
         uses: actions/cache@v1
@@ -362,7 +362,7 @@ jobs:
       X_PLEX_CLIENT_IDENTIFIER: ${{ secrets.X_PLEX_CLIENT_IDENTIFIER }}
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
 
       - name: Run Plex Server
         run: |
