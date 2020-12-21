@@ -22,7 +22,7 @@ lazy_static = "1.4"
 url = { version = "2.2", features = ["serde"] }
 async-trait = "0.1"
 thiserror = "1.0"
-serde-aux = "1.1"
+serde-aux = "2.0"
 semver = { version = "0.11", features = ["serde"] }
 
 [dev-dependencies]
