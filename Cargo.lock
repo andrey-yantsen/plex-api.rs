@@ -1071,7 +1071,7 @@ dependencies = [
  "serde_repr",
  "serde_with",
  "thiserror",
- "tokio 0.3.6",
+ "tokio 1.0.0",
  "uname",
  "url",
  "uuid",
@@ -1088,7 +1088,7 @@ dependencies = [
  "log",
  "plex-api",
  "thiserror",
- "tokio 0.3.6",
+ "tokio 1.0.0",
 ]
 
 [[package]]
@@ -1561,22 +1561,21 @@ dependencies = [
 
 [[package]]
 name = "tokio"
-version = "0.3.6"
+version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "720ba21c25078711bf456d607987d95bce90f7c3bea5abe1db587862e7a1e87c"
+checksum = "9f4bfdcbd00fa893ac0549b38aa27080636a0104b0d0c38475a99439405e1df8"
 dependencies = [
  "autocfg",
  "num_cpus",
  "pin-project-lite 0.2.0",
- "slab",
  "tokio-macros",
 ]
 
 [[package]]
 name = "tokio-macros"
-version = "0.3.1"
+version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "21d30fdbb5dc2d8f91049691aa1a9d4d4ae422a21c334ce8936e5886d30c5c45"
+checksum = "42517d2975ca3114b22a16192634e8241dc5cc1f130be194645970cc1c371494"
 dependencies = [
  "proc-macro2",
  "quote",
