@@ -18,24 +18,18 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@v2
 
-      - name: Cache cargo registry
-        uses: actions/cache@v1
+      - name: Cache cargo index and registry
+        uses: actions/cache@v2
         with:
-          path: ~/.cargo/registry
-          key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+          key: ${{ runner.os }}-dot-cargo-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: |
-            ${{ runner.os }}-cargo-registry-
-
-      - name: Cache cargo index
-        uses: actions/cache@v1
-        with:
-          path: ~/.cargo/git
-          key: ${{ runner.os }}-cargo-index-${{ hashFiles('**/Cargo.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-cargo-index-
+            ${{ runner.os }}-dot-cargo-
 
       - name: Cache cargo build
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
           path: target
           key: ${{ runner.os }}-cargo-build-target-check-${{ hashFiles('**/Cargo.lock') }}
@@ -60,24 +54,18 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@v2
 
-      - name: Cache cargo registry
-        uses: actions/cache@v1
+      - name: Cache cargo index and registry
+        uses: actions/cache@v2
         with:
-          path: ~/.cargo/registry
-          key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+          key: ${{ runner.os }}-dot-cargo-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: |
-            ${{ runner.os }}-cargo-registry-
-
-      - name: Cache cargo index
-        uses: actions/cache@v1
-        with:
-          path: ~/.cargo/git
-          key: ${{ runner.os }}-cargo-index-${{ hashFiles('**/Cargo.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-cargo-index-
+            ${{ runner.os }}-dot-cargo-
 
       - name: Cache cargo build
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
           path: target
           key: ${{ runner.os }}-cargo-build-target-test-${{ hashFiles('**/Cargo.lock') }}
@@ -102,24 +90,18 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@v2
 
-      - name: Cache cargo registry
-        uses: actions/cache@v1
+      - name: Cache cargo index and registry
+        uses: actions/cache@v2
         with:
-          path: ~/.cargo/registry
-          key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+          key: ${{ runner.os }}-dot-cargo-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: |
-            ${{ runner.os }}-cargo-registry-
-
-      - name: Cache cargo index
-        uses: actions/cache@v1
-        with:
-          path: ~/.cargo/git
-          key: ${{ runner.os }}-cargo-index-${{ hashFiles('**/Cargo.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-cargo-index-
+            ${{ runner.os }}-dot-cargo-
 
       - name: Cache cargo build
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
           path: target
           key: ${{ runner.os }}-cargo-build-target-clippy-${{ hashFiles('**/Cargo.lock') }}
@@ -167,24 +149,18 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@v2
 
-      - name: Cache cargo registry
-        uses: actions/cache@v1
+      - name: Cache cargo index and registry
+        uses: actions/cache@v2
         with:
-          path: ~/.cargo/registry
-          key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+          key: ${{ runner.os }}-dot-cargo-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: |
-            ${{ runner.os }}-cargo-registry-
-
-      - name: Cache cargo index
-        uses: actions/cache@v1
-        with:
-          path: ~/.cargo/git
-          key: ${{ runner.os }}-cargo-index-${{ hashFiles('**/Cargo.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-cargo-index-
+            ${{ runner.os }}-dot-cargo-
 
       - name: Cache cargo build
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
           path: target
           key: ${{ runner.os }}-cargo-build-target-test-online-${{ hashFiles('**/Cargo.lock') }}
@@ -255,24 +231,18 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@v2
 
-      - name: Cache cargo registry
-        uses: actions/cache@v1
+      - name: Cache cargo index and registry
+        uses: actions/cache@v2
         with:
-          path: ~/.cargo/registry
-          key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+          key: ${{ runner.os }}-dot-cargo-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: |
-            ${{ runner.os }}-cargo-registry-
-
-      - name: Cache cargo index
-        uses: actions/cache@v1
-        with:
-          path: ~/.cargo/git
-          key: ${{ runner.os }}-cargo-index-${{ hashFiles('**/Cargo.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-cargo-index-
+            ${{ runner.os }}-dot-cargo-
 
       - name: Cache cargo build
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
           path: target
           key: ${{ runner.os }}-cargo-build-target-test-online-${{ hashFiles('**/Cargo.lock') }}
@@ -376,21 +346,15 @@ jobs:
             -v `pwd`/plex-stub-data/media:/data \
             plexinc/pms-docker:latest
 
-      - name: Cache cargo registry
-        uses: actions/cache@v1
+      - name: Cache cargo index and registry
+        uses: actions/cache@v2
         with:
-          path: ~/.cargo/registry
-          key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+          key: ${{ runner.os }}-dot-cargo-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: |
-            ${{ runner.os }}-cargo-registry-
-
-      - name: Cache cargo index
-        uses: actions/cache@v1
-        with:
-          path: ~/.cargo/git
-          key: ${{ runner.os }}-cargo-index-${{ hashFiles('**/Cargo.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-cargo-index-
+            ${{ runner.os }}-dot-cargo-
 
       - name: Install nightly toolchain
         uses: actions-rs/toolchain@v1
