@@ -12,8 +12,8 @@ impl Server {
         url: U,
         auth_token: &str,
     ) -> Result<Self> {
-        let response = get_http_client()?
-            .get(url.as_str())
+        let rb: reqwest::RequestBuilder = { get_http_client()?.get(url.as_str()) };
+        let response = rb
             .headers(base_headers()?)
             .header("X-Plex-Token", auth_token)
             .send()

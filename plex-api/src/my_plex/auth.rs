@@ -16,8 +16,8 @@ impl MyPlexAccount {
             ("mememberMe", "true"),
         ];
 
-        let response = get_http_client()?
-            .post(MYPLEX_LOGIN_URL)
+        let rb: reqwest::RequestBuilder = { get_http_client()?.post(MYPLEX_LOGIN_URL) };
+        let response = rb
             .form(&params)
             .headers(base_headers()?)
             .header(reqwest::header::ACCEPT, "application/json")
@@ -28,8 +28,8 @@ impl MyPlexAccount {
 
     /// Log in to [MyPlex](http://app.plex.tv) using existing authentication token.
     pub async fn by_token(auth_token: &str) -> crate::Result<Self> {
-        let response = get_http_client()?
-            .get(MYPLEX_ACCOUNT_INFO_URL)
+        let rb: reqwest::RequestBuilder = { get_http_client()?.get(MYPLEX_ACCOUNT_INFO_URL) };
+        let response = rb
             .headers(base_headers()?)
             .header(reqwest::header::ACCEPT, "application/json")
             .header("X-Plex-Token", auth_token)
