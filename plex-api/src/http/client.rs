@@ -75,14 +75,14 @@ pub fn base_headers() -> Result<HeaderMap> {
     headers.insert("X-Plex-Provides", provides.parse()?);
 
     let mut product = *config::X_PLEX_PRODUCT.read()?;
-    if product == "" {
+    if product.is_empty() {
         product = config::PROJECT.unwrap_or("plex-api");
     }
 
     headers.insert("X-Plex-Product", product.parse()?);
 
     let mut version = *config::X_PLEX_VERSION.read()?;
-    if version == "" {
+    if version.is_empty() {
         version = config::VERSION.unwrap_or("unknown");
     }
 
@@ -93,21 +93,21 @@ pub fn base_headers() -> Result<HeaderMap> {
     );
 
     let mut platform = *config::X_PLEX_PLATFORM.read()?;
-    if platform == "" {
+    if platform.is_empty() {
         platform = &i.sysname;
     }
 
     headers.insert("X-Plex-Platform", platform.parse()?);
 
     let mut platform_version = *config::X_PLEX_PLATFORM_VERSION.read()?;
-    if platform_version == "" {
+    if platform_version.is_empty() {
         platform_version = &i.release;
     }
 
     headers.insert("X-Plex-Platform-Version", platform_version.parse()?);
 
     let mut client_identifier: String = String::from(&*config::X_PLEX_CLIENT_IDENTIFIER.read()?);
-    if client_identifier == "" {
+    if client_identifier.is_empty() {
         warn!("Generating random identifier for the machine! Set X_PLEX_CLIENT_IDENTIFIER to avoid this");
         let random_uuid = Uuid::new_v4();
         client_identifier = random_uuid.to_string();
@@ -116,14 +116,14 @@ pub fn base_headers() -> Result<HeaderMap> {
     headers.insert("X-Plex-Client-Identifier", client_identifier.parse()?);
 
     let mut device = *config::X_PLEX_DEVICE.read()?;
-    if device == "" {
+    if device.is_empty() {
         device = platform
     }
 
     headers.insert("X-Plex-Device", device.parse()?);
 
     let mut device_name = *config::X_PLEX_DEVICE_NAME.read()?;
-    if device_name == "" {
+    if device_name.is_empty() {
         device_name = &i.nodename;
     }
 
