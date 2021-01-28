@@ -29,8 +29,7 @@ pub struct User {
     allow_camera_upload: bool,
     #[serde(deserialize_with = "serde_aux::prelude::deserialize_bool_from_anything")]
     allow_channels: bool,
-    #[serde(deserialize_with = "serde_aux::prelude::deserialize_bool_from_anything")]
-    allow_tuners: bool,
+    allow_tuners: u8,
     #[serde(deserialize_with = "serde_aux::prelude::deserialize_bool_from_anything")]
     allow_subtitle_admin: bool,
     #[serde(deserialize_with = "serde_aux::prelude::deserialize_bool_from_anything")]
