@@ -7,6 +7,7 @@ enum MediaStreamType {
     Video = 1,
     Audio = 2,
     Subtitles = 3,
+    Lyrics = 4,
 }
 
 #[derive(Debug, Clone)]
@@ -14,6 +15,7 @@ pub enum MediaStream {
     Video(VideoStream),
     Audio(AudioStream),
     Subtitles(SubtitlesStream),
+    Lyrics(LyricsStream),
 }
 
 #[derive(Debug, Deserialize, Clone)]
@@ -66,6 +68,8 @@ struct MediaStreamStruct {
     loudness: Option<f32>,
     lra: Option<f32>,
     peak: Option<f32>,
+    format: Option<String>,
+    provider: Option<String>,
 }
 
 macro_rules! media_stream_enum {
@@ -172,12 +176,21 @@ media_stream_enum! {
     }
 }
 
+media_stream_enum! {
+    pub struct LyricsStream {
+        extended_display_title: Option<String>,
+        format: Option<String>,
+        provider: Option<String>,
+    }
+}
+
 impl MediaStream {
     fn new(stream: MediaStreamStruct) -> Self {
         match stream.stream_type {
             MediaStreamType::Video => MediaStream::Video(VideoStream::from(stream)),
             MediaStreamType::Audio => MediaStream::Audio(AudioStream::from(stream)),
             MediaStreamType::Subtitles => MediaStream::Subtitles(SubtitlesStream::from(stream)),
+            MediaStreamType::Lyrics => MediaStream::Lyrics(LyricsStream::from(stream)),
         }
     }
 }
