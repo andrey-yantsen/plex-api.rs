@@ -90,7 +90,7 @@ pub struct MyPlexAccount {
     mailing_list_status: String,
     mailing_list_active: bool,
     scrobble_types: String,
-    pin: String,
+    pin: Option<String>,
     subscription: SubscriptionSummary,
     subscription_description: String,
     restricted: bool,
@@ -112,11 +112,11 @@ pub struct MyPlexAccount {
     country: String,
     home_admin: bool,
     trials: Vec<String>,
-    ads_consent: bool,
-    #[serde(with = "chrono::serde::ts_seconds")]
-    ads_consent_set_at: DateTime<Utc>,
-    #[serde(with = "chrono::serde::ts_seconds")]
-    ads_consent_reminder_at: DateTime<Utc>,
+    ads_consent: Option<bool>,
+    #[serde(with = "chrono::serde::ts_seconds_option")]
+    ads_consent_set_at: Option<DateTime<Utc>>,
+    #[serde(with = "chrono::serde::ts_seconds_option")]
+    ads_consent_reminder_at: Option<DateTime<Utc>>,
     anonymous: Option<bool>,
 }
 
