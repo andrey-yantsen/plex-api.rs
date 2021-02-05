@@ -58,6 +58,14 @@ struct MediaStreamStruct {
         deserialize_with = "crate::serde_helpers::option_bool_from_anything"
     )]
     embedded_in_video: Option<bool>,
+    extended_display_title: Option<String>,
+    album_gain: Option<f32>,
+    album_peak: Option<f32>,
+    album_range: Option<f32>,
+    gain: Option<f32>,
+    loudness: Option<f32>,
+    lra: Option<f32>,
+    peak: Option<f32>,
 }
 
 macro_rules! media_stream_enum {
@@ -137,13 +145,22 @@ media_stream_enum! {
 
 media_stream_enum! {
     pub struct AudioStream {
-        default: bool,
+        default: Option<bool>,
         selected: bool,
         bitrate: u32,
         profile: String,
         sampling_rate: u32,
         channels: u8,
         audio_channel_layout: String,
+        album_gain: Option<f32>,
+        album_peak: Option<f32>,
+        album_range: Option<f32>,
+        bit_depth: Option<u16>,
+        extended_display_title: Option<String>,
+        gain: Option<f32>,
+        loudness: Option<f32>,
+        lra: Option<f32>,
+        peak: Option<f32>,
     }
 }
 
