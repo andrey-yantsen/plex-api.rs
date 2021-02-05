@@ -46,4 +46,5 @@ pub enum MediaType {
     Photo,
     Episode,
     Season,
+    Track,
 }
