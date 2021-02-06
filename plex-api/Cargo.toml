@@ -9,7 +9,6 @@ repository = "https://github.com/andrey-yantsen/plex-api.rs"
 
 [dependencies]
 reqwest = { version = "0.11", features = ["json", "gzip"] }
-uname = "0.1"
 uuid = { version = "0.8", features = ["v4", "serde"] }
 log = "0.4"
 serde = { version = "1.0", features = ["derive"] }
@@ -24,6 +23,7 @@ async-trait = "0.1"
 thiserror = "1.0"
 serde-aux = "2.1"
 semver = { version = "0.11", features = ["serde"] }
+sys-info = "0.8"
 
 [dev-dependencies]
 tokio = { version = "1.1", features = ["macros", "rt-multi-thread"] }

@@ -1035,9 +1035,9 @@ dependencies = [
  "serde_json",
  "serde_repr",
  "serde_with",
+ "sys-info",
  "thiserror",
  "tokio",
- "uname",
  "url",
  "uuid",
 ]
@@ -1482,6 +1482,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "sys-info"
+version = "0.8.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3f3e7ba888a12ddcf0084e36ae4609b055845f38022d1946b67356fbc27d5795"
+dependencies = [
+ "cc",
+ "libc",
+]
+
+[[package]]
 name = "tempfile"
 version = "3.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1666,15 +1676,6 @@ name = "ucd-trie"
 version = "0.1.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "56dee185309b50d1f11bfedef0fe6d036842e3fb77413abef29f8f8d1c5d4c1c"
-
-[[package]]
-name = "uname"
-version = "0.1.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b72f89f0ca32e4db1c04e2a72f5345d59796d4866a1ee0609084569f73683dc8"
-dependencies = [
- "libc",
-]
 
 [[package]]
 name = "unicode-bidi"

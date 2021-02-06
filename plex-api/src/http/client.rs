@@ -1,9 +1,10 @@
+use std::sync::{LockResult, RwLock, RwLockReadGuard};
+
+use reqwest::{header::HeaderMap, Client};
+use uuid::Uuid;
+
 use crate::config;
 use crate::Result;
-use reqwest::{header::HeaderMap, Client};
-use std::sync::{LockResult, RwLock, RwLockReadGuard};
-use uname::uname;
-use uuid::Uuid;
 
 /// Sets custom HTTP-client, e.g. to change request timeout or to set a proxy.
 ///
@@ -69,7 +70,10 @@ pub fn base_headers() -> Result<HeaderMap> {
     }
 
     let mut headers = HeaderMap::new();
-    let i = uname()?;
+
+    let sys_platform = sys_info::os_type().unwrap_or_else(|_| "unknown".into());
+    let sys_version = sys_info::os_release().unwrap_or_else(|_| "unknown".into());
+    let sys_hostname = sys_info::hostname().unwrap_or_else(|_| "unknown".into());
 
     let provides = *config::X_PLEX_PROVIDES.read()?;
     headers.insert("X-Plex-Provides", provides.parse()?);
@@ -94,14 +98,14 @@ pub fn base_headers() -> Result<HeaderMap> {
 
     let mut platform = *config::X_PLEX_PLATFORM.read()?;
     if platform.is_empty() {
-        platform = &i.sysname;
+        platform = &sys_platform;
     }
 
     headers.insert("X-Plex-Platform", platform.parse()?);
 
     let mut platform_version = *config::X_PLEX_PLATFORM_VERSION.read()?;
     if platform_version.is_empty() {
-        platform_version = &i.release;
+        platform_version = &sys_version;
     }
 
     headers.insert("X-Plex-Platform-Version", platform_version.parse()?);
@@ -124,7 +128,7 @@ pub fn base_headers() -> Result<HeaderMap> {
 
     let mut device_name = *config::X_PLEX_DEVICE_NAME.read()?;
     if device_name.is_empty() {
-        device_name = &i.nodename;
+        device_name = &sys_hostname;
     }
 
     headers.insert("X-Plex-Device-Name", device_name.parse()?);
