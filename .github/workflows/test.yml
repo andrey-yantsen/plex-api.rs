@@ -54,6 +54,9 @@ jobs:
     name: Offline tests
     runs-on: ${{ matrix.os }}
     steps:
+      - name: 'Git: enable longpaths'
+        run: git config --global core.longpaths true
+
       - name: Checkout sources
         uses: actions/checkout@v2
 
