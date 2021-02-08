@@ -47,9 +47,12 @@ jobs:
           command: check
 
   test_offline:
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
     needs: check
     name: Offline tests
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout sources
         uses: actions/checkout@v2
@@ -60,15 +63,15 @@ jobs:
           path: |
             ~/.cargo/registry
             ~/.cargo/git
-          key: ${{ runner.os }}-dot-cargo-${{ hashFiles('**/Cargo.lock') }}
+          key: ${{ matrix.os }}-${{ runner.os }}-dot-cargo-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: |
-            ${{ runner.os }}-dot-cargo-
+            ${{ matrix.os }}-${{ runner.os }}-dot-cargo-
 
       - name: Cache cargo build
         uses: actions/cache@v2
         with:
           path: target
-          key: ${{ runner.os }}-cargo-build-target-test-${{ hashFiles('**/Cargo.lock') }}
+          key: ${{ matrix.os }}-${{ runner.os }}-cargo-build-target-test-${{ hashFiles('**/Cargo.lock') }}
 
       - name: Install stable toolchain
         uses: actions-rs/toolchain@v1
