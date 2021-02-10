@@ -25,16 +25,6 @@ pub use self::my_plex::*;
 pub use self::server::*;
 use url::Url;
 
-mod config;
-mod error;
-mod http;
-mod library;
-mod media_container;
-mod my_plex;
-pub mod prelude;
-mod serde_helpers;
-mod server;
-
 #[cfg(test)]
 mod tests;
 
