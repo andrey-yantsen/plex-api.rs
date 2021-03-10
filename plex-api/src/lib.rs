@@ -23,7 +23,6 @@ pub use self::http::{clear_headers_cache, set_http_client};
 pub use self::media_container::*;
 pub use self::my_plex::*;
 pub use self::server::*;
-use url::Url;
 
 mod config;
 mod error;
@@ -79,37 +78,15 @@ trait HasBaseUrl {
 }
 
 trait CanMakeRequests {
-    fn prepare_query<P: reqwest::IntoUrl + AsStr>(
+    fn prepare_query<P: reqwest::IntoUrl>(
         &self,
         url: P,
         method: reqwest::Method,
     ) -> Result<reqwest::RequestBuilder>;
 }
 
-pub trait AsStr {
-    fn as_str(&self) -> &str;
-}
-
-impl AsStr for &str {
-    fn as_str(&self) -> &str {
-        self
-    }
-}
-
-impl AsStr for Url {
-    fn as_str(&self) -> &str {
-        self.as_str()
-    }
-}
-
-impl AsStr for &String {
-    fn as_str(&self) -> &str {
-        self
-    }
-}
-
 impl<T: HasPlexHeaders + HasBaseUrl> CanMakeRequests for T {
-    fn prepare_query<P: reqwest::IntoUrl + AsStr>(
+    fn prepare_query<P: reqwest::IntoUrl>(
         &self,
         url: P,
         method: reqwest::Method,
@@ -142,16 +119,13 @@ impl<T: HasPlexHeaders + HasBaseUrl> CanMakeRequests for T {
 
 #[async_trait]
 trait InternalHttpApi {
-    async fn get<U: reqwest::IntoUrl + AsStr + Send>(
-        &self,
-        url: U,
-    ) -> crate::Result<reqwest::Response>;
-    async fn post_form<U: reqwest::IntoUrl + AsStr + Send, T: serde::Serialize + ?Sized + Sync>(
+    async fn get<U: reqwest::IntoUrl + Send>(&self, url: U) -> crate::Result<reqwest::Response>;
+    async fn post_form<U: reqwest::IntoUrl + Send, T: serde::Serialize + ?Sized + Sync>(
         &self,
         url: U,
         params: &T,
     ) -> crate::Result<reqwest::Response>;
-    async fn put_form<U: reqwest::IntoUrl + AsStr + Send, T: serde::Serialize + ?Sized + Sync>(
+    async fn put_form<U: reqwest::IntoUrl + Send, T: serde::Serialize + ?Sized + Sync>(
         &self,
         url: U,
         params: &T,
@@ -160,14 +134,14 @@ trait InternalHttpApi {
 
 #[async_trait]
 impl<T: CanMakeRequests + Sync> InternalHttpApi for T {
-    async fn get<U: reqwest::IntoUrl + AsStr + Send>(&self, url: U) -> Result<reqwest::Response> {
+    async fn get<U: reqwest::IntoUrl + Send>(&self, url: U) -> Result<reqwest::Response> {
         self.prepare_query(url, reqwest::Method::GET)?
             .send()
             .await
             .map_err(From::from)
     }
 
-    async fn post_form<U: reqwest::IntoUrl + AsStr + Send, P: serde::Serialize + ?Sized + Sync>(
+    async fn post_form<U: reqwest::IntoUrl + Send, P: serde::Serialize + ?Sized + Sync>(
         &self,
         url: U,
         params: &P,
@@ -179,7 +153,7 @@ impl<T: CanMakeRequests + Sync> InternalHttpApi for T {
             .map_err(From::from)
     }
 
-    async fn put_form<U: reqwest::IntoUrl + AsStr + Send, P: serde::Serialize + ?Sized + Sync>(
+    async fn put_form<U: reqwest::IntoUrl + Send, P: serde::Serialize + ?Sized + Sync>(
         &self,
         url: U,
         params: &P,
