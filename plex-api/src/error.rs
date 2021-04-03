@@ -23,9 +23,9 @@ pub enum PlexApiError {
         source: serde_json::Error,
     },
     #[error("RwLock was poisoned (reading)")]
-    RWLockReadPoison,
+    RwLockReadPoison,
     #[error("RwLock was poisoned (writing)")]
-    RWLockWritePoison,
+    RwLockWritePoison,
     #[error("Error while communicating with MyPlexApi: {errors:?}")]
     MyPlexErrorResponse { errors: Vec<PlexApiError> },
     #[error("Error occurred while communicating to MyPlex API: #{code} - {message}")]
@@ -75,7 +75,7 @@ pub enum PlexApiError {
         source: InvalidHeaderValue,
     },
     #[error("I/O-error occurred: {source}")]
-    IOError {
+    IoError {
         #[from]
         source: std::io::Error,
     },
@@ -94,12 +94,12 @@ pub enum PlexApiError {
 
 impl<T> From<std::sync::PoisonError<RwLockWriteGuard<'_, T>>> for PlexApiError {
     fn from(_: PoisonError<RwLockWriteGuard<'_, T>>) -> Self {
-        PlexApiError::RWLockWritePoison
+        PlexApiError::RwLockWritePoison
     }
 }
 
 impl<T> From<std::sync::PoisonError<std::sync::RwLockReadGuard<'_, T>>> for PlexApiError {
     fn from(_: PoisonError<RwLockReadGuard<'_, T>>) -> Self {
-        PlexApiError::RWLockReadPoison
+        PlexApiError::RwLockReadPoison
     }
 }
