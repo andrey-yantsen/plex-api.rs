@@ -7,3 +7,5 @@ Library/Application Support/Plex Media Server/Plug-in Support/*
 !Library/Application Support/Plex Media Server/Plug-in Support/Databases/
 Library/Application Support/Plex Media Server/Plug-in Support/Databases/*.db-shm
 Library/Application Support/Plex Media Server/Plug-in Support/Databases/*.db-wal
+
+.bash_history
