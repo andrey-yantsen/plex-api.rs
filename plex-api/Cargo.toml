@@ -23,7 +23,7 @@ async-trait = "0.1"
 thiserror = "1.0"
 serde-aux = "2.2"
 semver = { version = "0.11", features = ["serde"] }
-sys-info = "0.8"
+sys-info = "0.9"
 
 [dev-dependencies]
 tokio = { version = "1.4", features = ["macros", "rt-multi-thread"] }
