@@ -22,7 +22,7 @@ url = { version = "2.2", features = ["serde"] }
 async-trait = "0.1"
 thiserror = "1.0"
 serde-aux = "2.2"
-semver = { version = "0.11", features = ["serde"] }
+semver = { version = "1.0", features = ["serde"] }
 sys-info = "0.9"
 
 [dev-dependencies]
