@@ -73,8 +73,8 @@ pub struct ServerMediaContainer {
     platform_version: String,
     #[serde(deserialize_with = "serde_aux::prelude::deserialize_bool_from_anything")]
     plugin_host: bool,
-    #[serde(deserialize_with = "serde_aux::prelude::deserialize_bool_from_anything")]
-    request_parameters_in_cookie: bool,
+    #[serde(deserialize_with = "option_bool_from_anything", default)]
+    request_parameters_in_cookie: Option<bool>,
     read_only_libraries: u16,
     #[serde(rename = "streamingBrainABRVersion")]
     streaming_brain_abr_version: Option<u8>,
