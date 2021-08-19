@@ -147,8 +147,8 @@ jobs:
       matrix:
         plex_server_version:
           - latest
+          - 1.21.4.4079-1b7748a7b
           - 1.19.5.3112-b23ab3896
-          - 1.17.0.1841-d42cfa161
     env:
       X_PLEX_CLIENT_IDENTIFIER: ${{ secrets.X_PLEX_CLIENT_IDENTIFIER }}
     steps:
@@ -227,8 +227,8 @@ jobs:
       matrix:
         plex_server_version:
           - latest
+          - 1.21.4.4079-1b7748a7b
           - 1.19.5.3112-b23ab3896
-          - 1.17.0.1841-d42cfa161
     env:
       X_PLEX_CLIENT_IDENTIFIER: ${{ secrets.X_PLEX_CLIENT_IDENTIFIER }}
     steps:
