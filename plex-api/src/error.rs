@@ -80,9 +80,9 @@ pub enum PlexApiError {
         source: std::io::Error,
     },
     #[error("Unable to parse version requirement")]
-    ReqSemverParsingError {
+    SemverParsingError {
         #[from]
-        source: semver::ReqParseError,
+        source: semver::Error,
     },
     #[error("{message} (current server version: {current_version})")]
     ServerVersionLessThanRequired {
