@@ -85,7 +85,7 @@ pub enum PlexApiError {
         source: semver::Error,
     },
     #[error("{message} (current server version: {current_version})")]
-    ServerVersionLessThanRequired {
+    ServerVersionNotMatchRequirement {
         message: String,
         required_version: String,
         current_version: String,

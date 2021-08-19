@@ -1,17 +1,19 @@
 /// Compare current server's version with the requirements (should be formatter as proper semver
 /// requirement, e.g. ">= 1.10" or "<= 1.16"). If requirement is not met, `return` would be called
-/// with error `PlexApiError::ServerVersionLessThanRequired`.
+/// with error `PlexApiError::ServerVersionNotMatchRequirement`.
 macro_rules! required_server_version {
     ($srv:ident, $version:literal, $error:literal) => {
         use semver::VersionReq;
         match VersionReq::parse($version) {
             Ok(req) => {
                 if !req.matches($srv.get_version()) {
-                    return Err(crate::error::PlexApiError::ServerVersionLessThanRequired {
-                        message: $error.to_string(),
-                        required_version: $version.to_string(),
-                        current_version: $srv.get_version().to_string(),
-                    });
+                    return Err(
+                        crate::error::PlexApiError::ServerVersionNotMatchRequirement {
+                            message: $error.to_string(),
+                            required_version: $version.to_string(),
+                            current_version: $srv.get_version().to_string(),
+                        },
+                    );
                 }
             }
             Err(e) => return Err(core::convert::From::from(e)),
