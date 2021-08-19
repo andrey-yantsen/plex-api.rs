@@ -5,7 +5,6 @@ use crate::serde_helpers::option_bool_from_anything;
 use crate::server::Server;
 use crate::{HasBaseUrl, HasDeleteUrl, HasMyPlexToken, MediaContainer, PlexApiError};
 use std::collections::HashMap;
-use std::net::IpAddr;
 use url::Url;
 
 #[derive(Debug, Deserialize, Clone)]
@@ -99,7 +98,7 @@ struct SyncList {
 struct Connection {
     uri: Url,
     protocol: Option<String>,
-    address: Option<IpAddr>,
+    address: Option<String>,
     port: Option<u32>,
     #[serde(deserialize_with = "option_bool_from_anything", default)]
     local: Option<bool>,
