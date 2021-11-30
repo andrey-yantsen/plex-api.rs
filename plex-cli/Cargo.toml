@@ -10,5 +10,5 @@ log = "0.4"
 fern = "0.6"
 chrono = "0.4"
 tokio = { version = "1.14", features = ["macros", "rt-multi-thread", "time"] }
-clap = { version = "2.33", features = ["yaml", "color"] }
+clap = { version = "2.34", features = ["yaml", "color"] }
 thiserror = "1.0"
