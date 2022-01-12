@@ -191,7 +191,7 @@ jobs:
         continue-on-error: true
         with:
           command: run
-          args: "--package xtask -- test --docker-tag ${{ matrix.plex_server_version }} --deny-unknown-fields"
+          args: "--package xtask -- test --online --docker-tag ${{ matrix.plex_server_version }} --deny-unknown-fields"
 
   test_on_real_server_authenticated:
     if: "github.ref == 'refs/heads/master'"
@@ -223,17 +223,17 @@ jobs:
           profile: minimal
           toolchain: stable
           override: true
-      - name: "Test against real server [anonymous]"
+      - name: "Test against real server [authenticated]"
         uses: actions-rs/cargo@v1
         with:
           command: run
           args: "--package xtask -- test --online --docker-tag ${{ matrix.plex_server_version }} --token '${{ secrets.PLEX_API_AUTH_TOKEN }}'"
-      - name: "Test against real server [anonymous + new attributes]"
+      - name: "Test against real server [authenticated + new attributes]"
         if: "matrix.plex_server_version == 'latest'"
         uses: actions-rs/cargo@v1
         with:
           command: run
-          args: "--package xtask -- test --docker-tag ${{ matrix.plex_server_version }} --token '${{ secrets.PLEX_API_AUTH_TOKEN }}' --deny-unknown-fields"
+          args: "--package xtask -- test --online --docker-tag ${{ matrix.plex_server_version }} --token '${{ secrets.PLEX_API_AUTH_TOKEN }}' --deny-unknown-fields"
 
   collect_coverage:
     needs: check
