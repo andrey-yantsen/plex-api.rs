@@ -1,3 +1,5 @@
+#![cfg_attr(windows, allow(unused_imports))]
+
 use crate::flags;
 #[cfg(not(windows))]
 use crate::plex_docker_image::Plex as PlexImage;

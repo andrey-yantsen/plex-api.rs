@@ -1,3 +1,5 @@
+#![cfg_attr(windows, allow(dead_code))]
+
 #[cfg(not(windows))]
 use testcontainers::{core::WaitFor, Image};
 
