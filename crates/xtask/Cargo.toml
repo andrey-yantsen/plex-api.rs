@@ -1,0 +1,27 @@
+[package]
+name = "xtask"
+version = "0.0.0"
+edition = "2021"
+publish = false
+
+[package.metadata.workspaces]
+independent = true
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+anyhow = "^1.0"
+flate2 = "^1.0"
+xshell = "^0.1"
+xflags = "^0.2"
+uuid = { version = "^0.8", features = ["v4"] }
+plex-api = { path = "../plex-api" }
+tokio = { version = "1.13", features = ["rt-multi-thread"] }
+walkdir = "^2"
+semver = "^1.0.0"
+ureq = "^2.4.0"
+regex = "^1.5"
+
+# https://github.com/testcontainers/testcontainers-rs/issues/279
+[target.'cfg(not(windows))'.dependencies]
+testcontainers = { git = "https://github.com/testcontainers/testcontainers-rs", branch = "dev" }

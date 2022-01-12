@@ -21,14 +21,31 @@ stub media, and assigns this shiny new server to MyPlex account, if required.
 
 # TODO
 
-* [X] MyPlex access
-* [ ] CLI command to bootstrap new Plex server
-   * [X] Requesting claim-token from MyPlex
-   * [X] Change server's settings
-   * [ ] Creating library-like files structure (probably it'd easier to use git-lfs for storing file stubs)
-   * [ ] Library section creation
-   * [ ] Notifications handling, to be able to determine if the library initialisation complete
-   * [ ] Granting access to a managed user for freshly created server
-* [ ] MobileSync
-    * [ ] Read
-    * [ ] Download
+- [x] MyPlex access
+- [ ] CLI command to bootstrap new Plex server
+  - [x] Requesting claim-token from MyPlex
+  - [ ] Change server's settings
+  - [ ] Library section creation
+  - [ ] Notifications handling, to be able to determine if the library initialisation complete
+  - [ ] Granting access to a managed user for freshly created server
+- [ ] MobileSync
+  - [ ] Read
+  - [ ] Download
+
+# License
+
+Licensed under either of
+
+- Apache License, Version 2.0 ([LICENSE-APACHE](LICENSE-APACHE) or
+  http://www.apache.org/licenses/LICENSE-2.0)
+- MIT license ([LICENSE-MIT](LICENSE-MIT) or http://opensource.org/licenses/MIT)
+
+at your option.
+
+## Contribution
+
+Unless you explicitly state otherwise, any contribution intentionally submitted
+for inclusion in the work by you, as defined in the Apache-2.0 license, shall be
+licensed as above, without any additional terms or conditions.
+
+You can find the contribution documentation in the [CONTRIBUTING.md](./CONTRIBUTING.md) file.

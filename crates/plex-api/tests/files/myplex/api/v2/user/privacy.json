@@ -1,0 +1,480 @@
+{
+    "optOutPlayback": true,
+    "optOutLibraryStats": true,
+    "domain": "analytics.plex.tv",
+    "baseUrl": "https://analytics.plex.tv",
+    "metrics": [
+        {
+            "event": "cameraupload:batch",
+            "status": "identifiable"
+        },
+        {
+            "event": "cameraupload:ingest",
+            "status": "identifiable"
+        },
+        {
+            "event": "channel:launch",
+            "status": "identifiable"
+        },
+        {
+            "event": "client:attribution",
+            "status": "identifiable"
+        },
+        {
+            "event": "client:claimServer",
+            "status": "identifiable"
+        },
+        {
+            "event": "client:claimServerFailure",
+            "status": "identifiable"
+        },
+        {
+            "event": "client:click",
+            "status": "identifiable"
+        },
+        {
+            "event": "client:download",
+            "status": "anonymous"
+        },
+        {
+            "event": "client:mmp:start",
+            "status": "identifiable"
+        },
+        {
+            "event": "client:relayTested",
+            "status": "identifiable"
+        },
+        {
+            "event": "client:search",
+            "status": "identifiable"
+        },
+        {
+            "event": "client:selectserver",
+            "status": "identifiable"
+        },
+        {
+            "event": "client:selectsource",
+            "status": "identifiable"
+        },
+        {
+            "event": "client:setting",
+            "status": "identifiable"
+        },
+        {
+            "event": "client:shutdown",
+            "status": "identifiable"
+        },
+        {
+            "event": "client:signin",
+            "status": "identifiable"
+        },
+        {
+            "event": "client:signin:failure",
+            "status": "anonymous"
+        },
+        {
+            "event": "client:signout",
+            "status": "identifiable"
+        },
+        {
+            "event": "client:signup",
+            "status": "identifiable"
+        },
+        {
+            "event": "client:support:vote",
+            "status": "anonymous"
+        },
+        {
+            "event": "client:start",
+            "status": "identifiable"
+        },
+        {
+            "event": "client:switchuser",
+            "status": "identifiable"
+        },
+        {
+            "event": "client:upsell",
+            "status": "identifiable"
+        },
+        {
+            "event": "client:view",
+            "status": "identifiable"
+        },
+        {
+            "event": "client:voice",
+            "status": "anonymous"
+        },
+        {
+            "event": "cloudserver:create",
+            "status": "identifiable"
+        },
+        {
+            "event": "cloudserver:destroy",
+            "status": "identifiable"
+        },
+        {
+            "event": "cloudserver:start",
+            "status": "identifiable"
+        },
+        {
+            "event": "cloudserver:stop",
+            "status": "identifiable"
+        },
+        {
+            "event": "codec:download",
+            "status": "anonymous"
+        },
+        {
+            "event": "device:linked",
+            "status": "identifiable"
+        },
+        {
+            "event": "device:seen",
+            "status": "identifiable"
+        },
+        {
+            "event": "dvr:create",
+            "status": "identifiable"
+        },
+        {
+            "event": "dvr:destroy",
+            "status": "identifiable"
+        },
+        {
+            "event": "dvr:epg:load:end",
+            "status": "anonymous"
+        },
+        {
+            "event": "dvr:epg:load:start",
+            "status": "identifiable"
+        },
+        {
+            "event": "dvr:grabber:device:added",
+            "status": "anonymous"
+        },
+        {
+            "event": "dvr:grabber:device:channelmap",
+            "status": "identifiable"
+        },
+        {
+            "event": "dvr:grabber:device:discovered",
+            "status": "identifiable"
+        },
+        {
+            "event": "dvr:grabber:grab",
+            "status": "identifiable"
+        },
+        {
+            "event": "dvr:grabber:postprocess",
+            "status": "identifiable"
+        },
+        {
+            "event": "dvr:grabber:record",
+            "status": "identifiable"
+        },
+        {
+            "event": "dvr:grab:end",
+            "status": "identifiable"
+        },
+        {
+            "event": "dvr:grab:start",
+            "status": "identifiable"
+        },
+        {
+            "event": "dvr:grab:postprocess",
+            "status": "identifiable"
+        },
+        {
+            "event": "dvr:sub:create",
+            "status": "identifiable"
+        },
+        {
+            "event": "dvr:sub:destroy",
+            "status": "identifiable"
+        },
+        {
+            "event": "dvr:sub:move",
+            "status": "anonymous"
+        },
+        {
+            "event": "dvr:upgrade:fail",
+            "status": "identifiable"
+        },
+        {
+            "event": "geotagging:metadata_item",
+            "status": "identifiable"
+        },
+        {
+            "event": "imagga:tagging_request",
+            "status": "identifiable"
+        },
+        {
+            "event": "imagga:thumb_generation_fail",
+            "status": "identifiable"
+        },
+        {
+            "event": "imagga:service_throttled",
+            "status": "identifiable"
+        },
+        {
+            "event": "imagga:upload_thumb",
+            "status": "identifiable"
+        },
+        {
+            "event": "library:created",
+            "status": "off"
+        },
+        {
+            "event": "library:scan:complete",
+            "status": "off"
+        },
+        {
+            "event": "link:mediaprovider:tidal",
+            "status": "identifiable"
+        },
+        {
+            "event": "lyrics:consumed",
+            "status": "identifiable"
+        },
+        {
+            "event": "mediaprovider:settings",
+            "status": "identifiable"
+        },
+        {
+            "event": "metadata:match",
+            "status": "anonymous"
+        },
+        {
+            "event": "metadata:music:match",
+            "status": "anonymous"
+        },
+        {
+            "event": "nominatim:reverse_geocode",
+            "status": "identifiable"
+        },
+        {
+            "event": "nominatim:reverse_geocode_error",
+            "status": "identifiable"
+        },
+        {
+            "event": "playback:failure",
+            "status": "off"
+        },
+        {
+            "event": "playback:itemend",
+            "status": "off"
+        },
+        {
+            "event": "playback:itemrestart",
+            "status": "off"
+        },
+        {
+            "event": "playback:itemstart",
+            "status": "off"
+        },
+        {
+            "event": "playback:server:itemend",
+            "status": "off"
+        },
+        {
+            "event": "playback:server:itemstart",
+            "status": "off"
+        },
+        {
+            "event": "playback:server:failure",
+            "status": "off"
+        },
+        {
+            "event": "playback:sessionend",
+            "status": "off"
+        },
+        {
+            "event": "purchase:appunlock",
+            "status": "identifiable"
+        },
+        {
+            "event": "purchase:failure",
+            "status": "identifiable"
+        },
+        {
+            "event": "purchase:plexpass",
+            "status": "identifiable"
+        },
+        {
+            "event": "server:accepted",
+            "status": "identifiable"
+        },
+        {
+            "event": "server:agent_status",
+            "status": "identifiable"
+        },
+        {
+            "event": "server:authenticated",
+            "status": "identifiable"
+        },
+        {
+            "event": "server:created",
+            "status": "identifiable"
+        },
+        {
+            "event": "server:job:failure",
+            "status": "anonymous"
+        },
+        {
+            "event": "server:left",
+            "status": "identifiable"
+        },
+        {
+            "event": "server:playback",
+            "status": "off"
+        },
+        {
+            "event": "server:published",
+            "status": "identifiable"
+        },
+        {
+            "event": "server:shared",
+            "status": "identifiable"
+        },
+        {
+            "event": "server:startup",
+            "status": "identifiable"
+        },
+        {
+            "event": "server:unpublished",
+            "status": "identifiable"
+        },
+        {
+            "event": "signin:failure",
+            "status": "identifiable"
+        },
+        {
+            "event": "subscription:canceled",
+            "status": "identifiable"
+        },
+        {
+            "event": "subscription:canceled:reason",
+            "status": "identifiable"
+        },
+        {
+            "event": "subscription:comped",
+            "status": "identifiable"
+        },
+        {
+            "event": "subscription:created",
+            "status": "identifiable"
+        },
+        {
+            "event": "subscription:ended",
+            "status": "identifiable"
+        },
+        {
+            "event": "subscription:failed",
+            "status": "identifiable"
+        },
+        {
+            "event": "subscription:gift",
+            "status": "identifiable"
+        },
+        {
+            "event": "subscription:lapsed",
+            "status": "identifiable"
+        },
+        {
+            "event": "subscription:recurring",
+            "status": "identifiable"
+        },
+        {
+            "event": "subscription:upgraded",
+            "status": "identifiable"
+        },
+        {
+            "event": "subscription:tidal:canceled",
+            "status": "identifiable"
+        },
+        {
+            "event": "subscription:tidal:comped",
+            "status": "identifiable"
+        },
+        {
+            "event": "subscription:tidal:created",
+            "status": "identifiable"
+        },
+        {
+            "event": "subscription:tidal:ended",
+            "status": "identifiable"
+        },
+        {
+            "event": "subscription:tidal:failed",
+            "status": "identifiable"
+        },
+        {
+            "event": "subscription:tidal:gift",
+            "status": "identifiable"
+        },
+        {
+            "event": "subscription:tidal:lapsed",
+            "status": "identifiable"
+        },
+        {
+            "event": "subscription:tidal:recurring",
+            "status": "identifiable"
+        },
+        {
+            "event": "subscription:tidal:transferred",
+            "status": "identifiable"
+        },
+        {
+            "event": "subscription:tidal:upgraded",
+            "status": "identifiable"
+        },
+        {
+            "event": "subscription:tidal:downgraded",
+            "status": "identifiable"
+        },
+        {
+            "event": "subtitle:server:search",
+            "status": "anonymous"
+        },
+        {
+            "event": "subtitle:server:download",
+            "status": "anonymous"
+        },
+        {
+            "event": "subtitle:server:delete",
+            "status": "anonymous"
+        },
+        {
+            "event": "subtitle:server:itemstart",
+            "status": "anonymous"
+        },
+        {
+            "event": "subtitle:server:itemend",
+            "status": "anonymous"
+        },
+        {
+            "event": "sync:complete",
+            "status": "anonymous"
+        },
+        {
+            "event": "user:disabled",
+            "status": "identifiable"
+        },
+        {
+            "event": "user:reenabled",
+            "status": "identifiable"
+        },
+        {
+            "event": "user:registered",
+            "status": "identifiable"
+        },
+        {
+            "event": "watchtogether:created",
+            "status": "identifiable"
+        },
+        {
+            "event": "watchtogether:joined",
+            "status": "identifiable"
+        }
+    ]
+}
