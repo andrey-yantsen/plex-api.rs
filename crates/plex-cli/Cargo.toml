@@ -1,0 +1,18 @@
+[package]
+name = "plex-cli"
+version = "0.0.0"
+authors = ["Andrey Yantsen <andrey@janzen.su>"]
+edition = "2021"
+publish = false
+license = "MIT/Apache-2.0"
+
+[package.metadata.workspaces]
+independent = true
+
+[dependencies]
+plex-api = { path = "../plex-api" }
+tracing = "^0.1.29"
+tracing-subscriber = "^0.3.4"
+tokio = { version = "^1.15", features = ["macros", "rt-multi-thread", "time"] }
+anyhow = "^1.0"
+xflags = "^0.2"

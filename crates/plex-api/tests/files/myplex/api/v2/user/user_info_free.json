@@ -1,0 +1,198 @@
+{
+    "id": 12345,
+    "uuid": "212acf24b07315e5",
+    "username": "user@example.com",
+    "title": "user@example.com",
+    "email": "user@example.com",
+    "friendlyName": "",
+    "locale": null,
+    "confirmed": true,
+    "emailOnlyAuth": false,
+    "hasPassword": true,
+    "protected": false,
+    "thumb": "https://plex.tv/users/212acf24b07315e5/avatar?c=123456",
+    "authToken": "auth_token",
+    "mailingListStatus": "unsubscribed",
+    "mailingListActive": false,
+    "scrobbleTypes": "",
+    "country": "GB",
+    "subscription": {
+        "active": false,
+        "subscribedAt": null,
+        "status": "Inactive",
+        "paymentService": null,
+        "plan": null,
+        "features": [
+            "home",
+            "adaptive_bitrate",
+            "photos-metadata-edition",
+            "collections",
+            "radio",
+            "tuner-sharing",
+            "photos-favorites",
+            "federated-auth",
+            "livetv",
+            "Android - PiP",
+            "unsupportedtuners",
+            "kevin-bacon",
+            "client-radio-stations",
+            "music",
+            "TREBLE-show-features",
+            "web_server_dashboard",
+            "conan_redirect_qa",
+            "conan_redirect_alpha",
+            "conan_redirect_beta",
+            "conan_redirect_public",
+            "transcoder_cache",
+            "live-tv-support-incomplete-segments",
+            "companions_sonos",
+            "cloud-livetv",
+            "exclude restrictions",
+            "vod",
+            "signin_with_apple",
+            "drm_support",
+            "Android - Dolby Vision",
+            "spring_serve_ad_provider",
+            "lets_encrypt",
+            "conan_redirect_nightlies",
+            "conan_redirect_nightly",
+            "watch-together-invite",
+            "ios14-privacy-banner",
+            "two-factor-authentication",
+            "amazon-loop-debug",
+            "retro-games-plex-tv",
+            "vod_cloudflare",
+            "optimize-server-users-endpoint",
+            "metadata_search",
+            "CU Sunset",
+            "news-provider-sunset-modal",
+            "custom-home-removal",
+            "ad-countdown-timer",
+            "guided-upgrade",
+            "upgrade-3ds2"
+        ]
+    },
+    "subscriptionDescription": null,
+    "restricted": false,
+    "anonymous": null,
+    "home": false,
+    "guest": false,
+    "homeSize": 1,
+    "homeAdmin": false,
+    "maxHomeSize": 15,
+    "certificateVersion": 3,
+    "rememberExpiresAt": 1642415212,
+    "profile": {
+        "autoSelectAudio": true,
+        "defaultAudioLanguage": null,
+        "defaultSubtitleLanguage": null,
+        "autoSelectSubtitle": 1,
+        "defaultSubtitleAccessibility": 0,
+        "defaultSubtitleForced": 0
+    },
+    "entitlements": [],
+    "subscriptions": [],
+    "pastSubscriptions": [],
+    "trials": [],
+    "services": [
+        {
+            "identifier": "epg",
+            "endpoint": "https://epg.provider.plex.tv",
+            "token": "token1",
+            "status": "online"
+        },
+        {
+            "identifier": "epg-staging",
+            "endpoint": "https://epg-staging.provider.plex.tv",
+            "token": "token1",
+            "status": "online"
+        },
+        {
+            "identifier": "epg-dev",
+            "endpoint": "https://epg-dev.provider.plex.tv",
+            "token": "token1",
+            "status": "online"
+        },
+        {
+            "identifier": "eyeq",
+            "endpoint": "https://c4412416.ipg.web.cddbp.net/webapi/xml/1.0/",
+            "token": "token2",
+            "status": "online"
+        },
+        {
+            "identifier": "eyeq-channel-icons",
+            "endpoint": "http://akamai-b.cdn.cddbp.net/cds/2.0/image",
+            "status": "online"
+        },
+        {
+            "identifier": "graph-dev",
+            "endpoint": "https://graph-dev.provider.plex.tv",
+            "status": "online"
+        },
+        {
+            "identifier": "graph-staging",
+            "endpoint": "https://graph-staging.provider.plex.tv",
+            "status": "online"
+        },
+        {
+            "identifier": "metadata",
+            "endpoint": "https://metadata.provider.plex.tv",
+            "token": "token3",
+            "status": "online"
+        },
+        {
+            "identifier": "metadata-dev",
+            "endpoint": "https://metadata-dev.provider.plex.tv",
+            "token": "token3",
+            "status": "online"
+        },
+        {
+            "identifier": "metadata-provider",
+            "endpoint": "https://mpm.plex.tv/",
+            "status": "online"
+        },
+        {
+            "identifier": "tmsapi",
+            "endpoint": "https://tmsapi.plex.tv/v1.1/",
+            "token": "token4",
+            "status": "online"
+        },
+        {
+            "identifier": "subtitles-search",
+            "endpoint": "https://metadata.provider.plex.tv/library/metadata/matches",
+            "token": "token3",
+            "status": "online"
+        },
+        {
+            "identifier": "acoustid",
+            "endpoint": "https://acoustid.plex.tv/",
+            "token": "token5",
+            "status": "online"
+        },
+        {
+            "identifier": "lyricfind",
+            "endpoint": "https://lyricfind.plex.tv/",
+            "token": "token6",
+            "secret": "secret6",
+            "status": "online"
+        },
+        {
+            "identifier": "lyricfind-search",
+            "endpoint": "https://lyricfind.plex.tv/",
+            "token": "token7",
+            "status": "online"
+        },
+        {
+            "identifier": "tvdb",
+            "endpoint": "https://api4.thetvdb.com/",
+            "token": "token8",
+            "status": "online"
+        }
+    ],
+    "adsConsent": null,
+    "adsConsentSetAt": null,
+    "adsConsentReminderAt": null,
+    "experimentalFeatures": false,
+    "twoFactorEnabled": false,
+    "backupCodesCreated": false
+}

@@ -1,15 +1,11 @@
-# Based on https://github.com/actions-rs/meta/blob/master/recipes/quickstart.md
-
-on:
+---
+"on":
   push:
-    branches:
-      - master
+    branches: [main, staging, trying]
   pull_request:
-    branches:
-      - master
+    branches: [main]
 
 name: Test everything
-
 jobs:
   check:
     name: Check
@@ -17,30 +13,23 @@ jobs:
     steps:
       - name: Checkout sources
         uses: actions/checkout@v2
-
       - name: Cache cargo index and registry
         uses: actions/cache@v2
         with:
-          path: |
-            ~/.cargo/registry
-            ~/.cargo/git
-          key: ${{ runner.os }}-dot-cargo-${{ hashFiles('**/Cargo.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-dot-cargo-
-
+          path: "~/.cargo/registry\n~/.cargo/git\n"
+          key: "${{ runner.os }}-dot-cargo-${{ hashFiles('**/Cargo.lock') }}"
+          restore-keys: "${{ runner.os }}-dot-cargo-\n"
       - name: Cache cargo build
         uses: actions/cache@v2
         with:
           path: target
-          key: ${{ runner.os }}-cargo-build-target-check-${{ hashFiles('**/Cargo.lock') }}
-
+          key: "${{ runner.os }}-cargo-build-target-check-${{ hashFiles('**/Cargo.lock') }}"
       - name: Install stable toolchain
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
           toolchain: stable
           override: true
-
       - name: Run cargo check
         uses: actions-rs/cargo@v1
         with:
@@ -49,45 +38,73 @@ jobs:
   test_offline:
     strategy:
       matrix:
-        os: [ ubuntu-latest, windows-latest, macos-latest ]
+        os:
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest
     needs: check
     name: Offline tests
-    runs-on: ${{ matrix.os }}
+    runs-on: "${{ matrix.os }}"
     steps:
-      - name: 'Git: enable longpaths'
+      - name: "Git: enable longpaths"
         run: git config --global core.longpaths true
-
       - name: Checkout sources
         uses: actions/checkout@v2
-
       - name: Cache cargo index and registry
         uses: actions/cache@v2
         with:
-          path: |
-            ~/.cargo/registry
-            ~/.cargo/git
-          key: ${{ matrix.os }}-${{ runner.os }}-dot-cargo-${{ hashFiles('**/Cargo.lock') }}
-          restore-keys: |
-            ${{ matrix.os }}-${{ runner.os }}-dot-cargo-
-
+          path: "~/.cargo/registry\n~/.cargo/git\n"
+          key: "${{ runner.os }}-dot-cargo-${{ hashFiles('**/Cargo.lock') }}"
+          restore-keys: "${{ runner.os }}-dot-cargo-\n"
       - name: Cache cargo build
         uses: actions/cache@v2
         with:
           path: target
-          key: ${{ matrix.os }}-${{ runner.os }}-cargo-build-target-test-${{ hashFiles('**/Cargo.lock') }}
-
+          key: "${{ runner.os }}-cargo-build-target-test-${{ hashFiles('**/Cargo.lock') }}"
       - name: Install stable toolchain
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
           toolchain: stable
           override: true
-
       - name: Run tests
         uses: actions-rs/cargo@v1
         with:
-          command: test
-          args: --all
+          command: run
+          args: "--package xtask -- test --offline"
+
+  plex_tags:
+    name: Prepare list of Plex docker image tags for testing
+    needs: test_offline
+    runs-on: ubuntu-latest
+    outputs:
+      tags: ${{ steps.set-tags.outputs.tags }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Checkout sources
+        uses: actions/checkout@v2
+      - name: Cache cargo index and registry
+        uses: actions/cache@v2
+        with:
+          path: "~/.cargo/registry\n~/.cargo/git\n"
+          key: "${{ runner.os }}-dot-cargo-${{ hashFiles('**/Cargo.lock') }}"
+          restore-keys: "${{ runner.os }}-dot-cargo-\n"
+      - name: Cache cargo build
+        uses: actions/cache@v2
+        with:
+          path: target
+          key: "${{ runner.os }}-cargo-build-target-test-${{ hashFiles('**/Cargo.lock') }}"
+      - name: Install stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+      - id: set-tags
+        run: |
+          cargo build --package xtask
+          tags=$(cargo run -q --package xtask -- get-last-plex-tags)
+          echo "::set-output name=tags::$tags"
 
   lints:
     name: Lints
@@ -95,303 +112,142 @@ jobs:
     steps:
       - name: Checkout sources
         uses: actions/checkout@v2
-
       - name: Cache cargo index and registry
         uses: actions/cache@v2
         with:
-          path: |
-            ~/.cargo/registry
-            ~/.cargo/git
-          key: ${{ runner.os }}-dot-cargo-${{ hashFiles('**/Cargo.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-dot-cargo-
-
+          path: "~/.cargo/registry\n~/.cargo/git\n"
+          key: "${{ runner.os }}-dot-cargo-${{ hashFiles('**/Cargo.lock') }}"
+          restore-keys: "${{ runner.os }}-dot-cargo-\n"
       - name: Cache cargo build
         uses: actions/cache@v2
         with:
           path: target
-          key: ${{ runner.os }}-cargo-build-target-clippy-${{ hashFiles('**/Cargo.lock') }}
-
+          key: "${{ runner.os }}-cargo-build-target-clippy-${{ hashFiles('**/Cargo.lock') }}"
       - name: Install stable toolchain
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
           toolchain: stable
           override: true
-          components: rustfmt, clippy
-
+          components: "rustfmt, clippy"
       - name: Run cargo fmt
         uses: actions-rs/cargo@v1
         with:
           command: fmt
-          args: --all -- --check
-
+          args: "--all -- --check"
       - name: Clippy with warnings
         uses: actions-rs/cargo@v1
         with:
           command: clippy
-          args: --all-targets --all-features -- -D warnings
-
+          args: "--all-targets --all-features -- -D warnings"
       - name: Clippy with nursery & tests
         uses: actions-rs/cargo@v1
         continue-on-error: true
         with:
           command: clippy
-          args: --all-targets --tests --all-features -- -D clippy::nursery -D warnings
+          args: "--all-targets --tests --all-features -- -D clippy::nursery -D warnings"
 
   test_on_real_server_anonymous:
-    needs: test_offline
+    needs: [test_offline, plex_tags]
     name: Test on a real server (anonymous)
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        plex_server_version:
-          - latest
-          - 1.21.4.4079-1b7748a7b
-          - 1.19.5.3112-b23ab3896
+        plex_server_version: ${{fromJson(needs.plex_tags.outputs.tags)}}
     env:
-      X_PLEX_CLIENT_IDENTIFIER: ${{ secrets.X_PLEX_CLIENT_IDENTIFIER }}
+      X_PLEX_CLIENT_IDENTIFIER: "${{ secrets.X_PLEX_CLIENT_IDENTIFIER }}"
     steps:
       - name: Checkout sources
         uses: actions/checkout@v2
-
       - name: Cache cargo index and registry
         uses: actions/cache@v2
         with:
-          path: |
-            ~/.cargo/registry
-            ~/.cargo/git
-          key: ${{ runner.os }}-dot-cargo-${{ hashFiles('**/Cargo.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-dot-cargo-
-
+          path: "~/.cargo/registry\n~/.cargo/git\n"
+          key: "${{ runner.os }}-dot-cargo-${{ hashFiles('**/Cargo.lock') }}"
+          restore-keys: "${{ runner.os }}-dot-cargo-\n"
       - name: Cache cargo build
         uses: actions/cache@v2
         with:
           path: target
-          key: ${{ runner.os }}-cargo-build-target-test-${{ hashFiles('**/Cargo.lock') }}
-
-      - name: Run Plex Server
-        run: |
-          ./plex-stub-data/media/configure.sh
-
-          docker run -d \
-            --network=host \
-            -e TZ=UTC \
-            -v `pwd`/plex-stub-data/config:/config \
-            -v `pwd`/plex-stub-data/transcode:/transcode \
-            -v `pwd`/plex-stub-data/media:/data \
-            plexinc/pms-docker:${{ matrix.plex_server_version }}
-
+          key: "${{ runner.os }}-cargo-build-target-test-${{ hashFiles('**/Cargo.lock') }}"
       - name: Install stable toolchain
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
           toolchain: stable
           override: true
-
-      - name: Build plex-cli binary
+      - name: "Test against real server [anonymous]"
         uses: actions-rs/cargo@v1
         with:
-          command: build
-          args: -p plex-cli
-
-      - name: Wait for plex-server to boot
-        run: target/debug/plex-cli wait --timeout 120 --server-url http://127.0.0.1:32400 -s
-
-      - name: Test against real server [anonymous]
-        if: matrix.plex_server_version == 'latest'
-        uses: actions-rs/cargo@v1
-        env:
-          PLEX_API_SERVER_URL: http://127.0.0.1:32400
-        with:
-          command: test
-          args: --manifest-path plex-api/Cargo.toml --features 'test_connect_anonymous'
-
-      - name: Test against real server [anonymous + new attributes]
-        if: matrix.plex_server_version != 'latest'
+          command: run
+          args: "--package xtask -- test --online --docker-tag ${{ matrix.plex_server_version }}"
+      - name: "Test against real server [anonymous + new attributes]"
+        if: "matrix.plex_server_version == 'latest'"
         uses: actions-rs/cargo@v1
         continue-on-error: true
-        env:
-          PLEX_API_SERVER_URL: http://127.0.0.1:32400
         with:
-          command: test
-          args: --manifest-path plex-api/Cargo.toml --features 'test_new_attributes,test_connect_anonymous'
+          command: run
+          args: "--package xtask -- test --online --docker-tag ${{ matrix.plex_server_version }} --deny-unknown-fields"
 
   test_on_real_server_authenticated:
-    if: github.ref == 'refs/heads/master'
-    needs: test_offline
+    if: "github.ref == 'refs/heads/main' || github.ref == 'refs/heads/staging'"
+    needs: [test_offline, plex_tags]
     name: Test on a real server (authenticated)
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        plex_server_version:
-          - latest
-          - 1.21.4.4079-1b7748a7b
-          - 1.19.5.3112-b23ab3896
+        plex_server_version: ${{fromJson(needs.plex_tags.outputs.tags)}}
     env:
-      X_PLEX_CLIENT_IDENTIFIER: ${{ secrets.X_PLEX_CLIENT_IDENTIFIER }}
+      X_PLEX_CLIENT_IDENTIFIER: "${{ secrets.X_PLEX_CLIENT_IDENTIFIER }}"
     steps:
       - name: Checkout sources
         uses: actions/checkout@v2
-
       - name: Cache cargo index and registry
         uses: actions/cache@v2
         with:
-          path: |
-            ~/.cargo/registry
-            ~/.cargo/git
-          key: ${{ runner.os }}-dot-cargo-${{ hashFiles('**/Cargo.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-dot-cargo-
-
+          path: "~/.cargo/registry\n~/.cargo/git\n"
+          key: "${{ runner.os }}-dot-cargo-${{ hashFiles('**/Cargo.lock') }}"
+          restore-keys: "${{ runner.os }}-dot-cargo-\n"
       - name: Cache cargo build
         uses: actions/cache@v2
         with:
           path: target
-          key: ${{ runner.os }}-cargo-build-target-test-${{ hashFiles('**/Cargo.lock') }}
-
+          key: "${{ runner.os }}-cargo-build-target-test-${{ hashFiles('**/Cargo.lock') }}"
       - name: Install stable toolchain
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
           toolchain: stable
           override: true
-
-      - name: Build plex-cli binary
+      - name: "Test against real server [authenticated]"
         uses: actions-rs/cargo@v1
         with:
-          command: build
-          args: -p plex-cli
-
-      - name: Get claim-token
-        env:
-          PLEX_API_AUTH_TOKEN: ${{ secrets.PLEX_API_AUTH_TOKEN }}
-        run: |
-          PLEX_CLAIM=$(target/debug/plex-cli token)
-          echo ::add-mask::${PLEX_CLAIM}
-          echo "PLEX_CLAIM=${PLEX_CLAIM}" >> $GITHUB_ENV
-
-      - name: Run Plex Server
-        run: |
-          PLEX_DOCKER_MACHINE_NAME="plex-test-docker-$(uuidgen)"
-          echo "PLEX_DOCKER_MACHINE_NAME=${PLEX_DOCKER_MACHINE_NAME}" >> $GITHUB_ENV
-
-          ./plex-stub-data/media/configure.sh
-
-          docker run -d \
-            --name="${PLEX_DOCKER_MACHINE_NAME}" \
-            --network=host \
-            -e TZ=UTC \
-            -e PLEX_CLAIM="${PLEX_CLAIM}" \
-            -v `pwd`/plex-stub-data/config:/config \
-            -v `pwd`/plex-stub-data/transcode:/transcode \
-            -v `pwd`/plex-stub-data/media:/data \
-            plexinc/pms-docker:${{ matrix.plex_server_version }}
-
-      - name: Wait for plex-server to boot
-        env:
-          PLEX_API_AUTH_TOKEN: ${{ secrets.PLEX_API_AUTH_TOKEN }}
-        run: target/debug/plex-cli wait --timeout 120 --server-url http://127.0.0.1:32400 -s
-
-      - name: Test against real server [authenticated]
-        if: matrix.plex_server_version == 'latest'
+          command: run
+          args: "--package xtask -- test --online --docker-tag ${{ matrix.plex_server_version }} --token '${{ secrets.PLEX_API_AUTH_TOKEN }}'"
+      - name: "Test against real server [authenticated + new attributes]"
+        if: "matrix.plex_server_version == 'latest'"
         uses: actions-rs/cargo@v1
-        env:
-          PLEX_API_SERVER_URL: http://127.0.0.1:32400
-          PLEX_API_AUTH_TOKEN: ${{ secrets.PLEX_API_AUTH_TOKEN }}
         with:
-          command: test
-          args: --manifest-path plex-api/Cargo.toml --features 'test_connect_authenticated'
-
-      - name: Test against real server [authenticated + new attributes]
-        if: matrix.plex_server_version != 'latest'
-        uses: actions-rs/cargo@v1
-        continue-on-error: true
-        env:
-          PLEX_API_SERVER_URL: http://127.0.0.1:32400
-          PLEX_API_AUTH_TOKEN: ${{ secrets.PLEX_API_AUTH_TOKEN }}
-        with:
-          command: test
-          args: --manifest-path plex-api/Cargo.toml --features 'test_new_attributes,test_connect_authenticated'
-
-      - name: Remove the server from the account
-        if: always()
-        continue-on-error: true
-        env:
-          PLEX_API_AUTH_TOKEN: ${{ secrets.PLEX_API_AUTH_TOKEN }}
-        run: |
-          if [ -n "PLEX_CLAIM" ] && [ -n "$PLEX_DOCKER_MACHINE_NAME" ]
-          then
-            target/debug/plex-cli unclaim --server-url http://127.0.0.1:32400
-          fi
+          command: run
+          args: "--package xtask -- test --online --docker-tag ${{ matrix.plex_server_version }} --token '${{ secrets.PLEX_API_AUTH_TOKEN }}' --deny-unknown-fields"
 
   collect_coverage:
     needs: check
     name: Collect code coverage (with anonymous server)
     runs-on: ubuntu-latest
-    env:
-      X_PLEX_CLIENT_IDENTIFIER: ${{ secrets.X_PLEX_CLIENT_IDENTIFIER }}
+    container:
+      image: xd009642/tarpaulin:develop-nightly
+      options: --security-opt seccomp=unconfined
     steps:
-      - name: Checkout sources
+      - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Run Plex Server
+      - name: Generate code coverage
         run: |
-          ./plex-stub-data/media/configure.sh
+          cargo +nightly tarpaulin --workspace --timeout 120 --out Xml
 
-          docker run -d \
-            --network=host \
-            -e TZ=UTC \
-            -v `pwd`/plex-stub-data/config:/config \
-            -v `pwd`/plex-stub-data/transcode:/transcode \
-            -v `pwd`/plex-stub-data/media:/data \
-            plexinc/pms-docker:latest
-
-      - name: Cache cargo index and registry
-        uses: actions/cache@v2
+      - name: Upload to codecov.io
+        uses: codecov/codecov-action@v2
         with:
-          path: |
-            ~/.cargo/registry
-            ~/.cargo/git
-          key: ${{ runner.os }}-dot-cargo-${{ hashFiles('**/Cargo.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-dot-cargo-
-
-      - name: Install nightly toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: nightly
-          override: true
-
-      - name: Wait for plex-server to boot
-        uses: actions-rs/cargo@v1
-        with:
-          command: run
-          args: -p plex-cli -- wait --timeout 120 --server-url http://127.0.0.1:32400 -s
-
-      - name: Clean cargo cache
-        uses: actions-rs/cargo@v1
-        with:
-          command: clean
-
-      - name: Test against real server [anonymous]
-        uses: actions-rs/cargo@v1
-        env:
-          PLEX_API_SERVER_URL: http://127.0.0.1:32400
-          CARGO_INCREMENTAL: '0'
-          RUSTFLAGS: '-Zprofile -Ccodegen-units=1 -Cinline-threshold=0 -Clink-dead-code -Coverflow-checks=off -Cpanic=abort -Zpanic_abort_tests'
-          RUSTDOCFLAGS: '-Cpanic=abort'
-        with:
-          command: test
-          args: --manifest-path plex-api/Cargo.toml  --no-fail-fast --features 'test_connect_anonymous'
-
-      - id: coverage
-        name: Run grcov
-        uses: actions-rs/grcov@v0.1
-
-      - name: Coveralls upload
-        uses: coverallsapp/github-action@master
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          path-to-lcov: ${{ steps.coverage.outputs.report }}
+          token: ${{secrets.CODECOV_TOKEN}}
+          fail_ci_if_error: true
