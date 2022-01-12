@@ -26,7 +26,7 @@ impl Webhook {
 }
 
 impl WebhookManager {
-    pub async fn new(client: Arc<Client>) -> Result<WebhookManager> {
+    pub async fn new(client: Arc<Client>) -> Result<Self> {
         let mut ret = Self {
             webhooks: vec![],
             client,

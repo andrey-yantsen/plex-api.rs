@@ -33,7 +33,7 @@ struct Metric {
 
 impl Privacy {
     /// Returns current privacy settings, see [Privacy Preferences on plex.tv](https://www.plex.tv/about/privacy-legal/privacy-preferences/#opd).
-    pub async fn new(client: Arc<Client>) -> crate::Result<Privacy> {
+    pub async fn new(client: Arc<Client>) -> crate::Result<Self> {
         let mut response = client.get(MYPLEX_PRIVACY_PATH).send().await?;
         if response.status() == StatusCode::OK {
             let p: PrivacyApiResponse = response.json().await?;

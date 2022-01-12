@@ -61,7 +61,7 @@ impl MyPlex {
             .send()
             .await?;
 
-        MyPlex::build_from_signin_response(client, response).await
+        Self::build_from_signin_response(client, response).await
     }
 
     async fn login(username: &str, password: &str, client: Client) -> Result<Self> {
@@ -92,7 +92,7 @@ impl MyPlex {
             .send()
             .await?;
 
-        MyPlex::build_from_signin_response(self.client.as_ref().to_owned(), response).await
+        Self::build_from_signin_response(self.client.as_ref().to_owned(), response).await
     }
 
     async fn build_from_signin_response(

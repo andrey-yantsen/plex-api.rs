@@ -73,12 +73,12 @@ impl Error {
             Ok(r) => {
                 if r.errors.len() == 1 && r.errors[0].code == PLEX_API_ERROR_CODE_AUTH_OTP_REQUIRED
                 {
-                    Error::OtpRequired
+                    Self::OtpRequired
                 } else {
                     r.into()
                 }
             }
-            Err(_) => Error::UnexpectedApiResponse {
+            Err(_) => Self::UnexpectedApiResponse {
                 status_code,
                 content: response_body,
             },
@@ -105,7 +105,7 @@ pub(crate) struct MyPlexApiErrorResponse {
 
 impl From<MyPlexApiError> for Error {
     fn from(error: MyPlexApiError) -> Self {
-        Error::MyPlexApiError {
+        Self::MyPlexApiError {
             code: error.code,
             message: error.message,
         }
@@ -114,7 +114,7 @@ impl From<MyPlexApiError> for Error {
 
 impl From<MyPlexApiErrorResponse> for Error {
     fn from(r: MyPlexApiErrorResponse) -> Self {
-        Error::MyPlexErrorResponse {
+        Self::MyPlexErrorResponse {
             errors: r.errors.into_iter().map(|e| e.into()).collect(),
         }
     }
