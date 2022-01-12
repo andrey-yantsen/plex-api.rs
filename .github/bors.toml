@@ -1,0 +1,10 @@
+status = [
+    "Check",
+    "Lints",
+    "Offline tests (ubuntu-latest)",
+    "Offline tests (windows-latest)",
+    "Offline tests (macos-latest)",
+    "Test on a real server (anonymous) (latest)",
+    "Test on a real server (authenticated) (latest)",
+]
+delete_merged_branches = true

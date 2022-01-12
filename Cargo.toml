@@ -1,6 +1,5 @@
 [workspace]
 
 members = [
-    "plex-api",
-    "plex-cli",
+    "crates/*"
 ]
