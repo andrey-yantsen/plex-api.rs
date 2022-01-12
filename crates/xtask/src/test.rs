@@ -68,7 +68,7 @@ impl flags::Test {
         }
         .into();
 
-        let docker_image = docker_image
+        let mut docker_image = docker_image
             .with_volume((format!("{}/plex-data/media", cwd()?.display()), "/data"))
             .with_volume((
                 format!("{}/plex-data/config/Library", cwd()?.display()),
@@ -80,6 +80,16 @@ impl flags::Test {
             ))
             .with_env_var(("TZ", "UTC"))
             .with_env_var(("PLEX_CLAIM", claim_token));
+
+        #[cfg(not(windows))]
+        {
+            let uid = users::get_current_uid();
+            let gid = users::get_current_gid();
+
+            docker_image = docker_image
+                .with_env_var(("PLEX_UID", uid.to_string()))
+                .with_env_var(("PLEX_GID", gid.to_string()));
+        }
 
         let docker = clients::Cli::default();
         let _plex_node = docker.run(docker_image);

@@ -25,3 +25,4 @@ regex = "^1.5"
 # https://github.com/testcontainers/testcontainers-rs/issues/279
 [target.'cfg(not(windows))'.dependencies]
 testcontainers = { git = "https://github.com/testcontainers/testcontainers-rs", branch = "dev" }
+users = "^0.11.0"
