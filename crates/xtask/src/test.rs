@@ -15,7 +15,7 @@ impl flags::Test {
         let _plex_token = pushenv("PLEX_API_AUTH_TOKEN", "");
 
         if !self.online {
-            cmd!("cargo test --workspace --no-fail-fast").run()?;
+            cmd!("cargo test --workspace --no-fail-fast --features deny_unknown_fields").run()?;
         }
 
         #[cfg(not(windows))]
