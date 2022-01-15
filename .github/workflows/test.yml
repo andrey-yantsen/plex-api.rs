@@ -58,13 +58,13 @@ jobs:
         uses: actions/cache@v2
         with:
           path: "~/.cargo/registry\n~/.cargo/git\n"
-          key: "${{ matrix.os }}-${{ runner.os }}-dot-cargo-${{ hashFiles('**/Cargo.lock') }}"
-          restore-keys: "${{ matrix.os }}-${{ runner.os }}-dot-cargo-\n"
+          key: "${{ runner.os }}-dot-cargo-${{ hashFiles('**/Cargo.lock') }}"
+          restore-keys: "${{ runner.os }}-dot-cargo-\n"
       - name: Cache cargo build
         uses: actions/cache@v2
         with:
           path: target
-          key: "${{ matrix.os }}-${{ runner.os }}-cargo-build-target-test-${{ hashFiles('**/Cargo.lock') }}"
+          key: "${{ runner.os }}-cargo-build-target-test-${{ hashFiles('**/Cargo.lock') }}"
       - name: Install stable toolchain
         uses: actions-rs/toolchain@v1
         with:
