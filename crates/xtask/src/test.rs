@@ -29,26 +29,29 @@ impl flags::Test {
 
             let _client_id = pushenv("X_PLEX_CLIENT_IDENTIFIER", &client_id);
 
-            if !self.online || self.token.is_none() {
+            if !self.online || self.token.is_none() || self.token.as_ref().unwrap().is_empty() {
                 cmd!("cargo xtask plex-data --replace").run()?;
                 self.integration_tests("")?;
             }
 
-            if let Some(token) = self.token.as_ref() {
-                cmd!("cargo xtask plex-data --replace").run()?;
-                let _plex_token = pushenv("PLEX_API_AUTH_TOKEN", token);
-                let claim_token = tokio::runtime::Runtime::new()?.block_on(async {
-                    MyPlexBuilder::default()
-                        .set_token(token)
-                        .set_test_token_auth(false)
-                        .build()
-                        .await
-                        .expect("failed to build the MyPlex client")
-                        .claim_token()
-                        .await
-                        .expect("failed to get claim token")
-                });
-                self.integration_tests(&claim_token.to_string())?;
+            match self.token.as_ref() {
+                Some(token) if !token.is_empty() => {
+                    cmd!("cargo xtask plex-data --replace").run()?;
+                    let _plex_token = pushenv("PLEX_API_AUTH_TOKEN", token);
+                    let claim_token = tokio::runtime::Runtime::new()?.block_on(async {
+                        MyPlexBuilder::default()
+                            .set_token(token)
+                            .set_test_token_auth(false)
+                            .build()
+                            .await
+                            .expect("failed to build the MyPlex client")
+                            .claim_token()
+                            .await
+                            .expect("failed to get claim token")
+                    });
+                    self.integration_tests(&claim_token.to_string())?;
+                }
+                _ => (),
             }
         }
 
