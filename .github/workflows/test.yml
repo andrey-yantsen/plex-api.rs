@@ -7,6 +7,30 @@
 
 name: Test everything
 jobs:
+  msrv:
+    name: MSRV
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+      - name: Get current MSRV from crates/plex-api/Cargo.toml
+        id: current_msrv
+        run: |
+          msrv=$(cat crates/plex-api/Cargo.toml | grep rust-version | sed 's/.* = "//; s/"//')
+          echo "::set-output name=msrv::$msrv"
+      - name: Install the toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: ${{steps.current_msrv.outputs.msrv}}
+          override: true
+      - uses: Swatinem/rust-cache@v1.3.0
+      - name: Check
+        uses: actions-rs/cargo@v1
+        with:
+          command: check
+          args: --workspace --all-targets
+
   check:
     name: Check
     runs-on: ubuntu-latest
