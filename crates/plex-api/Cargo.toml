@@ -25,7 +25,7 @@ time = { git = "https://github.com/time-rs/time", branch = "main", features = ["
 
 http = "^0.2.6"
 http-serde = "^1.0"
-serde_urlencoded = "^0.7.0"
+serde_urlencoded = "^0.7.1"
 
 thiserror = "^1.0"
 serde-aux = "^3.0"
