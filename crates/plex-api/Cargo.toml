@@ -7,6 +7,7 @@ description = "Library for communication with Plex server. Work in progress, not
 license = "MIT/Apache-2.0"
 repository = "https://github.com/andrey-yantsen/plex-api.rs"
 readme = "../README.md"
+rust-version = "1.56.1"
 
 [dependencies]
 isahc = { version = "^1.6.0", features = ["json", "text-decoding"] }
