@@ -1,6 +1,7 @@
 use crate::client::Client;
 use crate::url::MYPLEX_WEBHOOKS_PATH;
 use crate::{Error, Result};
+use core::convert::TryFrom;
 use http::{StatusCode, Uri};
 use isahc::AsyncReadResponseExt;
 use serde::Deserialize;

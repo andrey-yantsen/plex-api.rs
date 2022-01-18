@@ -2,7 +2,7 @@
 name = "plex-cli"
 version = "0.0.0"
 authors = ["Andrey Yantsen <andrey@janzen.su>"]
-edition = "2021"
+edition = "2018"
 publish = false
 license = "MIT/Apache-2.0"
 

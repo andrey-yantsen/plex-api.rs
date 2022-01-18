@@ -1,4 +1,5 @@
 use crate::{client::Client, myplex::MyPlex, ClientBuilder, Result};
+use core::convert::TryFrom;
 use http::Uri;
 use std::sync::Arc;
 

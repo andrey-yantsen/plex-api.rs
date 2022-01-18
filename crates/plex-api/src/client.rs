@@ -1,12 +1,12 @@
-use std::time::Duration;
-
 use crate::{url::MYPLEX_DEFAULT_API_URL, Result};
+use core::convert::TryFrom;
 use http::{uri::PathAndQuery, Uri};
 use isahc::{
     config::{Configurable, RedirectPolicy},
     http::request::Builder,
     AsyncBody, HttpClient, Request as HttpRequest, Response as HttpResponse,
 };
+use std::time::Duration;
 use uuid::Uuid;
 
 const DEFAULT_TIMEOUT: Duration = Duration::from_secs(30);
