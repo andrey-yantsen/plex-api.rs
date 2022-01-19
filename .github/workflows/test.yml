@@ -53,6 +53,23 @@ jobs:
         with:
           command: check
 
+  check_nightly:
+    name: Check (nightly)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+      - name: Install stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: nightly
+          override: true
+      - name: Run cargo check
+        uses: actions-rs/cargo@v1
+        with:
+          command: check
+
   test_offline:
     strategy:
       matrix:
@@ -124,6 +141,30 @@ jobs:
       - uses: Swatinem/rust-cache@v1.3.0
         with:
           sharedKey: cache
+      - name: Run cargo fmt
+        uses: actions-rs/cargo@v1
+        with:
+          command: fmt
+          args: "--all -- --check"
+      - name: Clippy with warnings
+        uses: actions-rs/cargo@v1
+        with:
+          command: clippy
+          args: "--all-targets --all-features -- -D warnings"
+
+  lints_nightly:
+    name: Lints (nightly)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+      - name: Install stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: nightly
+          override: true
+          components: "rustfmt, clippy"
       - name: Run cargo fmt
         uses: actions-rs/cargo@v1
         with:
