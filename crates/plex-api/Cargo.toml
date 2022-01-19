@@ -30,7 +30,7 @@ http-serde = "^1.0"
 serde_urlencoded = "^0.7.1"
 
 thiserror = "^1.0"
-serde-aux = "^2.3"
+serde-aux = "^3.0"
 sys-info = "^0.9"
 
 [dev-dependencies]
