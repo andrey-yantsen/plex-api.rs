@@ -12,23 +12,15 @@ jobs:
     steps:
       - name: Checkout sources
         uses: actions/checkout@v2
-      - name: Cache cargo index and registry
-        uses: actions/cache@v2
-        with:
-          path: "~/.cargo/registry\n~/.cargo/git\n"
-          key: "${{ runner.os }}-dot-cargo-${{ hashFiles('**/Cargo.lock') }}"
-          restore-keys: "${{ runner.os }}-dot-cargo-\n"
-      - name: Cache cargo build
-        uses: actions/cache@v2
-        with:
-          path: target
-          key: "${{ runner.os }}-cargo-build-target-test-${{ hashFiles('**/Cargo.lock') }}"
       - name: Install stable toolchain
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
           toolchain: stable
           override: true
+      - uses: Swatinem/rust-cache@v1.3.0
+        with:
+          sharedKey: cache
       - name: Run tests
         uses: actions-rs/cargo@v1
         with:
@@ -41,19 +33,15 @@ jobs:
     steps:
       - name: Checkout sources
         uses: actions/checkout@v2
-      - name: Cache cargo index and registry
-        uses: actions/cache@v2
+      - name: Install stable toolchain
+        uses: actions-rs/toolchain@v1
         with:
-          path: "~/.cargo/registry\n~/.cargo/git\n"
-          key: "${{ runner.os }}-dot-cargo-${{ hashFiles('**/Cargo.lock') }}"
-          restore-keys: "${{ runner.os }}-dot-cargo-\n"
-      - name: Cache cargo build
-        uses: actions/cache@v2
+          profile: minimal
+          toolchain: stable
+          override: true
+      - uses: Swatinem/rust-cache@v1.3.0
         with:
-          path: target
-          key: "${{ runner.os }}-cargo-build-target-release-${{ hashFiles('**/Cargo.lock') }}"
-          restore-keys: "${{ runner.os }}-cargo-build-target-test-${{ hashFiles('**/Cargo.lock') }}\n"
-      - uses: actions/checkout@v2
+          sharedKey: cache
       - run: "cargo login ${CRATES_IO_TOKEN}"
         env:
           CRATES_IO_TOKEN: "${{ secrets.CRATES_IO_TOKEN }}"
