@@ -1,4 +1,5 @@
 status = [
+    "MSRV",
     "Check",
     "Lints",
     "Offline tests (ubuntu-latest)",
