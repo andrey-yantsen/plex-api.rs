@@ -7,8 +7,10 @@ mod myplex;
 mod server;
 pub mod url;
 
+pub use client::Client;
 pub use client::ClientBuilder;
 pub use error::Error;
+pub use myplex::MyPlex;
 pub use myplex::MyPlexBuilder;
 pub use server::Server;
 

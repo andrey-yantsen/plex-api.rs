@@ -10,7 +10,7 @@ pub struct Server {
 }
 
 impl Server {
-    pub fn new<U>(url: U, client: Client) -> Result<Self>
+    pub async fn new<U>(url: U, client: Client) -> Result<Self>
     where
         Uri: TryFrom<U>,
         <Uri as TryFrom<U>>::Error: Into<http::Error>,

@@ -1,17 +1,25 @@
-use mockito::mock;
-use plex_api::{url::MYPLEX_WEBHOOKS_PATH, Error};
+mod fixtures;
+
+use crate::fixtures::offline::Mocked;
+use fixtures::offline::myplex::*;
+use httpmock::Method::GET;
+use httpmock::Method::POST;
+use plex_api::{url::MYPLEX_WEBHOOKS_PATH, Error, MyPlex};
 
 #[plex_api_test_helper::async_offline_test]
-async fn webhook_free_user(myplex: MyPlex) {
-    let m = mock("GET", MYPLEX_WEBHOOKS_PATH)
-        .with_status(200)
-        .with_header("content-type", "text/json")
-        .with_body_from_file("tests/files/myplex/api/v2/user/webhooks_none.json")
-        .expect(0)
-        .create();
+async fn webhook_free_user(#[future] myplex: Mocked<MyPlex>) {
+    let myplex = myplex.await;
+    let (myplex, mock_server) = myplex.decompose();
+
+    let m = mock_server.mock(|when, then| {
+        when.method(GET).path(MYPLEX_WEBHOOKS_PATH);
+        then.status(200)
+            .header("content-type", "text/json")
+            .body_from_file("tests/files/myplex/api/v2/user/webhooks_none.json");
+    });
 
     let webhook_manager_result = myplex.webhook_manager().await;
-    m.assert();
+    m.assert_hits(0);
 
     assert!(
         webhook_manager_result.is_err(),
@@ -26,13 +34,17 @@ async fn webhook_free_user(myplex: MyPlex) {
     );
 }
 
-#[plex_api_test_helper::async_offline_test(plexpass_user)]
-async fn webhook_plexpass_user_no_webhooks(myplex: MyPlex) {
-    let m = mock("GET", MYPLEX_WEBHOOKS_PATH)
-        .with_status(200)
-        .with_header("content-type", "text/json")
-        .with_body_from_file("tests/files/myplex/api/v2/user/webhooks_none.json")
-        .create();
+#[plex_api_test_helper::async_offline_test]
+async fn webhook_plexpass_user_no_webhooks(#[future] myplex_plexpass: Mocked<MyPlex>) {
+    let myplex = myplex_plexpass.await;
+    let (myplex, mock_server) = myplex.decompose();
+
+    let m = mock_server.mock(|when, then| {
+        when.method(GET).path(MYPLEX_WEBHOOKS_PATH);
+        then.status(200)
+            .header("content-type", "text/json")
+            .body_from_file("tests/files/myplex/api/v2/user/webhooks_none.json");
+    });
 
     let webhook_manager_result = myplex.webhook_manager().await;
     m.assert();
@@ -42,11 +54,15 @@ async fn webhook_plexpass_user_no_webhooks(myplex: MyPlex) {
 
     assert_eq!(webhook_manager.webhooks().len(), 0, "Expected no webhooks");
 
-    let m = mock("POST", MYPLEX_WEBHOOKS_PATH)
-        .with_status(201)
-        .match_body("urls%5B%5D=https%3A%2F%2Fexample.com%2Fwebhook1")
-        .with_body("empty")
-        .create();
+    let m = mock_server.mock(|when, then| {
+        when.method(POST)
+            .path(MYPLEX_WEBHOOKS_PATH)
+            .body("urls%5B%5D=https%3A%2F%2Fexample.com%2Fwebhook1");
+        then.status(201)
+            .header("content-type", "text/json")
+            .body("");
+    });
+
     let add_result = webhook_manager.add("https://example.com/webhook1").await;
     m.assert();
 
@@ -63,13 +79,17 @@ async fn webhook_plexpass_user_no_webhooks(myplex: MyPlex) {
     );
 }
 
-#[plex_api_test_helper::async_offline_test(plexpass_user)]
-async fn webhook_plexpass_user_two_webhooks(myplex: MyPlex) {
-    let m = mock("GET", MYPLEX_WEBHOOKS_PATH)
-        .with_status(200)
-        .with_header("content-type", "text/json")
-        .with_body_from_file("tests/files/myplex/api/v2/user/webhooks_two.json")
-        .create();
+#[plex_api_test_helper::async_offline_test]
+async fn webhook_plexpass_user_two_webhooks(#[future] myplex_plexpass: Mocked<MyPlex>) {
+    let myplex = myplex_plexpass.await;
+    let (myplex, mock_server) = myplex.decompose();
+
+    let m = mock_server.mock(|when, then| {
+        when.method(GET).path(MYPLEX_WEBHOOKS_PATH);
+        then.status(200)
+            .header("content-type", "text/json")
+            .body_from_file("tests/files/myplex/api/v2/user/webhooks_two.json");
+    });
 
     let webhook_manager_result = myplex.webhook_manager().await;
 
@@ -80,11 +100,14 @@ async fn webhook_plexpass_user_two_webhooks(myplex: MyPlex) {
 
     assert_eq!(webhook_manager.webhooks().len(), 2, "Expected two webhooks");
 
-    let m = mock("POST", MYPLEX_WEBHOOKS_PATH)
-        .with_status(201)
-        .match_body("urls%5B%5D=https%3A%2F%2Fexample.com%2Fwebhook1")
-        .with_body("empty")
-        .create();
+    let m = mock_server.mock(|when, then| {
+        when.method(POST)
+            .path(MYPLEX_WEBHOOKS_PATH)
+            .body("urls%5B%5D=https%3A%2F%2Fexample.com%2Fwebhook1");
+        then.status(201)
+            .header("content-type", "text/json")
+            .body("");
+    });
 
     let delete_result = webhook_manager.delete("https://example.com/webhook2").await;
     m.assert();
@@ -101,15 +124,17 @@ async fn webhook_plexpass_user_two_webhooks(myplex: MyPlex) {
         "Unexpected webhook url"
     );
 
-    let m = mock("POST", MYPLEX_WEBHOOKS_PATH)
-        .with_status(201)
-        .match_body("urls%5B%5D=https%3A%2F%2Fexample.com%2Fwebhook1")
-        .with_body("empty")
-        .expect(0)
-        .create();
+    let m = mock_server.mock(|when, then| {
+        when.method(POST)
+            .path(MYPLEX_WEBHOOKS_PATH)
+            .body("urls%5B%5D=https%3A%2F%2Fexample.com%2Fwebhook1");
+        then.status(201)
+            .header("content-type", "text/json")
+            .body("");
+    });
 
     let delete_result = webhook_manager.delete("https://example.com/webhook2").await;
-    m.assert();
+    m.assert_hits(0);
 
     assert!(
         matches!(
@@ -120,30 +145,36 @@ async fn webhook_plexpass_user_two_webhooks(myplex: MyPlex) {
     );
 }
 
-#[plex_api_test_helper::async_offline_test(plexpass_user)]
-async fn webhook_plexpass_user_refresh(myplex: MyPlex) {
-    let m = mock("GET", MYPLEX_WEBHOOKS_PATH)
-        .with_status(200)
-        .with_header("content-type", "text/json")
-        .with_body_from_file("tests/files/myplex/api/v2/user/webhooks_none.json")
-        .create();
+#[plex_api_test_helper::async_offline_test]
+async fn webhook_plexpass_user_refresh(#[future] myplex_plexpass: Mocked<MyPlex>) {
+    let myplex = myplex_plexpass.await;
+    let (myplex, mock_server) = myplex.decompose();
+
+    let mut mock = mock_server.mock(|when, then| {
+        when.method(GET).path(MYPLEX_WEBHOOKS_PATH);
+        then.status(200)
+            .header("content-type", "text/json")
+            .body_from_file("tests/files/myplex/api/v2/user/webhooks_none.json");
+    });
 
     let webhook_manager_result = myplex.webhook_manager().await;
-    m.assert();
+    mock.assert();
+    mock.delete();
 
     let mut webhook_manager =
         webhook_manager_result.expect("Webhook manager should be returned for paid user");
 
     assert_eq!(webhook_manager.webhooks().len(), 0, "Expected no webhooks");
 
-    let m = mock("GET", MYPLEX_WEBHOOKS_PATH)
-        .with_status(200)
-        .with_header("content-type", "text/json")
-        .with_body_from_file("tests/files/myplex/api/v2/user/webhooks_two.json")
-        .create();
+    let mock = mock_server.mock(|when, then| {
+        when.method(GET).path(MYPLEX_WEBHOOKS_PATH);
+        then.status(200)
+            .header("content-type", "text/json")
+            .body_from_file("tests/files/myplex/api/v2/user/webhooks_two.json");
+    });
 
     let webhook_manager_refresh_result = webhook_manager.refresh().await;
-    m.assert();
+    mock.assert();
 
     webhook_manager_refresh_result.expect("Webhook manager should be returned for paid user");
 

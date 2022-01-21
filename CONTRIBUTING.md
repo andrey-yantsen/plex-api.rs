@@ -20,11 +20,9 @@ messages.
 
 ## Writing tests
 
-I don't have much exprience with testing in Rust, so please write those the way you see fit.
-At the same time, I created who macroses to simplify the ingeration testing:
-
-- `#[plex_api_test_helper::async_offline_test]`
-- `#[plex_api_test_helper::async_online_test]`
+I don't have much exprience with testing in Rust, so please write the tests the way you see fit.
+At the same time, I created a macros to reduce the boilerplate amount: `#[plex_api_test_helper::async_offline_test]`. Under the hood, [rstest](http://docs.rs/rstest)
+is used for handling the tests — this way it's possible to use [fixtures](https://docs.rs/rstest/latest/rstest/attr.rstest.html#injecting-fixtures) and [tests parametrization](https://docs.rs/rstest/latest/rstest/attr.rstest.html#test-parametrized-cases).
 
 Please use those when writing integration tests.
 

@@ -7,7 +7,7 @@ use time::{Duration, OffsetDateTime};
 /// The lifetime of the token is not provided by the API, it's hardcoded to 4 minutes.
 const CLAIM_TOKEN_LIFETIME_SECONDS: i64 = 60 * 4;
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct ClaimToken {
     token: String,
     expires: OffsetDateTime,

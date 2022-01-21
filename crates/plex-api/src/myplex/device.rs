@@ -64,7 +64,7 @@ pub struct Device<'a> {
 impl Device<'_> {
     pub async fn connect(&self) -> Result<crate::Server> {
         if let Some(connections) = &self.inner.connections {
-            crate::Server::new(&connections[0].uri, self.client.to_owned())
+            crate::Server::new(&connections[0].uri, self.client.to_owned()).await
         } else {
             Err(crate::Error::UselessOtp)
         }

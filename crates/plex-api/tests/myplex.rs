@@ -1,13 +1,25 @@
-use mockito::{mock, Matcher};
-use plex_api::url::{MYPLEX_CLAIM_TOKEN_PATH, MYPLEX_PRIVACY_PATH};
+mod fixtures;
+
+use fixtures::offline::myplex::*;
+use fixtures::offline::Mocked;
+use httpmock::Method::GET;
+use httpmock::Method::PUT;
+use plex_api::{
+    url::{MYPLEX_CLAIM_TOKEN_PATH, MYPLEX_PRIVACY_PATH},
+    MyPlex,
+};
 
 #[plex_api_test_helper::async_offline_test]
-async fn privacy(myplex: MyPlex) {
-    let m = mock("GET", MYPLEX_PRIVACY_PATH)
-        .with_status(200)
-        .with_header("content-type", "text/json")
-        .with_body_from_file("tests/files/myplex/api/v2/user/privacy.json")
-        .create();
+async fn privacy(#[future] myplex: Mocked<MyPlex>) {
+    let myplex = myplex.await;
+    let (myplex, mock_server) = myplex.decompose();
+
+    let m = mock_server.mock(|when, then| {
+        when.method(GET).path(MYPLEX_PRIVACY_PATH);
+        then.status(200)
+            .header("content-type", "text/json")
+            .body_from_file("tests/files/myplex/api/v2/user/privacy.json");
+    });
 
     let privacy_result = myplex.privacy().await;
     m.assert();
@@ -23,14 +35,15 @@ async fn privacy(myplex: MyPlex) {
         "Unexpected opt_out_library_stats value"
     );
 
-    let m = mock("PUT", MYPLEX_PRIVACY_PATH)
-        .with_status(204)
-        .with_header("content-type", "text/json")
-        .match_body(Matcher::AllOf(vec![
-            Matcher::UrlEncoded("optOutPlayback".to_string(), "0".to_string()),
-            Matcher::UrlEncoded("optOutLibraryStats".to_string(), "0".to_string()),
-        ]))
-        .create();
+    let m = mock_server.mock(|when, then| {
+        when.method(PUT)
+            .path(MYPLEX_PRIVACY_PATH)
+            .x_www_form_urlencoded_tuple("optOutPlayback", "0")
+            .x_www_form_urlencoded_tuple("optOutLibraryStats", "0");
+        then.status(204)
+            .header("content-type", "text/json")
+            .body_from_file("tests/files/myplex/api/v2/user/privacy.json");
+    });
 
     let privacy_update_result = privacy.update(false, false).await;
     m.assert();
@@ -51,19 +64,23 @@ async fn privacy(myplex: MyPlex) {
 }
 
 #[plex_api_test_helper::async_offline_test]
-async fn claim_token(myplex: MyPlex) {
-    let m = mock("GET", MYPLEX_CLAIM_TOKEN_PATH)
-        .with_status(200)
-        .with_header("content-type", "text/json")
-        .with_body_from_file("tests/files/myplex/api/claim/token.json")
-        .create();
+async fn claim_token(#[future] myplex: Mocked<MyPlex>) {
+    let myplex = myplex.await;
+    let (myplex, mock_server) = myplex.decompose();
+
+    let mut mock = mock_server.mock(|when, then| {
+        when.method(GET).path(MYPLEX_CLAIM_TOKEN_PATH);
+        then.status(200)
+            .header("content-type", "text/json")
+            .body_from_file("tests/files/myplex/api/claim/token.json");
+    });
 
     let token = myplex
         .claim_token()
         .await
         .expect("failed to get claim_token");
-    m.assert();
-    drop(m);
+    mock.assert();
+    mock.delete();
 
     assert_eq!(
         token.to_string(),
@@ -72,15 +89,16 @@ async fn claim_token(myplex: MyPlex) {
     );
     assert!(!token.is_expired(), "Token is expired");
 
-    let m = mock("GET", MYPLEX_CLAIM_TOKEN_PATH)
-        .with_status(503)
-        .with_header("content-type", "text/json")
-        .with_body(r#"{"error": "Something went wrong"}"#)
-        .create();
+    let mut mock = mock_server.mock(|when, then| {
+        when.method(GET).path(MYPLEX_CLAIM_TOKEN_PATH);
+        then.status(503)
+            .header("content-type", "text/json")
+            .body(r#"{"error": "Something went wrong"}"#);
+    });
 
     let token_result = myplex.claim_token().await;
-    m.assert();
-    drop(m);
+    mock.assert();
+    mock.delete();
 
     assert!(
         token_result.is_err(),

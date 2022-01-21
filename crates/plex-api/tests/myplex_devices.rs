@@ -1,18 +1,32 @@
-use mockito::mock;
-use plex_api::url::{MYPLEX_DEVICES, MYPLEX_RESOURCES};
+mod fixtures;
+
+use fixtures::offline::myplex::*;
+use fixtures::offline::Mocked;
+use httpmock::Method::GET;
+use plex_api::{
+    url::{MYPLEX_DEVICES, MYPLEX_RESOURCES},
+    MyPlex,
+};
 
 #[plex_api_test_helper::async_offline_test]
-async fn devices(myplex: MyPlex) {
-    let devices_mock = mock("GET", MYPLEX_DEVICES)
-        .with_status(200)
-        .with_header("content-type", "application/xml")
-        .with_body_from_file("tests/files/myplex/devices.xml")
-        .create();
-    let resources_mock = mock("GET", MYPLEX_RESOURCES)
-        .with_status(200)
-        .with_header("content-type", "application/xml")
-        .with_body_from_file("tests/files/myplex/api/resources.xml")
-        .create();
+async fn devices(#[future] myplex: Mocked<MyPlex>) {
+    let myplex = myplex.await;
+    let (myplex, mock_server) = myplex.decompose();
+
+    let devices_mock = mock_server.mock(|when, then| {
+        when.method(GET).path(MYPLEX_DEVICES);
+        then.status(200)
+            .header("content-type", "application/xml")
+            .body_from_file("tests/files/myplex/devices.xml");
+    });
+
+    let resources_mock = mock_server.mock(|when, then| {
+        when.method(GET).path(MYPLEX_RESOURCES);
+        then.status(200)
+            .header("content-type", "application/xml")
+            .body_from_file("tests/files/myplex/api/resources.xml");
+    });
+
     let device_manager = myplex.device_manager();
 
     let _devices = dbg!(device_manager.get_devices().await);

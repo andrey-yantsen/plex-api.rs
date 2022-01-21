@@ -48,7 +48,7 @@ impl MyPlex {
         let mut params = vec![
             ("login", username),
             ("password", password),
-            ("mememberMe", "true"),
+            ("rememberMe", "true"),
         ];
         for (key, value) in extra_params {
             params.push((key, value));
@@ -139,7 +139,7 @@ impl MyPlex {
     }
 
     pub async fn srv(&self) -> Result<Server> {
-        Server::new("http://127.0.0.1:32400/", self.client.as_ref().to_owned())
+        Server::new("http://127.0.0.1:32400/", self.client.as_ref().to_owned()).await
     }
 
     pub fn device_manager(&self) -> DeviceManager {

@@ -2,3 +2,4 @@ ignore:
   - "crates/plex-cli"
   - "crates/xtask"
   - "crates/plex-api/tests"
+  - "crates/plex-api-test-helper"
