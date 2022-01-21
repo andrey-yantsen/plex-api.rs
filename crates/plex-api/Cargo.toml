@@ -17,18 +17,12 @@ serde = { version = "^1.0", features = ["derive"] }
 serde_json = "^1.0"
 futures-io = "^0.3.19"
 serde_with = { version = "^1.11", features = ["json"] }
-
 quick-xml = { version = "^0.22", features = [ "serialize" ] }
 serde_repr = "^0.1"
-
-time = { git = "https://github.com/time-rs/time", branch = "main", features = ["serde-well-known"] }
-# TODO: switch to the official version after the next release
-# time = { version = "^0.3", features = ["serde-well-known"] }
-
+time = { version = "^0.3", features = ["serde-well-known"] }
 http = "^0.2.6"
 http-serde = "^1.0"
 serde_urlencoded = "^0.7.1"
-
 thiserror = "^1.0"
 serde-aux = "^2.3"
 sys-info = "^0.9"
