@@ -239,26 +239,9 @@ pub struct ClientBuilder {
 
 impl Default for ClientBuilder {
     fn default() -> Self {
-        let sys_platform = {
-            match sys_info::os_type() {
-                Ok(it) => it,
-                Err(_) => "unknown".to_string(),
-            }
-        };
-
-        let sys_version = {
-            match sys_info::os_release() {
-                Ok(it) => it,
-                Err(_) => "unknown".to_string(),
-            }
-        };
-
-        let sys_hostname = {
-            match sys_info::hostname() {
-                Ok(it) => it,
-                Err(_) => "unknown".to_string(),
-            }
-        };
+        let sys_platform = sys_info::os_type().unwrap_or_else(|_| "unknown".to_string());
+        let sys_version = sys_info::os_release().unwrap_or_else(|_| "unknown".to_string());
+        let sys_hostname = sys_info::hostname().unwrap_or_else(|_| "unknown".to_string());
 
         let random_uuid = Uuid::new_v4();
 
