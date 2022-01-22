@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <MediaContainer size="1">
-  <Device name="Seedbox" product="Plex Media Server" productVersion="1.25.2.5319-c43dc0277" platform="Linux" platformVersion="5.4.0-88-generic" device="Docker Container" clientIdentifier="fc9d06475cec4c39ef38f62d92352a0724ff84d7" createdAt="1628973899" lastSeenAt="1641485176" provides="server" owned="1" accessToken="fdwv8hbMypb3pru18zrp" publicAddress="95.211.9.236" httpsRequired="0" synced="0" relay="1" dnsRebindingProtection="0" natLoopbackSupported="0" publicAddressMatches="0" presence="1">
-    <Connection protocol="http" address="172.18.0.12" port="32400" uri="http://172.18.0.12:32400" local="1"/>
-    <Connection protocol="https" address="plex.seedbox.yantsen.su" port="443" uri="https://plex.seedbox.yantsen.su:443" local="0"/>
-    <Connection protocol="http" address="95.211.9.236" port="443" uri="http://95.211.9.236:443" local="0"/>
+  <Device name="Box" product="Plex Media Server" productVersion="1.25.2.5319-c43dc0277" platform="Linux" platformVersion="5.4.0-88-generic" device="Docker Container" clientIdentifier="3" createdAt="1628211599" lastSeenAt="1628211599" provides="server" owned="1" accessToken="auth_token" publicAddress="1.0.0.2" httpsRequired="0" synced="0" relay="1" dnsRebindingProtection="0" natLoopbackSupported="0" publicAddressMatches="0" presence="1">
+    <Connection protocol="http" address="172.1.0.1" port="32400" uri="http://172.18.0.12:32400" local="1"/>
+    <Connection protocol="https" address="example.com" port="443" uri="https://example.com:443" local="0"/>
+    <Connection protocol="http" address="1.0.0.2" port="443" uri="http://1.0.0.2:443" local="0"/>
   </Device>
 </MediaContainer>
