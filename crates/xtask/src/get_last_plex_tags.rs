@@ -1,15 +1,15 @@
-use std::cmp::Ordering;
-
 use crate::flags;
-use crate::plex_docker_image::NAME as PLEX_IMAGE_NAME;
-use crate::plex_docker_image::TAG_LATEST;
 use regex::Regex;
+use std::cmp::Ordering;
 
 const VALID_TAGS_REGEXP: &str =
     r#""name"\s*:\s*"(?P<tag>(?P<semver>latest|beta|plexpass|\d+\.\d+.\d+)[^"]*)""#;
 
 const DEFAULT_TAGS_COUNT: u8 = 3;
 const DEFAULT_VERSION_JUMP: u8 = 1;
+
+pub(crate) const DOCKER_PLEX_IMAGE_NAME: &str = "plexinc/pms-docker";
+pub(crate) const DOCKER_PLEX_IMAGE_TAG_LATEST: &str = "latest";
 
 impl flags::GetLastPlexTags {
     pub(crate) fn run(self) -> anyhow::Result<()> {
@@ -25,14 +25,14 @@ impl flags::GetLastPlexTags {
 
         let mut tags: Vec<String> = vec![];
 
-        let tag_latest = TAG_LATEST.to_owned();
+        let tag_latest = DOCKER_PLEX_IMAGE_TAG_LATEST.to_owned();
         if !self.skip_tag.contains(&tag_latest) {
             tags.push("latest".to_owned());
         }
 
         let url = format!(
             "https://registry.hub.docker.com/v1/repositories/{image}/tags",
-            image = PLEX_IMAGE_NAME
+            image = DOCKER_PLEX_IMAGE_NAME
         );
 
         let available_tags = ureq::get(&url)

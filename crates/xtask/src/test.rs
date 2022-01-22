@@ -1,7 +1,7 @@
+use super::get_last_plex_tags::{DOCKER_PLEX_IMAGE_NAME, DOCKER_PLEX_IMAGE_TAG_LATEST};
 use crate::flags;
-use crate::plex_docker_image::Plex as PlexImage;
 use plex_api::MyPlexBuilder;
-use testcontainers::{clients, RunnableImage};
+use testcontainers::{clients, core::WaitFor, images::generic::GenericImage, RunnableImage};
 use xshell::{cmd, cwd, pushenv};
 
 impl flags::Test {
@@ -54,11 +54,14 @@ impl flags::Test {
     }
 
     fn integration_tests(&self, claim_token: &str) -> anyhow::Result<()> {
-        let docker_image: RunnableImage<PlexImage> = match self.docker_tag.as_ref() {
-            Some(tag) => PlexImage::new(tag.to_owned()),
-            None => PlexImage::default(),
-        }
-        .into();
+        let image_tag = self
+            .docker_tag
+            .clone()
+            .unwrap_or_else(|| DOCKER_PLEX_IMAGE_TAG_LATEST.to_owned());
+        let docker_image: RunnableImage<GenericImage> =
+            GenericImage::new(DOCKER_PLEX_IMAGE_NAME, &image_tag)
+                .with_wait_for(WaitFor::Healthcheck)
+                .into();
 
         #[cfg_attr(windows, allow(unused_mut))]
         let mut docker_image = docker_image

@@ -9,7 +9,6 @@
 mod flags;
 mod get_last_plex_tags;
 mod plex_data;
-mod plex_docker_image;
 mod test;
 
 use anyhow::Result;
