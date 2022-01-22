@@ -1,10 +1,6 @@
-#![cfg_attr(windows, allow(unused_imports))]
-
 use crate::flags;
-#[cfg(not(windows))]
 use crate::plex_docker_image::Plex as PlexImage;
 use plex_api::MyPlexBuilder;
-#[cfg(not(windows))]
 use testcontainers::{clients, RunnableImage};
 use xshell::{cmd, cwd, pushenv};
 
@@ -18,7 +14,6 @@ impl flags::Test {
             cmd!("cargo test --workspace --no-fail-fast --features deny_unknown_fields").run()?;
         }
 
-        #[cfg(not(windows))]
         if !self.offline {
             let client_id = if let Some(client_id) = self.client_id.as_ref() {
                 client_id.to_owned()
@@ -55,15 +50,9 @@ impl flags::Test {
             }
         }
 
-        #[cfg(windows)]
-        if self.online {
-            anyhow::bail!("Online tests are not supported on Windows");
-        }
-
         Ok(())
     }
 
-    #[cfg(not(windows))]
     fn integration_tests(&self, claim_token: &str) -> anyhow::Result<()> {
         let docker_image: RunnableImage<PlexImage> = match self.docker_tag.as_ref() {
             Some(tag) => PlexImage::new(tag.to_owned()),
@@ -71,6 +60,7 @@ impl flags::Test {
         }
         .into();
 
+        #[cfg_attr(windows, allow(unused_mut))]
         let mut docker_image = docker_image
             .with_volume((format!("{}/plex-data/media", cwd()?.display()), "/data"))
             .with_volume((

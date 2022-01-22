@@ -1,6 +1,3 @@
-#![cfg_attr(windows, allow(dead_code))]
-
-#[cfg(not(windows))]
 use testcontainers::{core::WaitFor, Image};
 
 pub const NAME: &str = "plexinc/pms-docker";
@@ -25,7 +22,6 @@ impl Plex {
     }
 }
 
-#[cfg(not(windows))]
 impl Image for Plex {
     type Args = ();
 
