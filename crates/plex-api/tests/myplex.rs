@@ -12,7 +12,7 @@ use plex_api::{
 #[plex_api_test_helper::async_offline_test]
 async fn privacy(#[future] myplex: Mocked<MyPlex>) {
     let myplex = myplex.await;
-    let (myplex, mock_server) = myplex.decompose();
+    let (myplex, mock_server) = myplex.split();
 
     let m = mock_server.mock(|when, then| {
         when.method(GET).path(MYPLEX_PRIVACY_PATH);
@@ -66,7 +66,7 @@ async fn privacy(#[future] myplex: Mocked<MyPlex>) {
 #[plex_api_test_helper::async_offline_test]
 async fn claim_token(#[future] myplex: Mocked<MyPlex>) {
     let myplex = myplex.await;
-    let (myplex, mock_server) = myplex.decompose();
+    let (myplex, mock_server) = myplex.split();
 
     let mut mock = mock_server.mock(|when, then| {
         when.method(GET).path(MYPLEX_CLAIM_TOKEN_PATH);

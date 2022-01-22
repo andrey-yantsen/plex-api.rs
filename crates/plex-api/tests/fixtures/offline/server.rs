@@ -7,7 +7,7 @@ use rstest::fixture;
 
 #[fixture]
 pub async fn server_anonymous(client_anonymous: Mocked<Client>) -> Mocked<Server> {
-    let (client_anonymous, mock_server) = client_anonymous.decompose();
+    let (client_anonymous, mock_server) = client_anonymous.split();
 
     let ret = Server::new(mock_server.base_url(), client_anonymous)
         .await
@@ -18,7 +18,7 @@ pub async fn server_anonymous(client_anonymous: Mocked<Client>) -> Mocked<Server
 
 #[fixture]
 pub async fn server_authenticated(client_authenticated: Mocked<Client>) -> Mocked<Server> {
-    let (client_authenticated, mock_server) = client_authenticated.decompose();
+    let (client_authenticated, mock_server) = client_authenticated.split();
 
     let ret = Server::new(mock_server.base_url(), client_authenticated)
         .await

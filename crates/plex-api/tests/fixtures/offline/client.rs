@@ -4,7 +4,7 @@ use rstest::fixture;
 
 #[fixture]
 pub fn client_anonymous(client_builder: Mocked<ClientBuilder>) -> Mocked<Client> {
-    let (client_builder, mock_server) = client_builder.decompose();
+    let (client_builder, mock_server) = client_builder.split();
 
     Mocked::new(
         client_builder
@@ -16,7 +16,7 @@ pub fn client_anonymous(client_builder: Mocked<ClientBuilder>) -> Mocked<Client>
 
 #[fixture]
 pub fn client_authenticated(client_builder: Mocked<ClientBuilder>) -> Mocked<Client> {
-    let (client_builder, mock_server) = client_builder.decompose();
+    let (client_builder, mock_server) = client_builder.split();
 
     Mocked::new(
         client_builder

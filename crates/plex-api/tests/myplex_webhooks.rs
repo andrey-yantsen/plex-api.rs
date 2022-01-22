@@ -9,7 +9,7 @@ use plex_api::{url::MYPLEX_WEBHOOKS_PATH, Error, MyPlex};
 #[plex_api_test_helper::async_offline_test]
 async fn webhook_free_user(#[future] myplex: Mocked<MyPlex>) {
     let myplex = myplex.await;
-    let (myplex, mock_server) = myplex.decompose();
+    let (myplex, mock_server) = myplex.split();
 
     let m = mock_server.mock(|when, then| {
         when.method(GET).path(MYPLEX_WEBHOOKS_PATH);
@@ -37,7 +37,7 @@ async fn webhook_free_user(#[future] myplex: Mocked<MyPlex>) {
 #[plex_api_test_helper::async_offline_test]
 async fn webhook_plexpass_user_no_webhooks(#[future] myplex_plexpass: Mocked<MyPlex>) {
     let myplex = myplex_plexpass.await;
-    let (myplex, mock_server) = myplex.decompose();
+    let (myplex, mock_server) = myplex.split();
 
     let m = mock_server.mock(|when, then| {
         when.method(GET).path(MYPLEX_WEBHOOKS_PATH);
@@ -82,7 +82,7 @@ async fn webhook_plexpass_user_no_webhooks(#[future] myplex_plexpass: Mocked<MyP
 #[plex_api_test_helper::async_offline_test]
 async fn webhook_plexpass_user_two_webhooks(#[future] myplex_plexpass: Mocked<MyPlex>) {
     let myplex = myplex_plexpass.await;
-    let (myplex, mock_server) = myplex.decompose();
+    let (myplex, mock_server) = myplex.split();
 
     let m = mock_server.mock(|when, then| {
         when.method(GET).path(MYPLEX_WEBHOOKS_PATH);
@@ -148,7 +148,7 @@ async fn webhook_plexpass_user_two_webhooks(#[future] myplex_plexpass: Mocked<My
 #[plex_api_test_helper::async_offline_test]
 async fn webhook_plexpass_user_refresh(#[future] myplex_plexpass: Mocked<MyPlex>) {
     let myplex = myplex_plexpass.await;
-    let (myplex, mock_server) = myplex.decompose();
+    let (myplex, mock_server) = myplex.split();
 
     let mut mock = mock_server.mock(|when, then| {
         when.method(GET).path(MYPLEX_WEBHOOKS_PATH);

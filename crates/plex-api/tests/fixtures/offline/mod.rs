@@ -18,7 +18,7 @@ impl<T> Mocked<T> {
         Self { inner, mock_server }
     }
 
-    pub fn decompose(self) -> (T, MockServer) {
+    pub fn split(self) -> (T, MockServer) {
         (self.inner, self.mock_server)
     }
 }

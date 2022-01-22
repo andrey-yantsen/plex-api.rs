@@ -9,7 +9,7 @@ use plex_api::{url::MYPLEX_USER_INFO_PATH, MyPlex, Server};
 #[plex_api_test_helper::async_offline_test]
 async fn myplex_recover_from_server(#[future] myplex: Mocked<MyPlex>) {
     let myplex = myplex.await;
-    let (myplex, mock_server) = myplex.decompose();
+    let (myplex, mock_server) = myplex.split();
 
     let srv = myplex.srv().await.expect("can't get server");
 
@@ -35,7 +35,7 @@ async fn myplex_recover_from_server(#[future] myplex: Mocked<MyPlex>) {
 #[plex_api_test_helper::async_offline_test]
 async fn myplex_recover_from_server2(#[future] server_authenticated: Mocked<Server>) {
     let server = server_authenticated.await;
-    let (server, mock_server) = server.decompose();
+    let (server, mock_server) = server.split();
 
     let m = mock_server.mock(|when, then| {
         when.method(GET)

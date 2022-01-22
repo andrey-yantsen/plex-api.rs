@@ -11,7 +11,7 @@ use plex_api::{
 #[plex_api_test_helper::async_offline_test]
 async fn devices(#[future] myplex: Mocked<MyPlex>) {
     let myplex = myplex.await;
-    let (myplex, mock_server) = myplex.decompose();
+    let (myplex, mock_server) = myplex.split();
 
     let devices_mock = mock_server.mock(|when, then| {
         when.method(GET).path(MYPLEX_DEVICES);
