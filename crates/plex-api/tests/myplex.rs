@@ -4,6 +4,7 @@ use fixtures::offline::myplex::*;
 use fixtures::offline::Mocked;
 use httpmock::Method::GET;
 use httpmock::Method::PUT;
+use plex_api::Error;
 use plex_api::{
     url::{MYPLEX_CLAIM_TOKEN_PATH, MYPLEX_PRIVACY_PATH},
     MyPlex,
@@ -61,6 +62,45 @@ async fn privacy(#[future] myplex: Mocked<MyPlex>) {
         !privacy.opt_out_library_stats,
         "Unexpected opt_out_library_stats value"
     );
+}
+
+#[plex_api_test_helper::async_offline_test]
+async fn privacy_errors(#[future] myplex: Mocked<MyPlex>) {
+    let myplex = myplex.await;
+    let (myplex, mock_server) = myplex.split();
+
+    let mut m = mock_server.mock(|when, then| {
+        when.method(GET).path(MYPLEX_PRIVACY_PATH);
+        then.status(400).header("content-type", "text/json");
+    });
+
+    let privacy_result = myplex.privacy().await;
+    m.assert();
+    m.delete();
+
+    assert!(matches!(
+        privacy_result,
+        Err(Error::UnexpectedApiResponse { .. })
+    ));
+
+    let mut m = mock_server.mock(|when, then| {
+        when.method(GET).path(MYPLEX_PRIVACY_PATH);
+        then.status(200)
+            .header("content-type", "text/json")
+            .body_from_file("tests/files/myplex/api/v2/user/privacy.json");
+    });
+
+    let mut privacy_result = myplex
+        .privacy()
+        .await
+        .expect("failed to get privacy config");
+    m.assert();
+    m.delete();
+
+    assert!(matches!(
+        privacy_result.update(false, false).await,
+        Err(Error::UnexpectedApiResponse { .. })
+    ));
 }
 
 #[plex_api_test_helper::async_offline_test]

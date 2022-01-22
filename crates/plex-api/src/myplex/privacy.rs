@@ -16,6 +16,7 @@ struct PrivacyApiResponse {
     pub metrics: Vec<Metric>,
 }
 
+#[derive(Debug)]
 pub struct Privacy {
     pub opt_out_playback: bool,
     pub opt_out_library_stats: bool,

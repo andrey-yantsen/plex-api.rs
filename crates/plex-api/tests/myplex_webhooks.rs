@@ -180,3 +180,37 @@ async fn webhook_plexpass_user_refresh(#[future] myplex_plexpass: Mocked<MyPlex>
 
     assert_eq!(webhook_manager.webhooks().len(), 2, "Expected two webhooks");
 }
+
+#[plex_api_test_helper::async_offline_test]
+async fn webhook_erase(#[future] myplex_plexpass: Mocked<MyPlex>) {
+    let myplex = myplex_plexpass.await;
+    let (myplex, mock_server) = myplex.split();
+
+    let m = mock_server.mock(|when, then| {
+        when.method(GET).path(MYPLEX_WEBHOOKS_PATH);
+        then.status(200)
+            .header("content-type", "text/json")
+            .body_from_file("tests/files/myplex/api/v2/user/webhooks_two.json");
+    });
+
+    let webhook_manager_result = myplex.webhook_manager().await;
+
+    m.assert();
+
+    let mut webhook_manager =
+        webhook_manager_result.expect("Webhook manager should be returned for paid user");
+
+    assert_eq!(webhook_manager.webhooks().len(), 2, "Expected two webhooks");
+
+    let m = mock_server.mock(|when, then| {
+        when.method(POST).path(MYPLEX_WEBHOOKS_PATH).body("urls=");
+        then.status(201)
+            .header("content-type", "text/json")
+            .body("");
+    });
+
+    let delete_result = webhook_manager.set(vec![]).await;
+    m.assert();
+
+    delete_result.expect("failed to erase webhooks");
+}
