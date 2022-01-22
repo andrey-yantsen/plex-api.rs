@@ -2,6 +2,12 @@
 
 I'm delighted you're reading this, and I hope you'll find this project easy to jump in.
 
+## First steps
+
+The project uses [cargo-husky](https://crates.io/crates/cargo-husky) for managing the git
+hooks. After you cloned the repository you need to run `cargo test` at least once, to
+install the correct hooks configuration.
+
 ## Testing
 
 The project provides a sample Plex library for testing, feel free to extend it the way you
