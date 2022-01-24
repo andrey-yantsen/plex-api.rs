@@ -102,7 +102,7 @@ jobs:
 
   plex_tags:
     name: Prepare list of Plex docker image tags for testing
-    needs: test_offline
+    needs: check
     runs-on: ubuntu-latest
     outputs:
       tags: ${{ steps.set-tags.outputs.tags }}
