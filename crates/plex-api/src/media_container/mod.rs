@@ -14,3 +14,11 @@ pub struct MediaContainer {
     pub friendly_name: Option<String>,
     pub identifier: Option<String>,
 }
+
+#[derive(Debug, Deserialize, Clone)]
+#[cfg_attr(feature = "deny_unknown_fields", serde(deny_unknown_fields))]
+#[serde(rename_all = "camelCase")]
+pub struct MediaContainerWrapper<T> {
+    #[serde(rename = "MediaContainer")]
+    pub media_container: T,
+}

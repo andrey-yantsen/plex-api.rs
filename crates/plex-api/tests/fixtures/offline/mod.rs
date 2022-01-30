@@ -41,12 +41,12 @@ pub fn client_builder(mock_server: MockServer) -> Mocked<ClientBuilder> {
     let client_builder = ClientBuilder::new(mock_server.base_url()).set_http_client(
         HttpClient::builder()
             // We're doing everything locally and using static mocks, no reasons to have big timeouts
-            .timeout(::std::time::Duration::from_secs(2))
-            .connect_timeout(::std::time::Duration::from_secs(1))
+            .timeout(std::time::Duration::from_secs(2))
+            .connect_timeout(std::time::Duration::from_secs(1))
             // Normally Plex doesn't do redirects and None is the default value in our default client
-            .redirect_policy(::isahc::config::RedirectPolicy::None)
+            .redirect_policy(isahc::config::RedirectPolicy::None)
             // mockito does not support Expect-100 header, so we disabling it here
-            .expect_continue(::isahc::config::ExpectContinue::disabled())
+            .expect_continue(isahc::config::ExpectContinue::disabled())
             .build()
             .expect("failed to create testing http client"),
     );

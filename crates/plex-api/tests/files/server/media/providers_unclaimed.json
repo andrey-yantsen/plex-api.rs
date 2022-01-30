@@ -1,0 +1,263 @@
+{
+    "MediaContainer": {
+        "size": 1,
+        "allowCameraUpload": false,
+        "allowChannelAccess": true,
+        "allowMediaDeletion": true,
+        "allowSharing": true,
+        "allowSync": false,
+        "allowTuners": true,
+        "backgroundProcessing": true,
+        "companionProxy": true,
+        "countryCode": "",
+        "diagnostics": "logs,databases,streaminglogs",
+        "eventStream": true,
+        "friendlyName": "machine_id3",
+        "livetv": 7,
+        "machineIdentifier": "machine_id3",
+        "musicAnalysis": 2,
+        "myPlex": true,
+        "myPlexMappingState": "unknown",
+        "myPlexSigninState": "none",
+        "myPlexSubscription": false,
+        "ownerFeatures": "06d14b9e-2af8-4c2b-a4a1-ea9d5c515824,1417df52-986e-4e4b-8dcd-3997fbc5c976,16d69c53-4c40-4821-b9f3-57ca690b2d4d,22b27e12-472e-4383-92ea-2ec3976d8e72,24b4cf36-b296-4002-86b7-f1adb657e76a,2ea0e464-ea4f-4be2-97c1-ce6ed4b377dd,300231e0-69aa-4dce-97f4-52d8c00e3e8c,34e182bd-2f62-4678-a9e9-d13b3e25019d,39dbdd84-8339-4736-96a1-0eb105cc2e08,4b522f91-ae89-4f62-af9c-76f44d8ef61c,547514ab-3284-46e5-af77-bbaff247e3fc,567033ef-ffee-44fb-8f90-f678077445f9,5d819d02-5d04-4116-8eec-f49def4e2d6f,5e2a89ec-fb26-4234-b66e-14d37f35dff2,65685ff8-4375-4e4c-a806-ec1f0b4a8b7f,68747f3a-ce13-46ce-9274-1e0544c9f500,6d7be725-9a96-42c7-8af4-01e735138822,78643fe5-d192-40c7-8e93-5ccf04c0b767,7e7596aa-6e2c-41d1-a460-1e13cf0b62f2,849433b0-ef60-4a71-9dd9-939bc01f5362,85ebfb7b-77fb-4afd-bb1a-2fe2fefdddbe,86da2200-58db-4d78-ba46-f146ba25906b,96cac76e-c5bc-4596-87eb-4fdfef9aaa11,98872b06-2ff3-4b71-96bc-039e2ebe7adc,a3d2d5c4-46a0-436e-a2d6-80d26f32b369,abd37b14-706c-461f-8255-fa9563882af3,adaptive_bitrate,b20d91ca-1b2f-45a2-a115-c1ad24c66ac5,b227c158-e062-4ff1-95d8-8ed11cecafb1,b2403ac6-4885-4971-8b96-59353fd87c72,b46d16ae-cbd6-4226-8ee9-ab2b27e5dd42,b5874ecb-6610-47b2-8906-1b5a897acb02,b77e6744-c18d-415a-8e7c-7aac5d7a7750,bfeaee4e-965a-4d24-b163-020c3c57d936,c7ae6f8f-05e6-48bb-9024-c05c1dc3c43e,c9d9b7ee-fdd9-474e-b143-5039c04e9b9b,collections,dab501df-5d99-48ef-afc2-3e839e4ddc9a,ddd730e1-a0a0-429f-a7d3-7c5001d24497,f83450e2-759a-4de4-8b31-e4a163896d43,fec722a0-a6d4-4fbd-96dc-4ffb02b072c5,federated-auth,home,kevin-bacon,livetv,radio,tuner-sharing,unsupportedtuners",
+        "photoAutoTag": true,
+        "platform": "Linux",
+        "platformVersion": "5.10.76-linuxkit",
+        "pluginHost": true,
+        "pushNotifications": false,
+        "readOnlyLibraries": false,
+        "startState": "startingPlugins",
+        "streamingBrainABRVersion": 3,
+        "streamingBrainVersion": 2,
+        "sync": true,
+        "transcoderActiveVideoSessions": 0,
+        "transcoderAudio": true,
+        "transcoderLyrics": true,
+        "transcoderSubtitles": true,
+        "transcoderVideo": true,
+        "transcoderVideoBitrates": "64,96,208,320,720,1500,2000,3000,4000,8000,10000,12000,20000",
+        "transcoderVideoQualities": "0,1,2,3,4,5,6,7,8,9,10,11,12",
+        "transcoderVideoResolutions": "128,128,160,240,320,480,768,720,720,1080,1080,1080,1080",
+        "updatedAt": -1,
+        "updater": true,
+        "version": "1.25.3.5409-f11334058",
+        "voiceSearch": true,
+        "MediaProvider": [
+            {
+                "identifier": "com.plexapp.plugins.library",
+                "title": "Library",
+                "types": "video,audio,photo",
+                "protocols": "stream,download",
+                "Feature": [
+                    {
+                        "key": "/library/sections",
+                        "type": "content",
+                        "Directory": [
+                            {
+                                "hubKey": "/hubs",
+                                "title": "Home"
+                            },
+                            {
+                                "agent": "com.plexapp.agents.imdb",
+                                "language": "en",
+                                "refreshing": false,
+                                "scanner": "Plex Movie Scanner",
+                                "uuid": "cebcb7e3-5031-436b-906a-3640d878ba2c",
+                                "id": "1",
+                                "key": "/library/sections/1",
+                                "hubKey": "/hubs/sections/1",
+                                "type": "movie",
+                                "title": "Movies",
+                                "updatedAt": 1628211599,
+                                "scannedAt": 1628211599,
+                                "Pivot": [
+                                    {
+                                        "id": "recommended",
+                                        "key": "/hubs/sections/1",
+                                        "type": "hub",
+                                        "title": "Recommended",
+                                        "context": "content.discover",
+                                        "symbol": "star"
+                                    },
+                                    {
+                                        "id": "library",
+                                        "key": "/library/sections/1/all?type=1",
+                                        "type": "list",
+                                        "title": "Library",
+                                        "context": "content.library",
+                                        "symbol": "library"
+                                    }
+                                ]
+                            },
+                            {
+                                "agent": "com.plexapp.agents.thetvdb",
+                                "language": "en",
+                                "refreshing": false,
+                                "scanner": "Plex Series Scanner",
+                                "uuid": "95c0f894-3716-41c8-9f70-38e344a93019",
+                                "id": "2",
+                                "key": "/library/sections/2",
+                                "hubKey": "/hubs/sections/2",
+                                "type": "show",
+                                "title": "TV Shows",
+                                "updatedAt": 1628211599,
+                                "scannedAt": 1628211599,
+                                "Pivot": [
+                                    {
+                                        "id": "recommended",
+                                        "key": "/hubs/sections/2",
+                                        "type": "hub",
+                                        "title": "Recommended",
+                                        "context": "content.discover",
+                                        "symbol": "star"
+                                    },
+                                    {
+                                        "id": "library",
+                                        "key": "/library/sections/2/all?type=2",
+                                        "type": "list",
+                                        "title": "Library",
+                                        "context": "content.library",
+                                        "symbol": "library"
+                                    }
+                                ]
+                            },
+                            {
+                                "agent": "com.plexapp.agents.lastfm",
+                                "language": "en",
+                                "refreshing": false,
+                                "scanner": "Plex Music Scanner",
+                                "uuid": "6248e967-8d45-4957-ba5e-ca85df9104b9",
+                                "id": "5",
+                                "key": "/library/sections/5",
+                                "hubKey": "/hubs/sections/5",
+                                "type": "artist",
+                                "title": "Music",
+                                "updatedAt": 1628211599,
+                                "scannedAt": 1628211599,
+                                "Pivot": [
+                                    {
+                                        "id": "recommended",
+                                        "key": "/hubs/sections/5",
+                                        "type": "hub",
+                                        "title": "Recommended",
+                                        "context": "content.discover",
+                                        "symbol": "star"
+                                    },
+                                    {
+                                        "id": "library",
+                                        "key": "/library/sections/5/all?type=8",
+                                        "type": "list",
+                                        "title": "Library",
+                                        "context": "content.library",
+                                        "symbol": "library"
+                                    }
+                                ]
+                            },
+                            {
+                                "agent": "com.plexapp.agents.none",
+                                "language": "en",
+                                "refreshing": false,
+                                "scanner": "Plex Photo Scanner",
+                                "uuid": "f173bb82-a89d-44ba-87d8-b818c62ba54d",
+                                "id": "3",
+                                "key": "/library/sections/3",
+                                "hubKey": "/hubs/sections/3",
+                                "type": "photo",
+                                "title": "Photos",
+                                "updatedAt": 1628211599,
+                                "scannedAt": 1628211599,
+                                "Pivot": [
+                                    {
+                                        "id": "recommended",
+                                        "key": "/hubs/sections/3",
+                                        "type": "hub",
+                                        "title": "Recommended",
+                                        "context": "content.discover",
+                                        "symbol": "star"
+                                    },
+                                    {
+                                        "id": "timeline",
+                                        "key": "view://photo/timeline",
+                                        "type": "view",
+                                        "title": "Timeline",
+                                        "context": "content.discover",
+                                        "symbol": "timeline"
+                                    },
+                                    {
+                                        "id": "library",
+                                        "key": "/library/sections/3/all",
+                                        "type": "list",
+                                        "title": "Library",
+                                        "context": "content.library",
+                                        "symbol": "library"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "key": "/hubs/search",
+                        "type": "search"
+                    },
+                    {
+                        "key": "/library/matches",
+                        "type": "match"
+                    },
+                    {
+                        "key": "/library/metadata",
+                        "type": "metadata"
+                    },
+                    {
+                        "key": "/:/rate",
+                        "type": "rate"
+                    },
+                    {
+                        "key": "/photo/:/transcode",
+                        "type": "imagetranscoder"
+                    },
+                    {
+                        "key": "/hubs/promoted",
+                        "type": "promoted"
+                    },
+                    {
+                        "key": "/hubs/continueWatching",
+                        "type": "continuewatching"
+                    },
+                    {
+                        "key": "/actions",
+                        "type": "actions",
+                        "Action": [
+                            {
+                                "id": "removeFromContinueWatching",
+                                "key": "/actions/removeFromContinueWatching"
+                            }
+                        ]
+                    },
+                    {
+                        "flavor": "universal",
+                        "key": "/playlists",
+                        "type": "playlist"
+                    },
+                    {
+                        "flavor": "universal",
+                        "key": "/playQueues",
+                        "type": "playqueue"
+                    },
+                    {
+                        "scrobbleKey": "/:/scrobble",
+                        "unscrobbleKey": "/:/unscrobble",
+                        "key": "/:/timeline",
+                        "type": "timeline"
+                    },
+                    {
+                        "type": "manage"
+                    },
+                    {
+                        "type": "queryParser"
+                    }
+                ]
+            }
+        ]
+    }
+}

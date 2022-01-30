@@ -1,4 +1,4 @@
-use crate::myplex::account::SubscriptionFeature;
+use crate::media_container::server::Feature;
 use isahc::{AsyncBody, AsyncReadResponseExt, Response as HttpResponse};
 use serde::Deserialize;
 use thiserror::Error;
@@ -50,7 +50,7 @@ pub enum Error {
     #[error("The requested webhook wasn't found: {0}.")]
     WebhookNotFound(String),
     #[error("The mandatory feature is not available: {0}.")]
-    SubscriptionFeatureNotAvailable(SubscriptionFeature),
+    SubscriptionFeatureNotAvailable(Feature),
     #[error("OTP is required for the authentication.")]
     OtpRequired,
     #[error("OTP is provided, but no username/password.")]

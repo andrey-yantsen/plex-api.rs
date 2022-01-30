@@ -4,23 +4,22 @@ mod device;
 mod privacy;
 mod webhook;
 
-use std::sync::Arc;
-
-use self::account::SubscriptionFeature;
 use self::claim_token::ClaimToken;
 use self::device::DeviceManager;
 use self::privacy::Privacy;
 use self::webhook::WebhookManager;
 use crate::client::{Client, ClientBuilder};
+use crate::media_container::server::Feature;
 use crate::url::{MYPLEX_SIGNIN_PATH, MYPLEX_SIGNOUT_PATH, MYPLEX_USER_INFO_PATH};
 use crate::{Error, Result, Server};
 use http::StatusCode;
 use isahc::{AsyncBody, AsyncReadResponseExt, Response as HttpResponse};
+use std::sync::Arc;
 
 #[derive(Debug, Clone)]
 pub struct MyPlex {
     client: Arc<Client>,
-    pub available_features: Option<Vec<SubscriptionFeature>>,
+    pub available_features: Option<Vec<Feature>>,
 }
 
 impl MyPlex {
@@ -129,10 +128,8 @@ impl MyPlex {
 
     pub async fn webhook_manager(&self) -> Result<WebhookManager> {
         if let Some(features) = self.available_features.as_ref() {
-            if !features.contains(&SubscriptionFeature::Webhooks) {
-                return Err(Error::SubscriptionFeatureNotAvailable(
-                    SubscriptionFeature::Webhooks,
-                ));
+            if !features.contains(&Feature::Webhooks) {
+                return Err(Error::SubscriptionFeatureNotAvailable(Feature::Webhooks));
             }
         }
         WebhookManager::new(self.client.clone()).await

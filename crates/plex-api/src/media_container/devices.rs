@@ -1,5 +1,6 @@
 use serde::Deserialize;
 use serde_with::{rust::StringWithSeparator, CommaSeparator};
+use strum::EnumString;
 use time::OffsetDateTime;
 
 #[derive(Debug, Deserialize, Clone)]
@@ -33,7 +34,7 @@ pub struct Device {
     pub model: Option<String>,
     pub vendor: Option<String>,
     #[serde(deserialize_with = "StringWithSeparator::<CommaSeparator>::deserialize")]
-    pub provides: Vec<String>,
+    pub provides: Vec<Feature>,
     pub client_identifier: String,
     pub version: Option<String>,
     pub id: Option<u32>,
@@ -88,4 +89,19 @@ pub struct Connection {
     pub port: Option<u32>,
     pub local: Option<bool>,
     pub relay: Option<bool>,
+}
+
+#[derive(Debug, Deserialize, Clone, PartialEq, Eq, EnumString)]
+#[serde(rename_all = "kebab-case")]
+pub enum Feature {
+    Server,
+    Client,
+    Controller,
+    Player,
+    PubsubPlayer,
+    ProviderPlayback,
+    SyncTarget,
+    #[cfg(not(feature = "deny_unknown_fields"))]
+    #[serde(other)]
+    Unknown,
 }

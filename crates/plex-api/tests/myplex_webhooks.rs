@@ -29,7 +29,7 @@ async fn webhook_free_user(#[future] myplex: Mocked<MyPlex>) {
     let error = webhook_manager_result.err().unwrap();
 
     assert!(
-        matches!(error, Error::SubscriptionFeatureNotAvailable(f) if format!("{}", f) == "Webhooks"),
+        matches!(error, Error::SubscriptionFeatureNotAvailable(f) if format!("{}", f) == "webhooks"),
         "Unexpected error"
     );
 }
