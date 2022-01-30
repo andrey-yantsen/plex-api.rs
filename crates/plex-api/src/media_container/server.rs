@@ -23,7 +23,7 @@ pub struct Server {
     pub friendly_name: String,
     pub livetv: u8,
     pub machine_identifier: String,
-    pub music_analysis: u8,
+    pub music_analysis: Option<u8>,
     pub my_plex: bool,
     pub my_plex_mapping_state: MappingState,
     pub my_plex_mapping_error: Option<MappingError>,
