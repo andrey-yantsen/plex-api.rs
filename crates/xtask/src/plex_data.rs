@@ -120,7 +120,7 @@ impl flags::PlexData {
             if entry.file_type().is_file() {
                 let path = entry.path();
                 let new_path = plex_data_path.join(path.strip_prefix(plex_stub_data_path)?);
-                self.cp(is_hardlink_supported, path, new_path)?;
+                self.cp(false, path, new_path)?;
             }
         }
 
