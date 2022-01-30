@@ -16,7 +16,7 @@ pub struct Server {
     pub background_processing: bool,
     pub certificate: Option<bool>,
     pub companion_proxy: bool,
-    pub country_code: String,
+    pub country_code: Option<String>,
     #[serde(deserialize_with = "StringWithSeparator::<CommaSeparator>::deserialize")]
     pub diagnostics: Vec<Diagnostics>,
     pub event_stream: bool,
