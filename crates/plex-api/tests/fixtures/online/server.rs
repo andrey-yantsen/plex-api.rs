@@ -14,11 +14,11 @@ async fn get_server(client: Client) -> Server {
 }
 
 #[fixture]
-pub async fn server_anonymous(client_anonymous: Client) -> Server {
+pub async fn server_unclaimed(client_anonymous: Client) -> Server {
     get_server(client_anonymous).await
 }
 
 #[fixture]
-pub async fn server_authenticated(client_authenticated: Client) -> Server {
+pub async fn server_claimed(client_authenticated: Client) -> Server {
     get_server(client_authenticated).await
 }

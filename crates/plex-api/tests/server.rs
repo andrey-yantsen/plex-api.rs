@@ -59,21 +59,21 @@ mod online {
     use super::fixtures::online::server::*;
     use plex_api::Server;
 
-    #[plex_api_test_helper::online_anonymous_test]
-    async fn test_connection_anonymous(#[future] server_anonymous: Server) {
-        let _server_result = server_anonymous.await;
+    #[plex_api_test_helper::online_test_unclaimed_server]
+    async fn load_server_unclaimed(#[future] server_unclaimed: Server) {
+        let _ = server_unclaimed.await;
     }
 
-    #[plex_api_test_helper::online_authenticated_test]
-    async fn test_connection_authenticated(#[future] server_authenticated: Server) {
-        let _server_result = server_authenticated.await;
+    #[plex_api_test_helper::online_test_claimed_server]
+    async fn load_server_claimed(#[future] server_claimed: Server) {
+        let _ = server_claimed.await;
     }
 
     #[allow(unused_attributes)]
-    #[plex_api_test_helper::online_authenticated_test]
+    #[plex_api_test_helper::online_test_claimed_server]
     #[ignore = "Must be run manually"]
-    async fn unclaim_server(#[future] server_authenticated: Server) {
-        let server = server_authenticated.await;
+    async fn unclaim_server(#[future] server_claimed: Server) {
+        let server = server_claimed.await;
         server.unclaim().await.unwrap();
     }
 }

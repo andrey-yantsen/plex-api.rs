@@ -113,9 +113,9 @@ impl flags::Test {
 
         let mut features = {
             if claim_token.is_empty() {
-                "tests_only_online_anonymous".to_owned()
+                "tests_only_online_unclaimed_server".to_owned()
             } else {
-                "tests_only_online_authenticated".to_owned()
+                "tests_only_online_claimed_server".to_owned()
             }
         };
 

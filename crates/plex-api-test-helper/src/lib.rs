@@ -39,17 +39,17 @@ pub fn async_offline_test(args: TokenStream, input: TokenStream) -> TokenStream 
 }
 
 #[proc_macro_attribute]
-pub fn online_anonymous_test(args: TokenStream, input: TokenStream) -> TokenStream {
+pub fn online_test_unclaimed_server(args: TokenStream, input: TokenStream) -> TokenStream {
     let ignore = quote! {
-        #[cfg_attr(not(feature = "tests_only_online_anonymous"), ignore = "Feature tests_only_online_anonymous is not set, skipping anonymous online tests.")]
+        #[cfg_attr(not(feature = "tests_only_online_unclaimed_server"), ignore = "Feature tests_only_online_anonymous is not set, skipping anonymous online tests.")]
     };
     prepare(args, input, ignore)
 }
 
 #[proc_macro_attribute]
-pub fn online_authenticated_test(args: TokenStream, input: TokenStream) -> TokenStream {
+pub fn online_test_claimed_server(args: TokenStream, input: TokenStream) -> TokenStream {
     let ignore = quote! {
-        #[cfg_attr(not(feature = "tests_only_online_authenticated"), ignore = "Feature tests_only_online_authenticated is not set, skipping authenticated online tests.")]
+        #[cfg_attr(not(feature = "tests_only_online_claimed_server"), ignore = "Feature tests_only_online_authenticated is not set, skipping authenticated online tests.")]
     };
     prepare(args, input, ignore)
 }
