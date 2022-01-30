@@ -15,28 +15,12 @@ pub struct Server {
     #[allow(dead_code)]
     client: Arc<Client>,
     myplex_api_url: Uri,
-    #[allow(dead_code)]
-    media_container: Option<ServerMediaContainer>,
+    pub media_container: ServerMediaContainer,
 }
 
 impl Server {
-    pub async fn new<U>(url: U, client: Client) -> Result<Self>
-    where
-        Uri: TryFrom<U>,
-        <Uri as TryFrom<U>>::Error: Into<http::Error>,
-    {
-        let ret = Self {
-            myplex_api_url: client.api_url.clone(),
-            client: Arc::new(ClientBuilder::from(client).set_api_url(url).build()?),
-            media_container: None,
-        };
-
-        ret.refresh().await
-    }
-
-    pub async fn refresh(self) -> Result<Self> {
-        let mut response = self
-            .client
+    async fn build(client: Arc<Client>, myplex_api_url: Uri) -> Result<Self> {
+        let mut response = client
             .get(SERVER_MEDIA_PROVIDERS)
             .header("Accept", "application/json")
             .send()
@@ -48,12 +32,30 @@ impl Server {
                     response.json().await?;
 
                 Ok(Self {
-                    media_container: Some(media_container_wrapper.media_container),
-                    ..self
+                    media_container: media_container_wrapper.media_container,
+                    client,
+                    myplex_api_url,
                 })
             }
             _ => Err(crate::Error::from_response(response).await),
         }
+    }
+
+    pub async fn new<U>(url: U, client: Client) -> Result<Self>
+    where
+        Uri: TryFrom<U>,
+        <Uri as TryFrom<U>>::Error: Into<http::Error>,
+    {
+        let myplex_api_url = client.api_url.clone();
+        Self::build(
+            Arc::new(ClientBuilder::from(client).set_api_url(url).build()?),
+            myplex_api_url,
+        )
+        .await
+    }
+
+    pub async fn refresh(self) -> Result<Self> {
+        Self::build(self.client, self.myplex_api_url).await
     }
 
     pub fn myplex(&self) -> Result<MyPlex> {

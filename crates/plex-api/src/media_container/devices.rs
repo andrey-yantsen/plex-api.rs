@@ -92,7 +92,7 @@ pub struct Connection {
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq, Eq, EnumString)]
-#[serde(rename_all = "kebab-case")]
+#[strum(serialize_all = "kebab-case")]
 pub enum Feature {
     Server,
     Client,
