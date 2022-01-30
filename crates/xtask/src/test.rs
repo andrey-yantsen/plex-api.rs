@@ -1,6 +1,7 @@
 use super::get_last_plex_tags::{DOCKER_PLEX_IMAGE_NAME, DOCKER_PLEX_IMAGE_TAG_LATEST};
 use crate::flags;
 use plex_api::MyPlexBuilder;
+use std::io::Write;
 use testcontainers::{clients, core::WaitFor, images::generic::GenericImage, RunnableImage};
 use xshell::{cmd, cwd, pushenv};
 
@@ -33,6 +34,10 @@ impl flags::Test {
                 Some(token) if !token.is_empty() => {
                     cmd!("cargo xtask plex-data --replace").run()?;
                     let _plex_token = pushenv("PLEX_API_AUTH_TOKEN", token);
+
+                    print!("// Requesting claim token... ");
+                    let _ = std::io::stdout().flush();
+
                     let claim_token = tokio::runtime::Runtime::new()?.block_on(async {
                         MyPlexBuilder::default()
                             .set_token(token)
@@ -44,6 +49,10 @@ impl flags::Test {
                             .await
                             .expect("failed to get claim token")
                     });
+
+                    println!("done!");
+                    let _ = std::io::stdout().flush();
+
                     self.integration_tests(&claim_token.to_string())?;
                 }
                 _ => (),
@@ -61,6 +70,7 @@ impl flags::Test {
         let docker_image: RunnableImage<GenericImage> =
             GenericImage::new(DOCKER_PLEX_IMAGE_NAME, &image_tag)
                 .with_wait_for(WaitFor::Healthcheck)
+                .with_wait_for(WaitFor::seconds(15))
                 .into();
 
         #[cfg_attr(windows, allow(unused_mut))]
@@ -88,22 +98,43 @@ impl flags::Test {
         }
 
         let docker = clients::Cli::default();
+
+        print!("// Spawning docker container... ");
+        let _ = std::io::stdout().flush();
+
         let _plex_node = docker.run(docker_image);
 
-        let _plex_server = pushenv(
-            "PLEX_SERVER_URL",
-            format!("http://localhost:{}/", _plex_node.get_host_port(32400)),
-        );
+        println!("done!");
+        let _ = std::io::stdout().flush();
 
-        let mut features = "tests_only_online".to_owned();
+        let server_url = format!("http://localhost:{}/", _plex_node.get_host_port(32400));
+
+        let _plex_server = pushenv("PLEX_SERVER_URL", server_url);
+
+        let mut features = {
+            if claim_token.is_empty() {
+                "tests_only_online_anonymous".to_owned()
+            } else {
+                "tests_only_online_authenticated".to_owned()
+            }
+        };
 
         if self.deny_unknown_fields {
             features.push_str(",deny_unknown_fields");
         }
 
-        cmd!("cargo test --workspace --no-fail-fast --features {features}").run()?;
+        let mut test_run_result =
+            cmd!("cargo test --workspace --no-fail-fast --features {features}").run();
 
-        Ok(())
+        if !claim_token.is_empty() {
+            // Unclaim must be executed after all the other tests.
+            // Not including `deny_unknown_fields` feature here to avoid
+            // possible unneeded failures.
+            let unclaim = cmd!("cargo test --workspace --no-fail-fast --features tests_only_online_authenticated --test online_server unclaim_server -- --include-ignored").run();
+            test_run_result = test_run_result.and(unclaim);
+        }
+
+        test_run_result.map_err(|e| e.into())
     }
 
     fn validate(&self) -> xflags::Result<()> {
