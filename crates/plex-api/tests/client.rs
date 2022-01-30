@@ -1,164 +1,166 @@
 mod fixtures;
 
-use fixtures::offline::mock_server;
-use httpmock::{Method::GET, MockServer};
-use isahc::HttpClient;
-use plex_api::ClientBuilder;
-use std::time::Duration;
+mod offline {
+    use super::fixtures::offline::mock_server;
+    use httpmock::{Method::GET, MockServer};
+    use isahc::HttpClient;
+    use plex_api::ClientBuilder;
+    use std::time::Duration;
 
-#[plex_api_test_helper::async_offline_test]
-async fn default_client(mock_server: MockServer) {
-    let client = ClientBuilder::new(mock_server.base_url())
-        .build()
-        .expect("failed to build default client");
+    #[plex_api_test_helper::async_offline_test]
+    async fn default_client(mock_server: MockServer) {
+        let client = ClientBuilder::new(mock_server.base_url())
+            .build()
+            .expect("failed to build default client");
 
-    let m = mock_server.mock(|when, then| {
-        when.method(GET)
-            .path("/")
-            .matches(|req| {
-                let mut found = false;
-                for (header, _) in req.headers.as_ref().unwrap() {
-                    if header.as_str() == "x-plex-token" {
-                        found = true;
-                        break;
+        let m = mock_server.mock(|when, then| {
+            when.method(GET)
+                .path("/")
+                .matches(|req| {
+                    let mut found = false;
+                    for (header, _) in req.headers.as_ref().unwrap() {
+                        if header.as_str() == "x-plex-token" {
+                            found = true;
+                            break;
+                        }
                     }
-                }
 
-                !found
-            })
-            .header_exists("X-Plex-Platform")
-            .header_exists("X-Plex-Platform-Version")
-            .header_exists("X-Plex-Device")
-            .header_exists("X-Plex-Device-Name")
-            .header_exists("X-Plex-Sync-Version")
-            .header_exists("X-Plex-Client-Identifier")
-            .header("X-Plex-Product", env!("CARGO_PKG_NAME"))
-            .header("X-Plex-Version", env!("CARGO_PKG_VERSION"))
-            .header("X-Plex-Provides", "controller");
-        then.status(200).body("");
-    });
+                    !found
+                })
+                .header_exists("X-Plex-Platform")
+                .header_exists("X-Plex-Platform-Version")
+                .header_exists("X-Plex-Device")
+                .header_exists("X-Plex-Device-Name")
+                .header_exists("X-Plex-Sync-Version")
+                .header_exists("X-Plex-Client-Identifier")
+                .header("X-Plex-Product", env!("CARGO_PKG_NAME"))
+                .header("X-Plex-Version", env!("CARGO_PKG_VERSION"))
+                .header("X-Plex-Provides", "controller");
+            then.status(200).body("");
+        });
 
-    let get_result = client.get("/").send().await;
+        let get_result = client.get("/").send().await;
 
-    m.assert();
+        m.assert();
 
-    get_result.expect("failed to perform first http request");
-}
+        get_result.expect("failed to perform first http request");
+    }
 
-#[plex_api_test_helper::async_offline_test]
-async fn customized_client(mock_server: MockServer) {
-    let client = ClientBuilder::new(mock_server.base_url())
-        .set_x_plex_token("auth_token".to_owned())
-        .set_x_plex_client_identifier("client_id".to_owned())
-        .set_x_plex_provides(vec!["provides1".to_owned(), "provides2".to_owned()])
-        .set_x_plex_platform("platform".to_owned())
-        .set_x_plex_platform_version("platform_version".to_owned())
-        .set_x_plex_product("product".to_owned())
-        .set_x_plex_version("product_version".to_owned())
-        .set_x_plex_device("device".to_owned())
-        .set_x_plex_device_name("device_name".to_owned())
-        .build()
-        .expect("failed to build custom client");
+    #[plex_api_test_helper::async_offline_test]
+    async fn customized_client(mock_server: MockServer) {
+        let client = ClientBuilder::new(mock_server.base_url())
+            .set_x_plex_token("auth_token".to_owned())
+            .set_x_plex_client_identifier("client_id".to_owned())
+            .set_x_plex_provides(vec!["provides1".to_owned(), "provides2".to_owned()])
+            .set_x_plex_platform("platform".to_owned())
+            .set_x_plex_platform_version("platform_version".to_owned())
+            .set_x_plex_product("product".to_owned())
+            .set_x_plex_version("product_version".to_owned())
+            .set_x_plex_device("device".to_owned())
+            .set_x_plex_device_name("device_name".to_owned())
+            .build()
+            .expect("failed to build custom client");
 
-    let m = mock_server.mock(|when, then| {
-        when.method(GET)
-            .path("/")
-            .header("X-Plex-Provides", "provides1,provides2")
-            .header("X-Plex-Platform", "platform")
-            .header("X-Plex-Platform-Version", "platform_version")
-            .header("X-Plex-Product", "product")
-            .header("X-Plex-Version", "product_version")
-            .header("X-Plex-Device", "device")
-            .header("X-Plex-Device-Name", "device_name")
-            .header("X-Plex-Sync-Version", "2")
-            .header("X-Plex-Client-Identifier", "client_id")
-            .header("X-Plex-Token", "auth_token");
-        then.status(200).body("");
-    });
+        let m = mock_server.mock(|when, then| {
+            when.method(GET)
+                .path("/")
+                .header("X-Plex-Provides", "provides1,provides2")
+                .header("X-Plex-Platform", "platform")
+                .header("X-Plex-Platform-Version", "platform_version")
+                .header("X-Plex-Product", "product")
+                .header("X-Plex-Version", "product_version")
+                .header("X-Plex-Device", "device")
+                .header("X-Plex-Device-Name", "device_name")
+                .header("X-Plex-Sync-Version", "2")
+                .header("X-Plex-Client-Identifier", "client_id")
+                .header("X-Plex-Token", "auth_token");
+            then.status(200).body("");
+        });
 
-    let get_result = client.get("/").send().await;
+        let get_result = client.get("/").send().await;
 
-    m.assert();
+        m.assert();
 
-    get_result.expect("failed to perform first http request");
-}
+        get_result.expect("failed to perform first http request");
+    }
 
-#[plex_api_test_helper::async_offline_test]
-async fn auth_token_updated_after_build(mock_server: MockServer) {
-    let client = ClientBuilder::new(mock_server.base_url())
-        .build()
-        .expect("failed to build default client")
-        .set_x_plex_token("auth_token".to_owned());
+    #[plex_api_test_helper::async_offline_test]
+    async fn auth_token_updated_after_build(mock_server: MockServer) {
+        let client = ClientBuilder::new(mock_server.base_url())
+            .build()
+            .expect("failed to build default client")
+            .set_x_plex_token("auth_token".to_owned());
 
-    let m = mock_server.mock(|when, then| {
-        when.method(GET)
-            .path("/")
-            .header_exists("X-Plex-Platform")
-            .header_exists("X-Plex-Platform-Version")
-            .header_exists("X-Plex-Device")
-            .header_exists("X-Plex-Device-Name")
-            .header_exists("X-Plex-Sync-Version")
-            .header_exists("X-Plex-Client-Identifier")
-            .header("X-Plex-Product", env!("CARGO_PKG_NAME"))
-            .header("X-Plex-Version", env!("CARGO_PKG_VERSION"))
-            .header("X-Plex-Provides", "controller")
-            .header("X-Plex-Token", "auth_token");
-        then.status(200).body("");
-    });
+        let m = mock_server.mock(|when, then| {
+            when.method(GET)
+                .path("/")
+                .header_exists("X-Plex-Platform")
+                .header_exists("X-Plex-Platform-Version")
+                .header_exists("X-Plex-Device")
+                .header_exists("X-Plex-Device-Name")
+                .header_exists("X-Plex-Sync-Version")
+                .header_exists("X-Plex-Client-Identifier")
+                .header("X-Plex-Product", env!("CARGO_PKG_NAME"))
+                .header("X-Plex-Version", env!("CARGO_PKG_VERSION"))
+                .header("X-Plex-Provides", "controller")
+                .header("X-Plex-Token", "auth_token");
+            then.status(200).body("");
+        });
 
-    let get_result = client.get("/").send().await;
+        let get_result = client.get("/").send().await;
 
-    m.assert();
+        m.assert();
 
-    get_result.expect("failed to perform first http request");
-}
+        get_result.expect("failed to perform first http request");
+    }
 
-#[plex_api_test_helper::async_offline_test]
-async fn custom_http_client(mock_server: MockServer) {
-    use isahc::config::Configurable as _;
+    #[plex_api_test_helper::async_offline_test]
+    async fn custom_http_client(mock_server: MockServer) {
+        use isahc::config::Configurable as _;
 
-    let client = ClientBuilder::default()
-        .set_http_client(
-            HttpClient::builder()
-                .timeout(Duration::from_secs(1))
-                .connect_timeout(Duration::from_secs(1))
-                .proxy(Some(mock_server.base_url().parse().unwrap()))
-                .build()
-                .expect("failed to create testing http client"),
-        )
-        .set_api_url("http://plex.tv")
-        .set_x_plex_token("auth_token".to_owned())
-        .set_x_plex_client_identifier("client_id".to_owned())
-        .set_x_plex_provides(vec!["provides1".to_owned(), "provides2".to_owned()])
-        .set_x_plex_platform("platform".to_owned())
-        .set_x_plex_platform_version("platform_version".to_owned())
-        .set_x_plex_product("product".to_owned())
-        .set_x_plex_version("product_version".to_owned())
-        .set_x_plex_device("device".to_owned())
-        .set_x_plex_device_name("device_name".to_owned())
-        .build()
-        .expect("failed to build client");
+        let client = ClientBuilder::default()
+            .set_http_client(
+                HttpClient::builder()
+                    .timeout(Duration::from_secs(1))
+                    .connect_timeout(Duration::from_secs(1))
+                    .proxy(Some(mock_server.base_url().parse().unwrap()))
+                    .build()
+                    .expect("failed to create testing http client"),
+            )
+            .set_api_url("http://plex.tv")
+            .set_x_plex_token("auth_token".to_owned())
+            .set_x_plex_client_identifier("client_id".to_owned())
+            .set_x_plex_provides(vec!["provides1".to_owned(), "provides2".to_owned()])
+            .set_x_plex_platform("platform".to_owned())
+            .set_x_plex_platform_version("platform_version".to_owned())
+            .set_x_plex_product("product".to_owned())
+            .set_x_plex_version("product_version".to_owned())
+            .set_x_plex_device("device".to_owned())
+            .set_x_plex_device_name("device_name".to_owned())
+            .build()
+            .expect("failed to build client");
 
-    let m = mock_server.mock(|when, then| {
-        when.method(GET)
-            .path("/index.html")
-            .header_exists("Proxy-connection")
-            .header("X-Plex-Provides", "provides1,provides2")
-            .header("X-Plex-Platform", "platform")
-            .header("X-Plex-Platform-Version", "platform_version")
-            .header("X-Plex-Product", "product")
-            .header("X-Plex-Version", "product_version")
-            .header("X-Plex-Device", "device")
-            .header("X-Plex-Device-Name", "device_name")
-            .header("X-Plex-Sync-Version", "2")
-            .header("X-Plex-Client-Identifier", "client_id")
-            .header("X-Plex-Token", "auth_token");
-        then.status(200).body("");
-    });
+        let m = mock_server.mock(|when, then| {
+            when.method(GET)
+                .path("/index.html")
+                .header_exists("Proxy-connection")
+                .header("X-Plex-Provides", "provides1,provides2")
+                .header("X-Plex-Platform", "platform")
+                .header("X-Plex-Platform-Version", "platform_version")
+                .header("X-Plex-Product", "product")
+                .header("X-Plex-Version", "product_version")
+                .header("X-Plex-Device", "device")
+                .header("X-Plex-Device-Name", "device_name")
+                .header("X-Plex-Sync-Version", "2")
+                .header("X-Plex-Client-Identifier", "client_id")
+                .header("X-Plex-Token", "auth_token");
+            then.status(200).body("");
+        });
 
-    let get_result = client.get("/index.html").send().await;
+        let get_result = client.get("/index.html").send().await;
 
-    m.assert();
+        m.assert();
 
-    get_result.expect("failed to perform first http request");
+        get_result.expect("failed to perform first http request");
+    }
 }
