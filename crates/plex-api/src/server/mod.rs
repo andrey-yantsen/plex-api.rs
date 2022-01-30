@@ -2,7 +2,7 @@ use crate::{
     client::Client,
     media_container::{server::Server as ServerMediaContainer, MediaContainerWrapper},
     myplex::MyPlex,
-    url::{SERVER_MEDIA_PROVIDERS, SERVER_MYPLEX_ACCOUNT},
+    url::{SERVER_MEDIA_PROVIDERS, SERVER_MYPLEX_ACCOUNT, SERVER_MYPLEX_CLAIM},
     ClientBuilder, Result,
 };
 use core::convert::TryFrom;
@@ -61,12 +61,12 @@ impl Server {
     }
 
     pub async fn claim(self, claim_token: &str) -> Result<Self> {
-        let mut response = self
-            .client
-            .post(SERVER_MYPLEX_ACCOUNT)
-            .form(&[("token", claim_token)])?
-            .send()
-            .await?;
+        let url = format!(
+            "{}?{}",
+            SERVER_MYPLEX_CLAIM,
+            serde_urlencoded::to_string(&[("token", claim_token)])?
+        );
+        let mut response = self.client.post(url).send().await?;
 
         if response.status() == StatusCode::OK {
             response.consume().await?;
