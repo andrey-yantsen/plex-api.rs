@@ -42,3 +42,5 @@ features = ["precommit-hook", "run-cargo-test", "run-cargo-clippy", "run-cargo-f
 [features]
 deny_unknown_fields = []
 tests_only_online = []
+tests_only_online_anonymous = ["tests_only_online"]
+tests_only_online_authenticated = ["tests_only_online"]

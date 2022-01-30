@@ -13,6 +13,12 @@ install the correct hooks configuration.
 The project provides a sample Plex library for testing, feel free to extend it the way you
 see fit.
 
+There're multiple test types available:
+
+* Offline tests, with mock data.
+* Online tests using a claimed (i.e. assigned to a MyPlex account) local docker container.
+* Online tests using an unclaimed local docker container.
+
 The easiest way to run all the available tests is by executing the following command:
 
 ```
@@ -27,8 +33,14 @@ messages.
 ## Writing tests
 
 I don't have much exprience with testing in Rust, so please write the tests the way you see fit.
-At the same time, I created a macros to reduce the boilerplate amount: `#[plex_api_test_helper::async_offline_test]`. Under the hood, [rstest](http://docs.rs/rstest)
-is used for handling the tests — this way it's possible to use [fixtures](https://docs.rs/rstest/latest/rstest/attr.rstest.html#injecting-fixtures) and [tests parametrization](https://docs.rs/rstest/latest/rstest/attr.rstest.html#test-parametrized-cases).
+At the same time, I created a few macroses to reduce the boilerplate amount:
+* `#[plex_api_test_helper::async_offline_test]`
+* `#[plex_api_test_helper::online_anonymous_test]`
+* `#[plex_api_test_helper::online_authenticated_test]`
+
+[rstest](http://docs.rs/rstest) is used under the hood for handling the tests — this way
+it's possible to use [fixtures](https://docs.rs/rstest/latest/rstest/attr.rstest.html#injecting-fixtures) and
+[tests parametrization](https://docs.rs/rstest/latest/rstest/attr.rstest.html#test-parametrized-cases).
 
 Please use those when writing integration tests.
 

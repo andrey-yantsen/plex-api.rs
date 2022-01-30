@@ -55,6 +55,10 @@ pub enum Error {
     OtpRequired,
     #[error("OTP is provided, but no username/password.")]
     UselessOtp,
+    #[error("Connecting to the device is not supported.")]
+    DeviceConnectionNotSupported,
+    #[error("Device doesn't have any exposed connection endpoints.")]
+    DeviceConnectionsIsEmpty,
 }
 
 const PLEX_API_ERROR_CODE_AUTH_OTP_REQUIRED: i32 = 1029;
