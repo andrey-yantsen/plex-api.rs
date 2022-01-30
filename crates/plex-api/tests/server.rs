@@ -56,8 +56,10 @@ mod offline {
 }
 
 mod online {
+    use super::fixtures::online::client::*;
     use super::fixtures::online::server::*;
-    use plex_api::Server;
+    use isahc::{config::Configurable, HttpClient};
+    use plex_api::{Client, ClientBuilder, Server};
 
     #[plex_api_test_helper::online_test_unclaimed_server]
     async fn load_server_unclaimed(#[future] server_unclaimed: Server) {
@@ -69,11 +71,62 @@ mod online {
         let _ = server_claimed.await;
     }
 
+    // Claim/unclaim could take long time due to unknown reasons.
+    async fn get_server_with_longer_timeout(server: Server, client: Client) -> Server {
+        let server_url = server.client().api_url.clone();
+
+        let client = ClientBuilder::from(client)
+            .set_http_client(
+                HttpClient::builder()
+                    .timeout(std::time::Duration::from_secs(60))
+                    .connect_timeout(std::time::Duration::from_secs(30))
+                    .redirect_policy(isahc::config::RedirectPolicy::None)
+                    .expect_continue(isahc::config::ExpectContinue::disabled())
+                    .build()
+                    .expect("failed to create testing http client"),
+            )
+            .build()
+            .expect("failed to build client");
+
+        Server::new(server_url, client)
+            .await
+            .expect("failed to get server")
+    }
+
+    #[allow(unused_attributes)]
+    #[plex_api_test_helper::online_test_claimed_server]
+    #[ignore = "Must be run manually"]
+    async fn claim_server(#[future] server_unclaimed: Server, client_authenticated: Client) {
+        let server =
+            get_server_with_longer_timeout(server_unclaimed.await, client_authenticated).await;
+
+        let myplex = server
+            .myplex()
+            .expect("failed to get MyPlex from the server");
+        let claim_token = myplex
+            .claim_token()
+            .await
+            .expect("failed to get claim token")
+            .to_string();
+
+        server
+            .claim(&claim_token)
+            .await
+            .expect("failed to claim server")
+            .unclaim()
+            .await
+            .expect("failed to unclaim server");
+    }
+
     #[allow(unused_attributes)]
     #[plex_api_test_helper::online_test_claimed_server]
     #[ignore = "Must be run manually"]
     async fn unclaim_server(#[future] server_claimed: Server) {
         let server = server_claimed.await;
-        server.unclaim().await.unwrap();
+        let client = server.client().to_owned();
+
+        let server = get_server_with_longer_timeout(server, client).await;
+
+        server.unclaim().await.expect("failed to unclaim server");
     }
 }

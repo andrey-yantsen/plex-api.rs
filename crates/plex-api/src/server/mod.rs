@@ -77,12 +77,7 @@ impl Server {
     }
 
     pub async fn unclaim(self) -> Result<Self> {
-        let mut response = self
-            .client
-            .delete(SERVER_MYPLEX_ACCOUNT)
-            .body("")?
-            .send()
-            .await?;
+        let mut response = self.client.delete(SERVER_MYPLEX_ACCOUNT).send().await?;
 
         if response.status() == StatusCode::OK {
             response.consume().await?;

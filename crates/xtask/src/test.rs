@@ -108,7 +108,6 @@ impl flags::Test {
         let _ = std::io::stdout().flush();
 
         let server_url = format!("http://localhost:{}/", _plex_node.get_host_port(32400));
-
         let _plex_server = pushenv("PLEX_SERVER_URL", server_url);
 
         let mut features = {
@@ -126,11 +125,18 @@ impl flags::Test {
         let mut test_run_result =
             cmd!("cargo test --workspace --no-fail-fast --features {features}").run();
 
+        // Claim/Unclaim must be executed after all the other tests.
+        // Not including `deny_unknown_fields` feature here to avoid
+        // possible unneeded failures.
         if !claim_token.is_empty() {
-            // Unclaim must be executed after all the other tests.
-            // Not including `deny_unknown_fields` feature here to avoid
-            // possible unneeded failures.
-            let unclaim = cmd!("cargo test --workspace --no-fail-fast --features tests_only_online_authenticated --test online_server unclaim_server -- --include-ignored").run();
+            let unclaim = cmd!("cargo test --workspace --no-fail-fast --features tests_only_online_claimed_server --test server online::unclaim_server -- --include-ignored --exact").run();
+            test_run_result = test_run_result.and(unclaim);
+            let claim = cmd!("cargo test --workspace --no-fail-fast --features tests_only_online_unclaimed_server --test server online::claim_server -- --include-ignored --exact").run();
+            test_run_result = test_run_result.and(claim);
+
+            // Running the `unclaim` once again to remove the freshly claimed
+            // server from the account.
+            let unclaim = cmd!("cargo test --workspace --no-fail-fast --features tests_only_online_unclaimed_server --test server online::unclaim_server -- --include-ignored --exact").run();
             test_run_result = test_run_result.and(unclaim);
         }
 
