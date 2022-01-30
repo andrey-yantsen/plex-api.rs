@@ -6,6 +6,7 @@ status = [
     "Offline tests (windows-latest)",
     "Offline tests (macos-latest)",
     "Test on a real server (anonymous) (latest)",
-    "Test on a real server (authenticated) (latest)",
+    "Test on a real server (authenticated free account) (latest)",
+    "Test on a real server (authenticated plexpass account) (latest)",
 ]
 delete_merged_branches = true
