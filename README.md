@@ -1,5 +1,5 @@
 [![crates](https://img.shields.io/crates/v/plex-api.svg)](https://crates.io/crates/plex-api)
-[![tests status](https://github.com/andrey-yantsen/plex-api.rs/workflows/Test%20everything/badge.svg)](https://github.com/andrey-yantsen/plex-api.rs/actions?query=workflow%3A%22Test+everything%22)
+[![tests status](https://github.com/andrey-yantsen/plex-api.rs/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/andrey-yantsen/plex-api.rs/actions/workflows/test.yml?query=branch%3Amain)
 [![codecov](https://codecov.io/gh/andrey-yantsen/plex-api.rs/branch/main/graph/badge.svg?token=hrpICjrn5q)](https://codecov.io/gh/andrey-yantsen/plex-api.rs)
 
 # Work in progress
