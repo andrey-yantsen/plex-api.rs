@@ -74,12 +74,18 @@ const LIBRARY_AUDIO: [(&str, &str); 9] = [
         "02 - Marmalade.aac",
     ),
     ("Music/System of a Down - Toxicity (1999)", "03 - Metro.aac"),
-    ("System of a Down - Aerials (2002)", "01 - Aerials.aac"),
     (
-        "System of a Down - Aerials (2002)",
+        "Music/System of a Down - Aerials (2002)",
+        "01 - Aerials.aac",
+    ),
+    (
+        "Music/System of a Down - Aerials (2002)",
         "02 - Streamline (album version).aac",
     ),
-    ("System of a Down - Aerials (2002)", "03 - Sugar (live).aac"),
+    (
+        "Music/System of a Down - Aerials (2002)",
+        "03 - Sugar (live).aac",
+    ),
     (
         "Music/Skrillex - Try It Out (2003)",
         "01 - TRY IT OUT (NEON MIX).aac",
