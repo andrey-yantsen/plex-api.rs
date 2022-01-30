@@ -2,10 +2,11 @@ use std::sync::Arc;
 
 use crate::{
     client::Client,
-    media_container::devices::DevicesMediaContainer,
+    media_container::devices::{DevicesMediaContainer, Feature},
     url::{MYPLEX_DEVICES, MYPLEX_RESOURCES},
-    Result,
+    Error, Result,
 };
+use futures::{future::select_ok, FutureExt};
 use http::StatusCode;
 use isahc::AsyncReadResponseExt;
 
@@ -56,17 +57,33 @@ impl DeviceManager {
 
 #[derive(Debug, Clone)]
 pub struct Device<'a> {
-    #[allow(dead_code)]
     inner: crate::media_container::devices::Device,
     client: &'a Client,
 }
 
 impl Device<'_> {
-    pub async fn connect(&self) -> Result<crate::Server> {
+    pub async fn connect(&self) -> Result<DeviceConnection> {
+        if !self.inner.provides.contains(&Feature::Server) {
+            return Err(Error::DeviceConnectionNotSupported);
+        }
+
         if let Some(connections) = &self.inner.connections {
-            crate::Server::new(&connections[0].uri, self.client.to_owned()).await
+            let futures = connections
+                .iter()
+                .map(|connection| {
+                    crate::Server::new(&connection.uri, self.client.to_owned()).boxed()
+                })
+                .collect::<Vec<_>>();
+
+            let (server, _) = select_ok(futures).await?;
+            Ok(DeviceConnection::Server(server))
         } else {
-            Err(crate::Error::UselessOtp)
+            Err(Error::DeviceConnectionsIsEmpty)
         }
     }
+}
+
+#[derive(Debug, Clone)]
+pub enum DeviceConnection {
+    Server(crate::Server),
 }
