@@ -183,8 +183,6 @@ jobs:
     strategy:
       matrix:
         plex_server_version: ${{fromJson(needs.plex_tags.outputs.tags)}}
-    env:
-      X_PLEX_CLIENT_IDENTIFIER: "${{ secrets.X_PLEX_CLIENT_IDENTIFIER }}"
     steps:
       - name: Checkout sources
         uses: actions/checkout@v2
@@ -213,11 +211,15 @@ jobs:
   test_on_real_server_authenticated:
     if: "github.ref == 'refs/heads/main' || github.ref == 'refs/heads/staging'"
     needs: [test_offline, plex_tags]
-    name: Test on a real server (authenticated)
-    runs-on: ubuntu-latest
     strategy:
       matrix:
+        environment:
+          - "Free Plex account"
+          - "Plexpass account"
         plex_server_version: ${{fromJson(needs.plex_tags.outputs.tags)}}
+    environment: "${{ matrix.environment }}"
+    name: Test on a real server (authenticated)
+    runs-on: ubuntu-latest
     env:
       X_PLEX_CLIENT_IDENTIFIER: "${{ secrets.X_PLEX_CLIENT_IDENTIFIER }}"
     steps:
