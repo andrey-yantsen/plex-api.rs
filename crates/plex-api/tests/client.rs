@@ -4,12 +4,12 @@ mod offline {
     use super::fixtures::offline::mock_server;
     use httpmock::{Method::GET, MockServer};
     use isahc::HttpClient;
-    use plex_api::ClientBuilder;
+    use plex_api::HttpClientBuilder;
     use std::time::Duration;
 
     #[plex_api_test_helper::async_offline_test]
     async fn default_client(mock_server: MockServer) {
-        let client = ClientBuilder::new(mock_server.base_url())
+        let client = HttpClientBuilder::new(mock_server.base_url())
             .build()
             .expect("failed to build default client");
 
@@ -48,7 +48,7 @@ mod offline {
 
     #[plex_api_test_helper::async_offline_test]
     async fn customized_client(mock_server: MockServer) {
-        let client = ClientBuilder::new(mock_server.base_url())
+        let client = HttpClientBuilder::new(mock_server.base_url())
             .set_x_plex_token("auth_token".to_owned())
             .set_x_plex_client_identifier("client_id".to_owned())
             .set_x_plex_provides(vec!["provides1".to_owned(), "provides2".to_owned()])
@@ -86,7 +86,7 @@ mod offline {
 
     #[plex_api_test_helper::async_offline_test]
     async fn auth_token_updated_after_build(mock_server: MockServer) {
-        let client = ClientBuilder::new(mock_server.base_url())
+        let client = HttpClientBuilder::new(mock_server.base_url())
             .build()
             .expect("failed to build default client")
             .set_x_plex_token("auth_token".to_owned());
@@ -118,7 +118,7 @@ mod offline {
     async fn custom_http_client(mock_server: MockServer) {
         use isahc::config::Configurable as _;
 
-        let client = ClientBuilder::default()
+        let client = HttpClientBuilder::default()
             .set_http_client(
                 HttpClient::builder()
                     .timeout(Duration::from_secs(1))

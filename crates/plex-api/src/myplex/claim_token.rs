@@ -1,4 +1,4 @@
-use crate::{client::Client, url::MYPLEX_CLAIM_TOKEN_PATH, Error, Result};
+use crate::{http_client::HttpClient, url::MYPLEX_CLAIM_TOKEN_PATH, Error, Result};
 use http::StatusCode;
 use isahc::AsyncReadResponseExt;
 use serde::{Deserialize, Serialize};
@@ -26,7 +26,7 @@ struct ErrorResponse {
 }
 
 impl ClaimToken {
-    pub async fn new(client: &Client) -> Result<Self> {
+    pub async fn new(client: &HttpClient) -> Result<Self> {
         let mut response = client.get(MYPLEX_CLAIM_TOKEN_PATH).send().await?;
         match response.status() {
             StatusCode::OK => {

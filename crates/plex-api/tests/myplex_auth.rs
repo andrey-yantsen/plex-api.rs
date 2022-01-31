@@ -8,11 +8,11 @@ mod offline {
     use plex_api::MyPlex;
     use plex_api::{
         url::{MYPLEX_SIGNIN_PATH, MYPLEX_SIGNOUT_PATH, MYPLEX_USER_INFO_PATH},
-        Client, Error, MyPlexBuilder,
+        Error, HttpClient, MyPlexBuilder,
     };
 
     #[plex_api_test_helper::async_offline_test]
-    async fn signin_free_user(client_anonymous: Mocked<Client>) {
+    async fn signin_free_user(client_anonymous: Mocked<HttpClient>) {
         let (client_anonymous, mock_server) = client_anonymous.split();
 
         let m = mock_server.mock(|when, then| {
@@ -43,7 +43,7 @@ mod offline {
     }
 
     #[plex_api_test_helper::async_offline_test]
-    async fn signin_plexpass_user(client_anonymous: Mocked<Client>) {
+    async fn signin_plexpass_user(client_anonymous: Mocked<HttpClient>) {
         let (client_anonymous, mock_server) = client_anonymous.split();
 
         let m = mock_server.mock(|when, then| {
@@ -74,7 +74,7 @@ mod offline {
     }
 
     #[plex_api_test_helper::async_offline_test]
-    async fn signin_without_required_otp(client_anonymous: Mocked<Client>) {
+    async fn signin_without_required_otp(client_anonymous: Mocked<HttpClient>) {
         let (client_anonymous, mock_server) = client_anonymous.split();
 
         let m = mock_server.mock(|when, then| {
@@ -101,7 +101,7 @@ mod offline {
     }
 
     #[plex_api_test_helper::async_offline_test]
-    async fn signin_with_otp(client_anonymous: Mocked<Client>) {
+    async fn signin_with_otp(client_anonymous: Mocked<HttpClient>) {
         let (client_anonymous, mock_server) = client_anonymous.split();
 
         let m = mock_server.mock(|when, then| {
@@ -140,7 +140,10 @@ mod offline {
     #[case::plexpass_user_managed_guest(
         "tests/files/myplex/api/v2/user/user_info_plexpass_guest.json"
     )]
-    async fn signin_with_token(client_authenticated: Mocked<Client>, #[case] mock_data_file: &str) {
+    async fn signin_with_token(
+        client_authenticated: Mocked<HttpClient>,
+        #[case] mock_data_file: &str,
+    ) {
         let (client_authenticated, mock_server) = client_authenticated.split();
 
         let m = mock_server.mock(|when, then| {
@@ -186,7 +189,7 @@ mod offline {
     }
 
     #[plex_api_test_helper::async_offline_test]
-    async fn signin_failures(client_anonymous: Mocked<Client>) {
+    async fn signin_failures(client_anonymous: Mocked<HttpClient>) {
         let (client_anonymous, _) = client_anonymous.split();
 
         let client2 = client_anonymous.clone();

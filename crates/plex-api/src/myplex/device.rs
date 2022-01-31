@@ -1,7 +1,7 @@
 use std::sync::Arc;
 
 use crate::{
-    client::Client,
+    http_client::HttpClient,
     media_container::devices::{DevicesMediaContainer, Feature},
     url::{MYPLEX_DEVICES, MYPLEX_RESOURCES},
     Error, Result,
@@ -11,11 +11,11 @@ use http::StatusCode;
 use isahc::AsyncReadResponseExt;
 
 pub struct DeviceManager {
-    pub client: Arc<Client>,
+    pub client: Arc<HttpClient>,
 }
 
 impl DeviceManager {
-    pub fn new(client: Arc<Client>) -> Self {
+    pub fn new(client: Arc<HttpClient>) -> Self {
         Self { client }
     }
 
@@ -58,7 +58,7 @@ impl DeviceManager {
 #[derive(Debug, Clone)]
 pub struct Device<'a> {
     inner: crate::media_container::devices::Device,
-    client: &'a Client,
+    client: &'a HttpClient,
 }
 
 impl Device<'_> {

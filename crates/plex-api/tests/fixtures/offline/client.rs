@@ -1,9 +1,9 @@
 use super::{client_builder, Mocked};
-use plex_api::{Client, ClientBuilder};
+use plex_api::{HttpClient, HttpClientBuilder};
 use rstest::fixture;
 
 #[fixture]
-pub fn client_anonymous(client_builder: Mocked<ClientBuilder>) -> Mocked<Client> {
+pub fn client_anonymous(client_builder: Mocked<HttpClientBuilder>) -> Mocked<HttpClient> {
     let (client_builder, mock_server) = client_builder.split();
 
     Mocked::new(
@@ -15,7 +15,7 @@ pub fn client_anonymous(client_builder: Mocked<ClientBuilder>) -> Mocked<Client>
 }
 
 #[fixture]
-pub fn client_authenticated(client_builder: Mocked<ClientBuilder>) -> Mocked<Client> {
+pub fn client_authenticated(client_builder: Mocked<HttpClientBuilder>) -> Mocked<HttpClient> {
     let (client_builder, mock_server) = client_builder.split();
 
     Mocked::new(

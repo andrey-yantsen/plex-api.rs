@@ -3,11 +3,11 @@ use super::{
     Mocked,
 };
 use httpmock::Method::GET;
-use plex_api::{url::SERVER_MEDIA_PROVIDERS, Client, Server};
+use plex_api::{url::SERVER_MEDIA_PROVIDERS, HttpClient, Server};
 use rstest::fixture;
 
 #[fixture]
-pub async fn server_anonymous(client_anonymous: Mocked<Client>) -> Mocked<Server> {
+pub async fn server_anonymous(client_anonymous: Mocked<HttpClient>) -> Mocked<Server> {
     let (client_anonymous, mock_server) = client_anonymous.split();
 
     let mut m = mock_server.mock(|when, then| {
@@ -27,7 +27,7 @@ pub async fn server_anonymous(client_anonymous: Mocked<Client>) -> Mocked<Server
 }
 
 #[fixture]
-pub async fn server_authenticated(client_authenticated: Mocked<Client>) -> Mocked<Server> {
+pub async fn server_authenticated(client_authenticated: Mocked<HttpClient>) -> Mocked<Server> {
     let (client_authenticated, mock_server) = client_authenticated.split();
 
     let mut m = mock_server.mock(|when, then| {

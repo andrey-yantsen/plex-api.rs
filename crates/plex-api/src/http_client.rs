@@ -4,7 +4,7 @@ use http::{uri::PathAndQuery, Uri};
 use isahc::{
     config::{Configurable, RedirectPolicy},
     http::request::Builder,
-    AsyncBody, HttpClient, Request as HttpRequest, Response as HttpResponse,
+    AsyncBody, HttpClient as IsahcHttpClient, Request as HttpRequest, Response as HttpResponse,
 };
 use std::time::Duration;
 use uuid::Uuid;
@@ -13,10 +13,10 @@ const DEFAULT_TIMEOUT: Duration = Duration::from_secs(30);
 const DEFAULT_CONNECTIONT_TIMEOUT: Duration = Duration::from_secs(5);
 
 #[derive(Debug, Clone)]
-pub struct Client {
+pub struct HttpClient {
     pub api_url: Uri,
 
-    pub http_client: HttpClient,
+    pub http_client: IsahcHttpClient,
 
     /// `X-Plex-Provides` header value. Comma-separated list.
     ///
@@ -71,7 +71,7 @@ pub struct Client {
     pub x_plex_sync_version: String,
 }
 
-impl Client {
+impl HttpClient {
     fn prepare_request(&self) -> Builder {
         let mut request = HttpRequest::builder()
             .header("X-Plex-Provides", &self.x_plex_provides)
@@ -166,7 +166,7 @@ where
     PathAndQuery: TryFrom<P>,
     <PathAndQuery as TryFrom<P>>::Error: Into<http::Error>,
 {
-    http_client: &'a HttpClient,
+    http_client: &'a IsahcHttpClient,
     base_url: Uri,
     path_and_query: P,
     request_builder: Builder,
@@ -220,7 +220,7 @@ where
 }
 
 pub struct Request<'a, T> {
-    http_client: &'a HttpClient,
+    http_client: &'a IsahcHttpClient,
     request: HttpRequest<T>,
 }
 
@@ -233,11 +233,11 @@ where
     }
 }
 
-pub struct ClientBuilder {
-    client: Result<Client>,
+pub struct HttpClientBuilder {
+    client: Result<HttpClient>,
 }
 
-impl Default for ClientBuilder {
+impl Default for HttpClientBuilder {
     fn default() -> Self {
         let sys_platform = sys_info::os_type().unwrap_or_else(|_| "unknown".to_string());
         let sys_version = sys_info::os_release().unwrap_or_else(|_| "unknown".to_string());
@@ -245,9 +245,9 @@ impl Default for ClientBuilder {
 
         let random_uuid = Uuid::new_v4();
 
-        let client = Client {
+        let client = HttpClient {
             api_url: Uri::from_static(MYPLEX_DEFAULT_API_URL),
-            http_client: HttpClient::builder()
+            http_client: IsahcHttpClient::builder()
                 .timeout(DEFAULT_TIMEOUT)
                 .connect_timeout(DEFAULT_CONNECTIONT_TIMEOUT)
                 .redirect_policy(RedirectPolicy::None)
@@ -273,12 +273,12 @@ impl Default for ClientBuilder {
     }
 }
 
-impl ClientBuilder {
-    pub fn build(self) -> Result<Client> {
+impl HttpClientBuilder {
+    pub fn build(self) -> Result<HttpClient> {
         self.client
     }
 
-    pub fn set_http_client(self, http_client: HttpClient) -> Self {
+    pub fn set_http_client(self, http_client: IsahcHttpClient) -> Self {
         Self {
             client: self.client.map(move |mut client| {
                 client.http_client = http_client;
@@ -287,7 +287,7 @@ impl ClientBuilder {
         }
     }
 
-    pub fn from(client: Client) -> Self {
+    pub fn from(client: HttpClient) -> Self {
         Self { client: Ok(client) }
     }
 

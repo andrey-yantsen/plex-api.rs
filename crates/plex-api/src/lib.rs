@@ -1,15 +1,15 @@
 //! TODO
 //!
-mod client;
 mod error;
+mod http_client;
 pub(crate) mod media_container;
 mod myplex;
 mod server;
 pub mod url;
 
-pub use client::Client;
-pub use client::ClientBuilder;
 pub use error::Error;
+pub use http_client::HttpClient;
+pub use http_client::HttpClientBuilder;
 pub use myplex::device;
 pub use myplex::MyPlex;
 pub use myplex::MyPlexBuilder;

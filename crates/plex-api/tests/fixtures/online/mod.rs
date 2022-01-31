@@ -2,12 +2,12 @@ pub mod client;
 pub mod server;
 
 use isahc::{config::Configurable, HttpClient};
-use plex_api::ClientBuilder;
+use plex_api::HttpClientBuilder;
 use rstest::fixture;
 
 #[fixture]
-pub fn client_builder() -> ClientBuilder {
-    let mut builder = ClientBuilder::default().set_http_client(
+pub fn client_builder() -> HttpClientBuilder {
+    let mut builder = HttpClientBuilder::default().set_http_client(
         HttpClient::builder()
             .timeout(std::time::Duration::from_secs(10))
             .connect_timeout(std::time::Duration::from_secs(2))

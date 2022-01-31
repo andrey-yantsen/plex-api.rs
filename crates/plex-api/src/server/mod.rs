@@ -1,9 +1,9 @@
 use crate::{
-    client::Client,
+    http_client::HttpClient,
     media_container::{server::Server as ServerMediaContainer, MediaContainerWrapper},
     myplex::MyPlex,
     url::{SERVER_MEDIA_PROVIDERS, SERVER_MYPLEX_ACCOUNT, SERVER_MYPLEX_CLAIM},
-    ClientBuilder, Result,
+    HttpClientBuilder, Result,
 };
 use core::convert::TryFrom;
 use http::{StatusCode, Uri};
@@ -13,13 +13,13 @@ use std::sync::Arc;
 #[derive(Debug, Clone)]
 pub struct Server {
     #[allow(dead_code)]
-    client: Arc<Client>,
+    client: Arc<HttpClient>,
     myplex_api_url: Uri,
     pub media_container: ServerMediaContainer,
 }
 
 impl Server {
-    async fn build(client: Arc<Client>, myplex_api_url: Uri) -> Result<Self> {
+    async fn build(client: Arc<HttpClient>, myplex_api_url: Uri) -> Result<Self> {
         let mut response = client
             .get(SERVER_MEDIA_PROVIDERS)
             .header("Accept", "application/json")
@@ -41,14 +41,14 @@ impl Server {
         }
     }
 
-    pub async fn new<U>(url: U, client: Client) -> Result<Self>
+    pub async fn new<U>(url: U, client: HttpClient) -> Result<Self>
     where
         Uri: TryFrom<U>,
         <Uri as TryFrom<U>>::Error: Into<http::Error>,
     {
         let myplex_api_url = client.api_url.clone();
         Self::build(
-            Arc::new(ClientBuilder::from(client).set_api_url(url).build()?),
+            Arc::new(HttpClientBuilder::from(client).set_api_url(url).build()?),
             myplex_api_url,
         )
         .await
@@ -95,13 +95,13 @@ impl Server {
         <Uri as TryFrom<U>>::Error: Into<http::Error>,
     {
         MyPlex::new(
-            ClientBuilder::from(self.client.as_ref().to_owned())
+            HttpClientBuilder::from(self.client.as_ref().to_owned())
                 .set_api_url(api_url)
                 .build()?,
         )
     }
 
-    pub fn client(&self) -> &Client {
+    pub fn client(&self) -> &HttpClient {
         &self.client
     }
 }

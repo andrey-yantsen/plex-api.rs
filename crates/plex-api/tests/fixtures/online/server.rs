@@ -1,8 +1,8 @@
 use super::client::{client_anonymous, client_authenticated};
-use plex_api::{Client, Server};
+use plex_api::{HttpClient, Server};
 use rstest::fixture;
 
-async fn get_server(client: Client) -> Server {
+async fn get_server(client: HttpClient) -> Server {
     let url = std::env::var("PLEX_SERVER_URL").unwrap_or_else(|_| "".to_owned());
     if url.is_empty() {
         panic!("PLEX_SERVER_URL must be set!");
@@ -14,11 +14,11 @@ async fn get_server(client: Client) -> Server {
 }
 
 #[fixture]
-pub async fn server_unclaimed(client_anonymous: Client) -> Server {
+pub async fn server_unclaimed(client_anonymous: HttpClient) -> Server {
     get_server(client_anonymous).await
 }
 
 #[fixture]
-pub async fn server_claimed(client_authenticated: Client) -> Server {
+pub async fn server_claimed(client_authenticated: HttpClient) -> Server {
     get_server(client_authenticated).await
 }

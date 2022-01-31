@@ -5,14 +5,16 @@ mod offline {
     use super::fixtures::offline::server::*;
     use super::fixtures::offline::Mocked;
     use httpmock::Method::GET;
-    use plex_api::url::SERVER_MEDIA_PROVIDERS;
-    use plex_api::{url::MYPLEX_USER_INFO_PATH, Client, Server};
+    use plex_api::{
+        url::{MYPLEX_USER_INFO_PATH, SERVER_MEDIA_PROVIDERS},
+        HttpClient, Server,
+    };
 
     #[plex_api_test_helper::async_offline_test]
     #[case::free("tests/files/server/media/providers_free.json")]
     #[case::plexpass("tests/files/server/media/providers_plexpass.json")]
     #[case::unclaimed("tests/files/server/media/providers_unclaimed.json")]
-    async fn load_server(client_authenticated: Mocked<Client>, #[case] mock_file: &str) {
+    async fn load_server(client_authenticated: Mocked<HttpClient>, #[case] mock_file: &str) {
         let (client_authenticated, mock_server) = client_authenticated.split();
 
         let m = mock_server.mock(|when, then| {
@@ -58,8 +60,8 @@ mod offline {
 mod online {
     use super::fixtures::online::client::*;
     use super::fixtures::online::server::*;
-    use isahc::{config::Configurable, HttpClient};
-    use plex_api::{Client, ClientBuilder, Server};
+    use isahc::{config::Configurable, HttpClient as IsahcHttpClient};
+    use plex_api::{HttpClient, HttpClientBuilder, Server};
 
     #[plex_api_test_helper::online_test_unclaimed_server]
     async fn load_server_unclaimed(#[future] server_unclaimed: Server) {
@@ -72,12 +74,12 @@ mod online {
     }
 
     // Claim/unclaim could take long time due to unknown reasons.
-    async fn get_server_with_longer_timeout(server: Server, client: Client) -> Server {
+    async fn get_server_with_longer_timeout(server: Server, client: HttpClient) -> Server {
         let server_url = server.client().api_url.clone();
 
-        let client = ClientBuilder::from(client)
+        let client = HttpClientBuilder::from(client)
             .set_http_client(
-                HttpClient::builder()
+                IsahcHttpClient::builder()
                     .timeout(std::time::Duration::from_secs(60))
                     .connect_timeout(std::time::Duration::from_secs(30))
                     .redirect_policy(isahc::config::RedirectPolicy::None)
@@ -96,7 +98,7 @@ mod online {
     #[allow(unused_attributes)]
     #[plex_api_test_helper::online_test_claimed_server]
     #[ignore = "Must be run manually"]
-    async fn claim_server(#[future] server_unclaimed: Server, client_authenticated: Client) {
+    async fn claim_server(#[future] server_unclaimed: Server, client_authenticated: HttpClient) {
         let server =
             get_server_with_longer_timeout(server_unclaimed.await, client_authenticated).await;
 

@@ -4,7 +4,7 @@ pub mod server;
 
 use httpmock::MockServer;
 use isahc::{config::Configurable, HttpClient};
-use plex_api::ClientBuilder;
+use plex_api::HttpClientBuilder;
 use rstest::fixture;
 use std::ops::Deref;
 
@@ -37,8 +37,8 @@ pub fn mock_server() -> MockServer {
 }
 
 #[fixture]
-pub fn client_builder(mock_server: MockServer) -> Mocked<ClientBuilder> {
-    let client_builder = ClientBuilder::new(mock_server.base_url()).set_http_client(
+pub fn client_builder(mock_server: MockServer) -> Mocked<HttpClientBuilder> {
+    let client_builder = HttpClientBuilder::new(mock_server.base_url()).set_http_client(
         HttpClient::builder()
             // We're doing everything locally and using static mocks, no reasons to have big timeouts
             .timeout(std::time::Duration::from_secs(2))

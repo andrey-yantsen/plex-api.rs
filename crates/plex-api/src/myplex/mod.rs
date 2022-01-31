@@ -8,7 +8,7 @@ use self::claim_token::ClaimToken;
 use self::device::DeviceManager;
 use self::privacy::Privacy;
 use self::webhook::WebhookManager;
-use crate::client::{Client, ClientBuilder};
+use crate::http_client::{HttpClient, HttpClientBuilder};
 use crate::media_container::server::Feature;
 use crate::url::{MYPLEX_SIGNIN_PATH, MYPLEX_SIGNOUT_PATH, MYPLEX_USER_INFO_PATH};
 use crate::{Error, Result, Server};
@@ -18,12 +18,12 @@ use std::sync::Arc;
 
 #[derive(Debug, Clone)]
 pub struct MyPlex {
-    client: Arc<Client>,
+    client: Arc<HttpClient>,
     pub available_features: Option<Vec<Feature>>,
 }
 
 impl MyPlex {
-    pub fn new(client: Client) -> Result<Self> {
+    pub fn new(client: HttpClient) -> Result<Self> {
         if !client.is_authenticated() {
             return Err(Error::ClientNotAuthenticated);
         }
@@ -37,7 +37,7 @@ impl MyPlex {
     async fn login_internal(
         username: &str,
         password: &str,
-        client: Client,
+        client: HttpClient,
         extra_params: &[(&str, &str)],
     ) -> Result<Self> {
         if client.is_authenticated() {
@@ -63,7 +63,7 @@ impl MyPlex {
         Self::build_from_signin_response(client, response).await
     }
 
-    async fn login(username: &str, password: &str, client: Client) -> Result<Self> {
+    async fn login(username: &str, password: &str, client: HttpClient) -> Result<Self> {
         Self::login_internal(username, password, client, &[]).await
     }
 
@@ -71,7 +71,7 @@ impl MyPlex {
         username: &str,
         password: &str,
         verification_code: &str,
-        client: Client,
+        client: HttpClient,
     ) -> Result<Self> {
         Self::login_internal(
             username,
@@ -95,7 +95,7 @@ impl MyPlex {
     }
 
     async fn build_from_signin_response(
-        client: Client,
+        client: HttpClient,
         mut response: HttpResponse<AsyncBody>,
     ) -> Result<Self> {
         match response.status() {
@@ -110,7 +110,7 @@ impl MyPlex {
         }
     }
 
-    pub fn client(&self) -> &Client {
+    pub fn client(&self) -> &HttpClient {
         &self.client
     }
 
@@ -162,7 +162,7 @@ impl MyPlex {
 
 #[derive(Debug, Clone)]
 pub struct MyPlexBuilder<'a> {
-    client: Client,
+    client: HttpClient,
     token: Option<&'a str>,
     username: Option<&'a str>,
     password: Option<&'a str>,
@@ -173,7 +173,7 @@ pub struct MyPlexBuilder<'a> {
 impl<'a> Default for MyPlexBuilder<'a> {
     fn default() -> Self {
         Self {
-            client: ClientBuilder::default()
+            client: HttpClientBuilder::default()
                 .build()
                 .expect("failed to build default client"),
             token: None,
@@ -186,7 +186,7 @@ impl<'a> Default for MyPlexBuilder<'a> {
 }
 
 impl MyPlexBuilder<'_> {
-    pub fn set_client(self, client: Client) -> Self {
+    pub fn set_client(self, client: HttpClient) -> Self {
         Self {
             client,
             token: self.token,
