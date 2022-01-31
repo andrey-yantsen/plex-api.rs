@@ -205,7 +205,7 @@ jobs:
           args: "--package xtask -- test --online --docker-tag '${{ matrix.plex_server_version }}' --deny-unknown-fields"
 
   test_on_real_server_authenticated_free:
-    if: "github.ref == 'refs/heads/main' || github.ref == 'refs/heads/staging'"
+    if: "github.ref == 'refs/heads/main' || github.ref == 'refs/heads/staging' || github.ref == 'refs/heads/trying'"
     needs: [test_offline, plex_tags]
     strategy:
       fail-fast: false
@@ -234,7 +234,7 @@ jobs:
           args: "--package xtask -- test --online --docker-tag '${{ matrix.plex_server_version }}' --token '${{ secrets.PLEX_API_AUTH_TOKEN_FREE }}' --deny-unknown-fields"
 
   test_on_real_server_authenticated_plexpass:
-    if: "github.ref == 'refs/heads/main' || github.ref == 'refs/heads/staging'"
+    if: "github.ref == 'refs/heads/main' || github.ref == 'refs/heads/staging' || github.ref == 'refs/heads/trying'"
     needs: [test_offline, plex_tags]
     strategy:
       fail-fast: false
