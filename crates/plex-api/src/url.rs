@@ -12,3 +12,5 @@ pub const MYPLEX_RESOURCES: &str = "/api/resources";
 pub const SERVER_MEDIA_PROVIDERS: &str = "/media/providers";
 pub const SERVER_MYPLEX_ACCOUNT: &str = "/myplex/account";
 pub const SERVER_MYPLEX_CLAIM: &str = "/myplex/claim";
+
+pub const CLIENT_RESOURCES: &str = "/resources";

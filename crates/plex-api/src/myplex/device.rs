@@ -4,7 +4,7 @@ use crate::{
     http_client::HttpClient,
     media_container::devices::{DevicesMediaContainer, Feature},
     url::{MYPLEX_DEVICES, MYPLEX_RESOURCES},
-    Error, Result,
+    Error, Player, Result, Server,
 };
 use futures::{future::select_ok, FutureExt};
 use http::StatusCode;
@@ -63,20 +63,34 @@ pub struct Device<'a> {
 
 impl Device<'_> {
     pub async fn connect(&self) -> Result<DeviceConnection> {
-        if !self.inner.provides.contains(&Feature::Server) {
+        if !self.inner.provides.contains(&Feature::Server)
+            && !self.inner.provides.contains(&Feature::Player)
+        {
             return Err(Error::DeviceConnectionNotSupported);
         }
 
         if let Some(connections) = &self.inner.connections {
-            let futures = connections
-                .iter()
-                .map(|connection| {
-                    crate::Server::new(&connection.uri, self.client.to_owned()).boxed()
-                })
-                .collect::<Vec<_>>();
+            if self.inner.provides.contains(&Feature::Server) {
+                let futures = connections
+                    .iter()
+                    .map(|connection| {
+                        crate::Server::new(&connection.uri, self.client.to_owned()).boxed()
+                    })
+                    .collect::<Vec<_>>();
 
-            let (server, _) = select_ok(futures).await?;
-            Ok(DeviceConnection::Server(server))
+                let (server, _) = select_ok(futures).await?;
+                Ok(DeviceConnection::Server(Box::new(server)))
+            } else {
+                let futures = connections
+                    .iter()
+                    .map(|connection| {
+                        crate::Player::new(&connection.uri, self.client.to_owned()).boxed()
+                    })
+                    .collect::<Vec<_>>();
+
+                let (player, _) = select_ok(futures).await?;
+                Ok(DeviceConnection::Player(Box::new(player)))
+            }
         } else {
             Err(Error::DeviceConnectionsIsEmpty)
         }
@@ -84,8 +98,7 @@ impl Device<'_> {
 }
 
 #[derive(Debug, Clone)]
-#[allow(clippy::large_enum_variant)]
 pub enum DeviceConnection {
-    Server(crate::Server),
-    Client, // TODO
+    Server(Box<Server>),
+    Player(Box<Player>),
 }

@@ -1,4 +1,5 @@
 pub(crate) mod devices;
+pub(crate) mod player;
 pub(crate) mod server;
 pub(crate) mod users;
 
