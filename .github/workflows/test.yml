@@ -124,7 +124,7 @@ jobs:
       - id: set-tags
         run: |
           cargo build --package xtask
-          tags=$(cargo run -q --package xtask -- get-last-plex-tags)
+          tags=$(cargo run -q --package xtask -- get-last-plex-tags --skip-tag latest --skip-tag beta --skip-tag plexpass)
           echo "::set-output name=tags::$tags"
 
   lints:
