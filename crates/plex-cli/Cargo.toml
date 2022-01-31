@@ -12,7 +12,7 @@ independent = true
 [dependencies]
 plex-api = { path = "../plex-api" }
 tracing = "^0.1.29"
-tracing-subscriber = "^0.3.4"
+tracing-subscriber = "^0.3.7"
 tokio = { version = "^1.16", features = ["macros", "rt-multi-thread", "time"] }
 anyhow = "^1.0"
 xflags = "^0.2"
