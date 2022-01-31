@@ -71,8 +71,7 @@ impl flags::GetLastPlexTags {
             let tmp = v.clone();
             match v {
                 SemverOrString::Str(_) => ret.push(tag),
-                SemverOrString::Semver(s)
-                    if matches!(previous_seen_version, SemverOrString::Str(_)) =>
+                SemverOrString::Semver(s) if matches!(previous_seen_version, SemverOrString::Str(v) if !v.is_empty()) =>
                 {
                     next_min_invalid_version =
                         semver::Version::new(s.major, s.minor - u64::from(jump), 0);
