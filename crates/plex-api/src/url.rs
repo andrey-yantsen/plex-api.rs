@@ -8,6 +8,7 @@ pub const MYPLEX_PRIVACY_PATH: &str = "/api/v2/user/privacy";
 pub const MYPLEX_WEBHOOKS_PATH: &str = "/api/v2/user/webhooks";
 pub const MYPLEX_DEVICES: &str = "/devices.xml";
 pub const MYPLEX_RESOURCES: &str = "/api/resources";
+pub const MYPLEX_LINK: &str = "/api/v2/pins/link.json";
 
 pub const SERVER_MEDIA_PROVIDERS: &str = "/media/providers";
 pub const SERVER_MYPLEX_ACCOUNT: &str = "/myplex/account";

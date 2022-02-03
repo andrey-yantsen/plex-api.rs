@@ -5,6 +5,7 @@ mod offline {
     use super::fixtures::offline::Mocked;
     use httpmock::Method::GET;
     use httpmock::Method::PUT;
+    use plex_api::url::MYPLEX_LINK;
     use plex_api::Error;
     use plex_api::{
         url::{MYPLEX_CLAIM_TOKEN_PATH, MYPLEX_PRIVACY_PATH},
@@ -153,5 +154,35 @@ mod offline {
             ),
             "Unexpected error returned"
         );
+    }
+
+    #[plex_api_test_helper::async_offline_test]
+    async fn link(#[future] myplex: Mocked<MyPlex>) {
+        let myplex = myplex.await;
+        let (myplex, mock_server) = myplex.split();
+
+        let mut mock = mock_server.mock(|when, then| {
+            when.method(PUT)
+                .path(MYPLEX_LINK)
+                .x_www_form_urlencoded_tuple("code", "abcd");
+            then.status(404)
+                .header("content-type", "text/json")
+                .body(r#"{"errors":[{"code": 1020, "message": "Code not found or expired"}]}"#);
+        });
+
+        assert!(myplex.link("abcd").await.is_err());
+        mock.assert();
+        mock.delete();
+
+        let mut mock = mock_server.mock(|when, then| {
+            when.method(PUT)
+                .path(MYPLEX_LINK)
+                .x_www_form_urlencoded_tuple("code", "code");
+            then.status(204);
+        });
+
+        myplex.link("code").await.expect("failed to link");
+        mock.assert();
+        mock.delete();
     }
 }

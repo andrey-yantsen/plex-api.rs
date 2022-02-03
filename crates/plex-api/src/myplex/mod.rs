@@ -10,7 +10,7 @@ use self::privacy::Privacy;
 use self::webhook::WebhookManager;
 use crate::http_client::{HttpClient, HttpClientBuilder};
 use crate::media_container::server::Feature;
-use crate::url::{MYPLEX_SIGNIN_PATH, MYPLEX_SIGNOUT_PATH, MYPLEX_USER_INFO_PATH};
+use crate::url::{MYPLEX_LINK, MYPLEX_SIGNIN_PATH, MYPLEX_SIGNOUT_PATH, MYPLEX_USER_INFO_PATH};
 use crate::{Error, Result, Server};
 use http::StatusCode;
 use isahc::{AsyncBody, AsyncReadResponseExt, Response as HttpResponse};
@@ -141,6 +141,21 @@ impl MyPlex {
 
     pub fn device_manager(&self) -> DeviceManager {
         DeviceManager::new(self.client.clone())
+    }
+
+    pub async fn link(&self, code: &str) -> Result {
+        let response = self
+            .client
+            .put(MYPLEX_LINK)
+            .form(&[("code", code)])?
+            .send()
+            .await?;
+
+        if response.status() == StatusCode::NO_CONTENT {
+            Ok(())
+        } else {
+            Err(Error::from_response(response).await)
+        }
     }
 
     /// Sign out of your account. It's highly recommended to call this method when you're done using the API.
