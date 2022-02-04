@@ -7,6 +7,7 @@ mod myplex;
 mod player;
 mod server;
 pub mod url;
+pub mod webhook;
 
 pub use error::Error;
 pub use http_client::HttpClient;
