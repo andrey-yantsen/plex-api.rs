@@ -24,8 +24,8 @@ jobs:
       - name: Run tests
         uses: actions-rs/cargo@v1
         with:
-          command: test
-          args: "--all"
+          command: run
+          args: "--package xtask -- test --offline"
   cargo_publish:
     needs: test_offline
     name: Publish to cargo
