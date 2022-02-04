@@ -1,5 +1,4 @@
-use serde::Deserialize;
-use serde_aux::field_attributes::deserialize_bool_from_anything;
+use serde::{Deserialize, Deserializer};
 use serde_repr::Deserialize_repr;
 use std::collections::HashMap;
 use time::OffsetDateTime;
@@ -41,9 +40,9 @@ pub enum AutoSelectSubtitleMode {
 pub struct Profile {
     pub auto_select_audio: bool,
     pub auto_select_subtitle: AutoSelectSubtitleMode,
-    #[serde(deserialize_with = "deserialize_bool_from_anything")]
+    #[serde(deserialize_with = "bool_from_int")]
     pub default_subtitle_accessibility: bool,
-    #[serde(deserialize_with = "deserialize_bool_from_anything")]
+    #[serde(deserialize_with = "bool_from_int")]
     pub default_subtitle_forced: bool,
     pub default_audio_language: Option<String>,
     pub default_subtitle_language: Option<String>,
@@ -227,4 +226,20 @@ pub enum RestrictionProfile {
     #[cfg(not(feature = "tests_deny_unknown_fields"))]
     #[serde(other)]
     Unknown,
+}
+
+fn bool_from_int<'de, D>(deserializer: D) -> Result<bool, D::Error>
+where
+    D: Deserializer<'de>,
+{
+    use serde::de::{self, Unexpected};
+
+    match u8::deserialize(deserializer)? {
+        0 => Ok(false),
+        1 => Ok(true),
+        other => Err(de::Error::invalid_value(
+            Unexpected::Unsigned(other as u64),
+            &"zero or one",
+        )),
+    }
 }

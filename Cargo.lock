@@ -1318,7 +1318,6 @@ dependencies = [
  "quick-xml",
  "rstest",
  "serde",
- "serde-aux",
  "serde_json",
  "serde_repr",
  "serde_urlencoded",
@@ -1589,17 +1588,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ce31e24b01e1e524df96f1c2fdd054405f8d7376249a5110886fb4b658484789"
 dependencies = [
  "serde_derive",
-]
-
-[[package]]
-name = "serde-aux"
-version = "2.3.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "907c320ef8f45ce134b28ca9567ec58ec0d51dcae4e1ffe7ee0cc15517243810"
-dependencies = [
- "chrono",
- "serde",
- "serde_json",
 ]
 
 [[package]]
