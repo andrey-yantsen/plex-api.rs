@@ -7,7 +7,7 @@ edition = "2018"
 description = "Library for communication with Plex server. Work in progress, not ready for any use. See github for details."
 license = "MIT/Apache-2.0"
 repository = "https://github.com/andrey-yantsen/plex-api.rs"
-readme = "../README.md"
+readme = "../../README.md"
 rust-version = "1.53.0"
 
 [dependencies]
