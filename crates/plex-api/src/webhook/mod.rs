@@ -54,33 +54,34 @@ pub struct Player {
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct Metadata {
-    pub library_section_type: String,
-    pub key: String,
-    pub parent_key: String,
-    pub grandparent_key: String,
-    pub rating_key: String,
-    pub parent_rating_key: String,
-    pub grandparent_rating_key: String,
-    pub guid: String,
-    #[serde(rename = "librarySectionID")]
-    pub library_section_id: u32,
-    pub r#type: String,
     pub title: String,
-    pub parent_title: String,
-    pub grandparent_title: String,
-    pub summary: String,
-    pub index: u32,
-    pub parent_index: u32,
-    pub rating_count: u64,
-    pub thumb: String,
-    pub parent_thumb: String,
-    pub grandparent_thumb: String,
-    pub art: String,
-    pub grandparent_art: String,
     #[serde(with = "time::serde::timestamp")]
     pub added_at: OffsetDateTime,
-    #[serde(with = "time::serde::timestamp")]
-    pub updated_at: OffsetDateTime,
+
+    pub library_section_type: Option<String>,
+    pub key: Option<String>,
+    pub parent_key: Option<String>,
+    pub grandparent_key: Option<String>,
+    pub rating_key: Option<String>,
+    pub parent_rating_key: Option<String>,
+    pub grandparent_rating_key: Option<String>,
+    pub guid: Option<String>,
+    #[serde(rename = "librarySectionID")]
+    pub library_section_id: Option<u32>,
+    pub r#type: Option<String>,
+    pub parent_title: Option<String>,
+    pub grandparent_title: Option<String>,
+    pub summary: Option<String>,
+    pub index: Option<u32>,
+    pub parent_index: Option<u32>,
+    pub rating_count: Option<u64>,
+    pub thumb: Option<String>,
+    pub parent_thumb: Option<String>,
+    pub grandparent_thumb: Option<String>,
+    pub art: Option<String>,
+    pub grandparent_art: Option<String>,
+    #[serde(with = "time::serde::timestamp::option")]
+    pub updated_at: Option<OffsetDateTime>,
 }
 
 /// Event type as described in the [Plex documentation](https://support.plex.tv/articles/115002267687-webhooks/).
