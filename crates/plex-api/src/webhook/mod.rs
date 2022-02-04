@@ -8,7 +8,7 @@ use serde::{Deserialize, Serialize};
 use time::OffsetDateTime;
 
 #[derive(Deserialize, Debug)]
-#[cfg_attr(feature = "deny_unknown_fields", serde(deny_unknown_fields))]
+#[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 pub struct Webhook {
     pub event: Event,
     pub user: bool,
@@ -24,7 +24,7 @@ pub struct Webhook {
 }
 
 #[derive(Deserialize, Debug)]
-#[cfg_attr(feature = "deny_unknown_fields", serde(deny_unknown_fields))]
+#[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 pub struct Account {
     pub id: u64,
     #[serde(with = "http_serde::uri")]
@@ -33,14 +33,14 @@ pub struct Account {
 }
 
 #[derive(Deserialize, Debug)]
-#[cfg_attr(feature = "deny_unknown_fields", serde(deny_unknown_fields))]
+#[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 pub struct Server {
     pub title: String,
     pub uuid: String,
 }
 
 #[derive(Deserialize, Debug)]
-#[cfg_attr(feature = "deny_unknown_fields", serde(deny_unknown_fields))]
+#[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct Player {
     pub local: bool,
@@ -51,7 +51,7 @@ pub struct Player {
 
 // TODO: combine with the regular metadata struct when we get one
 #[derive(Deserialize, Debug)]
-#[cfg_attr(feature = "deny_unknown_fields", serde(deny_unknown_fields))]
+#[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct Metadata {
     pub library_section_type: String,
@@ -130,7 +130,7 @@ pub enum Event {
     #[serde(rename = "playback.started")]
     PlaybackStarted,
 
-    #[cfg(not(feature = "deny_unknown_fields"))]
+    #[cfg(not(feature = "tests_deny_unknown_fields"))]
     #[serde(other)]
     Unknown,
 }

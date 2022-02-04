@@ -40,7 +40,7 @@ default-features = false
 features = ["precommit-hook", "run-cargo-test", "run-cargo-clippy", "run-cargo-fmt"]
 
 [features]
-deny_unknown_fields = []
+tests_deny_unknown_fields = []
 tests_only_online = []
 tests_only_online_unclaimed_server = ["tests_only_online"]
 tests_only_online_claimed_server = ["tests_only_online"]

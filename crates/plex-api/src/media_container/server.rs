@@ -3,7 +3,7 @@ use serde_with::{rust::StringWithSeparator, CommaSeparator};
 use strum::EnumString;
 
 #[derive(Debug, Deserialize, Clone)]
-#[cfg_attr(feature = "deny_unknown_fields", serde(deny_unknown_fields))]
+#[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct Server {
     pub size: u32,
@@ -69,7 +69,7 @@ pub enum Diagnostics {
     Logs,
     Databases,
     StreamingLogs,
-    #[cfg(not(feature = "deny_unknown_fields"))]
+    #[cfg(not(feature = "tests_deny_unknown_fields"))]
     #[strum(default)]
     UnknownValue(String),
 }
@@ -487,10 +487,10 @@ pub enum Feature {
         serialize = "e7cea823-02e5-48c4-a501-d37b82bf132f"
     )]
     StrangeUuid,
-    #[cfg(not(feature = "deny_unknown_fields"))]
+    #[cfg(not(feature = "tests_deny_unknown_fields"))]
     #[strum(default)]
     UnknownValue(String),
-    #[cfg(not(feature = "deny_unknown_fields"))]
+    #[cfg(not(feature = "tests_deny_unknown_fields"))]
     #[serde(other)]
     UnknownValue2,
 }
@@ -502,7 +502,7 @@ pub enum MappingState {
     Wating,
     Mapped,
     Failed,
-    #[cfg(not(feature = "deny_unknown_fields"))]
+    #[cfg(not(feature = "tests_deny_unknown_fields"))]
     #[serde(other)]
     UnknownValue,
 }
@@ -520,7 +520,7 @@ pub enum MappingError {
     DoubleNat,
     #[serde(rename = "jumboframes")]
     JumboFrames,
-    #[cfg(not(feature = "deny_unknown_fields"))]
+    #[cfg(not(feature = "tests_deny_unknown_fields"))]
     #[serde(other)]
     UnknownValue,
 }
@@ -532,7 +532,7 @@ pub enum MyPlexSignInState {
     None,
     Invalid,
     Ok,
-    #[cfg(not(feature = "deny_unknown_fields"))]
+    #[cfg(not(feature = "tests_deny_unknown_fields"))]
     #[serde(other)]
     UnknownValue,
 }

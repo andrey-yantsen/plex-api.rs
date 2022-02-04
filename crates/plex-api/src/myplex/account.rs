@@ -5,7 +5,7 @@ use std::collections::HashMap;
 use time::OffsetDateTime;
 
 #[derive(Deserialize, Debug)]
-#[cfg_attr(feature = "deny_unknown_fields", serde(deny_unknown_fields))]
+#[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct SubscriptionSummary {
     pub active: bool,
@@ -36,7 +36,7 @@ pub enum AutoSelectSubtitleMode {
 }
 
 #[derive(Deserialize, Debug)]
-#[cfg_attr(feature = "deny_unknown_fields", serde(deny_unknown_fields))]
+#[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct Profile {
     pub auto_select_audio: bool,
@@ -50,7 +50,7 @@ pub struct Profile {
 }
 
 #[derive(Deserialize, Debug)]
-#[cfg_attr(feature = "deny_unknown_fields", serde(deny_unknown_fields))]
+#[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct Subscription {
     pub id: Option<i32>,
@@ -63,7 +63,7 @@ pub struct Subscription {
 }
 
 #[derive(Deserialize, Debug)]
-#[cfg_attr(feature = "deny_unknown_fields", serde(deny_unknown_fields))]
+#[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 pub struct Service {
     pub identifier: String,
     pub endpoint: String,
@@ -73,7 +73,7 @@ pub struct Service {
 }
 
 #[derive(Deserialize, Debug)]
-#[cfg_attr(feature = "deny_unknown_fields", serde(deny_unknown_fields))]
+#[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct MyPlexAccount {
     pub id: i64,
@@ -138,7 +138,7 @@ pub struct MyPlexAccount {
 }
 
 #[derive(Deserialize, Debug)]
-#[cfg_attr(feature = "deny_unknown_fields", serde(deny_unknown_fields))]
+#[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 pub struct CustomRestrictions {
     pub all: Option<bool>,
     pub movies: Option<bool>,
@@ -154,7 +154,7 @@ pub enum Settings {
 }
 
 #[derive(Debug, Deserialize)]
-#[cfg_attr(feature = "deny_unknown_fields", serde(deny_unknown_fields))]
+#[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct ExperienceSettingsContainer {
     pub hidden: bool,
@@ -173,7 +173,7 @@ pub enum ExperienceSettingsFormat {
 }
 
 #[derive(Debug, Deserialize)]
-#[cfg_attr(feature = "deny_unknown_fields", serde(deny_unknown_fields))]
+#[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct ExperienceSettings {
     pub auto_home_hubs_enabled: bool,
@@ -185,7 +185,7 @@ pub struct ExperienceSettings {
 }
 
 #[derive(Debug, Deserialize)]
-#[cfg_attr(feature = "deny_unknown_fields", serde(deny_unknown_fields))]
+#[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct ExperienceHomeSettings {
     pub settings_key: String,
@@ -193,7 +193,7 @@ pub struct ExperienceHomeSettings {
 }
 
 #[derive(Debug, Deserialize)]
-#[cfg_attr(feature = "deny_unknown_fields", serde(deny_unknown_fields))]
+#[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct ExperienceSidebarSettings {
     pub has_completed_setup: bool,
@@ -201,7 +201,7 @@ pub struct ExperienceSidebarSettings {
 }
 
 #[derive(Debug, Deserialize)]
-#[cfg_attr(feature = "deny_unknown_fields", serde(deny_unknown_fields))]
+#[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct SidebarSource {
     pub key: String,
@@ -224,7 +224,7 @@ pub enum RestrictionProfile {
     LittleKid,
     OlderKid,
     Teen,
-    #[cfg(not(feature = "deny_unknown_fields"))]
+    #[cfg(not(feature = "tests_deny_unknown_fields"))]
     #[serde(other)]
     Unknown,
 }

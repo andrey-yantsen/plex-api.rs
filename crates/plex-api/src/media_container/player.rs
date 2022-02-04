@@ -4,7 +4,7 @@ use serde_with::{rust::StringWithSeparator, CommaSeparator};
 use strum::EnumString;
 
 #[derive(Debug, Deserialize, Clone)]
-#[cfg_attr(feature = "deny_unknown_fields", serde(deny_unknown_fields))]
+#[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct ResourcesMediaContainer {
     #[serde(rename = "Player", default)]
@@ -14,7 +14,7 @@ pub struct ResourcesMediaContainer {
 }
 
 #[derive(Debug, Deserialize, Clone)]
-#[cfg_attr(feature = "deny_unknown_fields", serde(deny_unknown_fields))]
+#[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct Player {
     pub machine_identifier: String,
@@ -33,7 +33,7 @@ pub struct Player {
 pub enum DeviceClass {
     Stb,
     Phone,
-    #[cfg(not(feature = "deny_unknown_fields"))]
+    #[cfg(not(feature = "tests_deny_unknown_fields"))]
     #[serde(other)]
     Unknown,
 }

@@ -28,7 +28,7 @@ xflags::xflags! {
             /// The X-Plex-Client-Identifier header to use for the tests.
             optional --client-id id: String
 
-            /// If passed, the online tests will run with the `deny_unknown_fields` feature enabled.
+            /// If passed, the online tests will run with the `tests_deny_unknown_fields` feature enabled.
             optional --deny-unknown-fields
         }
 

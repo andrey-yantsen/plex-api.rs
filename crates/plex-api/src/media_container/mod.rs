@@ -6,7 +6,7 @@ pub(crate) mod users;
 use serde::Deserialize;
 
 #[derive(Debug, Deserialize, Clone)]
-#[cfg_attr(feature = "deny_unknown_fields", serde(deny_unknown_fields))]
+#[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct MediaContainer {
     pub size: Option<u32>,
@@ -17,7 +17,7 @@ pub struct MediaContainer {
 }
 
 #[derive(Debug, Deserialize, Clone)]
-#[cfg_attr(feature = "deny_unknown_fields", serde(deny_unknown_fields))]
+#[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct MediaContainerWrapper<T> {
     #[serde(rename = "MediaContainer")]

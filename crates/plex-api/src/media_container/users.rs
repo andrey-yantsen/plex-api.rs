@@ -4,7 +4,7 @@ use serde_repr::Deserialize_repr;
 use time::OffsetDateTime;
 
 #[derive(Debug, Deserialize, Clone)]
-#[cfg_attr(feature = "deny_unknown_fields", serde(deny_unknown_fields))]
+#[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct UsersMediaContainer {
     pub machine_identifier: String,
@@ -23,7 +23,7 @@ pub enum AllowTuners {
 }
 
 #[derive(Debug, Deserialize, Clone)]
-#[cfg_attr(feature = "deny_unknown_fields", serde(deny_unknown_fields))]
+#[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct User {
     pub id: u32,
@@ -47,7 +47,7 @@ pub struct User {
 }
 
 #[derive(Debug, Deserialize, Clone)]
-#[cfg_attr(feature = "deny_unknown_fields", serde(deny_unknown_fields))]
+#[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct UserServer {
     pub id: u32,

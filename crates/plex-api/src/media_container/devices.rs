@@ -4,7 +4,7 @@ use strum::EnumString;
 use time::OffsetDateTime;
 
 #[derive(Debug, Deserialize, Clone)]
-#[cfg_attr(feature = "deny_unknown_fields", serde(deny_unknown_fields))]
+#[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct DevicesMediaContainer {
     #[serde(rename = "Device", default)]
@@ -21,7 +21,7 @@ pub struct DevicesMediaContainer {
 }
 
 #[derive(Debug, Deserialize, Clone)]
-#[cfg_attr(feature = "deny_unknown_fields", serde(deny_unknown_fields))]
+#[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct Device {
     pub name: String,
@@ -71,7 +71,7 @@ pub struct Device {
 }
 
 #[derive(Debug, Deserialize, Clone)]
-#[cfg_attr(feature = "deny_unknown_fields", serde(deny_unknown_fields))]
+#[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct SyncList {
     pub items_complete_count: u32,
@@ -80,7 +80,7 @@ pub struct SyncList {
 }
 
 #[derive(Debug, Deserialize, Clone)]
-#[cfg_attr(feature = "deny_unknown_fields", serde(deny_unknown_fields))]
+#[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 pub struct Connection {
     #[serde(with = "http_serde::uri")]
     pub uri: http::Uri,
@@ -101,7 +101,7 @@ pub enum Feature {
     PubsubPlayer,
     ProviderPlayback,
     SyncTarget,
-    #[cfg(not(feature = "deny_unknown_fields"))]
+    #[cfg(not(feature = "tests_deny_unknown_fields"))]
     #[serde(other)]
     Unknown,
 }

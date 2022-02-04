@@ -12,7 +12,8 @@ impl flags::Test {
         let _plex_token = pushenv("PLEX_API_AUTH_TOKEN", "");
 
         if !self.online {
-            cmd!("cargo test --workspace --no-fail-fast --features deny_unknown_fields").run()?;
+            cmd!("cargo test --workspace --no-fail-fast --features tests_deny_unknown_fields")
+                .run()?;
         }
 
         if !self.offline {
@@ -119,14 +120,14 @@ impl flags::Test {
         };
 
         if self.deny_unknown_fields {
-            features.push_str(",deny_unknown_fields");
+            features.push_str(",tests_deny_unknown_fields");
         }
 
         let mut test_run_result =
             cmd!("cargo test --workspace --no-fail-fast --features {features}").run();
 
         // Claim/Unclaim must be executed after all the other tests.
-        // Not including `deny_unknown_fields` feature here to avoid
+        // Not including `tests_deny_unknown_fields` feature here to avoid
         // possible unneeded failures.
         if !claim_token.is_empty() {
             let unclaim = cmd!("cargo test --workspace --no-fail-fast --features tests_only_online_claimed_server --test server online::unclaim_server -- --include-ignored --exact").run();

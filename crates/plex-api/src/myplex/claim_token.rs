@@ -14,13 +14,13 @@ pub struct ClaimToken {
 }
 
 #[derive(Serialize, Deserialize)]
-#[cfg_attr(feature = "deny_unknown_fields", serde(deny_unknown_fields))]
+#[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 struct SuccessResponse {
     token: String,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
-#[cfg_attr(feature = "deny_unknown_fields", serde(deny_unknown_fields))]
+#[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 struct ErrorResponse {
     error: String,
 }

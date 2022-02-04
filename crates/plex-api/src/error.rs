@@ -91,7 +91,7 @@ impl Error {
 }
 
 #[derive(Deserialize, Debug, Clone)]
-#[cfg_attr(feature = "deny_unknown_fields", serde(deny_unknown_fields))]
+#[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 struct MyPlexApiError {
     code: i32,
     message: String,
@@ -102,7 +102,7 @@ struct MyPlexApiError {
 }
 
 #[derive(Deserialize, Debug, Clone)]
-#[cfg_attr(feature = "deny_unknown_fields", serde(deny_unknown_fields))]
+#[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 pub(crate) struct MyPlexApiErrorResponse {
     errors: Vec<MyPlexApiError>,
 }
