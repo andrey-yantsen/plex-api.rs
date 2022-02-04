@@ -7,7 +7,7 @@ mod offline {
     use httpmock::Method::POST;
     use plex_api::{url::MYPLEX_WEBHOOKS_PATH, Error, MyPlex};
 
-    #[plex_api_test_helper::async_offline_test]
+    #[plex_api_test_helper::offline_test]
     async fn webhook_free_user(#[future] myplex: Mocked<MyPlex>) {
         let myplex = myplex.await;
         let (myplex, mock_server) = myplex.split();
@@ -35,7 +35,7 @@ mod offline {
         );
     }
 
-    #[plex_api_test_helper::async_offline_test]
+    #[plex_api_test_helper::offline_test]
     async fn webhook_plexpass_user_no_webhooks(#[future] myplex_plexpass: Mocked<MyPlex>) {
         let myplex = myplex_plexpass.await;
         let (myplex, mock_server) = myplex.split();
@@ -80,7 +80,7 @@ mod offline {
         );
     }
 
-    #[plex_api_test_helper::async_offline_test]
+    #[plex_api_test_helper::offline_test]
     async fn webhook_plexpass_user_two_webhooks(#[future] myplex_plexpass: Mocked<MyPlex>) {
         let myplex = myplex_plexpass.await;
         let (myplex, mock_server) = myplex.split();
@@ -146,7 +146,7 @@ mod offline {
         );
     }
 
-    #[plex_api_test_helper::async_offline_test]
+    #[plex_api_test_helper::offline_test]
     async fn webhook_plexpass_user_refresh(#[future] myplex_plexpass: Mocked<MyPlex>) {
         let myplex = myplex_plexpass.await;
         let (myplex, mock_server) = myplex.split();
@@ -182,7 +182,7 @@ mod offline {
         assert_eq!(webhook_manager.webhooks().len(), 2, "Expected two webhooks");
     }
 
-    #[plex_api_test_helper::async_offline_test]
+    #[plex_api_test_helper::offline_test]
     async fn webhook_erase(#[future] myplex_plexpass: Mocked<MyPlex>) {
         let myplex = myplex_plexpass.await;
         let (myplex, mock_server) = myplex.split();

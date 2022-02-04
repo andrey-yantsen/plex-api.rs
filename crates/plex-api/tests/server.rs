@@ -10,7 +10,7 @@ mod offline {
         HttpClient, Server,
     };
 
-    #[plex_api_test_helper::async_offline_test]
+    #[plex_api_test_helper::offline_test]
     #[case::free("tests/files/server/media/providers_free.json")]
     #[case::plexpass("tests/files/server/media/providers_plexpass.json")]
     #[case::unclaimed("tests/files/server/media/providers_unclaimed.json")]
@@ -32,7 +32,7 @@ mod offline {
         server_result.expect("can't recover myplex from server");
     }
 
-    #[plex_api_test_helper::async_offline_test]
+    #[plex_api_test_helper::offline_test]
     async fn myplex_recover_from_server(#[future] server_authenticated: Mocked<Server>) {
         let server = server_authenticated.await;
         let (server, mock_server) = server.split();

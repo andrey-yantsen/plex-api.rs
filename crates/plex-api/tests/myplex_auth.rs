@@ -11,7 +11,7 @@ mod offline {
         Error, HttpClient, MyPlexBuilder,
     };
 
-    #[plex_api_test_helper::async_offline_test]
+    #[plex_api_test_helper::offline_test]
     async fn signin_free_user(client_anonymous: Mocked<HttpClient>) {
         let (client_anonymous, mock_server) = client_anonymous.split();
 
@@ -42,7 +42,7 @@ mod offline {
         );
     }
 
-    #[plex_api_test_helper::async_offline_test]
+    #[plex_api_test_helper::offline_test]
     async fn signin_plexpass_user(client_anonymous: Mocked<HttpClient>) {
         let (client_anonymous, mock_server) = client_anonymous.split();
 
@@ -73,7 +73,7 @@ mod offline {
         );
     }
 
-    #[plex_api_test_helper::async_offline_test]
+    #[plex_api_test_helper::offline_test]
     async fn signin_without_required_otp(client_anonymous: Mocked<HttpClient>) {
         let (client_anonymous, mock_server) = client_anonymous.split();
 
@@ -100,7 +100,7 @@ mod offline {
         assert!(matches!(err, Error::OtpRequired), "unexpected error");
     }
 
-    #[plex_api_test_helper::async_offline_test]
+    #[plex_api_test_helper::offline_test]
     async fn signin_with_otp(client_anonymous: Mocked<HttpClient>) {
         let (client_anonymous, mock_server) = client_anonymous.split();
 
@@ -133,7 +133,7 @@ mod offline {
         );
     }
 
-    #[plex_api_test_helper::async_offline_test]
+    #[plex_api_test_helper::offline_test]
     #[case::free_user("tests/files/myplex/api/v2/user/user_info_free.json")]
     #[case::free_user_managed_guest("tests/files/myplex/api/v2/user/user_info_free_guest.json")]
     #[case::plexpass_user("tests/files/myplex/api/v2/user/user_info_plexpass.json")]
@@ -170,7 +170,7 @@ mod offline {
         );
     }
 
-    #[plex_api_test_helper::async_offline_test]
+    #[plex_api_test_helper::offline_test]
     async fn signout(#[future] myplex: Mocked<MyPlex>) {
         let myplex = myplex.await;
         let (myplex, mock_server) = myplex.split();
@@ -188,7 +188,7 @@ mod offline {
         signout_result.expect("failed to signout");
     }
 
-    #[plex_api_test_helper::async_offline_test]
+    #[plex_api_test_helper::offline_test]
     async fn signin_failures(client_anonymous: Mocked<HttpClient>) {
         let (client_anonymous, _) = client_anonymous.split();
 

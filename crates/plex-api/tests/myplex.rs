@@ -12,7 +12,7 @@ mod offline {
         MyPlex,
     };
 
-    #[plex_api_test_helper::async_offline_test]
+    #[plex_api_test_helper::offline_test]
     async fn privacy(#[future] myplex: Mocked<MyPlex>) {
         let myplex = myplex.await;
         let (myplex, mock_server) = myplex.split();
@@ -66,7 +66,7 @@ mod offline {
         );
     }
 
-    #[plex_api_test_helper::async_offline_test]
+    #[plex_api_test_helper::offline_test]
     async fn privacy_errors(#[future] myplex: Mocked<MyPlex>) {
         let myplex = myplex.await;
         let (myplex, mock_server) = myplex.split();
@@ -105,7 +105,7 @@ mod offline {
         ));
     }
 
-    #[plex_api_test_helper::async_offline_test]
+    #[plex_api_test_helper::offline_test]
     async fn claim_token(#[future] myplex: Mocked<MyPlex>) {
         let myplex = myplex.await;
         let (myplex, mock_server) = myplex.split();
@@ -156,7 +156,7 @@ mod offline {
         );
     }
 
-    #[plex_api_test_helper::async_offline_test]
+    #[plex_api_test_helper::offline_test]
     async fn link(#[future] myplex: Mocked<MyPlex>) {
         let myplex = myplex.await;
         let (myplex, mock_server) = myplex.split();

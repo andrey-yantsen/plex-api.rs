@@ -31,7 +31,7 @@ fn prepare(args: TokenStream, input: TokenStream, extra_attr: TokenStream2) -> T
 }
 
 #[proc_macro_attribute]
-pub fn async_offline_test(args: TokenStream, input: TokenStream) -> TokenStream {
+pub fn offline_test(args: TokenStream, input: TokenStream) -> TokenStream {
     let ignore = quote! {
         #[cfg_attr(feature = "tests_only_online", ignore = "Feature tests_only_online is set, running only online tests.")]
     };

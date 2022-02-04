@@ -34,7 +34,7 @@ messages.
 
 I don't have much exprience with testing in Rust, so please write the tests the way you see fit.
 At the same time, I created a few macroses to reduce the boilerplate amount:
-* `#[plex_api_test_helper::async_offline_test]`
+* `#[plex_api_test_helper::offline_test]`
 * `#[plex_api_test_helper::online_test_unclaimed_server]`
 * `#[plex_api_test_helper::online_test_claimed_server]`
 

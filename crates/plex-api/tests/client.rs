@@ -7,7 +7,7 @@ mod offline {
     use plex_api::HttpClientBuilder;
     use std::time::Duration;
 
-    #[plex_api_test_helper::async_offline_test]
+    #[plex_api_test_helper::offline_test]
     async fn default_client(mock_server: MockServer) {
         let client = HttpClientBuilder::new(mock_server.base_url())
             .build()
@@ -46,7 +46,7 @@ mod offline {
         get_result.expect("failed to perform first http request");
     }
 
-    #[plex_api_test_helper::async_offline_test]
+    #[plex_api_test_helper::offline_test]
     async fn customized_client(mock_server: MockServer) {
         let client = HttpClientBuilder::new(mock_server.base_url())
             .set_x_plex_token("auth_token".to_owned())
@@ -84,7 +84,7 @@ mod offline {
         get_result.expect("failed to perform first http request");
     }
 
-    #[plex_api_test_helper::async_offline_test]
+    #[plex_api_test_helper::offline_test]
     async fn auth_token_updated_after_build(mock_server: MockServer) {
         let client = HttpClientBuilder::new(mock_server.base_url())
             .build()
@@ -114,7 +114,7 @@ mod offline {
         get_result.expect("failed to perform first http request");
     }
 
-    #[plex_api_test_helper::async_offline_test]
+    #[plex_api_test_helper::offline_test]
     async fn custom_http_client(mock_server: MockServer) {
         use isahc::config::Configurable as _;
 
