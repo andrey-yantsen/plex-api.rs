@@ -1,6 +1,6 @@
 use serde::Deserialize;
+use serde_plain::derive_fromstr_from_deserialize;
 use serde_with::{rust::StringWithSeparator, CommaSeparator};
-use strum::EnumString;
 use time::OffsetDateTime;
 
 #[derive(Debug, Deserialize, Clone)]
@@ -91,8 +91,8 @@ pub struct Connection {
     pub relay: Option<bool>,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq, Eq, EnumString)]
-#[strum(serialize_all = "kebab-case")]
+#[derive(Debug, Deserialize, Clone, PartialEq, Eq)]
+#[serde(rename_all = "kebab-case")]
 pub enum Feature {
     Server,
     Client,
@@ -105,3 +105,5 @@ pub enum Feature {
     #[serde(other)]
     Unknown,
 }
+
+derive_fromstr_from_deserialize!(Feature);

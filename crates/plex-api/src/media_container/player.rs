@@ -1,7 +1,7 @@
 use super::MediaContainer;
 use serde::Deserialize;
+use serde_plain::derive_fromstr_from_deserialize;
 use serde_with::{rust::StringWithSeparator, CommaSeparator};
-use strum::EnumString;
 
 #[derive(Debug, Deserialize, Clone)]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
@@ -38,8 +38,8 @@ pub enum DeviceClass {
     Unknown,
 }
 
-#[derive(Debug, Deserialize, Clone, EnumString)]
-#[strum(serialize_all = "kebab-case")]
+#[derive(Debug, Deserialize, Clone)]
+#[serde(rename_all = "kebab-case")]
 pub enum ProtocolCapability {
     Mirror,
     Playback,
@@ -47,3 +47,5 @@ pub enum ProtocolCapability {
     ProviderPlayback,
     Timeline,
 }
+
+derive_fromstr_from_deserialize!(ProtocolCapability);
