@@ -405,7 +405,8 @@ pub enum Feature {
         alias = "fb34e64d-cd89-47b8-8bae-a6d20c542bae",
         alias = "fd6683b9-1426-4b00-840f-cd5fb0904a6a",
         alias = "fec722a0-a6d4-4fbd-96dc-4ffb02b072c5",
-        alias = "e7cea823-02e5-48c4-a501-d37b82bf132f"
+        alias = "e7cea823-02e5-48c4-a501-d37b82bf132f",
+        alias = "93bf35b9-3b62-4a8a-b09b-5c85437fa67b"
     )]
     StrangeUuid,
     #[cfg(not(feature = "tests_deny_unknown_fields"))]
