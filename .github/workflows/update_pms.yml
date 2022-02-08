@@ -46,6 +46,7 @@ jobs:
         id: cpr
         uses: peter-evans/create-pull-request@v3
         with:
+          token: "${{ secrets.PAT_GITHUB_PR }}"
           commit-message: "ci: update PMS versions"
           branch: "auto-pr/pms-update"
           title: "Update the list of tested PMS releases"
