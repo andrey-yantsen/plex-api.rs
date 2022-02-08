@@ -31,8 +31,6 @@ jobs:
           echo "::set-output name=tags::$tags"
           first_tag=$(echo "$tags" | jq -r '.[0]')
           echo "::set-output name=first_tag::$first_tag"
-          markdown_list=$(echo "$tags" | jq -r '.[] | "* \(.)"')
-          echo "::set-output name=markdown_list::$markdown_list"
       - name: Update test.yml workflow
         run: |
           sed -i 's/plex_server_version: .*/plex_server_version: ${{ steps.tags.outputs.tags }}/g' .github/workflows/test.yml
@@ -41,7 +39,9 @@ jobs:
           sed -i 's/\(Test on a real server ([a-z ]*)\).*/\1 (${{ steps.tags.outputs.first_tag }})/g' .github/bors.toml
       - name: Update the list in README.md
         run: |
-          perl -0pi -e 's/(<!-- plex releases list start -->).*(<!-- plex releases list end -->)/$1\n${{ steps.tags.outputs.markdown_list }}\n$2/sm' README.md
+          plex_tags="$(echo '${{ steps.tags.outputs.tags }}' | jq -r '.[] | "* \(.)"')"
+          perl -0pi -e 's/(<!-- plex releases list start -->).*(<!-- plex releases list end -->)/$1\n!PMS_TAGS_LIST!\n$2/sm' README.md
+          perl -0pi -e "s/!PMS_TAGS_LIST!/$plex_tags/sm" README.md
       - name: Create Pull Request
         id: cpr
         uses: peter-evans/create-pull-request@v3
