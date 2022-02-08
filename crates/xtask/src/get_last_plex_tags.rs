@@ -2,8 +2,7 @@ use crate::flags;
 use regex::Regex;
 use std::cmp::Ordering;
 
-const VALID_TAGS_REGEXP: &str =
-    r#""name"\s*:\s*"(?P<tag>(?P<semver>latest|beta|plexpass|\d+\.\d+.\d+)[^"]*)""#;
+const VALID_TAGS_REGEXP: &str = r#""name"\s*:\s*"(?P<tag>(?P<semver>latest|beta|plexpass|\d+\.\d+.\d+)(?:\.(?P<build>\d+))?[^"]*)""#;
 
 const DEFAULT_TAGS_COUNT: u8 = 3;
 const DEFAULT_VERSION_JUMP: u8 = 1;
@@ -46,7 +45,17 @@ impl flags::GetLastPlexTags {
             .map(|c| {
                 (
                     match semver::Version::parse(c.name("semver").unwrap().as_str()) {
-                        Ok(v) => SemverOrString::Semver(v),
+                        Ok(v) => SemverOrString::Semver(semver::Version {
+                            major: v.major,
+                            minor: v.minor,
+                            patch: v.patch,
+                            pre: semver::Prerelease::new(&format!(
+                                "build.{}",
+                                c.name("build").unwrap().as_str()
+                            ))
+                            .unwrap(),
+                            build: v.build,
+                        }),
                         Err(_) => SemverOrString::Str(c.name("semver").unwrap().as_str()),
                     },
                     c.name("tag").unwrap().as_str(),
@@ -64,6 +73,7 @@ impl flags::GetLastPlexTags {
         let mut previous_seen_version = SemverOrString::Str("");
         let mut next_min_invalid_version =
             semver::Version::new(u64::max_value(), u64::max_value(), u64::max_value());
+        next_min_invalid_version.pre = semver::Prerelease::new("build.0").unwrap();
 
         let mut ret: Vec<&str> = vec![];
 
@@ -75,11 +85,13 @@ impl flags::GetLastPlexTags {
                 {
                     next_min_invalid_version =
                         semver::Version::new(s.major, s.minor - u64::from(jump), 0);
+                    next_min_invalid_version.pre = semver::Prerelease::new("build.0").unwrap();
                 }
                 SemverOrString::Semver(s) if s < next_min_invalid_version => {
                     ret.push(tag);
                     next_min_invalid_version =
                         semver::Version::new(s.major, s.minor - u64::from(jump), 0);
+                    next_min_invalid_version.pre = semver::Prerelease::new("build.0").unwrap();
                 }
                 SemverOrString::Semver(_) => {}
             }
