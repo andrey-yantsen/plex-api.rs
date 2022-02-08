@@ -36,7 +36,7 @@ jobs:
           sed -i 's/plex_server_version: .*/plex_server_version: ${{ steps.tags.outputs.tags }}/g' .github/workflows/test.yml
       - name: Update bors.toml config
         run: |
-          sed -i 's/\(Test on a real server ([a-z ]*)\).*/\1 (${{ steps.tags.outputs.first_tag }})/g' .github/bors.toml
+          sed -i 's/\(Test on a real server ([a-z ]*)\).*/\1 (${{ steps.tags.outputs.first_tag }})",/g' .github/bors.toml
       - name: Update the list in README.md
         run: |
           plex_tags="$(echo '${{ steps.tags.outputs.tags }}' | jq -r '.[] | "* \(.)"')"
