@@ -1,0 +1,56 @@
+---
+"on":
+  workflow_dispatch:
+  schedule:
+    - cron: 0 0 * * *
+
+name: Update supported PMS versions
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+      - name: Install stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+      - uses: Swatinem/rust-cache@v1.3.0
+        with:
+          sharedKey: cache
+      - name: Build xtask
+        uses: actions-rs/cargo@v1
+        with:
+          command: build
+          args: "--package xtask"
+      - id: tags
+        run: |
+          tags=$(cargo run -q --package xtask -- get-last-plex-tags --skip-tag latest --skip-tag beta --skip-tag plexpass)
+          echo "::set-output name=tags::$tags"
+          first_tag=$(echo "$tags" | jq -r '.[0]')
+          echo "::set-output name=first_tag::$first_tag"
+          markdown_list=$(echo "$tags" | jq -r '.[] | "* \(.)"')
+          echo "::set-output name=markdown_list::$markdown_list"
+      - name: Update test.yml workflow
+        run: |
+          sed -i 's/plex_server_version: .*/plex_server_version: ${{ steps.tags.outputs.tags }}/g' .github/workflows/test.yml
+      - name: Update bors.toml config
+        run: |
+          sed -i 's/\(Test on a real server ([a-z ]*)\).*/\1 (${{ steps.tags.outputs.first_tag }})/g' .github/bors.toml
+      - name: Update the list in README.md
+        run: |
+          perl -0pi -e 's/(<!-- plex releases list start -->).*(<!-- plex releases list end -->)/$1\n${{ steps.tags.outputs.markdown_list }}\n$2/sm' README.md
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v3
+        with:
+          commit-message: "ci: update PMS versions"
+          branch: "auto-pr/pms-update"
+          title: "Update the list of tested PMS releases"
+          labels: "C-Dependencies"
+      - name: Check outputs
+        run: |
+          echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
+          echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
