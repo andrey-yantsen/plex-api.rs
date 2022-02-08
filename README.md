@@ -2,20 +2,6 @@
 [![tests status](https://github.com/andrey-yantsen/plex-api.rs/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/andrey-yantsen/plex-api.rs/actions/workflows/test.yml?query=branch%3Amain)
 [![codecov](https://codecov.io/gh/andrey-yantsen/plex-api.rs/branch/main/graph/badge.svg?token=hrpICjrn5q)](https://codecov.io/gh/andrey-yantsen/plex-api.rs)
 
-# Supported plex versions
-
-The codebase is regularly tested against three different PMS versions. The
-exact list of the releases is generated automatically for every test run,
-to keep up with all the recent PMS versions. We take every other minor release
-from the latest 6 stable releases. At the moment the following versions are
-tested:
-
-<!-- plex releases list start -->
-* 1.25.5.5492-12f6b8c83
-* 1.23.6.4881-e2e58f321
-* 1.21.4.4079-1b7748a7b
-<!-- plex releases list end -->
-
 # Work in progress
 
 Sorry, if you're looking for a ready-to-use API, it's definitely not this one.
@@ -32,6 +18,20 @@ As the starting point I'd like to have an easy way to bootstrap test env. You ca
 [python-plexapi](https://github.com/pkkid/python-plexapi/blob/master/tools/plex-bootstraptest.py) in terms
 of the env: there is a script which creates a new Plex Server instance in docker and populates the library with some
 stub media, and assigns this shiny new server to MyPlex account, if required.
+
+# Supported plex versions
+
+The codebase is regularly tested against three different PMS versions. The
+exact list of the releases is generated automatically for every test run,
+to keep up with all the recent PMS versions. We take every other minor release
+from the latest 6 stable releases. At the moment the following versions are
+tested:
+
+<!-- plex releases list start -->
+* 1.25.5.5492-12f6b8c83
+* 1.23.6.4881-e2e58f321
+* 1.21.4.4079-1b7748a7b
+<!-- plex releases list end -->
 
 # TODO
 
