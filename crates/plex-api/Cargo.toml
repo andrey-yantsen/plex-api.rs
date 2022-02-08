@@ -22,7 +22,7 @@ serde_plain = "^1.0.0"
 serde_repr = "^0.1"
 time = { version = "^0.3", features = ["serde-well-known"] }
 http = "^0.2.6"
-http-serde = "^1.0"
+http-serde = "^1.1"
 serde_urlencoded = "^0.7.1"
 thiserror = "^1.0"
 sys-info = "^0.9"
