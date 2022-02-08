@@ -102,31 +102,6 @@ jobs:
           command: run
           args: "--package xtask -- test --offline"
 
-  plex_tags:
-    name: Prepare list of Plex docker image tags for testing
-    needs: check
-    runs-on: ubuntu-latest
-    outputs:
-      tags: ${{ steps.set-tags.outputs.tags }}
-    steps:
-      - uses: actions/checkout@v2
-      - name: Checkout sources
-        uses: actions/checkout@v2
-      - name: Install stable toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-          override: true
-      - uses: Swatinem/rust-cache@v1.3.0
-        with:
-          sharedKey: cache
-      - id: set-tags
-        run: |
-          cargo build --package xtask
-          tags=$(cargo run -q --package xtask -- get-last-plex-tags)
-          echo "::set-output name=tags::$tags"
-
   lints:
     name: Lints
     runs-on: ubuntu-latest
@@ -179,13 +154,16 @@ jobs:
           args: "--all-targets --all-features -- -D warnings"
 
   test_on_real_server_anonymous:
-    needs: [test_offline, plex_tags]
+    needs: test_offline
     name: Test on a real server (anonymous)
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        plex_server_version: ${{fromJson(needs.plex_tags.outputs.tags)}}
+        plex_server_version:
+          - 1.25.4.5468-989df2310
+          - 1.23.6.4881-e2e58f321
+          - 1.21.4.4079-1b7748a7b
     steps:
       - name: Checkout sources
         uses: actions/checkout@v2
@@ -206,11 +184,14 @@ jobs:
 
   test_on_real_server_authenticated_free:
     if: "github.ref == 'refs/heads/main' || github.ref == 'refs/heads/staging' || github.ref == 'refs/heads/trying'"
-    needs: [test_offline, plex_tags]
+    needs: test_offline
     strategy:
       fail-fast: false
       matrix:
-        plex_server_version: ${{fromJson(needs.plex_tags.outputs.tags)}}
+        plex_server_version:
+          - 1.25.4.5468-989df2310
+          - 1.23.6.4881-e2e58f321
+          - 1.21.4.4079-1b7748a7b
     name: Test on a real server (authenticated free account)
     runs-on: ubuntu-latest
     env:
@@ -235,11 +216,14 @@ jobs:
 
   test_on_real_server_authenticated_plexpass:
     if: "github.ref == 'refs/heads/main' || github.ref == 'refs/heads/staging' || github.ref == 'refs/heads/trying'"
-    needs: [test_offline, plex_tags]
+    needs: test_offline
     strategy:
       fail-fast: false
       matrix:
-        plex_server_version: ${{fromJson(needs.plex_tags.outputs.tags)}}
+        plex_server_version:
+          - 1.25.4.5468-989df2310
+          - 1.23.6.4881-e2e58f321
+          - 1.21.4.4079-1b7748a7b
     name: Test on a real server (authenticated plexpass account)
     runs-on: ubuntu-latest
     env:
