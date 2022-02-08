@@ -5,8 +5,8 @@ status = [
     "Offline tests (ubuntu-latest)",
     "Offline tests (windows-latest)",
     "Offline tests (macos-latest)",
-    "Test on a real server (anonymous) (1.25.4.5468-989df2310)",
-    "Test on a real server (authenticated free account) (1.25.4.5468-989df2310)",
-    "Test on a real server (authenticated plexpass account) (1.25.4.5468-989df2310)",
+    "Test on a real server (anonymous) (1.25.3.5409-f11334058)",
+    "Test on a real server (authenticated free account) (1.25.3.5409-f11334058)",
+    "Test on a real server (authenticated plexpass account) (1.25.3.5409-f11334058)",
 ]
 delete_merged_branches = true
