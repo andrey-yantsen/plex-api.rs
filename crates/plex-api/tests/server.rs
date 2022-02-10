@@ -63,14 +63,9 @@ mod online {
     use isahc::{config::Configurable, HttpClient as IsahcHttpClient};
     use plex_api::{HttpClient, HttpClientBuilder, Server};
 
-    #[plex_api_test_helper::online_test_unclaimed_server]
-    async fn load_server_unclaimed(#[future] server_unclaimed: Server) {
-        let _ = server_unclaimed.await;
-    }
-
-    #[plex_api_test_helper::online_test_claimed_server]
-    async fn load_server_claimed(#[future] server_claimed: Server) {
-        let _ = server_claimed.await;
+    #[plex_api_test_helper::online_test]
+    async fn load_server(#[future] server: Server) {
+        let _ = server.await;
     }
 
     // Claim/unclaim could take long time due to unknown reasons.

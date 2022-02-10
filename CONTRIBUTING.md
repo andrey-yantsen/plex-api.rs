@@ -37,6 +37,7 @@ At the same time, I created a few macroses to reduce the boilerplate amount:
 * `#[plex_api_test_helper::offline_test]`
 * `#[plex_api_test_helper::online_test_unclaimed_server]`
 * `#[plex_api_test_helper::online_test_claimed_server]`
+* `#[plex_api_test_helper::online_test]`
 
 [rstest](http://docs.rs/rstest) is used under the hood for handling the tests — this way
 it's possible to use [fixtures](https://docs.rs/rstest/latest/rstest/attr.rstest.html#injecting-fixtures) and

@@ -52,63 +52,9 @@ mod online {
     use super::fixtures::online::server::*;
     use plex_api::Server;
 
-    #[plex_api_test_helper::online_test_unclaimed_server]
-    async fn load_prefs_unclaimed_server(#[future] server_unclaimed: Server) {
-        let server = server_unclaimed.await;
-        let mut prefs = server
-            .preferences()
-            .await
-            .expect("failed to load preferences");
-
-        let current = {
-            let s = prefs
-                .get("ButlerTaskDeepMediaAnalysis")
-                .expect("failed to get value");
-
-            match s.value {
-                plex_api::SettingValue::Bool(b) => b,
-                _ => panic!("expected bool value"),
-            }
-        };
-
-        prefs
-            .set(
-                "ButlerTaskDeepMediaAnalysis",
-                plex_api::SettingValue::Bool(!current),
-            )
-            .expect("failed to update value");
-
-        prefs
-            .commit()
-            .await
-            .expect("failed to commit updated preferences");
-
-        // Server responds with 400 Bad Request if the next request is
-        // sent too soon after the PUT.
-        async_std::task::sleep(Duration::from_secs(1)).await;
-
-        let prefs = server
-            .preferences()
-            .await
-            .expect("failed to load preferences 2nd time");
-
-        let new_value = {
-            let s = prefs
-                .get("ButlerTaskDeepMediaAnalysis")
-                .expect("failed to get value");
-
-            match s.value {
-                plex_api::SettingValue::Bool(b) => b,
-                _ => panic!("expected bool value"),
-            }
-        };
-
-        assert_eq!(!current, new_value, "Value did not change");
-    }
-
-    #[plex_api_test_helper::online_test_claimed_server]
-    async fn load_prefs_claimed_server(#[future] server_claimed: Server) {
-        let server = server_claimed.await;
+    #[plex_api_test_helper::online_test]
+    async fn load_prefs(#[future] server: Server) {
+        let server = server.await;
         let mut prefs = server
             .preferences()
             .await
