@@ -6,6 +6,9 @@ updates:
     interval: weekly
   labels:
     - "C-Dependencies"
+  commit-message:
+    prefix: chore
+    include: scope
 
 - package-ecosystem: "github-actions"
   directory: "/"
@@ -13,3 +16,6 @@ updates:
     interval: weekly
   labels:
     - "C-Dependencies"
+  commit-message:
+    prefix: chore
+    include: scope
