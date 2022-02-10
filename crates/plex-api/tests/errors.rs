@@ -14,7 +14,7 @@ mod offline {
                 .header("content-type", "text/json")
                 .body("foo");
         });
-        let r = dbg!(myplex.refresh().await);
+        let r = myplex.refresh().await;
         assert!(matches!(
             r.err().unwrap(),
             plex_api::Error::JsonDeserealiseError { .. }
@@ -30,7 +30,7 @@ mod offline {
                 .header("content-type", "text/json")
                 .body("foo");
         });
-        let r = dbg!(myplex.refresh().await);
+        let r = myplex.refresh().await;
         assert!(matches!(
             r.err().unwrap(),
             plex_api::Error::UnexpectedApiResponse { .. }
@@ -46,7 +46,7 @@ mod offline {
                 .header("content-type", "text/json")
                 .body(r#"{"errors": [{"code": 1111, "message": "test", "status": 400}]}"#);
         });
-        let r = dbg!(myplex.refresh().await);
+        let r = myplex.refresh().await;
         assert!(matches!(
             r.err().unwrap(),
             plex_api::Error::MyPlexErrorResponse { .. }
