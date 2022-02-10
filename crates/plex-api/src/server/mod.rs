@@ -1,3 +1,6 @@
+pub mod prefs;
+
+use self::prefs::Preferences;
 use crate::{
     http_client::HttpClient,
     media_container::{server::Server as ServerMediaContainer, MediaContainerWrapper},
@@ -103,5 +106,9 @@ impl Server {
 
     pub fn client(&self) -> &HttpClient {
         &self.client
+    }
+
+    pub async fn preferences(&self) -> Result<Preferences<'_>> {
+        Preferences::new(&self.client).await
     }
 }

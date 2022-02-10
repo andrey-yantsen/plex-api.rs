@@ -59,6 +59,10 @@ pub enum Error {
     DeviceConnectionNotSupported,
     #[error("Device doesn't have any exposed connection endpoints.")]
     DeviceConnectionsIsEmpty,
+    #[error("Requested unknown setting: {0}.")]
+    RequestedSettingNotFound(String),
+    #[error("You can't set setting to a value of a different type.")]
+    IncompatibleSettingValues,
 }
 
 const PLEX_API_ERROR_CODE_AUTH_OTP_REQUIRED: i32 = 1029;
