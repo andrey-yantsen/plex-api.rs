@@ -1,6 +1,6 @@
 [package]
 name = "plex-api"
-version = "0.0.3"
+version = "1.0.0"
 authors = ["Andrey Yantsen <andrey@janzen.su>"]
 categories = ["api-bindings"]
 edition = "2018"
