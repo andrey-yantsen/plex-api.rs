@@ -1,16 +1,16 @@
 [package]
 name = "plex-cli"
-version = "0.0.0"
+version = "0.0.1"
 authors = ["Andrey Yantsen <andrey@janzen.su>"]
 edition = "2018"
-publish = false
 license = "MIT/Apache-2.0"
+description = "Command line interface for managing Plex Media Server"
 
 [package.metadata.workspaces]
 independent = true
 
 [dependencies]
-plex-api = { path = "../plex-api" }
+plex-api = { path = "../plex-api", version = ">= 0.0.4" }
 tokio = { version = "^1.16", features = ["macros", "rt-multi-thread", "time"] }
 anyhow = "^1.0"
 xflags = "^0.2"
