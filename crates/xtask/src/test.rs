@@ -28,7 +28,7 @@ impl flags::Test {
 
             if !self.online || self.token.is_none() || self.token.as_ref().unwrap().is_empty() {
                 cmd!("cargo xtask plex-data --replace").run()?;
-                self.integration_tests("")?;
+                self.integration_tests("", "")?;
             }
 
             match self.token.as_ref() {
@@ -54,7 +54,7 @@ impl flags::Test {
                     println!("done!");
                     let _ = std::io::stdout().flush();
 
-                    self.integration_tests(&claim_token.to_string())?;
+                    self.integration_tests(&claim_token.to_string(), token)?;
                 }
                 _ => (),
             }
@@ -63,7 +63,7 @@ impl flags::Test {
         Ok(())
     }
 
-    fn integration_tests(&self, claim_token: &str) -> anyhow::Result<()> {
+    fn integration_tests(&self, claim_token: &str, auth_token: &str) -> anyhow::Result<()> {
         let image_tag = self
             .docker_tag
             .clone()
@@ -71,7 +71,6 @@ impl flags::Test {
         let docker_image: RunnableImage<GenericImage> =
             GenericImage::new(DOCKER_PLEX_IMAGE_NAME, &image_tag)
                 .with_wait_for(WaitFor::Healthcheck)
-                .with_wait_for(WaitFor::seconds(15))
                 .into();
 
         #[cfg_attr(windows, allow(unused_mut))]
@@ -109,6 +108,8 @@ impl flags::Test {
         let _ = std::io::stdout().flush();
 
         let server_url = format!("http://localhost:{}/", _plex_node.get_host_port(32400));
+        cmd!("cargo run -p plex-cli -- wait --server {server_url} --token {auth_token}").run()?;
+
         let _plex_server = pushenv("PLEX_SERVER_URL", server_url);
 
         let mut features = {
