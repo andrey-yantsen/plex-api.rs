@@ -1,6 +1,6 @@
 [package]
 name = "plex-api-test-helper"
-version = "0.0.0"
+version = "0.0.1"
 authors = ["Andrey Yantsen <andrey@janzen.su>"]
 edition = "2018"
 publish = false
