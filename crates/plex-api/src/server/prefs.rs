@@ -1,5 +1,3 @@
-use std::mem::discriminant;
-
 use crate::media_container::preferences::{
     Preferences as MediaContainerPreferences, Setting, Value,
 };
@@ -7,6 +5,7 @@ use crate::url::SERVER_PREFS;
 use crate::{media_container::MediaContainerWrapper, HttpClient, Result};
 use http::StatusCode;
 use isahc::AsyncReadResponseExt;
+use std::mem::discriminant;
 
 #[derive(Debug, Clone)]
 pub struct Preferences<'a> {
@@ -37,6 +36,10 @@ impl<'a> Preferences<'a> {
 
     pub fn get(&self, key: &str) -> Option<&Setting> {
         self.settings.iter().find(|s| s.id == key)
+    }
+
+    pub fn all(&self) -> &[Setting] {
+        &self.settings
     }
 
     pub fn set(&mut self, key: &'a str, value: Value) -> Result<&mut Self> {
