@@ -13,12 +13,43 @@ xflags::xflags! {
             optional -h, --help
         }
 
+        /// Wait for the server to be available.
         cmd wait {
             /// Delay between attempts
             optional -d, --delay seconds: u32
 
             /// How long to wait for the success.
             optional --timeout seconds: u32
+        }
+
+        /// Manage server preferences.
+        cmd preferences {
+            /// Get current configuration.
+            cmd get {
+                /// Return only one parameter.
+                optional -k, --key key: String
+
+                /// Return all parameters from the specified group.
+                optional -g, --group group: String
+
+                /// Display advanced configuration.
+                optional --show-advances
+
+                /// Display hidden parameters.
+                optional --show-hidden
+            }
+
+            /// Modify the configuration.
+            cmd set {
+                /// Parameter name.
+                required -k, --key key: String
+
+                /// New value.
+                required -v, --value value: String
+
+                /// Required if you're changing a hidden parameter.
+                optional --i-know-what-i-am-doing
+            }
         }
     }
 }
@@ -37,6 +68,7 @@ pub struct PlexCli {
 pub enum PlexCliCmd {
     Help(Help),
     Wait(Wait),
+    Preferences(Preferences),
 }
 
 #[derive(Debug)]
@@ -48,6 +80,32 @@ pub struct Help {
 pub struct Wait {
     pub delay: Option<u32>,
     pub timeout: Option<u32>,
+}
+
+#[derive(Debug)]
+pub struct Preferences {
+    pub subcommand: PreferencesCmd,
+}
+
+#[derive(Debug)]
+pub enum PreferencesCmd {
+    Get(Get),
+    Set(Set),
+}
+
+#[derive(Debug)]
+pub struct Get {
+    pub key: Option<String>,
+    pub group: Option<String>,
+    pub show_advances: bool,
+    pub show_hidden: bool,
+}
+
+#[derive(Debug)]
+pub struct Set {
+    pub key: String,
+    pub value: String,
+    pub i_know_what_i_am_doing: bool,
 }
 
 impl PlexCli {
@@ -84,6 +142,7 @@ impl PlexCli {
         match self.subcommand {
             PlexCliCmd::Help(cmd) => cmd.run(),
             PlexCliCmd::Wait(cmd) => cmd.run(&server, &auth_token).await,
+            PlexCliCmd::Preferences(cmd) => cmd.run(&server, &auth_token).await,
         }
     }
 }

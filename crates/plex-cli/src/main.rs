@@ -1,4 +1,5 @@
 mod flags;
+mod preferences;
 mod wait;
 
 #[tokio::main]
