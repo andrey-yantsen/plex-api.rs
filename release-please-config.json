@@ -8,6 +8,9 @@
     "packages": {
         "crates/plex-api": {
             "package-name": "plex-api"
+        },
+        "crates/plex-cli": {
+            "package-name": "plex-cli"
         }
     },
     "changelog-sections": [
