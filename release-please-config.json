@@ -1,13 +1,15 @@
 {
-    "bootstrap-sha": "3cd2bae3e91b8b70dfc566cd8c33b88f7ef69b8f",
+    "bootstrap-sha": "b0ba08b0372f9eb67bc3efbf3d3f2dd228873749",
     "release-type": "rust",
     "bump-minor-pre-major": true,
     "bump-patch-for-minor-pre-major": true,
     "separate-pull-requests": true,
-    "plugins": ["cargo-workspace"],
     "packages": {
         "crates/plex-api": {
             "package-name": "plex-api"
+        },
+        "crates/plex-cli": {
+            "package-name": "plex-cli"
         }
     },
     "changelog-sections": [
