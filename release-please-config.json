@@ -1,0 +1,14 @@
+{
+  "packages": {
+    "crates/plex-api": {
+      "releaseType": "rust",
+      "packageName": "plex-api",
+      "draft": false,
+      "prerelease": false,
+      "bumpMinorPreMajor": true,
+      "bumpPatchForMinorPreMajor": true,
+      "changelogPath": "CHANGELOG.md",
+      "versioning": "default"
+    }
+  }
+}
