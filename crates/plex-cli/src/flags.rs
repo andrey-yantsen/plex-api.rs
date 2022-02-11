@@ -2,6 +2,12 @@ xflags::xflags! {
     src "./src/flags.rs"
 
     cmd plex-cli {
+        /// Server URL, e.g. http://192.168.1.1:32400. Default is http://127.0.0.1:32400.
+        optional -s, --server url: String
+
+        /// Authentication token, if needed. Mandatory for the claimed server.
+        optional -t, --token token: String
+
         default cmd help {
             /// Print help information.
             optional -h, --help
@@ -10,12 +16,6 @@ xflags::xflags! {
         cmd wait {
             /// Delay between attempts
             optional -d, --delay seconds: u32
-
-            /// Server URL, e.g. http://192.168.1.1:32400. Default is http://127.0.0.1:32400.
-            optional -s, --server url: String
-
-            /// Authentication token, if needed. Mandatory for the claimed server.
-            optional -t, --token token: String
 
             /// How long to wait for the success.
             optional --timeout seconds: u32
@@ -28,6 +28,8 @@ xflags::xflags! {
 // Run `env UPDATE_XFLAGS=1 cargo build` to regenerate.
 #[derive(Debug)]
 pub struct PlexCli {
+    pub server: Option<String>,
+    pub token: Option<String>,
     pub subcommand: PlexCliCmd,
 }
 
@@ -45,8 +47,6 @@ pub struct Help {
 #[derive(Debug)]
 pub struct Wait {
     pub delay: Option<u32>,
-    pub server: Option<String>,
-    pub token: Option<String>,
     pub timeout: Option<u32>,
 }
 
@@ -69,5 +69,21 @@ impl Help {
     pub(crate) fn run(self) -> anyhow::Result<()> {
         println!("{}", PlexCli::HELP);
         Ok(())
+    }
+}
+
+impl PlexCli {
+    pub async fn run(self) -> anyhow::Result<()> {
+        let server = self
+            .server
+            .clone()
+            .unwrap_or_else(|| "http://127.0.0.1:32400".to_owned());
+
+        let auth_token = self.token.unwrap_or_default();
+
+        match self.subcommand {
+            PlexCliCmd::Help(cmd) => cmd.run(),
+            PlexCliCmd::Wait(cmd) => cmd.run(&server, &auth_token).await,
+        }
     }
 }
