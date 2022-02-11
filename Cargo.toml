@@ -1,5 +1,8 @@
 [workspace]
 
 members = [
-    "crates/*"
+    "crates/plex-api",
+    "crates/plex-api-test-helper",
+    "crates/plex-cli",
+    "crates/xtask",
 ]

@@ -4,6 +4,7 @@
     "bump-minor-pre-major": true,
     "bump-patch-for-minor-pre-major": true,
     "separate-pull-requests": true,
+    "plugins": ["cargo-workspace"],
     "packages": {
         "crates/plex-api": {
             "package-name": "plex-api"

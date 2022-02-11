@@ -1296,7 +1296,7 @@ checksum = "58893f751c9b0412871a09abd62ecd2a00298c6c83befa223ef98c52aef40cbe"
 
 [[package]]
 name = "plex-api"
-version = "0.0.3"
+version = "0.0.4"
 dependencies = [
  "async-std",
  "cargo-husky",
