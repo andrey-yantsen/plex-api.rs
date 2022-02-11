@@ -176,25 +176,39 @@ impl<'de> Deserialize<'de> for Setting {
                         ),
                         suggested_values,
                     }),
-                    "int" => Ok(Setting {
-                        id,
-                        label,
-                        summary,
-                        hidden,
-                        advanced,
-                        group,
-                        value: super::Value::Int(
-                            value
-                                .as_i64()
-                                .ok_or_else(|| de::Error::custom("int expected"))?,
-                        ),
-                        default: super::Value::Int(
-                            default
-                                .as_i64()
-                                .ok_or_else(|| de::Error::custom("int expected"))?,
-                        ),
-                        suggested_values,
-                    }),
+                    "int" => {
+                        fn int_or_err<E>(v: serde_json::Value, id: &str) -> Result<i64, E>
+                        where
+                            E: de::Error,
+                        {
+                            match v {
+                                serde_json::Value::Number(n) => n
+                                    .as_i64()
+                                    .ok_or_else(|| de::Error::custom(format_args!("invalid value for {}: {}, expected numeric or numeric string", id, n))),
+
+                                serde_json::Value::String(s) => s
+                                    .parse::<i64>()
+                                    .map_err(|_| de::Error::custom(format_args!("invalid value for {}: \"{}\", expected numeric or numeric string", id, s))),
+
+                                _ => Err(de::Error::custom(format_args!("invalid value for {}: {:?}, expected numeric or numeric string", id, v))),
+                            }
+                        }
+
+                        let value: i64 = int_or_err(value, &id)?;
+                        let default: i64 = int_or_err(default, &id)?;
+
+                        Ok(Setting {
+                            id,
+                            label,
+                            summary,
+                            hidden,
+                            advanced,
+                            group,
+                            value: super::Value::Int(value),
+                            default: super::Value::Int(default),
+                            suggested_values,
+                        })
+                    }
                     "text" => Ok(Setting {
                         id,
                         label,
@@ -216,26 +230,39 @@ impl<'de> Deserialize<'de> for Setting {
                         ),
                         suggested_values,
                     }),
-                    "double" => Ok(Setting {
-                        id,
-                        label,
-                        summary,
-                        hidden,
-                        advanced,
-                        group,
-                        value: super::Value::Double(
-                            value
-                                .as_f64()
-                                .ok_or_else(|| de::Error::custom("double expected"))?,
-                        ),
-                        default: super::Value::Double(
-                            default
-                                .as_f64()
-                                .ok_or_else(|| de::Error::custom("double expected"))?
-                                .to_owned(),
-                        ),
-                        suggested_values,
-                    }),
+                    "double" => {
+                        fn double_or_err<E>(v: serde_json::Value, id: &str) -> Result<f64, E>
+                        where
+                            E: de::Error,
+                        {
+                            match v {
+                                serde_json::Value::Number(n) => n
+                                    .as_f64()
+                                    .ok_or_else(|| de::Error::custom(format_args!("invalid value for {}: {}, expected numeric or numeric string", id, n))),
+
+                                serde_json::Value::String(s) => s
+                                    .parse::<f64>()
+                                    .map_err(|_| de::Error::custom(format_args!("invalid value for {}: \"{}\", expected numeric or numeric string", id, s))),
+
+                                _ => Err(de::Error::custom(format_args!("invalid value for {}: {:?}, expected numeric or numeric string", id, v))),
+                            }
+                        }
+
+                        let value: f64 = double_or_err(value, &id)?;
+                        let default: f64 = double_or_err(default, &id)?;
+
+                        Ok(Setting {
+                            id,
+                            label,
+                            summary,
+                            hidden,
+                            advanced,
+                            group,
+                            value: super::Value::Double(value),
+                            default: super::Value::Double(default),
+                            suggested_values,
+                        })
+                    }
                     _ => Err(de::Error::unknown_variant(
                         &r#type,
                         &["bool", "int", "text", "double"],
