@@ -115,3 +115,10 @@ impl Xtask {
     }
 }
 // generated end
+
+impl Help {
+    pub(crate) fn run(self) -> anyhow::Result<()> {
+        println!("{}", Xtask::HELP);
+        Ok(())
+    }
+}

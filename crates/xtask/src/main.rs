@@ -24,10 +24,7 @@ fn main() -> Result<()> {
     let flags = flags::Xtask::from_env()?;
 
     match flags.subcommand {
-        flags::XtaskCmd::Help(_) => {
-            println!("{}", flags::Xtask::HELP);
-            Ok(())
-        }
+        flags::XtaskCmd::Help(cmd) => cmd.run(),
         flags::XtaskCmd::Test(cmd) => cmd.run(),
         flags::XtaskCmd::PlexData(cmd) => cmd.run(),
         flags::XtaskCmd::GetLastPlexTags(cmd) => cmd.run(),
