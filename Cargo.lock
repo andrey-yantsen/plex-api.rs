@@ -1287,7 +1287,7 @@ checksum = "58893f751c9b0412871a09abd62ecd2a00298c6c83befa223ef98c52aef40cbe"
 
 [[package]]
 name = "plex-api"
-version = "0.0.4"
+version = "0.0.5"
 dependencies = [
  "async-std",
  "cargo-husky",
@@ -1313,7 +1313,7 @@ dependencies = [
 
 [[package]]
 name = "plex-api-test-helper"
-version = "0.0.0"
+version = "0.0.1"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -1322,7 +1322,7 @@ dependencies = [
 
 [[package]]
 name = "plex-cli"
-version = "0.0.1"
+version = "0.1.0"
 dependencies = [
  "anyhow",
  "plex-api",
@@ -2264,7 +2264,7 @@ checksum = "4916a4a3cad759e499a3620523bf9545cc162d7a06163727dde97ce9aaa4cf39"
 
 [[package]]
 name = "xtask"
-version = "0.0.0"
+version = "0.0.1"
 dependencies = [
  "anyhow",
  "flate2",
