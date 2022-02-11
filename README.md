@@ -22,9 +22,9 @@ stub media, and assigns this shiny new server to MyPlex account, if required.
 # Supported plex versions
 
 The codebase is regularly tested against three different PMS versions. The
-exact list of the releases is generated automatically for every test run,
-to keep up with all the recent PMS versions. We take every other minor release
-from the latest 6 stable releases. At the moment the following versions are
+exact list of the releases is generated automatically on a daily basis, to keep
+up with all the recent PMS versions. We take every other minor release from
+the latest 5 minor releases. At the moment the following versions are
 tested:
 
 <!-- plex releases list start -->
