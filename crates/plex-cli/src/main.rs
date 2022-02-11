@@ -1,13 +1,12 @@
-use tracing::Level;
-use tracing_subscriber::FmtSubscriber;
+mod flags;
+mod wait;
 
 #[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let subscriber = FmtSubscriber::builder()
-        .with_max_level(Level::INFO)
-        .finish();
+async fn main() -> anyhow::Result<()> {
+    let flags = flags::PlexCli::from_env()?;
 
-    tracing::subscriber::set_global_default(subscriber).expect("setting default subscriber failed");
-
-    Ok(())
+    match flags.subcommand {
+        flags::PlexCliCmd::Help(cmd) => cmd.run(),
+        flags::PlexCliCmd::Wait(cmd) => cmd.run().await,
+    }
 }
