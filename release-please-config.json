@@ -1,0 +1,59 @@
+{
+    "bootstrap-sha": "3cd2bae3e91b8b70dfc566cd8c33b88f7ef69b8f",
+    "release-type": "rust",
+    "bump-minor-pre-major": true,
+    "bump-patch-for-minor-pre-major": true,
+    "separate-pull-requests": true,
+    "packages": {
+        "crates/plex-api": {
+            "package-name": "plex-api"
+        }
+    },
+    "changelog-sections": [
+        {
+            "type": "feat",
+            "section": "Features",
+            "hidden": false
+        },
+        {
+            "type": "fix",
+            "section": "Bug Fixes",
+            "hidden": false
+        },
+        {
+            "type": "chore",
+            "section": "Miscellaneous",
+            "hidden": false
+        },
+        {
+            "type": "test",
+            "section": "Tests",
+            "hidden": true
+        },
+        {
+            "type": "ci",
+            "section": "Continuous Integration",
+            "hidden": true
+        },
+        {
+            "type": "build",
+            "section": "Build System",
+            "hidden": true
+        },
+        {
+            "type": "docs",
+            "section": "Documentation",
+            "hidden": true
+        },
+        {
+            "type": "refactor",
+            "section": "Code Refactoring",
+            "hidden": true
+        },
+        {
+            "type": "style",
+            "section": "Styles",
+            "hidden": true
+        }
+    ]
+}
