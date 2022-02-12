@@ -12,6 +12,11 @@ xflags::xflags! {
         cmd test {
             /// A tag from https://hub.docker.com/r/plexinc/pms-docker/tags to use for the tests.
             /// By default, `latest` is used.
+            ///
+            /// WARNING! When you specify a tag without defining `--plex-data-path`
+            ///          the default path will be changed to `plex-data-{tag}`.
+            ///          This allows to run tests over multiple docker tags in
+            ///          parallel.
             optional --docker-tag tag: String
 
             /// Use the provided authentication token to run the functional tests.
@@ -30,12 +35,18 @@ xflags::xflags! {
 
             /// If passed, the online tests will run with the `tests_deny_unknown_fields` feature enabled.
             optional --deny-unknown-fields
+
+            /// Path where to store the data. See `plex-data` subcommand for details.
+            optional --plex-data-path path: String
         }
 
         /// Generate the data files to be fed into the Plex instance during testing.
         cmd plex-data {
             /// Replace everything with `plex-stub-data` folder.
             optional --replace
+
+            /// Path where to store the data. Defaults to `plex-data`.
+            optional -d, --plex-data-path path: String
 
             /// Print every copied filename.
             optional --verbose
@@ -86,11 +97,13 @@ pub struct Test {
     pub online: bool,
     pub client_id: Option<String>,
     pub deny_unknown_fields: bool,
+    pub plex_data_path: Option<String>,
 }
 
 #[derive(Debug)]
 pub struct PlexData {
     pub replace: bool,
+    pub plex_data_path: Option<String>,
     pub verbose: bool,
 }
 

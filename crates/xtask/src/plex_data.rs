@@ -102,19 +102,24 @@ const LIBRARY_AUDIO: [(&str, &str); 9] = [
 
 impl flags::PlexData {
     pub(crate) fn run(self) -> anyhow::Result<()> {
-        let plex_data_path = Path::new("plex-data");
+        let path = match self.plex_data_path.as_ref() {
+            Some(path) => path.as_str(),
+            None => "plex-data",
+        };
+
+        let plex_data_path = Path::new(path);
         let plex_stub_data_path = Path::new("plex-stub-data");
         let plex_stub_data_media_path = plex_stub_data_path.join("media");
 
         if self.replace && plex_data_path.exists() {
-            remove_dir_all("plex-data")?;
+            remove_dir_all(plex_data_path)?;
         }
 
-        create_dir_all("plex-data")?;
+        create_dir_all(plex_data_path)?;
 
         let mut is_hardlink_supported = false;
-        if let Ok(()) = hard_link("Cargo.lock", "plex-data/Cargo.lock") {
-            remove_file("plex-data/Cargo.lock")?;
+        if let Ok(()) = hard_link("Cargo.lock", plex_data_path.join("Cargo.lock")) {
+            remove_file(plex_data_path.join("Cargo.lock"))?;
             is_hardlink_supported = true;
         }
 

@@ -26,14 +26,24 @@ impl flags::Test {
 
             let _client_id = pushenv("X_PLEX_CLIENT_IDENTIFIER", &client_id);
 
+            let plex_data_path = if let Some(plex_data_path) = self.plex_data_path.as_ref() {
+                plex_data_path.to_owned()
+            } else {
+                match self.docker_tag.as_ref() {
+                    Some(t) => format!("plex-data-{}", t),
+                    None => "plex-data".to_owned(),
+                }
+            };
+
             if !self.online || self.token.is_none() || self.token.as_ref().unwrap().is_empty() {
-                cmd!("cargo xtask plex-data --replace").run()?;
-                self.integration_tests("", "")?;
+                cmd!("cargo xtask plex-data --replace --plex-data-path {plex_data_path}").run()?;
+                self.integration_tests(&plex_data_path, "", "")?;
             }
 
             match self.token.as_ref() {
                 Some(token) if !token.is_empty() => {
-                    cmd!("cargo xtask plex-data --replace").run()?;
+                    cmd!("cargo xtask plex-data --replace --plex-data-path {plex_data_path}")
+                        .run()?;
                     let _plex_token = pushenv("PLEX_API_AUTH_TOKEN", token);
 
                     print!("// Requesting claim token... ");
@@ -54,7 +64,7 @@ impl flags::Test {
                     println!("done!");
                     let _ = std::io::stdout().flush();
 
-                    self.integration_tests(&claim_token.to_string(), token)?;
+                    self.integration_tests(&plex_data_path, &claim_token.to_string(), token)?;
                 }
                 _ => (),
             }
@@ -63,7 +73,12 @@ impl flags::Test {
         Ok(())
     }
 
-    fn integration_tests(&self, claim_token: &str, auth_token: &str) -> anyhow::Result<()> {
+    fn integration_tests(
+        &self,
+        plex_data_path: &str,
+        claim_token: &str,
+        auth_token: &str,
+    ) -> anyhow::Result<()> {
         let image_tag = self
             .docker_tag
             .clone()
@@ -75,13 +90,16 @@ impl flags::Test {
 
         #[cfg_attr(windows, allow(unused_mut))]
         let mut docker_image = docker_image
-            .with_volume((format!("{}/plex-data/media", cwd()?.display()), "/data"))
             .with_volume((
-                format!("{}/plex-data/config/Library", cwd()?.display()),
+                format!("{}/{}/media", cwd()?.display(), plex_data_path),
+                "/data",
+            ))
+            .with_volume((
+                format!("{}/{}/config/Library", cwd()?.display(), plex_data_path),
                 "/config/Library",
             ))
             .with_volume((
-                format!("{}/plex-data/transcode", cwd()?.display()),
+                format!("{}/{}/transcode", cwd()?.display(), plex_data_path),
                 "/transcode",
             ))
             .with_env_var(("TZ", "UTC"))
