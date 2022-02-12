@@ -14,7 +14,7 @@ pub async fn server_anonymous(client_anonymous: Mocked<HttpClient>) -> Mocked<Se
         when.method(GET).path(SERVER_MEDIA_PROVIDERS);
         then.status(200)
             .header("content-type", "text/json")
-            .body_from_file("tests/files/server/media/providers_free.json");
+            .body_from_file("tests/mocks/server/media/providers_free.json");
     });
 
     let ret = Server::new(mock_server.base_url(), client_anonymous)
@@ -34,7 +34,7 @@ pub async fn server_authenticated(client_authenticated: Mocked<HttpClient>) -> M
         when.method(GET).path(SERVER_MEDIA_PROVIDERS);
         then.status(200)
             .header("content-type", "text/json")
-            .body_from_file("tests/files/server/media/providers_unclaimed.json");
+            .body_from_file("tests/mocks/server/media/providers_unclaimed.json");
     });
 
     let ret = Server::new(mock_server.base_url(), client_authenticated)

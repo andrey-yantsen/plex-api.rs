@@ -15,7 +15,7 @@ mod offline {
             when.method(GET).path(SERVER_PREFS);
             then.status(200)
                 .header("content-type", "text/json")
-                .body_from_file("tests/files/server/prefs.json");
+                .body_from_file("tests/mocks/server/prefs.json");
         });
 
         let mut prefs = server

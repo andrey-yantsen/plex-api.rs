@@ -21,7 +21,7 @@ mod offline {
             when.method(GET).path(MYPLEX_PRIVACY_PATH);
             then.status(200)
                 .header("content-type", "text/json")
-                .body_from_file("tests/files/myplex/api/v2/user/privacy.json");
+                .body_from_file("tests/mocks/myplex/api/v2/user/privacy.json");
         });
 
         let privacy_result = myplex.privacy().await;
@@ -45,7 +45,7 @@ mod offline {
                 .x_www_form_urlencoded_tuple("optOutLibraryStats", "0");
             then.status(204)
                 .header("content-type", "text/json")
-                .body_from_file("tests/files/myplex/api/v2/user/privacy.json");
+                .body_from_file("tests/mocks/myplex/api/v2/user/privacy.json");
         });
 
         let privacy_update_result = privacy.update(false, false).await;
@@ -89,7 +89,7 @@ mod offline {
             when.method(GET).path(MYPLEX_PRIVACY_PATH);
             then.status(200)
                 .header("content-type", "text/json")
-                .body_from_file("tests/files/myplex/api/v2/user/privacy.json");
+                .body_from_file("tests/mocks/myplex/api/v2/user/privacy.json");
         });
 
         let mut privacy_result = myplex
@@ -114,7 +114,7 @@ mod offline {
             when.method(GET).path(MYPLEX_CLAIM_TOKEN_PATH);
             then.status(200)
                 .header("content-type", "text/json")
-                .body_from_file("tests/files/myplex/api/claim/token.json");
+                .body_from_file("tests/mocks/myplex/api/claim/token.json");
         });
 
         let token = myplex

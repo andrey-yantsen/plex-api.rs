@@ -23,7 +23,7 @@ mod offline {
                 .x_www_form_urlencoded_tuple("rememberMe", "true");
             then.status(200)
                 .header("content-type", "text/json")
-                .body_from_file("tests/files/myplex/api/v2/user/user_info_free.json");
+                .body_from_file("tests/mocks/myplex/api/v2/user/user_info_free.json");
         });
 
         let plex_result = MyPlexBuilder::default()
@@ -54,7 +54,7 @@ mod offline {
                 .x_www_form_urlencoded_tuple("rememberMe", "true");
             then.status(200)
                 .header("content-type", "text/json")
-                .body_from_file("tests/files/myplex/api/v2/user/user_info_plexpass.json");
+                .body_from_file("tests/mocks/myplex/api/v2/user/user_info_plexpass.json");
         });
 
         let plex_result = MyPlexBuilder::default()
@@ -113,7 +113,7 @@ mod offline {
                 .x_www_form_urlencoded_tuple("verificationCode", "123456");
             then.status(200)
                 .header("content-type", "text/json")
-                .body_from_file("tests/files/myplex/api/v2/user/user_info_free.json");
+                .body_from_file("tests/mocks/myplex/api/v2/user/user_info_free.json");
         });
 
         let plex_result = MyPlexBuilder::default()
@@ -134,11 +134,11 @@ mod offline {
     }
 
     #[plex_api_test_helper::offline_test]
-    #[case::free_user("tests/files/myplex/api/v2/user/user_info_free.json")]
-    #[case::free_user_managed_guest("tests/files/myplex/api/v2/user/user_info_free_guest.json")]
-    #[case::plexpass_user("tests/files/myplex/api/v2/user/user_info_plexpass.json")]
+    #[case::free_user("tests/mocks/myplex/api/v2/user/user_info_free.json")]
+    #[case::free_user_managed_guest("tests/mocks/myplex/api/v2/user/user_info_free_guest.json")]
+    #[case::plexpass_user("tests/mocks/myplex/api/v2/user/user_info_plexpass.json")]
     #[case::plexpass_user_managed_guest(
-        "tests/files/myplex/api/v2/user/user_info_plexpass_guest.json"
+        "tests/mocks/myplex/api/v2/user/user_info_plexpass_guest.json"
     )]
     async fn signin_with_token(
         client_authenticated: Mocked<HttpClient>,

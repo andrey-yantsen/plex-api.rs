@@ -20,7 +20,7 @@ mod offline {
             when.method(GET).path(MYPLEX_DEVICES);
             then.status(200)
                 .header("content-type", "application/xml")
-                .body_from_file("tests/files/myplex/devices.xml");
+                .body_from_file("tests/mocks/myplex/devices.xml");
         });
 
         let device_manager = myplex.device_manager();
@@ -39,7 +39,7 @@ mod offline {
             when.method(GET).path(MYPLEX_RESOURCES);
             then.status(200)
                 .header("content-type", "application/xml")
-                .body_from_file("tests/files/myplex/api/resources.xml");
+                .body_from_file("tests/mocks/myplex/api/resources.xml");
         });
 
         let device_manager = myplex.device_manager();
@@ -53,7 +53,7 @@ mod offline {
     async fn connection_from_device(#[future] myplex: Mocked<MyPlex>) {
         let myplex = myplex.await;
         let (myplex, mock_server) = myplex.split();
-        let body = include_str!("files/myplex/api/resources.xml")
+        let body = include_str!("mocks/myplex/api/resources.xml")
             .replace("http://1.0.0.2:443", &mock_server.base_url());
 
         let mut resources_mock = mock_server.mock(|when, then| {
@@ -67,7 +67,7 @@ mod offline {
             when.method(GET).path(SERVER_MEDIA_PROVIDERS);
             then.status(200)
                 .header("content-type", "application/json")
-                .body_from_file("tests/files/server/media/providers_free.json");
+                .body_from_file("tests/mocks/server/media/providers_free.json");
         });
 
         let device_manager = myplex.device_manager();

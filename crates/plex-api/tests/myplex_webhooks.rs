@@ -16,7 +16,7 @@ mod offline {
             when.method(GET).path(MYPLEX_WEBHOOKS_PATH);
             then.status(200)
                 .header("content-type", "text/json")
-                .body_from_file("tests/files/myplex/api/v2/user/webhooks_none.json");
+                .body_from_file("tests/mocks/myplex/api/v2/user/webhooks_none.json");
         });
 
         let webhook_manager_result = myplex.webhook_manager().await;
@@ -44,7 +44,7 @@ mod offline {
             when.method(GET).path(MYPLEX_WEBHOOKS_PATH);
             then.status(200)
                 .header("content-type", "text/json")
-                .body_from_file("tests/files/myplex/api/v2/user/webhooks_none.json");
+                .body_from_file("tests/mocks/myplex/api/v2/user/webhooks_none.json");
         });
 
         let webhook_manager_result = myplex.webhook_manager().await;
@@ -89,7 +89,7 @@ mod offline {
             when.method(GET).path(MYPLEX_WEBHOOKS_PATH);
             then.status(200)
                 .header("content-type", "text/json")
-                .body_from_file("tests/files/myplex/api/v2/user/webhooks_two.json");
+                .body_from_file("tests/mocks/myplex/api/v2/user/webhooks_two.json");
         });
 
         let webhook_manager_result = myplex.webhook_manager().await;
@@ -155,7 +155,7 @@ mod offline {
             when.method(GET).path(MYPLEX_WEBHOOKS_PATH);
             then.status(200)
                 .header("content-type", "text/json")
-                .body_from_file("tests/files/myplex/api/v2/user/webhooks_none.json");
+                .body_from_file("tests/mocks/myplex/api/v2/user/webhooks_none.json");
         });
 
         let webhook_manager_result = myplex.webhook_manager().await;
@@ -171,7 +171,7 @@ mod offline {
             when.method(GET).path(MYPLEX_WEBHOOKS_PATH);
             then.status(200)
                 .header("content-type", "text/json")
-                .body_from_file("tests/files/myplex/api/v2/user/webhooks_two.json");
+                .body_from_file("tests/mocks/myplex/api/v2/user/webhooks_two.json");
         });
 
         let webhook_manager_refresh_result = webhook_manager.refresh().await;
@@ -191,7 +191,7 @@ mod offline {
             when.method(GET).path(MYPLEX_WEBHOOKS_PATH);
             then.status(200)
                 .header("content-type", "text/json")
-                .body_from_file("tests/files/myplex/api/v2/user/webhooks_two.json");
+                .body_from_file("tests/mocks/myplex/api/v2/user/webhooks_two.json");
         });
 
         let webhook_manager_result = myplex.webhook_manager().await;

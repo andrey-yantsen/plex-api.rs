@@ -11,9 +11,9 @@ mod offline {
     };
 
     #[plex_api_test_helper::offline_test]
-    #[case::free("tests/files/server/media/providers_free.json")]
-    #[case::plexpass("tests/files/server/media/providers_plexpass.json")]
-    #[case::unclaimed("tests/files/server/media/providers_unclaimed.json")]
+    #[case::free("tests/mocks/server/media/providers_free.json")]
+    #[case::plexpass("tests/mocks/server/media/providers_plexpass.json")]
+    #[case::unclaimed("tests/mocks/server/media/providers_unclaimed.json")]
     async fn load_server(client_authenticated: Mocked<HttpClient>, #[case] mock_file: &str) {
         let (client_authenticated, mock_server) = client_authenticated.split();
 
@@ -43,7 +43,7 @@ mod offline {
                 .header("X-Plex-Token", "fixture_auth_token");
             then.status(200)
                 .header("content-type", "text/json")
-                .body_from_file("tests/files/myplex/api/v2/user/user_info_free_guest.json");
+                .body_from_file("tests/mocks/myplex/api/v2/user/user_info_free_guest.json");
         });
 
         let plex_result = server
