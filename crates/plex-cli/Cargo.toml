@@ -10,7 +10,7 @@ description = "Command line interface for managing Plex Media Server"
 independent = true
 
 [dependencies]
-plex-api = { path = "../plex-api", version = "0.0.4" }
+plex-api = { version = "0.0.4", path = "../plex-api" }
 tokio = { version = "^1.16", features = ["macros", "rt-multi-thread", "time"] }
 anyhow = "^1.0"
 xflags = "^0.2"
