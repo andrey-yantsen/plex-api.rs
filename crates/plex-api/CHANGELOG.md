@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.0.5](https://github.com/andrey-yantsen/plex-api.rs/compare/plex-api-v0.0.4...plex-api-v0.0.5) (2022-02-12)
+
+
+### Features
+
+* **srv:** add method for getting all settings ([fafb427](https://github.com/andrey-yantsen/plex-api.rs/commit/fafb42743412ad7f49961624b48baa9d263d868c))
+
 ### [0.0.4](https://github.com/andrey-yantsen/plex-api.rs/compare/plex-api-v0.0.3...plex-api-v0.0.4) (2022-02-11)
 
 
