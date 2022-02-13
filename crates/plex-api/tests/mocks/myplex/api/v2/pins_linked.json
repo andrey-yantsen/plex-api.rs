@@ -1,0 +1,24 @@
+{
+    "id": 111222333,
+    "code": "CODE",
+    "product": "0",
+    "trusted": false,
+    "clientIdentifier": "ClientId",
+    "location": {
+        "code": "GB",
+        "european_union_member": false,
+        "continent_code": "EU",
+        "country": "United Kingdom",
+        "city": "London",
+        "time_zone": "Europe/London",
+        "postal_code": "N19",
+        "in_privacy_restricted_country": true,
+        "subdivisions": "England, Windsor and Maidenhead",
+        "coordinates": "51.000, -1"
+    },
+    "expiresIn": 900,
+    "createdAt": "2022-02-01T00:00:00Z",
+    "expiresAt": "2022-02-01T00:15:00Z",
+    "authToken": "auth_token",
+    "newRegistration": false
+}

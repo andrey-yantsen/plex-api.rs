@@ -63,6 +63,10 @@ pub enum Error {
     RequestedSettingNotFound(String),
     #[error("You can't set setting to a value of a different type.")]
     IncompatibleSettingValues,
+    #[error("Provided pin is already expired.")]
+    PinExpired,
+    #[error("Provided pin is not linked yet.")]
+    PinNotLinked,
 }
 
 const PLEX_API_ERROR_CODE_AUTH_OTP_REQUIRED: i32 = 1029;

@@ -13,9 +13,7 @@ pub use error::Error;
 pub use http_client::HttpClient;
 pub use http_client::HttpClientBuilder;
 pub use media_container::preferences::Value as SettingValue;
-pub use myplex::device;
-pub use myplex::MyPlex;
-pub use myplex::MyPlexBuilder;
+pub use myplex::{device, pin::PinManager, MyPlex, MyPlexBuilder};
 pub use player::Player;
 pub use server::Server;
 

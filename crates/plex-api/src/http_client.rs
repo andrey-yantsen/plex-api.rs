@@ -73,7 +73,7 @@ pub struct HttpClient {
 
 impl HttpClient {
     fn prepare_request(&self) -> Builder {
-        let mut request = HttpRequest::builder()
+        self.prepare_request_min()
             .header("X-Plex-Provides", &self.x_plex_provides)
             .header("X-Plex-Platform", &self.x_plex_platform)
             .header("X-Plex-Platform-Version", &self.x_plex_platform_version)
@@ -81,8 +81,12 @@ impl HttpClient {
             .header("X-Plex-Version", &self.x_plex_version)
             .header("X-Plex-Device", &self.x_plex_device)
             .header("X-Plex-Device-Name", &self.x_plex_device_name)
-            .header("X-Plex-Client-Identifier", &self.x_plex_client_identifier)
-            .header("X-Plex-Sync-Version", &self.x_plex_sync_version);
+            .header("X-Plex-Sync-Version", &self.x_plex_sync_version)
+    }
+
+    fn prepare_request_min(&self) -> Builder {
+        let mut request = HttpRequest::builder()
+            .header("X-Plex-Client-Identifier", &self.x_plex_client_identifier);
 
         if !self.x_plex_token.is_empty() {
             request = request.header("X-Plex-Token", &self.x_plex_token);
@@ -108,6 +112,21 @@ impl HttpClient {
         }
     }
 
+    /// Does the same as HttpClient::post(), but appends only bare minimum
+    /// headers: `X-Plex-Client-Identifier` and `X-Plex-Token`.
+    pub fn postm<T>(&self, path: T) -> RequestBuilder<'_, T>
+    where
+        PathAndQuery: TryFrom<T>,
+        <PathAndQuery as TryFrom<T>>::Error: Into<http::Error>,
+    {
+        RequestBuilder {
+            http_client: &self.http_client,
+            base_url: self.api_url.clone(),
+            path_and_query: path,
+            request_builder: self.prepare_request_min().method("POST"),
+        }
+    }
+
     pub fn get<T>(&self, path: T) -> RequestBuilder<'_, T>
     where
         PathAndQuery: TryFrom<T>,
@@ -118,6 +137,21 @@ impl HttpClient {
             base_url: self.api_url.clone(),
             path_and_query: path,
             request_builder: self.prepare_request().method("GET"),
+        }
+    }
+
+    /// Does the same as HttpClient::get(), but appends only bare minimum
+    /// headers: `X-Plex-Client-Identifier` and `X-Plex-Token`.
+    pub fn getm<T>(&self, path: T) -> RequestBuilder<'_, T>
+    where
+        PathAndQuery: TryFrom<T>,
+        <PathAndQuery as TryFrom<T>>::Error: Into<http::Error>,
+    {
+        RequestBuilder {
+            http_client: &self.http_client,
+            base_url: self.api_url.clone(),
+            path_and_query: path,
+            request_builder: self.prepare_request_min().method("GET"),
         }
     }
 
@@ -134,7 +168,37 @@ impl HttpClient {
         }
     }
 
+    /// Does the same as HttpClient::put(), but appends only bare minimum
+    /// headers: `X-Plex-Client-Identifier` and `X-Plex-Token`.
+    pub fn putm<T>(&self, path: T) -> RequestBuilder<'_, T>
+    where
+        PathAndQuery: TryFrom<T>,
+        <PathAndQuery as TryFrom<T>>::Error: Into<http::Error>,
+    {
+        RequestBuilder {
+            http_client: &self.http_client,
+            base_url: self.api_url.clone(),
+            path_and_query: path,
+            request_builder: self.prepare_request_min().method("PUT"),
+        }
+    }
+
     pub fn delete<T>(&self, path: T) -> RequestBuilder<'_, T>
+    where
+        PathAndQuery: TryFrom<T>,
+        <PathAndQuery as TryFrom<T>>::Error: Into<http::Error>,
+    {
+        RequestBuilder {
+            http_client: &self.http_client,
+            base_url: self.api_url.clone(),
+            path_and_query: path,
+            request_builder: self.prepare_request().method("DELETE"),
+        }
+    }
+
+    /// Does the same as HttpClient::delete(), but appends only bare minimum
+    /// headers: `X-Plex-Client-Identifier` and `X-Plex-Token`.
+    pub fn deletem<T>(&self, path: T) -> RequestBuilder<'_, T>
     where
         PathAndQuery: TryFrom<T>,
         <PathAndQuery as TryFrom<T>>::Error: Into<http::Error>,
