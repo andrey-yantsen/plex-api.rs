@@ -1,0 +1,44 @@
+[{
+    "identifier": "tv.plex.provider.epg",
+    "baseURL": "https://epg.provider.plex.tv",
+    "title": "Live TV",
+    "icon": "https://provider-static.plex.tv/icons/epg-560.svg",
+    "sourceTitle": "On Plex",
+    "token": "token"
+}, {
+    "identifier": "tv.plex.provider.vod",
+    "baseURL": "https://vod.provider.plex.tv",
+    "title": "Movies & TV",
+    "icon": "https://provider-static.plex.tv/icons/vod-560.svg",
+    "sourceTitle": "On Plex",
+    "token": "token"
+}, {
+    "identifier": "tv.plex.provider.webshows",
+    "baseURL": "https://webshows.provider.plex.tv",
+    "title": "Web Shows",
+    "icon": "https://provider-static.plex.tv/icons/webshows-560.svg",
+    "sourceTitle": null,
+    "token": "token"
+}, {
+    "identifier": "tv.plex.provider.podcasts",
+    "baseURL": "https://podcasts.provider.plex.tv",
+    "title": "Podcasts",
+    "icon": "https://provider-static.plex.tv/icons/podcasts-560.svg",
+    "sourceTitle": null,
+    "token": "token"
+}, {
+    "identifier": "tv.plex.provider.music",
+    "baseURL": "https://music.provider.plex.tv",
+    "title": "Music",
+    "icon": "https://provider-static.plex.tv/icons/music-560.svg",
+    "sourceTitle": "On TIDAL",
+    "token": "token"
+}, {
+    "identifier": "tv.plex.provider.metadata",
+    "baseURL": "https://metadata.provider.plex.tv",
+    "title": "Metadata",
+    "icon": "https://provider-static.plex.tv/icons/metadata-560.svg",
+    "sourceTitle": null,
+    "token": "token"
+}]
+

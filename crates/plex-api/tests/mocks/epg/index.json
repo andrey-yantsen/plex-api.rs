@@ -1,0 +1,117 @@
+{
+    "MediaProvider": {
+        "icon": "https://provider-static.plex.tv/icons/epg-560.svg",
+        "identifier": "tv.plex.provider.epg",
+        "protocols": [
+            "livetv"
+        ],
+        "version": "1.3.0",
+        "sourceTitle": "On Plex",
+        "title": "Live TV",
+        "Feature": [
+            {
+                "type": "metadata",
+                "key": "/library/metadata"
+            },
+            {
+                "type": "grid",
+                "key": "/grid",
+                "GridFilter": [
+                    {
+                        "key": "/grid/entertainment",
+                        "title": "Entertainment"
+                    },
+                    {
+                        "key": "/grid/movies",
+                        "title": "Movies"
+                    },
+                    {
+                        "key": "/grid/reality",
+                        "title": "Reality"
+                    },
+                    {
+                        "key": "/grid/news-and-opinion",
+                        "title": "News + Opinion"
+                    },
+                    {
+                        "key": "/grid/kids-and-family",
+                        "title": "Kids + Family"
+                    },
+                    {
+                        "key": "/grid/lifestyle",
+                        "title": "Lifestyle"
+                    },
+                    {
+                        "key": "/grid/sports",
+                        "title": "Sports"
+                    },
+                    {
+                        "key": "/grid/explore",
+                        "title": "Explore"
+                    },
+                    {
+                        "key": "/grid/comedy",
+                        "title": "Comedy"
+                    },
+                    {
+                        "key": "/grid/music",
+                        "title": "Music"
+                    },
+                    {
+                        "key": "/grid/gaming-and-anime",
+                        "title": "Gaming + Anime"
+                    },
+                    {
+                        "key": "/grid/en-espanol",
+                        "title": "En Español"
+                    }
+                ]
+            },
+            {
+                "type": "lineups",
+                "key": "/lineups"
+            },
+            {
+                "type": "timeline",
+                "key": "/timeline"
+            },
+            {
+                "public": true,
+                "type": "imagetranscoder",
+                "key": "https://images.plex.tv/photo"
+            },
+            {
+                "type": "promoted",
+                "key": "/hubs/promoted"
+            },
+            {
+                "type": "settings",
+                "key": "/settings"
+            },
+            {
+                "type": "content",
+                "key": "/library/sections",
+                "Directory": [
+                    {
+                        "id": "home",
+                        "icon": "https://provider-static.plex.tv/icons/epg-560.svg",
+                        "title": "Live TV",
+                        "type": "episode",
+                        "context": "content.home",
+                        "hubKey": "/hubs/sections/home",
+                        "Pivot": [
+                            {
+                                "context": "content.dvr.guide",
+                                "id": "epg.guide",
+                                "key": "view://dvr/guide",
+                                "symbol": "guide",
+                                "title": "Guide",
+                                "type": "view"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

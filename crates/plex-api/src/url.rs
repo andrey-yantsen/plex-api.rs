@@ -8,6 +8,15 @@ pub const MYPLEX_PRIVACY_PATH: &str = "/api/v2/user/privacy";
 pub const MYPLEX_WEBHOOKS_PATH: &str = "/api/v2/user/webhooks";
 pub const MYPLEX_DEVICES: &str = "/devices.xml";
 pub const MYPLEX_RESOURCES: &str = "/api/resources";
+pub const MYPLEX_FEATURES: &str = "/api/v2/features";
+pub const MYPLEX_COMPANIONS: &str = "/api/v2/companions";
+pub const MYPLEX_PROVIDERS: &str = "/media/providers";
+
+pub const MYPLEX_INVITES_REQUESTS: &str = "/api/invites/requests";
+pub const MYPLEX_INVITES_REQUESTED: &str = "/api/invites/requested";
+
+pub const MYPLED_SONOS_DOMAIN: &str = "https://sonos.plex.tv/";
+pub const MYPLEX_SONOS_RESOURCES: &str = "/resources";
 
 pub const MYPLEX_PINS: &str = "/api/v2/pins";
 pub const MYPLEX_PINS_LINK: &str = "/api/v2/pins/link.json";
