@@ -1810,7 +1810,7 @@ dependencies = [
 [[package]]
 name = "testcontainers"
 version = "0.12.0"
-source = "git+https://github.com/testcontainers/testcontainers-rs?branch=dev#2468e84c3a84e5d649b7ff95bddc56a6985ba546"
+source = "git+https://github.com/testcontainers/testcontainers-rs?branch=dev#a13426d19f02ea019debb75b7a7d3b84c547e95c"
 dependencies = [
  "bollard-stubs",
  "futures",
