@@ -41,9 +41,9 @@ jobs:
         uses: peter-evans/create-pull-request@v4
         with:
           token: "${{ secrets.PAT_GITHUB_PR }}"
-          commit-message: "feat: update Feature enum"
-          branch: "auto-pr/pms-update"
-          title: "Update the media_containr::server::Feature enum"
+          commit-message: "chore: update Feature enum"
+          branch: "auto-pr/feature-enum-update"
+          title: "Update the media_container::server::Feature enum"
           labels: "C-Dependencies"
       - name: Check outputs
         run: |
