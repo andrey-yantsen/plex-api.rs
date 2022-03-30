@@ -1,0 +1,122 @@
+{
+    "MediaProvider": {
+        "icon": "https://provider-static.plex.tv/icons/music-560.svg",
+        "identifier": "tv.plex.provider.music",
+        "protocols": [
+            "stream"
+        ],
+        "version": "1.3.0",
+        "sourceTitle": "On TIDAL",
+        "title": "Music",
+        "Feature": [
+            {
+                "type": "metadata",
+                "key": "/library/metadata"
+            },
+            {
+                "type": "actions",
+                "Action": [
+                    {
+                        "id": "pick",
+                        "key": "/actions/pick",
+                        "reverseKey": "/actions/unpick"
+                    },
+                    {
+                        "id": "rate",
+                        "key": "/actions/rate"
+                    },
+                    {
+                        "id": "save",
+                        "key": "/actions/save",
+                        "reverseKey": "/actions/unsave",
+                        "requires": [
+                            "tidal"
+                        ]
+                    }
+                ]
+            },
+            {
+                "requires": [
+                    "tidal"
+                ],
+                "type": "search",
+                "key": "/hubs/search"
+            },
+            {
+                "type": "timeline",
+                "key": "/timeline"
+            },
+            {
+                "public": true,
+                "type": "imagetranscoder",
+                "key": "https://images.plex.tv/photo"
+            },
+            {
+                "flavor": "universal",
+                "type": "playqueue",
+                "key": "https://play.provider.plex.tv/playQueues"
+            },
+            {
+                "flavor": "universal",
+                "requires": [
+                    "tidal"
+                ],
+                "type": "playlist",
+                "key": "/playlists"
+            },
+            {
+                "requires": [
+                    "tidal"
+                ],
+                "type": "promoted",
+                "key": "/hubs/promoted"
+            },
+            {
+                "type": "content",
+                "key": "/library/sections",
+                "Directory": [
+                    {
+                        "id": "tidal",
+                        "icon": "https://provider-static.plex.tv/icons/music-560.svg",
+                        "title": "Music",
+                        "type": "artist",
+                        "context": "content.tidal",
+                        "hubKey": "/hubs/sections/tidal",
+                        "Pivot": [
+                            {
+                                "context": "content.tidal",
+                                "id": "tidal.recommended",
+                                "key": "/hubs/sections/tidal",
+                                "symbol": "star",
+                                "title": "Recommended",
+                                "type": "hub"
+                            },
+                            {
+                                "context": "content.saved",
+                                "id": "tidal.saved",
+                                "key": "/library/sections/saved/all",
+                                "symbol": "music",
+                                "title": "My TIDAL",
+                                "type": "list",
+                                "requires": "tidal"
+                            },
+                            {
+                                "context": "content.playlists",
+                                "id": "tidal.playlists",
+                                "key": "/playlists",
+                                "symbol": "playlist",
+                                "title": "My TIDAL Playlists",
+                                "type": "list",
+                                "requires": "tidal"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "type": "match",
+                "key": "/library/metadata/matches"
+            }
+        ]
+    }
+}
