@@ -1,10 +1,10 @@
 use plex_api::MyPlexBuilder;
-use rpassword::prompt_password_stdout;
+use rpassword::prompt_password;
 
 #[async_std::main]
 async fn main() {
-    let token = prompt_password_stdout("Token: ").unwrap();
-    let code = prompt_password_stdout("Code: ").unwrap();
+    let token = prompt_password("Token: ").unwrap();
+    let code = prompt_password("Code: ").unwrap();
 
     MyPlexBuilder::default()
         .set_token(&token)
