@@ -571,6 +571,11 @@ pub enum Feature {
     )]
     Vod,
     #[serde(
+        rename = "vod_channels",
+        alias = "5050545e-95c6-4a25-b94e-1fe5a5a603d0"
+    )]
+    VodChannels,
+    #[serde(
         rename = "vod_cloudflare",
         alias = "68747f3a-ce13-46ce-9274-1e0544c9f500"
     )]
