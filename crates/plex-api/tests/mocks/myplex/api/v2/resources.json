@@ -1,0 +1,59 @@
+[{
+    "name": "Box",
+    "product": "Plex Media Server",
+    "productVersion": "1.25.5.5492-12f6b8c83",
+    "platform": "Linux",
+    "platformVersion": "5.4.0-88-generic",
+    "device": "Docker Container",
+    "clientIdentifier": "client_id2",
+    "createdAt": "2021-01-01T12:12:24Z",
+    "lastSeenAt": "2022-01-01T13:43:34Z",
+    "provides": "server",
+    "ownerId": null,
+    "sourceTitle": null,
+    "publicAddress": "2.2.2.2",
+    "accessToken": "auth_token",
+    "owned": true,
+    "home": false,
+    "synced": false,
+    "relay": true,
+    "presence": true,
+    "httpsRequired": false,
+    "publicAddressMatches": false,
+    "dnsRebindingProtection": false,
+    "natLoopbackSupported": false,
+    "connections": [{
+        "protocol": "https",
+        "address": "172.18.0.3",
+        "port": 32400,
+        "uri": "https://172-18-0-3.client-id2.plex.direct:32400",
+        "local": true,
+        "relay": false,
+        "IPv6": false
+    }, {
+        "protocol": "https",
+        "address": "example.org",
+        "port": 443,
+        "uri": "https://example.org:443",
+        "local": false,
+        "relay": false,
+        "IPv6": false
+    }, {
+        "protocol": "https",
+        "address": "2.2.2.2",
+        "port": 443,
+        "uri": "https://2-2-2-2.client-id2.plex.direct:443",
+        "local": false,
+        "relay": false,
+        "IPv6": false
+    }, {
+        "protocol": "https",
+        "address": "178.3.2.1",
+        "port": 8443,
+        "uri": "https://178-3-2-1.client-id2.plex.direct:8443",
+        "local": false,
+        "relay": true,
+        "IPv6": false
+    }]
+}]
+

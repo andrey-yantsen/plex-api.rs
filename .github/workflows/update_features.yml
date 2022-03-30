@@ -1,0 +1,51 @@
+---
+"on":
+  workflow_dispatch:
+  schedule:
+    - cron: 0 0 * * *
+
+name: Update known features list
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+      - name: Install stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+      - uses: Swatinem/rust-cache@v1.3.0
+        with:
+          sharedKey: cache
+      - name: Update json
+        run: |
+          curl -o 'crates/plex-api/tests/mocks/myplex/api/v2/features.json' \
+            -H 'Accept: application/json' \
+            https://plex.tv/api/v2/features\?X-Plex-Product\=Plex%20Web\&X-Plex-Version\=4.77.3\&X-Plex-Client-Identifier\=${{ secrets.X_PLEX_CLIENT_IDENTIFIER_FREE }}\&X-Plex-Platform\=Safari\&X-Plex-Platform-Version\=15.4\&X-Plex-Sync-Version\=2\&X-Plex-Features\=external-media%2Cindirect-media\&X-Plex-Model\=hosted\&X-Plex-Device\=OSX\&X-Plex-Device-Name\=Safari\&X-Plex-Device-Screen-Resolution\=1440x772%2C1440x900\&X-Plex-Token\=${{ secrets.PLEX_API_AUTH_TOKEN_PLEXPASS }}\&X-Plex-Language\=en
+      - name: Build plex-api
+        uses: actions-rs/cargo@v1
+        with:
+          command: build
+          args: "--package plex-api"
+      - name: Check if the enum was updated
+        run: |
+          if git diff --exit-code crates/plex-api/src/media_container/server/feature.rs
+          then
+            git checkout .
+          fi
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v4
+        with:
+          token: "${{ secrets.PAT_GITHUB_PR }}"
+          commit-message: "feat: update Feature enum"
+          branch: "auto-pr/pms-update"
+          title: "Update the media_containr::server::Feature enum"
+          labels: "C-Dependencies"
+      - name: Check outputs
+        run: |
+          echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
+          echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"

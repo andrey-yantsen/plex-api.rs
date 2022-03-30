@@ -1,0 +1,111 @@
+{
+    "MediaProvider": {
+        "icon": "https://provider-static.plex.tv/icons/podcasts-560.svg",
+        "identifier": "tv.plex.provider.podcasts",
+        "protocols": [
+            "stream"
+        ],
+        "version": "1.3.0",
+        "title": "Podcasts",
+        "Feature": [
+            {
+                "type": "metadata",
+                "key": "/library/metadata"
+            },
+            {
+                "type": "actions",
+                "Action": [
+                    {
+                        "id": "addToCatalog",
+                        "key": "/actions/addToCatalog"
+                    },
+                    {
+                        "id": "save",
+                        "key": "/actions/save",
+                        "reverseKey": "/actions/unsave"
+                    },
+                    {
+                        "id": "scrobble",
+                        "key": "/actions/scrobble",
+                        "reverseKey": "/actions/unscrobble"
+                    }
+                ]
+            },
+            {
+                "type": "activities",
+                "key": "/activities"
+            },
+            {
+                "type": "search",
+                "key": "/hubs/search"
+            },
+            {
+                "type": "subscribe",
+                "flavor": "download"
+            },
+            {
+                "type": "timeline",
+                "key": "/timeline"
+            },
+            {
+                "public": true,
+                "type": "imagetranscoder",
+                "key": "https://images.plex.tv/photo"
+            },
+            {
+                "flavor": "universal",
+                "type": "playqueue",
+                "key": "https://play.provider.plex.tv/playQueues"
+            },
+            {
+                "type": "promoted",
+                "key": "/hubs/promoted"
+            },
+            {
+                "type": "settings",
+                "key": "/settings"
+            },
+            {
+                "type": "content",
+                "key": "/library/sections",
+                "Directory": [
+                    {
+                        "id": "home",
+                        "icon": "https://provider-static.plex.tv/icons/podcasts-560.svg",
+                        "title": "Podcasts",
+                        "type": "show",
+                        "subtype": "podcast",
+                        "context": "content.home",
+                        "hubKey": "/hubs/sections/home",
+                        "Pivot": [
+                            {
+                                "context": "content.home",
+                                "id": "podcasts.recommended",
+                                "key": "/hubs/sections/home",
+                                "symbol": "star",
+                                "title": "Recommended",
+                                "type": "hub"
+                            },
+                            {
+                                "context": "content.saved",
+                                "id": "podcasts.saved",
+                                "key": "/library/sections/saved/all",
+                                "symbol": "podcast",
+                                "title": "My Podcasts",
+                                "type": "list"
+                            },
+                            {
+                                "context": "content.categories",
+                                "id": "podcasts.categories",
+                                "key": "/library/sections/categories/all",
+                                "symbol": "group",
+                                "title": "Categories",
+                                "type": "list"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

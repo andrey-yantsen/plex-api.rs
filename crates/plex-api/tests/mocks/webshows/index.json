@@ -1,0 +1,96 @@
+{
+    "MediaProvider": {
+        "icon": "https://provider-static.plex.tv/icons/webshows-560.svg",
+        "identifier": "tv.plex.provider.webshows",
+        "protocols": [
+            "stream"
+        ],
+        "version": "1.3.0",
+        "title": "Web Shows",
+        "Feature": [
+            {
+                "type": "metadata",
+                "key": "/library/metadata"
+            },
+            {
+                "type": "actions",
+                "Action": [
+                    {
+                        "id": "save",
+                        "key": "/actions/save",
+                        "reverseKey": "/actions/unsave"
+                    },
+                    {
+                        "id": "scrobble",
+                        "key": "/actions/scrobble",
+                        "reverseKey": "/actions/unscrobble"
+                    }
+                ]
+            },
+            {
+                "type": "search",
+                "key": "/hubs/search"
+            },
+            {
+                "type": "timeline",
+                "key": "/timeline"
+            },
+            {
+                "public": true,
+                "type": "imagetranscoder",
+                "key": "https://images.plex.tv/photo"
+            },
+            {
+                "flavor": "universal",
+                "type": "playqueue",
+                "key": "https://play.provider.plex.tv/playQueues"
+            },
+            {
+                "type": "promoted",
+                "key": "/hubs/promoted"
+            },
+            {
+                "type": "content",
+                "key": "/library/sections",
+                "Directory": [
+                    {
+                        "id": "home",
+                        "icon": "https://provider-static.plex.tv/icons/webshows-560.svg",
+                        "title": "Web Shows",
+                        "type": "show",
+                        "subtype": "webshow",
+                        "context": "content.home",
+                        "hubKey": "/hubs/sections/home",
+                        "key": "/library/sections/home",
+                        "Pivot": [
+                            {
+                                "context": "content.home",
+                                "id": "webshows.recommended",
+                                "key": "/hubs/sections/home",
+                                "symbol": "star",
+                                "title": "Recommended",
+                                "type": "hub"
+                            },
+                            {
+                                "context": "content.saved",
+                                "id": "webshows.saved",
+                                "key": "/library/sections/saved/all",
+                                "symbol": "webshow",
+                                "title": "My Shows",
+                                "type": "list"
+                            },
+                            {
+                                "context": "content.all",
+                                "key": "/library/sections/home/all",
+                                "id": "webshows.library",
+                                "symbol": "group",
+                                "title": "All Shows",
+                                "type": "list"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

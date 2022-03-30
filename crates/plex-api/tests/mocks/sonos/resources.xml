@@ -1,0 +1,4 @@
+<MediaContainer size="2">
+  <Player title="Bedroom" machineIdentifier="RINCON_00000000000000000:671345625" deviceClass="speaker" product="Sonos" platform="Sonos" platformVersion="67.1-25031" protocol="plex" protocolVersion="1" protocolCapabilities="timeline,playback,playqueues,provider-playback" lanIP="192.168.1.2"/>
+  <Player title="Lounge" machineIdentifier="RINCON_00000000000000000:2691225045" deviceClass="speaker" product="Sonos" platform="Sonos" platformVersion="67.1-25031" protocol="plex" protocolVersion="1" protocolCapabilities="timeline,playback,playqueues,provider-playback" lanIP="192.168.1.3"/>
+</MediaContainer>
