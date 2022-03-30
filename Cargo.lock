@@ -1384,9 +1384,9 @@ dependencies = [
 
 [[package]]
 name = "quote"
-version = "1.0.15"
+version = "1.0.17"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "864d3e96a899863136fc6e99f3d7cae289dafe43bf2c5ac19b70df7210c0a145"
+checksum = "632d02bff7f874a36f33ea8bb416cd484b90cc66c1194b1a1110d067a7013f58"
 dependencies = [
  "proc-macro2",
 ]
@@ -1817,7 +1817,7 @@ dependencies = [
 [[package]]
 name = "testcontainers"
 version = "0.12.0"
-source = "git+https://github.com/testcontainers/testcontainers-rs?branch=dev#2468e84c3a84e5d649b7ff95bddc56a6985ba546"
+source = "git+https://github.com/testcontainers/testcontainers-rs?branch=dev#8d937a8ee53eb9d86a219578c65c10d4a7564db9"
 dependencies = [
  "bollard-stubs",
  "futures",
@@ -2252,18 +2252,18 @@ checksum = "712e227841d057c1ee1cd2fb22fa7e5a5461ae8e48fa2ca79ec42cfc1931183f"
 
 [[package]]
 name = "xflags"
-version = "0.2.3"
+version = "0.2.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2c2854f07e689d7388420d1c73512073630df31ec5ddf18554f64aea0ae73775"
+checksum = "3f14fe1ed41a5a2b5ef3f565586c4a8a559ee55d3953faab360a771135bdee00"
 dependencies = [
  "xflags-macros",
 ]
 
 [[package]]
 name = "xflags-macros"
-version = "0.2.3"
+version = "0.2.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "da260301476ad19a4733a0e930db8227a48ea04561e235a5102978145ec69fcc"
+checksum = "45d11d5fc2a97287eded8b170ca80533b3c42646dd7fa386a5eb045817921022"
 
 [[package]]
 name = "xshell"
