@@ -402,11 +402,13 @@ pub enum Feature {
         rename = "retro-games",
         alias = "4e27cf82-9fb6-4ebe-8e10-c48bfe6fbbb6"
     )]
+    #[deprecated]
     RetroGames,
     #[serde(
         rename = "retro-games-plex-tv",
         alias = "a4bc568b-477f-4f36-894b-49e19f34353f"
     )]
+    #[deprecated]
     RetroGamesPlexTv,
     #[serde(
         rename = "save-to-library",
@@ -556,6 +558,7 @@ pub enum Feature {
         rename = "user-profile-whats-new",
         alias = "90138784-37a0-4a6b-87f6-1146d6c628e6"
     )]
+    #[deprecated]
     UserProfileWhatsNew,
     #[serde(
         rename = "users-and-sharing",
