@@ -22,9 +22,7 @@ walkdir = "^2"
 semver = "^1.0.7"
 ureq = "^2.4.0"
 regex = "^1.5"
-
-# Waiting for v0.13.0 to be released
-testcontainers = { git = "https://github.com/testcontainers/testcontainers-rs", branch = "dev" }
+testcontainers = "^0.13"
 
 [target.'cfg(not(windows))'.dependencies]
 users = "^0.11.0"
