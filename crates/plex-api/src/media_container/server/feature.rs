@@ -1,3 +1,5 @@
+#![allow(deprecated)]
+
 use serde::{Deserialize, Serialize};
 use serde_plain::derive_display_from_serialize;
 

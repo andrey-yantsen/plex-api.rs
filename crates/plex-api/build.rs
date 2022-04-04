@@ -8,6 +8,7 @@ const FEATURE_ENUM_FILE_PATH: &str = "src/media_container/server/feature.rs";
 const FEATURE_MOCK_FILE_PATH: &str = "tests/mocks/myplex/api/v2/features.json";
 
 // Features that are not reported by the API, but returned by the server.
+// Probably those are deprecated.
 const EXTRA_FEATURES: &[&str] = &[
     "download_certificates",
     "loudness",
@@ -16,10 +17,12 @@ const EXTRA_FEATURES: &[&str] = &[
     "photo_autotags",
 ];
 
-#[derive(Deserialize, PartialEq, Eq)]
+#[derive(Deserialize, PartialEq, Eq, Debug)]
 struct Feature {
     id: String,
     uuid: String,
+    #[serde(default)]
+    deprecated: bool,
 }
 
 impl Feature {
@@ -33,13 +36,11 @@ impl Feature {
 
     fn enum_name(&self) -> String {
         use inflections::Inflect;
+        use regex::Regex;
 
-        self.id
-            .replace('-', " ")
-            .replace('_', " ")
-            .replace("  ", " ")
-            .replace("  ", " ")
-            .replace("  ", " ")
+        Regex::new(r"[-_\s]+")
+            .unwrap()
+            .replace_all(&self.id, " ")
             .to_lowercase()
             .to_title_case()
             .replace(' ', "")
@@ -59,12 +60,40 @@ impl<'a> Ord for Feature {
 }
 
 fn generate_features() {
+    use regex::Regex;
     use serde_json::from_reader;
     use std::fs::File;
     use std::io::Write;
 
     println!("cargo:rerun-if-changed={}", FEATURE_MOCK_FILE_PATH);
+
+    let old_features_enum_file =
+        std::fs::read_to_string(FEATURE_ENUM_FILE_PATH).unwrap_or_default();
+    let mut old_features: Vec<Feature> = vec![];
+
+    for cap in Regex::new(
+        r#"(?xs)
+        \#\[serde\(\s*
+            rename\s*=\s*"(?P<rename>[^"]+)",?
+            (?:\s+alias\s*=\s*"(?P<alias>[^"]+)")?
+        \s*\)\]"#,
+    )
+    .unwrap()
+    .captures_iter(&old_features_enum_file)
+    {
+        let id = cap.name("rename").unwrap().as_str();
+        let uuid = cap.name("alias").map_or("", |a| a.as_str());
+
+        old_features.push(Feature {
+            id: id.to_string(),
+            uuid: uuid.to_string(),
+            deprecated: false,
+        });
+    }
+
     let mut f = File::create(FEATURE_ENUM_FILE_PATH).unwrap();
+    f.write_all(b"#![allow(deprecated)]\n\n").unwrap();
+
     f.write_all(b"use serde::{Deserialize, Serialize};\n")
         .unwrap();
     f.write_all(b"use serde_plain::derive_display_from_serialize;\n\n")
@@ -82,7 +111,19 @@ fn generate_features() {
         data.push(Feature {
             id: extra.to_string(),
             uuid: "".to_string(),
+            deprecated: false,
         });
+    }
+
+    for old_feature in old_features {
+        if !data.contains(&old_feature) {
+            let deprecated_feature = Feature {
+                id: old_feature.id.clone(),
+                uuid: old_feature.uuid.clone(),
+                deprecated: true,
+            };
+            data.push(deprecated_feature);
+        }
     }
 
     data.sort();
@@ -102,6 +143,11 @@ fn generate_features() {
             )
             .unwrap();
         }
+
+        if feature.deprecated {
+            f.write_all(b"    #[deprecated]\n").unwrap();
+        }
+
         f.write_all(format!("    {},\n", feature.enum_name()).as_bytes())
             .unwrap();
     }

@@ -1305,6 +1305,7 @@ dependencies = [
  "isahc",
  "plex-api-test-helper",
  "quick-xml",
+ "regex",
  "rpassword",
  "rstest",
  "serde",
