@@ -7,7 +7,7 @@ fn main() {
 const FEATURE_ENUM_FILE_PATH: &str = "src/media_container/server/feature.rs";
 const FEATURE_MOCK_FILE_PATH: &str = "tests/mocks/myplex/api/v2/features.json";
 
-// Features that a not reported by the API, but returned by the server.
+// Features that are not reported by the API, but returned by the server.
 const EXTRA_FEATURES: &[&str] = &[
     "download_certificates",
     "loudness",
@@ -120,7 +120,7 @@ impl ::std::str::FromStr for Feature {
         let result = serde_plain::from_str(s);
 
         #[cfg(not(feature = \"tests_deny_unknown_fields\"))]
-        let is_unknown_value = result.is_err() || matches!(result, Ok(Feature::UnknownValue));
+        let is_unknown_value = matches!(result, Ok(Feature::UnknownValue));
         #[cfg(feature = \"tests_deny_unknown_fields\")]
         let is_unknown_value = result.is_err();
 

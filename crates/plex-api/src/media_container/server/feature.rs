@@ -667,7 +667,7 @@ impl ::std::str::FromStr for Feature {
         let result = serde_plain::from_str(s);
 
         #[cfg(not(feature = "tests_deny_unknown_fields"))]
-        let is_unknown_value = result.is_err() || matches!(result, Ok(Feature::UnknownValue));
+        let is_unknown_value = matches!(result, Ok(Feature::UnknownValue));
         #[cfg(feature = "tests_deny_unknown_fields")]
         let is_unknown_value = result.is_err();
 
