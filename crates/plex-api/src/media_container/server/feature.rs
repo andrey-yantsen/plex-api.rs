@@ -340,6 +340,7 @@ pub enum Feature {
         rename = "optimize-server-users-endpoint",
         alias = "ddd730e1-a0a0-429f-a7d3-7c5001d24497"
     )]
+    #[deprecated]
     OptimizeServerUsersEndpoint,
     #[serde(
         rename = "parental-controls",
