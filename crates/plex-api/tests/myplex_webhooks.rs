@@ -139,7 +139,7 @@ mod offline {
 
         assert!(
             matches!(
-                delete_result.err().expect("error was expected"),
+                delete_result.expect_err("error was expected"),
                 Error::WebhookNotFound(url) if url == "https://example.com/webhook2"
             ),
             "Unexpected error"

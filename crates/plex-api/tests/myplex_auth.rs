@@ -95,7 +95,7 @@ mod offline {
             .await;
         m.assert();
 
-        let err = plex_result.err().expect("error expected");
+        let err = plex_result.expect_err("error expected");
 
         assert!(matches!(err, Error::OtpRequired), "unexpected error");
     }

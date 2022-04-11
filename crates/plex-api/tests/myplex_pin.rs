@@ -64,7 +64,7 @@ mod offline {
         let pin = pin_manager.pin().await.expect("failed to pin");
         mock.assert();
         assert!(pin.is_expired(), "Pin should be expired");
-        pin.check().await.err().expect("check should've failed");
+        pin.check().await.expect_err("check should've failed");
         mock.delete();
 
         let mut mock = mock_server.mock(|when, then| {
@@ -77,7 +77,7 @@ mod offline {
         let pin = pin_manager.pin().await.expect("failed to pin");
         mock.assert();
         assert!(!pin.is_expired());
-        pin.check().await.err().expect("check should've failed");
+        pin.check().await.expect_err("check should've failed");
         mock.delete();
 
         let mut mock = mock_server.mock(|when, then| {
