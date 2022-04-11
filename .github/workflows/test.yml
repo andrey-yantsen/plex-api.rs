@@ -24,7 +24,7 @@ jobs:
           profile: minimal
           toolchain: ${{steps.current_msrv.outputs.msrv}}
           override: true
-      - uses: Swatinem/rust-cache@v1.3.0
+      - uses: Swatinem/rust-cache@v1.4.0
         with:
           sharedKey: cache
       - name: Check
@@ -45,7 +45,7 @@ jobs:
           profile: minimal
           toolchain: stable
           override: true
-      - uses: Swatinem/rust-cache@v1.3.0
+      - uses: Swatinem/rust-cache@v1.4.0
         with:
           sharedKey: cache
       - name: Run cargo check
@@ -91,7 +91,7 @@ jobs:
           profile: minimal
           toolchain: stable
           override: true
-      - uses: Swatinem/rust-cache@v1.3.0
+      - uses: Swatinem/rust-cache@v1.4.0
         with:
           sharedKey: cache
       - name: Run tests
@@ -113,7 +113,7 @@ jobs:
           toolchain: stable
           override: true
           components: "rustfmt, clippy"
-      - uses: Swatinem/rust-cache@v1.3.0
+      - uses: Swatinem/rust-cache@v1.4.0
         with:
           sharedKey: cache
       - name: Run cargo fmt
@@ -158,7 +158,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        plex_server_version: ["1.25.8.5663-e071c3d62","1.23.6.4881-e2e58f321","1.21.4.4079-1b7748a7b"]
+        plex_server_version: ["1.25.9.5721-965587f64","1.23.6.4881-e2e58f321","1.21.4.4079-1b7748a7b"]
     steps:
       - name: Checkout sources
         uses: actions/checkout@v3
@@ -168,7 +168,7 @@ jobs:
           profile: minimal
           toolchain: stable
           override: true
-      - uses: Swatinem/rust-cache@v1.3.0
+      - uses: Swatinem/rust-cache@v1.4.0
         with:
           sharedKey: cache-anonymous
       - name: "Test against real server [anonymous]"
@@ -183,7 +183,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        plex_server_version: ["1.25.8.5663-e071c3d62","1.23.6.4881-e2e58f321","1.21.4.4079-1b7748a7b"]
+        plex_server_version: ["1.25.9.5721-965587f64","1.23.6.4881-e2e58f321","1.21.4.4079-1b7748a7b"]
     name: Test on a real server (authenticated free account)
     runs-on: ubuntu-latest
     env:
@@ -197,7 +197,7 @@ jobs:
           profile: minimal
           toolchain: stable
           override: true
-      - uses: Swatinem/rust-cache@v1.3.0
+      - uses: Swatinem/rust-cache@v1.4.0
         with:
           sharedKey: cache-authenticated
       - name: "Test against real server [authenticated]"
@@ -212,7 +212,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        plex_server_version: ["1.25.8.5663-e071c3d62","1.23.6.4881-e2e58f321","1.21.4.4079-1b7748a7b"]
+        plex_server_version: ["1.25.9.5721-965587f64","1.23.6.4881-e2e58f321","1.21.4.4079-1b7748a7b"]
     name: Test on a real server (authenticated plexpass account)
     runs-on: ubuntu-latest
     env:
@@ -226,7 +226,7 @@ jobs:
           profile: minimal
           toolchain: stable
           override: true
-      - uses: Swatinem/rust-cache@v1.3.0
+      - uses: Swatinem/rust-cache@v1.4.0
         with:
           sharedKey: cache-authenticated
       - name: "Test against real server [authenticated]"
@@ -251,7 +251,7 @@ jobs:
           cargo +nightly tarpaulin --workspace --timeout 120 --out Xml
 
       - name: Upload to codecov.io
-        uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v3
         with:
           token: ${{secrets.CODECOV_TOKEN}}
           fail_ci_if_error: true
