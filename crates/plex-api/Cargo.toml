@@ -12,11 +12,11 @@ rust-version = "1.53.0"
 
 [dependencies]
 isahc = { version = "^1.7.0", features = ["json", "text-decoding"] }
-uuid = { version = "^0.8", features = ["v4", "serde"] }
+uuid = { version = "^1.0", features = ["v4", "serde"] }
 serde = { version = "^1.0", features = ["derive"] }
 serde_json = "^1.0"
 futures = "^0.3.21"
-serde_with = { version = "^1.12", features = ["json"] }
+serde_with = { version = "^1.13", features = ["json"] }
 quick-xml = { version = "^0.22", features = [ "serialize" ] }
 serde_plain = "^1.0.0"
 serde_repr = "^0.1"
