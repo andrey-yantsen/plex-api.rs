@@ -47,13 +47,13 @@ impl Feature {
     }
 }
 
-impl<'a> PartialOrd for Feature {
+impl PartialOrd for Feature {
     fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
         self.enum_name().partial_cmp(&other.enum_name())
     }
 }
 
-impl<'a> Ord for Feature {
+impl Ord for Feature {
     fn cmp(&self, other: &Self) -> std::cmp::Ordering {
         self.partial_cmp(other).unwrap()
     }
