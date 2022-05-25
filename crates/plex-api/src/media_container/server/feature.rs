@@ -617,6 +617,11 @@ pub enum Feature {
     )]
     Watchlist,
     #[serde(
+        rename = "watchlist-rss",
+        alias = "f0f40559-a43a-4b8f-85ef-bdb1de1a912a"
+    )]
+    WatchlistRss,
+    #[serde(
         rename = "web-desktop-gracenote-banner",
         alias = "13056a62-9bd2-47cf-aba9-bab00095fd08"
     )]
