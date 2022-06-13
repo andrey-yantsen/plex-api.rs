@@ -620,7 +620,6 @@ pub enum Feature {
         rename = "watchlist-rss",
         alias = "f0f40559-a43a-4b8f-85ef-bdb1de1a912a"
     )]
-    #[deprecated]
     WatchlistRss,
     #[serde(
         rename = "web-desktop-gracenote-banner",
