@@ -22,7 +22,7 @@ walkdir = "^2"
 semver = "^1.0.9"
 ureq = "^2.4.0"
 regex = "^1.5"
-testcontainers = "^0.13"
+testcontainers = "^0.14"
 
 [target.'cfg(not(windows))'.dependencies]
 users = "^0.11.0"
