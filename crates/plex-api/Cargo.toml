@@ -3,12 +3,12 @@ name = "plex-api"
 version = "0.0.4"
 authors = ["Andrey Yantsen <andrey@janzen.su>"]
 categories = ["api-bindings"]
-edition = "2018"
+edition = "2021"
 description = "Library for communication with Plex server. Work in progress, not ready for any use. See github for details."
 license = "MIT/Apache-2.0"
 repository = "https://github.com/andrey-yantsen/plex-api.rs"
 readme = "../../README.md"
-rust-version = "1.53.0"
+rust-version = "1.56.0"
 
 [dependencies]
 isahc = { version = "^1.7.2", features = ["json", "text-decoding"] }

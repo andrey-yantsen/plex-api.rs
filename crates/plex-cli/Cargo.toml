@@ -2,7 +2,7 @@
 name = "plex-cli"
 version = "0.0.1"
 authors = ["Andrey Yantsen <andrey@janzen.su>"]
-edition = "2018"
+edition = "2021"
 license = "MIT/Apache-2.0"
 description = "Command line interface for managing Plex Media Server"
 
