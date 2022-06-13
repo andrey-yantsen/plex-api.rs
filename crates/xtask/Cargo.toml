@@ -19,10 +19,10 @@ uuid = { version = "^1.1", features = ["v4"] }
 plex-api = { path = "../plex-api" }
 tokio = { version = "^1.16", features = ["rt-multi-thread"] }
 walkdir = "^2"
-semver = "^1.0.9"
+semver = "^1.0.10"
 ureq = "^2.4.0"
 regex = "^1.5"
-testcontainers = "^0.13"
+testcontainers = "^0.14"
 
 [target.'cfg(not(windows))'.dependencies]
 users = "^0.11.0"

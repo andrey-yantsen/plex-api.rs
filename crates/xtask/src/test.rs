@@ -125,7 +125,7 @@ impl flags::Test {
         println!("done!");
         let _ = std::io::stdout().flush();
 
-        let server_url = format!("http://localhost:{}/", _plex_node.get_host_port(32400));
+        let server_url = format!("http://localhost:{}/", _plex_node.get_host_port_ipv4(32400));
         cmd!("cargo run -p plex-cli --  --server {server_url} --token {auth_token} wait").run()?;
 
         let _plex_server = pushenv("PLEX_SERVER_URL", server_url);
