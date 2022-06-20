@@ -1500,11 +1500,10 @@ dependencies = [
 
 [[package]]
 name = "rstest"
-version = "0.13.0"
+version = "0.14.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b939295f93cb1d12bc1a83cf9ee963199b133fb8a79832dd51b68bb9f59a04dc"
+checksum = "86fcf8fa7e9f3b396a5967d7455c057532a81be5114c81d5b02fae9a1f8e21d7"
 dependencies = [
- "async-std",
  "futures",
  "futures-timer",
  "rstest_macros",
@@ -1513,9 +1512,9 @@ dependencies = [
 
 [[package]]
 name = "rstest_macros"
-version = "0.13.0"
+version = "0.14.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f78aba848123782ba59340928ec7d876ebe745aa0365d6af8a630f19a5c16116"
+checksum = "5015e68a0685a95ade3eee617ff7101ab6a3fc689203101ca16ebc16f2b89c66"
 dependencies = [
  "cfg-if",
  "proc-macro2",
