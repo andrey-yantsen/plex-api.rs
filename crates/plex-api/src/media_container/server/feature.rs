@@ -111,31 +111,37 @@ pub enum Feature {
         rename = "conan_redirect_alpha",
         alias = "78643fe5-d192-40c7-8e93-5ccf04c0b767"
     )]
+    #[deprecated]
     ConanRedirectAlpha,
     #[serde(
         rename = "conan_redirect_beta",
         alias = "bfeaee4e-965a-4d24-b163-020c3c57d936"
     )]
+    #[deprecated]
     ConanRedirectBeta,
     #[serde(
         rename = "conan_redirect_nightlies",
         alias = "98872b06-2ff3-4b71-96bc-039e2ebe7adc"
     )]
+    #[deprecated]
     ConanRedirectNightlies,
     #[serde(
         rename = "conan_redirect_nightly",
         alias = "7e7596aa-6e2c-41d1-a460-1e13cf0b62f2"
     )]
+    #[deprecated]
     ConanRedirectNightly,
     #[serde(
         rename = "conan_redirect_public",
         alias = "b20d91ca-1b2f-45a2-a115-c1ad24c66ac5"
     )]
+    #[deprecated]
     ConanRedirectPublic,
     #[serde(
         rename = "conan_redirect_qa",
         alias = "16d69c53-4c40-4821-b9f3-57ca690b2d4d"
     )]
+    #[deprecated]
     ConanRedirectQa,
     #[serde(
         rename = "content_filter",
