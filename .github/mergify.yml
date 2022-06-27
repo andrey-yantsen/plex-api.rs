@@ -9,9 +9,7 @@ pull_request_rules:
   - name: automatic merge for code-gen pull requests
     conditions:
       - author=andrey-yantsen
-      - or:
-        - title=Update the media_container::server::Feature enum
-        - title=Update the list of tested PMS releases
+      - title=Update the media_container::server::Feature enum
       - check-success=Test on a real server (anonymous) (1.27.1.5916-6b0e31a64)
     actions:
       merge:
