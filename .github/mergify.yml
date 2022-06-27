@@ -2,7 +2,7 @@ pull_request_rules:
   - name: automatic merge for Dependabot pull requests
     conditions:
       - author=dependabot[bot]
-      - check-success=Test on a real server (anonymous) (1.27.1.5916-6b0e31a64)
+      - check-success=Test on a real server (anonymous) (1.27.1.5916-6b0e31a64)",
     actions:
       merge:
         method: merge
@@ -12,7 +12,7 @@ pull_request_rules:
       - or:
         - title=Update the media_container::server::Feature enum
         - title=Update the list of tested PMS releases
-      - check-success=Test on a real server (anonymous) (1.27.1.5916-6b0e31a64)
+      - check-success=Test on a real server (anonymous) (1.27.1.5916-6b0e31a64)",
     actions:
       merge:
         method: merge
@@ -20,7 +20,7 @@ pull_request_rules:
     conditions:
       - "#approved-reviews-by>=1"
       - base=main
-      - check-success=Test on a real server (anonymous) (1.27.1.5916-6b0e31a64)
+      - check-success=Test on a real server (anonymous) (1.27.1.5916-6b0e31a64)",
     actions:
       merge:
         method: merge
