@@ -21,7 +21,7 @@ tokio = { version = "^1.16", features = ["rt-multi-thread"] }
 walkdir = "^2"
 semver = "^1.0.12"
 ureq = "^2.4.0"
-regex = "^1.5"
+regex = "^1.6"
 testcontainers = "^0.14"
 
 [target.'cfg(not(windows))'.dependencies]
