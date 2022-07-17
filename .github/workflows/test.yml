@@ -24,9 +24,9 @@ jobs:
           profile: minimal
           toolchain: ${{steps.current_msrv.outputs.msrv}}
           override: true
-      - uses: Swatinem/rust-cache@v1.4.0
+      - uses: Swatinem/rust-cache@v2.0.0
         with:
-          sharedKey: cache
+          shared-key: cache
       - name: Check
         uses: actions-rs/cargo@v1
         with:
@@ -45,9 +45,9 @@ jobs:
           profile: minimal
           toolchain: stable
           override: true
-      - uses: Swatinem/rust-cache@v1.4.0
+      - uses: Swatinem/rust-cache@v2.0.0
         with:
-          sharedKey: cache
+          shared-key: cache
       - name: Run cargo check
         uses: actions-rs/cargo@v1
         with:
@@ -91,9 +91,9 @@ jobs:
           profile: minimal
           toolchain: stable
           override: true
-      - uses: Swatinem/rust-cache@v1.4.0
+      - uses: Swatinem/rust-cache@v2.0.0
         with:
-          sharedKey: cache
+          shared-key: cache
       - name: Run tests
         uses: actions-rs/cargo@v1
         with:
@@ -113,9 +113,9 @@ jobs:
           toolchain: stable
           override: true
           components: "rustfmt, clippy"
-      - uses: Swatinem/rust-cache@v1.4.0
+      - uses: Swatinem/rust-cache@v2.0.0
         with:
-          sharedKey: cache
+          shared-key: cache
       - name: Run cargo fmt
         uses: actions-rs/cargo@v1
         with:
@@ -168,9 +168,9 @@ jobs:
           profile: minimal
           toolchain: stable
           override: true
-      - uses: Swatinem/rust-cache@v1.4.0
+      - uses: Swatinem/rust-cache@v2.0.0
         with:
-          sharedKey: cache-anonymous
+          shared-key: cache-anonymous
       - name: "Test against real server [anonymous]"
         uses: actions-rs/cargo@v1
         with:
@@ -197,9 +197,9 @@ jobs:
           profile: minimal
           toolchain: stable
           override: true
-      - uses: Swatinem/rust-cache@v1.4.0
+      - uses: Swatinem/rust-cache@v2.0.0
         with:
-          sharedKey: cache-authenticated
+          shared-key: cache-authenticated
       - name: "Test against real server [authenticated]"
         uses: actions-rs/cargo@v1
         with:
@@ -226,9 +226,9 @@ jobs:
           profile: minimal
           toolchain: stable
           override: true
-      - uses: Swatinem/rust-cache@v1.4.0
+      - uses: Swatinem/rust-cache@v2.0.0
         with:
-          sharedKey: cache-authenticated
+          shared-key: cache-authenticated
       - name: "Test against real server [authenticated]"
         uses: actions-rs/cargo@v1
         with:
