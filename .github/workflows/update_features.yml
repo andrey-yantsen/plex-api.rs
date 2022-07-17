@@ -17,9 +17,9 @@ jobs:
           profile: minimal
           toolchain: stable
           override: true
-      - uses: Swatinem/rust-cache@v1.4.0
+      - uses: Swatinem/rust-cache@v2.0.0
         with:
-          sharedKey: cache
+          shared-key: cache
       - name: Update json
         run: |
           curl -o 'crates/plex-api/tests/mocks/myplex/api/v2/features.json' \
