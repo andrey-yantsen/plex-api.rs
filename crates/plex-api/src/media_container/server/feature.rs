@@ -427,6 +427,11 @@ pub enum Feature {
         alias = "644c4466-05fa-45e0-a478-c594cf81778f"
     )]
     SaveToLibrary,
+    #[serde(
+        rename = "scrobbling-service-plex-tv",
+        alias = "7b392594-6949-4736-9894-e57a9dfe4037"
+    )]
+    ScrobblingServicePlexTv,
     #[serde(rename = "server-manager")]
     ServerManager,
     #[serde(
