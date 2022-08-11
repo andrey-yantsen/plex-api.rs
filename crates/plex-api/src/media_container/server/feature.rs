@@ -251,6 +251,16 @@ pub enum Feature {
     )]
     ItemClusters,
     #[serde(
+        rename = "join-discover-together",
+        alias = "f8f68869-07a5-4fc3-9359-d0b5ba9c487c"
+    )]
+    JoinDiscoverTogether,
+    #[serde(
+        rename = "join-discover-together-as-friend",
+        alias = "af866200-1116-4502-be15-f71457ce9d27"
+    )]
+    JoinDiscoverTogetherAsFriend,
+    #[serde(
         rename = "kevin-bacon",
         alias = "c7ae6f8f-05e6-48bb-9024-c05c1dc3c43e"
     )]
