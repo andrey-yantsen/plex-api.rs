@@ -32,6 +32,11 @@ jobs:
         with:
           command: check
           args: --workspace --all-targets
+      - name: Check the new MSRV
+        if: ${{ failure() }}
+        run: |
+          cargo install cargo-msrv
+          cargo msrv --bisect --min ${{steps.current_msrv.outputs.msrv}}
 
   check:
     name: Check
