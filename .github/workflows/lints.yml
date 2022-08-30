@@ -1,0 +1,86 @@
+---
+"on":
+  push:
+    branches: [main, staging, trying]
+  pull_request:
+    branches: [main]
+
+name: Lints
+jobs:
+  msrv:
+    name: MSRV
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v3
+      - name: Get current MSRV from crates/plex-api/Cargo.toml
+        id: current_msrv
+        run: |
+          msrv=$(cat crates/plex-api/Cargo.toml | grep rust-version | sed 's/.* = "//; s/"//')
+          echo "::set-output name=msrv::$msrv"
+      - name: Install the toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: ${{steps.current_msrv.outputs.msrv}}
+          override: true
+      - uses: Swatinem/rust-cache@v2.0.0
+        with:
+          shared-key: cache
+      - name: Check
+        uses: actions-rs/cargo@v1
+        with:
+          command: check
+          args: --workspace --all-targets
+      - name: Check the new MSRV
+        if: ${{ failure() }}
+        run: |
+          cargo install cargo-msrv
+          cargo msrv --bisect --min ${{steps.current_msrv.outputs.msrv}}
+
+  check:
+    name: Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v3
+      - name: Install stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+      - uses: Swatinem/rust-cache@v2.0.0
+        with:
+          shared-key: cache
+      - name: Run cargo check
+        uses: actions-rs/cargo@v1
+        with:
+          command: check
+
+  lints:
+    name: Lints
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v3
+      - name: Install stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+          components: "rustfmt, clippy"
+      - uses: Swatinem/rust-cache@v2.0.0
+        with:
+          shared-key: cache
+      - name: Run cargo fmt
+        uses: actions-rs/cargo@v1
+        with:
+          command: fmt
+          args: "--all -- --check"
+      - name: Clippy with warnings
+        uses: actions-rs/cargo@v1
+        with:
+          command: clippy
+          args: "--all-targets --all-features -- -D warnings"

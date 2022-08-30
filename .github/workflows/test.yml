@@ -7,74 +7,6 @@
 
 name: Test
 jobs:
-  msrv:
-    name: MSRV
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout sources
-        uses: actions/checkout@v3
-      - name: Get current MSRV from crates/plex-api/Cargo.toml
-        id: current_msrv
-        run: |
-          msrv=$(cat crates/plex-api/Cargo.toml | grep rust-version | sed 's/.* = "//; s/"//')
-          echo "::set-output name=msrv::$msrv"
-      - name: Install the toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: ${{steps.current_msrv.outputs.msrv}}
-          override: true
-      - uses: Swatinem/rust-cache@v2.0.0
-        with:
-          shared-key: cache
-      - name: Check
-        uses: actions-rs/cargo@v1
-        with:
-          command: check
-          args: --workspace --all-targets
-      - name: Check the new MSRV
-        if: ${{ failure() }}
-        run: |
-          cargo install cargo-msrv
-          cargo msrv --bisect --min ${{steps.current_msrv.outputs.msrv}}
-
-  check:
-    name: Check
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout sources
-        uses: actions/checkout@v3
-      - name: Install stable toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-          override: true
-      - uses: Swatinem/rust-cache@v2.0.0
-        with:
-          shared-key: cache
-      - name: Run cargo check
-        uses: actions-rs/cargo@v1
-        with:
-          command: check
-
-  check_nightly:
-    name: Check (nightly)
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout sources
-        uses: actions/checkout@v3
-      - name: Install stable toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: nightly
-          override: true
-      - name: Run cargo check
-        uses: actions-rs/cargo@v1
-        with:
-          command: check
-
   test_offline:
     strategy:
       matrix:
@@ -82,7 +14,6 @@ jobs:
           - ubuntu-latest
           - windows-latest
           - macos-latest
-    needs: check
     name: Offline tests
     runs-on: "${{ matrix.os }}"
     steps:
@@ -104,57 +35,6 @@ jobs:
         with:
           command: run
           args: "--package xtask -- test --offline"
-
-  lints:
-    name: Lints
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout sources
-        uses: actions/checkout@v3
-      - name: Install stable toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-          override: true
-          components: "rustfmt, clippy"
-      - uses: Swatinem/rust-cache@v2.0.0
-        with:
-          shared-key: cache
-      - name: Run cargo fmt
-        uses: actions-rs/cargo@v1
-        with:
-          command: fmt
-          args: "--all -- --check"
-      - name: Clippy with warnings
-        uses: actions-rs/cargo@v1
-        with:
-          command: clippy
-          args: "--all-targets --all-features -- -D warnings"
-
-  lints_nightly:
-    name: Lints (nightly)
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout sources
-        uses: actions/checkout@v3
-      - name: Install stable toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: nightly
-          override: true
-          components: "rustfmt, clippy"
-      - name: Run cargo fmt
-        uses: actions-rs/cargo@v1
-        with:
-          command: fmt
-          args: "--all -- --check"
-      - name: Clippy with warnings
-        uses: actions-rs/cargo@v1
-        with:
-          command: clippy
-          args: "--all-targets --all-features -- -D warnings"
 
   test_on_real_server_anonymous:
     needs: test_offline
@@ -241,8 +121,7 @@ jobs:
           args: "--package xtask -- test --online --docker-tag '${{ matrix.plex_server_version }}' --token '${{ secrets.PLEX_API_AUTH_TOKEN_PLEXPASS }}' --deny-unknown-fields"
 
   collect_coverage:
-    needs: check
-    name: Collect code coverage (with anonymous server)
+    name: Collect code coverage
     runs-on: ubuntu-latest
     container:
       image: xd009642/tarpaulin:develop-nightly
