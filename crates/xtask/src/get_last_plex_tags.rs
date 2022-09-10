@@ -30,7 +30,7 @@ impl flags::GetLastPlexTags {
         }
 
         let url = format!(
-            "https://registry.hub.docker.com/v1/repositories/{image}/tags",
+            "https://hub.docker.com/v2/repositories/{image}/tags/?page_size=100&page=1",
             image = DOCKER_PLEX_IMAGE_NAME
         );
 
