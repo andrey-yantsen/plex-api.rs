@@ -22,7 +22,7 @@ There're multiple test types available:
 The easiest way to run all the available tests is by executing the following command:
 
 ```
-cargo xtask tests
+cargo xtask test
 ```
 
 ## Committing
@@ -33,7 +33,7 @@ messages.
 ## Writing tests
 
 I don't have much exprience with testing in Rust, so please write the tests the way you see fit.
-At the same time, I created a few macroses to reduce the boilerplate amount:
+At the same time, I created a few macros to reduce the boilerplate amount:
 * `#[plex_api_test_helper::offline_test]`
 * `#[plex_api_test_helper::online_test_unclaimed_server]`
 * `#[plex_api_test_helper::online_test_claimed_server]`
