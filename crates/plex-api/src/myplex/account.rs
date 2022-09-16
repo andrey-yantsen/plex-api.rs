@@ -101,7 +101,6 @@ pub struct MyPlexAccount {
     pub queue_uid: Option<HashMap<String, String>>,
     pub home_size: i32,
     pub max_home_size: i32,
-    pub certificate_version: i32,
     #[serde(with = "time::serde::timestamp::option")]
     pub remember_expires_at: Option<OffsetDateTime>,
     pub profile: Profile,
