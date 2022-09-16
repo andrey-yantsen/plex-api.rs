@@ -117,7 +117,6 @@
     "homeSize": 5,
     "homeAdmin": false,
     "maxHomeSize": 15,
-    "certificateVersion": 3,
     "rememberExpiresAt": null,
     "profile": {
         "autoSelectAudio": true,

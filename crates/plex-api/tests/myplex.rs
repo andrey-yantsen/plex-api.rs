@@ -155,3 +155,17 @@ mod offline {
         );
     }
 }
+
+mod online {
+    use super::fixtures::online::client::*;
+    use plex_api::{HttpClient, MyPlexBuilder};
+
+    #[plex_api_test_helper::online_test_claimed_server]
+    async fn connect(client_authenticated: HttpClient) {
+        MyPlexBuilder::default()
+            .set_client(client_authenticated)
+            .build()
+            .await
+            .unwrap();
+    }
+}

@@ -128,7 +128,6 @@
     "homeSize": 3,
     "homeAdmin": false,
     "maxHomeSize": 15,
-    "certificateVersion": 3,
     "rememberExpiresAt": 1641937035,
     "profile": {
         "autoSelectAudio": true,
