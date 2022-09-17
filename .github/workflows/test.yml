@@ -1,9 +1,11 @@
 ---
 "on":
   push:
-    branches: [main, staging, trying]
+    branches: [main]
   pull_request:
     branches: [main]
+  pull_request_review:
+    types: [submitted]
 
 name: Test
 jobs:
@@ -63,7 +65,7 @@ jobs:
           args: "--package xtask -- test --online --docker-tag '${{ matrix.plex_server_version }}' --deny-unknown-fields"
 
   test_on_real_server_authenticated_free:
-    if: "github.ref == 'refs/heads/main' || github.ref == 'refs/heads/staging' || github.ref == 'refs/heads/trying'"
+    if: "github.ref == 'refs/heads/main' || github.event.review.state == 'approved'"
     needs: test_offline
     strategy:
       fail-fast: false
@@ -92,7 +94,7 @@ jobs:
           args: "--package xtask -- test --online --docker-tag '${{ matrix.plex_server_version }}' --token '${{ secrets.PLEX_API_AUTH_TOKEN_FREE }}' --deny-unknown-fields"
 
   test_on_real_server_authenticated_plexpass:
-    if: "github.ref == 'refs/heads/main' || github.ref == 'refs/heads/staging' || github.ref == 'refs/heads/trying'"
+    if: "github.ref == 'refs/heads/main' || github.event.review.state == 'approved'"
     needs: test_offline
     strategy:
       fail-fast: false
