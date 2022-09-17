@@ -299,5 +299,6 @@
     "adsConsentReminderAt": 1649808851,
     "experimentalFeatures": true,
     "twoFactorEnabled": true,
-    "backupCodesCreated": true
+    "backupCodesCreated": true,
+    "joinedAt": 1339124759
 }

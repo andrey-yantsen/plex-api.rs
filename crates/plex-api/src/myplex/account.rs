@@ -119,6 +119,8 @@ pub struct MyPlexAccount {
     pub experimental_features: bool,
     pub two_factor_enabled: bool,
     pub backup_codes_created: bool,
+    #[serde(with = "time::serde::timestamp")]
+    pub joined_at: OffsetDateTime,
 
     pub restriction_profile: Option<RestrictionProfile>,
 
