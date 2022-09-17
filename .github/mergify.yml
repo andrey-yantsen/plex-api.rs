@@ -24,6 +24,8 @@ pull_request_rules:
       - "#approved-reviews-by>=1"
       - base=main
       - check-success=Test on a real server (anonymous) (1.28.2.6151-914ddd2b3)
+      - check-success=Test on a real server (authenticated free account) (1.28.2.6151-914ddd2b3)
+      - check-success=Test on a real server (authenticated plexpass account) (1.28.2.6151-914ddd2b3)
     actions:
       queue:
         name: default
