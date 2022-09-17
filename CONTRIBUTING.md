@@ -11,9 +11,18 @@ install the correct hooks configuration.
 ## Testing
 
 The project provides a sample Plex library for testing, feel free to extend it the way you
-see fit.
+see fit. The `cargo xtask plex-data` command populates the test library from the stub data.
+If you need to add additional media to the library you should modify the lists in
+[`crates/xtask/src/plex_data.rs`](crates/xtask/src/plex_data.rs). To modify the library structure
+such as categories and playlists use the `cargo xtask modify-data` command to start plex against
+the test data and use the web interface to make the modifications you need. Note that the first
+time you run the server against the test data you will have to accept Plex's terms of service.
+Assuming you have read and agreed to them you can do this from the command line:
+```
+cargo run -p plex-cli -- -s {server_url} preferences set --i-know-what-i-am-doing -k AcceptedEULA -v true
+```
 
-There're multiple test types available:
+There are multiple test types available:
 
 * Offline tests, with mock data.
 * Online tests using a claimed (i.e. assigned to a MyPlex account) local docker container.

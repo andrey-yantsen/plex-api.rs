@@ -52,6 +52,22 @@ xflags::xflags! {
             optional --verbose
         }
 
+        /// Starts a plex server to modify the test data.
+        cmd modify-data {
+            /// A tag from https://hub.docker.com/r/plexinc/pms-docker/tags to use for the server.
+            /// By default the minimum supported version is used.
+            optional --docker-tag tag: String
+
+            /// Don't replace the temporary data in plex-data with plex-stub-data when starting.
+            optional --no-replace
+
+            /// Path where to store the data. Defaults to `plex-data`.
+            optional -d, --plex-data-path path: String
+
+            /// Print every copied filename.
+            optional --verbose
+        }
+
         /// Returns a list of the latest Plex image tags from Docker Hub.
         cmd get-last-plex-tags {
             /// The number of versions to build into matrix. 3 is the default.
@@ -81,6 +97,7 @@ pub enum XtaskCmd {
     Help(Help),
     Test(Test),
     PlexData(PlexData),
+    ModifyData(ModifyData),
     GetLastPlexTags(GetLastPlexTags),
 }
 
@@ -103,6 +120,14 @@ pub struct Test {
 #[derive(Debug)]
 pub struct PlexData {
     pub replace: bool,
+    pub plex_data_path: Option<String>,
+    pub verbose: bool,
+}
+
+#[derive(Debug)]
+pub struct ModifyData {
+    pub docker_tag: Option<String>,
+    pub no_replace: bool,
     pub plex_data_path: Option<String>,
     pub verbose: bool,
 }
