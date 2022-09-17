@@ -1,9 +1,112 @@
 mod feature;
+pub mod library;
 
 pub use self::feature::Feature;
+use self::library::ContentDirectory;
 use serde::Deserialize;
 use serde_plain::derive_fromstr_from_deserialize;
 use serde_with::{rust::StringWithSeparator, CommaSeparator};
+
+#[derive(Debug, Deserialize, Clone)]
+pub struct Action {
+    pub id: String,
+    pub key: String,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+#[serde(tag = "type", rename_all = "lowercase")]
+pub enum MediaProviderFeature {
+    Content {
+        key: String,
+        #[serde(rename = "Directory")]
+        directory: Vec<ContentDirectory>,
+    },
+    Search {
+        key: String,
+    },
+    Match {
+        key: String,
+    },
+    Metadata {
+        key: String,
+    },
+    Rate {
+        key: String,
+    },
+    ImageTranscoder {
+        key: String,
+    },
+    Promoted {
+        key: String,
+    },
+    ContinueWatching {
+        key: String,
+    },
+    Actions {
+        key: String,
+        #[serde(rename = "Action")]
+        actions: Vec<Action>,
+    },
+    Playlist {
+        key: String,
+        flavor: String,
+    },
+    PlayQueue {
+        key: String,
+        flavor: String,
+    },
+    #[serde(rename = "collection")]
+    Collections {
+        key: String,
+    },
+    #[serde(rename_all = "camelCase")]
+    Timeline {
+        key: String,
+        scrobble_key: String,
+        unscrobble_key: String,
+    },
+    Manage,
+    #[serde(rename = "queryParser")]
+    QueryParser,
+    Subscribe {
+        flavor: String,
+    },
+    #[serde(other)]
+    Unknown,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+#[serde(rename_all = "lowercase")]
+pub enum MediaProviderProtocol {
+    Stream,
+    Download,
+}
+
+derive_fromstr_from_deserialize!(MediaProviderProtocol);
+
+#[derive(Debug, Deserialize, Clone)]
+#[serde(rename_all = "lowercase")]
+pub enum MediaProviderType {
+    Video,
+    Audio,
+    Photo,
+}
+
+derive_fromstr_from_deserialize!(MediaProviderType);
+
+#[derive(Debug, Deserialize, Clone)]
+#[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
+#[serde(rename_all = "camelCase")]
+pub struct MediaProvider {
+    pub identifier: String,
+    #[serde(deserialize_with = "StringWithSeparator::<CommaSeparator>::deserialize")]
+    pub protocols: Vec<MediaProviderProtocol>,
+    pub title: String,
+    #[serde(deserialize_with = "StringWithSeparator::<CommaSeparator>::deserialize")]
+    pub types: Vec<MediaProviderType>,
+    #[serde(rename = "Feature")]
+    pub features: Vec<MediaProviderFeature>,
+}
 
 #[derive(Debug, Deserialize, Clone)]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
@@ -63,7 +166,7 @@ pub struct Server {
     pub version: String,
     pub voice_search: bool,
     #[serde(rename = "MediaProvider")]
-    pub media_provider: Vec<serde_json::Value>,
+    pub media_providers: Vec<MediaProvider>,
 }
 
 #[derive(Debug, Deserialize, Clone)]

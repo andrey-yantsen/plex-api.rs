@@ -1,9 +1,16 @@
+pub mod library;
 pub mod prefs;
 
-use self::prefs::Preferences;
+use self::{library::Library, prefs::Preferences};
 use crate::{
     http_client::HttpClient,
-    media_container::{server::Server as ServerMediaContainer, MediaContainerWrapper},
+    media_container::{
+        server::{
+            library::{ContentDirectory, LibraryType},
+            MediaProviderFeature, Server as ServerMediaContainer,
+        },
+        MediaContainerWrapper,
+    },
     myplex::MyPlex,
     url::{SERVER_MEDIA_PROVIDERS, SERVER_MYPLEX_ACCOUNT, SERVER_MYPLEX_CLAIM},
     HttpClientBuilder, Result,
@@ -11,18 +18,16 @@ use crate::{
 use core::convert::TryFrom;
 use http::{StatusCode, Uri};
 use isahc::AsyncReadResponseExt;
-use std::sync::Arc;
 
 #[derive(Debug, Clone)]
 pub struct Server {
-    #[allow(dead_code)]
-    client: Arc<HttpClient>,
+    client: HttpClient,
     myplex_api_url: Uri,
     pub media_container: ServerMediaContainer,
 }
 
 impl Server {
-    async fn build(client: Arc<HttpClient>, myplex_api_url: Uri) -> Result<Self> {
+    async fn build(client: HttpClient, myplex_api_url: Uri) -> Result<Self> {
         let mut response = client
             .get(SERVER_MEDIA_PROVIDERS)
             .header("Accept", "application/json")
@@ -51,10 +56,48 @@ impl Server {
     {
         let myplex_api_url = client.api_url.clone();
         Self::build(
-            Arc::new(HttpClientBuilder::from(client).set_api_url(url).build()?),
+            HttpClientBuilder::from(client).set_api_url(url).build()?,
             myplex_api_url,
         )
         .await
+    }
+
+    fn content(&self) -> Option<&Vec<ContentDirectory>> {
+        if let Some(provider) = self
+            .media_container
+            .media_providers
+            .iter()
+            .find(|p| p.identifier == "com.plexapp.plugins.library")
+        {
+            for feature in &provider.features {
+                if let MediaProviderFeature::Content {
+                    key: _,
+                    ref directory,
+                } = feature
+                {
+                    return Some(directory);
+                }
+            }
+        }
+
+        None
+    }
+
+    pub fn libraries(&self) -> Vec<Library> {
+        if let Some(content) = self.content() {
+            content
+                .iter()
+                .filter_map(|d| match d {
+                    ContentDirectory::Media(lib) => match lib.library_type {
+                        LibraryType::Unknown(_) => None,
+                        _ => Some(Library::new(self.client.clone(), *lib.clone())),
+                    },
+                    _ => None,
+                })
+                .collect()
+        } else {
+            Vec::new()
+        }
     }
 
     pub async fn refresh(self) -> Result<Self> {
@@ -98,7 +141,7 @@ impl Server {
         <Uri as TryFrom<U>>::Error: Into<http::Error>,
     {
         MyPlex::new(
-            HttpClientBuilder::from(self.client.as_ref().to_owned())
+            HttpClientBuilder::from(self.client.clone())
                 .set_api_url(api_url)
                 .build()?,
         )

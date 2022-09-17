@@ -62,6 +62,10 @@ pub struct Device<'a> {
 }
 
 impl Device<'_> {
+    pub fn provides(&self, feature: Feature) -> bool {
+        self.inner.provides.contains(&feature)
+    }
+
     pub async fn connect(&self) -> Result<DeviceConnection> {
         if !self.inner.provides.contains(&Feature::Server)
             && !self.inner.provides.contains(&Feature::Player)

@@ -12,9 +12,14 @@ pub mod webhook;
 pub use error::Error;
 pub use http_client::HttpClient;
 pub use http_client::HttpClientBuilder;
+pub use media_container::devices::Feature;
 pub use media_container::preferences::Value as SettingValue;
 pub use myplex::{device, pin::PinManager, MyPlex, MyPlexBuilder};
 pub use player::Player;
+pub use server::library::{
+    Artist, Collection, Episode, Library, MetadataItem, Movie, MusicAlbum, Photo, PhotoAlbum,
+    PhotoAlbumItem, Playlist, Season, Show, Track, Video,
+};
 pub use server::Server;
 
 pub type Result<T = (), E = error::Error> = std::result::Result<T, E>;

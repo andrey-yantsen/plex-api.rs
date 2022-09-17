@@ -1,0 +1,35 @@
+{
+  "MediaContainer": {
+    "size": 1,
+    "allowSync": true,
+    "art": "/:/resources/photo-fanart.jpg",
+    "identifier": "com.plexapp.plugins.library",
+    "librarySectionID": 3,
+    "librarySectionTitle": "Photos",
+    "librarySectionUUID": "f173bb82-a89d-44ba-87d8-b818c62ba54d",
+    "mediaTagPrefix": "/system/bundle/media/flags/",
+    "mediaTagVersion": 1634922197,
+    "nocache": true,
+    "thumb": "/:/resources/photo.png",
+    "title1": "Photos",
+    "title2": "All Photos",
+    "viewGroup": "photo",
+    "viewMode": 131633,
+    "Metadata": [
+      {
+        "ratingKey": "43",
+        "key": "/library/metadata/43/children",
+        "guid": "local://43",
+        "type": "photo",
+        "title": "Cats",
+        "summary": "",
+        "index": 1,
+        "composite": "/library/metadata/43/composite/1579514153",
+        "thumb": "/library/metadata/43/thumb/1579514153",
+        "art": "/library/metadata/43/art/1579514153",
+        "addedAt": 1579479284,
+        "updatedAt": 1579514153
+      }
+    ]
+  }
+}

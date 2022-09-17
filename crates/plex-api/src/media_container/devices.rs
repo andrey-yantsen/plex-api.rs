@@ -91,7 +91,7 @@ pub struct Connection {
     pub relay: Option<bool>,
 }
 
-#[derive(Debug, Deserialize, Clone, PartialEq, Eq)]
+#[derive(Debug, Deserialize, Clone, Copy, PartialEq, Eq)]
 #[serde(rename_all = "kebab-case")]
 pub enum Feature {
     Server,
