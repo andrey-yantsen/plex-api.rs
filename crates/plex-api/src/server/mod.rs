@@ -69,7 +69,7 @@ impl Server {
         let url = format!(
             "{}?{}",
             SERVER_MYPLEX_CLAIM,
-            serde_urlencoded::to_string(&[("token", claim_token)])?
+            serde_urlencoded::to_string([("token", claim_token)])?
         );
         let mut response = self.client.post(url).send().await?;
 
