@@ -1,0 +1,66 @@
+---
+"on":
+  push:
+    branches: [main]
+  pull_request_review:
+    types: [submitted]
+
+name: Tests with Plex account
+jobs:
+  test_on_real_server_authenticated_free:
+    if: "github.ref == 'refs/heads/main' || github.event.review.state == 'approved'"
+    needs: test_offline
+    strategy:
+      fail-fast: false
+      matrix:
+        plex_server_version: ["1.28.2.6151-914ddd2b3","1.26.2.5797-5bd057d2b","1.24.5.5173-8dcc73a59"]
+    name: Test on a real server (authenticated free account)
+    runs-on: ubuntu-latest
+    env:
+      X_PLEX_CLIENT_IDENTIFIER: "${{ secrets.X_PLEX_CLIENT_IDENTIFIER_FREE }}"
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v3
+      - name: Install stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+      - uses: Swatinem/rust-cache@v2.0.0
+        with:
+          shared-key: cache-authenticated
+      - name: "Test against real server [authenticated]"
+        uses: actions-rs/cargo@v1
+        with:
+          command: run
+          args: "--package xtask -- test --online --docker-tag '${{ matrix.plex_server_version }}' --token '${{ secrets.PLEX_API_AUTH_TOKEN_FREE }}' --deny-unknown-fields"
+
+  test_on_real_server_authenticated_plexpass:
+    if: "github.ref == 'refs/heads/main' || github.event.review.state == 'approved'"
+    needs: test_offline
+    strategy:
+      fail-fast: false
+      matrix:
+        plex_server_version: ["1.28.2.6151-914ddd2b3","1.26.2.5797-5bd057d2b","1.24.5.5173-8dcc73a59"]
+    name: Test on a real server (authenticated plexpass account)
+    runs-on: ubuntu-latest
+    env:
+      X_PLEX_CLIENT_IDENTIFIER: "${{ secrets.X_PLEX_CLIENT_IDENTIFIER_PLEXPASS }}"
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v3
+      - name: Install stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+      - uses: Swatinem/rust-cache@v2.0.0
+        with:
+          shared-key: cache-authenticated
+      - name: "Test against real server [authenticated]"
+        uses: actions-rs/cargo@v1
+        with:
+          command: run
+          args: "--package xtask -- test --online --docker-tag '${{ matrix.plex_server_version }}' --token '${{ secrets.PLEX_API_AUTH_TOKEN_PLEXPASS }}' --deny-unknown-fields"

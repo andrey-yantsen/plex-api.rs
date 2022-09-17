@@ -1,0 +1,83 @@
+---
+"on":
+  push:
+    branches: [main, staging, trying]
+  pull_request:
+    branches: [main]
+
+name: Tests without Plex account
+jobs:
+  test_offline:
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest
+    name: Offline tests
+    runs-on: "${{ matrix.os }}"
+    steps:
+      - name: "Git: enable longpaths"
+        run: git config --global core.longpaths true
+      - name: Checkout sources
+        uses: actions/checkout@v3
+      - name: Install stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+      - uses: Swatinem/rust-cache@v2.0.0
+        with:
+          shared-key: cache
+      - name: Run tests
+        uses: actions-rs/cargo@v1
+        with:
+          command: run
+          args: "--package xtask -- test --offline"
+
+  test_on_real_server_anonymous:
+    needs: test_offline
+    name: Test on a real server (anonymous)
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        plex_server_version: ["1.28.2.6151-914ddd2b3","1.26.2.5797-5bd057d2b","1.24.5.5173-8dcc73a59"]
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v3
+      - name: Install stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+      - uses: Swatinem/rust-cache@v2.0.0
+        with:
+          shared-key: cache-anonymous
+      - name: "Test against real server [anonymous]"
+        uses: actions-rs/cargo@v1
+        with:
+          command: run
+          args: "--package xtask -- test --online --docker-tag '${{ matrix.plex_server_version }}' --deny-unknown-fields"
+
+  collect_coverage:
+    name: Collect code coverage
+    runs-on: ubuntu-latest
+    container:
+      image: xd009642/tarpaulin:develop-nightly
+      options: --security-opt seccomp=unconfined
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Generate code coverage
+        run: |
+          cargo +nightly tarpaulin --workspace --timeout 120 --out Xml
+
+      - name: Upload to codecov.io
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{secrets.CODECOV_TOKEN}}
+          fail_ci_if_error: true
