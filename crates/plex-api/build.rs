@@ -38,9 +38,9 @@ impl Feature {
         use inflections::Inflect;
         use regex::Regex;
 
-        Regex::new(r"[-_\s]+")
+        Regex::new(r"[-_\s]+|([a-z])([A-Z])")
             .unwrap()
-            .replace_all(&self.id, " ")
+            .replace_all(&self.id, r"$1 $2")
             .to_lowercase()
             .to_title_case()
             .replace(' ', "")

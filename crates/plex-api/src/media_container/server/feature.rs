@@ -41,7 +41,7 @@ pub enum Feature {
         rename = "Android - PiP",
         alias = "86da2200-58db-4d78-ba46-f146ba25906b"
     )]
-    AndroidPip,
+    AndroidPiP,
     #[serde(
         rename = "artist-tv",
         alias = "2797e341-b062-46ed-862f-0acbba5dd522"
@@ -356,7 +356,7 @@ pub enum Feature {
         rename = "nonAnonymousAccount",
         alias = "3dd35df0-3e4a-4e74-9ba8-2baeda83a733"
     )]
-    Nonanonymousaccount,
+    NonAnonymousAccount,
     #[serde(
         rename = "optimize-server-users-endpoint",
         alias = "ddd730e1-a0a0-429f-a7d3-7c5001d24497"
@@ -394,12 +394,12 @@ pub enum Feature {
         rename = "photosV6-edit",
         alias = "850f3d1e-3f38-44c1-9c0c-e3c9127b8b5a"
     )]
-    Photosv6Edit,
+    PhotosV6Edit,
     #[serde(
         rename = "photosV6-tv-albums",
         alias = "3a2b0cb6-1519-4431-98e2-823c248c70eb"
     )]
-    Photosv6TvAlbums,
+    PhotosV6TvAlbums,
     #[serde(
         rename = "podcasts",
         alias = "1841971c-6be5-40e6-a211-7e189d767a78"
