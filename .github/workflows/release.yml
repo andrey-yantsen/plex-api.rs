@@ -22,6 +22,9 @@ jobs:
           monorepo-tags: true
           bump-minor-pre-major: true
           bump-patch-for-minor-pre-major: true
+          bootstrap-sha: d12010bbff5687e80dd9c14cfa3fbeae1f106f0d
+          plugins: |
+            cargo-workspace
           changelog-types: |
             [{"type":"feat","section":"Features","hidden":false},
              {"type":"fix","section":"Bug Fixes","hidden":false},
