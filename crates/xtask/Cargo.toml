@@ -19,7 +19,7 @@ uuid = { version = "^1.1", features = ["v4"] }
 plex-api = { path = "../plex-api" }
 tokio = { version = "^1.16", features = ["rt-multi-thread"] }
 walkdir = "^2"
-semver = "^1.0.13"
+semver = "^1.0.14"
 ureq = "^2.5.0"
 regex = "^1.6"
 testcontainers = "^0.14"
