@@ -11,14 +11,6 @@ pull_request_rules:
     actions:
       queue:
         name: default
-  - name: automatic merge for code-gen pull requests
-    conditions:
-      - author=andrey-yantsen
-      - title=Update the media_container::server::Feature enum
-      - check-success=Test on a real server (anonymous) (1.28.2.6151-914ddd2b3)
-    actions:
-      queue:
-        name: default
   - name: automatic merge for main when when approved
     conditions:
       - "#approved-reviews-by>=1"
