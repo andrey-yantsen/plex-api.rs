@@ -20,7 +20,7 @@ impl flags::Preferences {
                     }
                 } else {
                     for setting in preferences.all() {
-                        if setting.advanced && !cmd.show_advances {
+                        if setting.advanced && !cmd.show_advanced {
                             continue;
                         }
 

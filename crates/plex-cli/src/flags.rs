@@ -33,7 +33,7 @@ xflags::xflags! {
                 optional -g, --group group: String
 
                 /// Display advanced configuration.
-                optional --show-advances
+                optional --show-advanced
 
                 /// Display hidden parameters.
                 optional --show-hidden
@@ -97,7 +97,7 @@ pub enum PreferencesCmd {
 pub struct Get {
     pub key: Option<String>,
     pub group: Option<String>,
-    pub show_advances: bool,
+    pub show_advanced: bool,
     pub show_hidden: bool,
 }
 
