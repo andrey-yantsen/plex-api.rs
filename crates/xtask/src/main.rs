@@ -8,8 +8,10 @@
 
 mod flags;
 mod get_last_plex_tags;
+mod modify_data;
 mod plex_data;
 mod test;
+pub mod utils;
 
 use anyhow::Result;
 use std::{
@@ -27,6 +29,7 @@ fn main() -> Result<()> {
         flags::XtaskCmd::Help(cmd) => cmd.run(),
         flags::XtaskCmd::Test(cmd) => cmd.run(),
         flags::XtaskCmd::PlexData(cmd) => cmd.run(),
+        flags::XtaskCmd::ModifyData(cmd) => cmd.run(),
         flags::XtaskCmd::GetLastPlexTags(cmd) => cmd.run(),
     }
 }

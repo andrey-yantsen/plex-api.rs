@@ -1,9 +1,12 @@
-use crate::flags;
+use crate::{
+    flags,
+    utils::{copy_tree, cp},
+};
 use std::{
-    fs::{copy, create_dir_all, hard_link, remove_dir_all, remove_file},
+    fs::{create_dir_all, hard_link, remove_dir_all, remove_file},
     path::Path,
 };
-use walkdir::WalkDir;
+use xshell::cwd;
 
 const STUB_PICTURE: &str = "white_noise_720p.jpg";
 const STUB_VIDEO: &str = "white_noise_720p.mkv";
@@ -107,15 +110,15 @@ impl flags::PlexData {
             None => "plex-data",
         };
 
-        let plex_data_path = Path::new(path);
-        let plex_stub_data_path = Path::new("plex-stub-data");
+        let plex_data_path = cwd()?.join(path);
+        let plex_stub_data_path = cwd()?.join("plex-stub-data");
         let plex_stub_data_media_path = plex_stub_data_path.join("media");
 
         if self.replace && plex_data_path.exists() {
-            remove_dir_all(plex_data_path)?;
+            remove_dir_all(&plex_data_path)?;
         }
 
-        create_dir_all(plex_data_path)?;
+        create_dir_all(&plex_data_path)?;
 
         let mut is_hardlink_supported = false;
         if let Ok(()) = hard_link("Cargo.lock", plex_data_path.join("Cargo.lock")) {
@@ -123,17 +126,12 @@ impl flags::PlexData {
             is_hardlink_supported = true;
         }
 
-        for entry in WalkDir::new(plex_stub_data_path.join("config"))
-            .follow_links(true)
-            .into_iter()
-            .filter_map(|e| e.ok())
-        {
-            if entry.file_type().is_file() {
-                let path = entry.path();
-                let new_path = plex_data_path.join(path.strip_prefix(plex_stub_data_path)?);
-                self.cp(false, path, new_path)?;
-            }
-        }
+        copy_tree(
+            &plex_stub_data_path,
+            &plex_data_path,
+            vec!["config"],
+            self.verbose,
+        )?;
 
         let media_path = plex_data_path.join("media");
         self.populate(
@@ -158,50 +156,6 @@ impl flags::PlexData {
         Ok(())
     }
 
-    fn cp<P: AsRef<Path>, Q: AsRef<Path>>(
-        &self,
-        hardlink_suported: bool,
-        original: P,
-        link: Q,
-    ) -> anyhow::Result<()> {
-        if link.as_ref().exists() {
-            if self.verbose {
-                println!("File '{}' already exists!", link.as_ref().display());
-            }
-            return Ok(());
-        }
-
-        if let Some(parent) = link.as_ref().parent() {
-            if !parent.exists() {
-                create_dir_all(parent)?;
-            }
-        }
-
-        if hardlink_suported {
-            if self.verbose {
-                println!(
-                    "Copying '{}' to '{}'",
-                    original.as_ref().display(),
-                    link.as_ref().display()
-                );
-            }
-
-            hard_link(original, link)?;
-        } else {
-            if self.verbose {
-                println!(
-                    "Copying '{}' to '{}'",
-                    original.as_ref().display(),
-                    link.as_ref().display()
-                );
-            }
-
-            copy(original, link)?;
-        }
-
-        Ok(())
-    }
-
     fn populate(
         &self,
         is_hardlink_supported: bool,
@@ -213,7 +167,7 @@ impl flags::PlexData {
             let dir = destination.join(dir);
             let dest = dir.join(file);
 
-            self.cp(is_hardlink_supported, source, dest)?;
+            cp(is_hardlink_supported, source, dest, self.verbose)?;
         }
 
         Ok(())
