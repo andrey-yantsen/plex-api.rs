@@ -10,6 +10,7 @@
 name: Test
 jobs:
   test_offline:
+    if: "!github.event.review || github.event.review.state == 'approved'"
     strategy:
       matrix:
         os:
@@ -39,6 +40,7 @@ jobs:
           args: "--package xtask -- test --offline"
 
   test_on_real_server_anonymous:
+    if: "!github.event.review || github.event.review.state == 'approved'"
     needs: test_offline
     name: Test on a real server (anonymous)
     runs-on: ubuntu-latest
@@ -65,7 +67,7 @@ jobs:
           args: "--package xtask -- test --online --docker-tag '${{ matrix.plex_server_version }}' --deny-unknown-fields"
 
   test_on_real_server_authenticated_free:
-    if: "github.ref == 'refs/heads/main' || github.event.review.state == 'approved'"
+    if: "(github.ref == 'refs/heads/main' && !github.event.review) || github.event.review.state == 'approved'"
     needs: test_offline
     strategy:
       fail-fast: false
@@ -94,7 +96,7 @@ jobs:
           args: "--package xtask -- test --online --docker-tag '${{ matrix.plex_server_version }}' --token '${{ secrets.PLEX_API_AUTH_TOKEN_FREE }}' --deny-unknown-fields"
 
   test_on_real_server_authenticated_plexpass:
-    if: "github.ref == 'refs/heads/main' || github.event.review.state == 'approved'"
+    if: "(github.ref == 'refs/heads/main' && !github.event.review) || github.event.review.state == 'approved'"
     needs: test_offline
     strategy:
       fail-fast: false
@@ -123,6 +125,7 @@ jobs:
           args: "--package xtask -- test --online --docker-tag '${{ matrix.plex_server_version }}' --token '${{ secrets.PLEX_API_AUTH_TOKEN_PLEXPASS }}' --deny-unknown-fields"
 
   collect_coverage:
+    if: "!github.event.review"
     name: Collect code coverage
     runs-on: ubuntu-latest
     container:
