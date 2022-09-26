@@ -18,7 +18,8 @@ such as categories and playlists use the `cargo xtask modify-data` command to st
 the test data and use the web interface to make the modifications you need. Note that the first
 time you run the server against the test data you will have to accept Plex's terms of service.
 Assuming you have read and agreed to them you can do this from the command line:
-```
+
+```shell
 cargo run -p plex-cli -- -s {server_url} preferences set --i-know-what-i-am-doing -k AcceptedEULA -v true
 ```
 
@@ -28,10 +29,43 @@ There are multiple test types available:
 * Online tests using a claimed (i.e. assigned to a MyPlex account) local docker container.
 * Online tests using an unclaimed local docker container.
 
-The easiest way to run all the available tests is by executing the following command:
+The easiest way to run all the available tests is by executing the following
+commands (they heavily use docker under the hood, please ensure you have it
+installed and running):
 
+```shell
+cargo xtask test --token <YOUR_PLEX_API_TOKEN>
+cargo xtask test --online --token <YOUR_PLEX_API_TOKEN> --deny-unknown-fields
 ```
-cargo xtask test
+
+You can omit the `--token <YOUR_PLEX_API_TOKEN>` argument — in this case only
+tests with an unclaimed server will be executed.
+
+The first command will run the offline tests with ensuring that all the mocked
+data can be parsed completely (i.e. the `tests_deny_unknown_fields` feature will
+be enabled), then the online tests using an unclaimed server, and then online
+tests using the claimed server. This ensures that your code "works in general".
+
+The second command will also run the online tests over claimed and unclaimed
+servers, but this time it will fail the tests if an unexpected struct field or
+enum value were met in any of the API responses. This is useful when you add
+some new functionality, it ensures that all the fields returned by the API are
+parsed.
+
+You can get your Plex API token by executing the following command and following
+the on-screen instructions:
+
+```shell
+cargo run -p plex-api --example get-token
+```
+
+Tokens received this way can be used multiple times, so feel free to store one
+and reuse. You can destroy an obsolete token either by removing it from the
+[Authorized Devices](https://app.plex.tv/desktop/#!/settings/devices/all) list,
+or by executing another command:
+
+```shell
+cargo run -p plex-api --example signout
 ```
 
 ## Committing
@@ -43,6 +77,7 @@ messages.
 
 I don't have much exprience with testing in Rust, so please write the tests the way you see fit.
 At the same time, I created a few macros to reduce the boilerplate amount:
+
 * `#[plex_api_test_helper::offline_test]`
 * `#[plex_api_test_helper::online_test_unclaimed_server]`
 * `#[plex_api_test_helper::online_test_claimed_server]`
