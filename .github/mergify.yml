@@ -6,7 +6,9 @@ pull_request_rules:
   - name: automatic merge for Dependabot pull requests
     conditions:
       - author=dependabot[bot]
-      - check-success=Test on a real server (anonymous) (1.28.2.6151-914ddd2b3)
+      - check-success=Test on a real server (anonymous) (1.24.5.5173-8dcc73a59) # supported-version-1
+      - check-success=Test on a real server (anonymous) (1.26.2.5797-5bd057d2b) # supported-version-2
+      - check-success=Test on a real server (anonymous) (1.28.2.6151-914ddd2b3) # supported-version-3
       - check-success=MSRV
     actions:
       queue:
@@ -15,9 +17,15 @@ pull_request_rules:
     conditions:
       - "#approved-reviews-by>=1"
       - base=main
-      - check-success=Test on a real server (anonymous) (1.28.2.6151-914ddd2b3)
-      - check-success=Test on a real server (authenticated free account) (1.28.2.6151-914ddd2b3)
-      - check-success=Test on a real server (authenticated plexpass account) (1.28.2.6151-914ddd2b3)
+      - check-success=Test on a real server (anonymous) (1.24.5.5173-8dcc73a59) # supported-version-1
+      - check-success=Test on a real server (anonymous) (1.26.2.5797-5bd057d2b) # supported-version-2
+      - check-success=Test on a real server (anonymous) (1.28.2.6151-914ddd2b3) # supported-version-3
+      - check-success=Test on a real server (authenticated free account) (1.24.5.5173-8dcc73a59) # supported-version-1
+      - check-success=Test on a real server (authenticated free account) (1.26.2.5797-5bd057d2b) # supported-version-2
+      - check-success=Test on a real server (authenticated free account) (1.28.2.6151-914ddd2b3) # supported-version-3
+      - check-success=Test on a real server (authenticated plexpass account) (1.24.5.5173-8dcc73a59) # supported-version-1
+      - check-success=Test on a real server (authenticated plexpass account) (1.26.2.5797-5bd057d2b) # supported-version-2
+      - check-success=Test on a real server (authenticated plexpass account) (1.28.2.6151-914ddd2b3) # supported-version-3
     actions:
       queue:
         name: default

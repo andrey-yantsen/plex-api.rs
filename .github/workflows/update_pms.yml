@@ -31,6 +31,8 @@ jobs:
           echo "::set-output name=tags::$tags"
           first_tag=$(echo "$tags" | jq -r '.[0]')
           echo "::set-output name=first_tag::$first_tag"
+          second_tag=$(echo "$tags" | jq -r '.[1]')
+          echo "::set-output name=second_tag::$second_tag"
           last_tag=$(echo "$tags" | jq -r '.[2]')
           echo "::set-output name=last_tag::$last_tag"
       - name: Update test.yml workflow
@@ -38,7 +40,9 @@ jobs:
           sed -i 's/plex_server_version: .*/plex_server_version: ${{ steps.tags.outputs.tags }}/g' .github/workflows/test.yml
       - name: Update mergify.toml config
         run: |
-          sed -i 's/\(Test on a real server ([a-z ]*)\).*/\1 (${{ steps.tags.outputs.first_tag }})/g' .github/mergify.yml
+          sed -i 's/\(Test on a real server ([a-z ]*)\).* # supported-version-1/\1 (${{ steps.tags.outputs.last_tag }}) # supported-version-1/g' .github/mergify.yml
+          sed -i 's/\(Test on a real server ([a-z ]*)\).* # supported-version-2/\1 (${{ steps.tags.outputs.second_tag }}) # supported-version-2/g' .github/mergify.yml
+          sed -i 's/\(Test on a real server ([a-z ]*)\).* # supported-version-3/\1 (${{ steps.tags.outputs.first_tag }}) # supported-version-3/g' .github/mergify.yml
       - name: Update modify-data command
         run: |
           sed -i 's/DEFAULT_TAG: &str = "[-a-z0-9.]*/DEFAULT_TAG: \&str = "${{ steps.tags.outputs.last_tag }}/g' crates/xtask/src/modify_data.rs
