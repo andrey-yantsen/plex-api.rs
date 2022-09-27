@@ -1,0 +1,165 @@
+{
+  "MediaContainer": {
+    "size": 3,
+    "allowSync": true,
+    "art": "/:/resources/artist-fanart.jpg",
+    "grandparentRatingKey": 156,
+    "grandparentThumb": "/library/metadata/156/thumb/1579520110",
+    "grandparentTitle": "Skrillex",
+    "identifier": "com.plexapp.plugins.library",
+    "key": "157",
+    "librarySectionID": 5,
+    "librarySectionTitle": "Music",
+    "librarySectionUUID": "6248e967-8d45-4957-ba5e-ca85df9104b9",
+    "mediaTagPrefix": "/system/bundle/media/flags/",
+    "mediaTagVersion": 1634922197,
+    "nocache": true,
+    "parentIndex": 1,
+    "parentTitle": "Try It Out",
+    "thumb": "/library/metadata/157/thumb/1579520116",
+    "title1": "Skrillex",
+    "title2": "Try It Out",
+    "viewGroup": "track",
+    "viewMode": 65593,
+    "Metadata": [
+      {
+        "ratingKey": "158",
+        "key": "/library/metadata/158",
+        "parentRatingKey": "157",
+        "grandparentRatingKey": "156",
+        "guid": "local://158",
+        "parentGuid": "com.plexapp.agents.lastfm://Skrillex/Try%20It%20Out?lang=en",
+        "grandparentGuid": "com.plexapp.agents.lastfm://Skrillex?lang=en",
+        "type": "track",
+        "title": "TRY IT OUT (NEON MIX)",
+        "grandparentKey": "/library/metadata/156",
+        "parentKey": "/library/metadata/157",
+        "grandparentTitle": "Skrillex",
+        "parentTitle": "Try It Out",
+        "summary": "",
+        "index": 1,
+        "parentIndex": 1,
+        "thumb": "/library/metadata/157/thumb/1579520116",
+        "parentThumb": "/library/metadata/157/thumb/1579520116",
+        "grandparentThumb": "/library/metadata/156/thumb/1579520110",
+        "duration": 5491,
+        "addedAt": 1579520106,
+        "updatedAt": 1579520116,
+        "Media": [
+          {
+            "id": 137,
+            "duration": 5491,
+            "bitrate": 146,
+            "audioChannels": 1,
+            "audioCodec": "aac",
+            "container": "aac",
+            "audioProfile": "lc",
+            "Part": [
+              {
+                "id": 151,
+                "key": "/library/parts/151/1579520044/file.aac",
+                "duration": 5491,
+                "file": "/data/Music/Skrillex - Try It Out (2003)/01 - TRY IT OUT (NEON MIX).aac",
+                "size": 100262,
+                "audioProfile": "lc",
+                "container": "aac"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "ratingKey": "159",
+        "key": "/library/metadata/159",
+        "parentRatingKey": "157",
+        "grandparentRatingKey": "156",
+        "guid": "local://159",
+        "parentGuid": "com.plexapp.agents.lastfm://Skrillex/Try%20It%20Out?lang=en",
+        "grandparentGuid": "com.plexapp.agents.lastfm://Skrillex?lang=en",
+        "type": "track",
+        "title": "Try It Out (Try Harder Mix)",
+        "grandparentKey": "/library/metadata/156",
+        "parentKey": "/library/metadata/157",
+        "grandparentTitle": "Skrillex",
+        "parentTitle": "Try It Out",
+        "summary": "",
+        "index": 2,
+        "parentIndex": 1,
+        "thumb": "/library/metadata/157/thumb/1579520116",
+        "parentThumb": "/library/metadata/157/thumb/1579520116",
+        "grandparentThumb": "/library/metadata/156/thumb/1579520110",
+        "duration": 5491,
+        "addedAt": 1579520106,
+        "updatedAt": 1579520116,
+        "Media": [
+          {
+            "id": 138,
+            "duration": 5491,
+            "bitrate": 146,
+            "audioChannels": 1,
+            "audioCodec": "aac",
+            "container": "aac",
+            "audioProfile": "lc",
+            "Part": [
+              {
+                "id": 152,
+                "key": "/library/parts/152/1579520044/file.aac",
+                "duration": 5491,
+                "file": "/data/Music/Skrillex - Try It Out (2003)/02 - Try It Out (Try Harder Mix).aac",
+                "size": 100262,
+                "audioProfile": "lc",
+                "container": "aac"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "ratingKey": "160",
+        "key": "/library/metadata/160",
+        "parentRatingKey": "157",
+        "grandparentRatingKey": "156",
+        "guid": "local://160",
+        "parentGuid": "com.plexapp.agents.lastfm://Skrillex/Try%20It%20Out?lang=en",
+        "grandparentGuid": "com.plexapp.agents.lastfm://Skrillex?lang=en",
+        "type": "track",
+        "title": "Try It Out (Put Em Up Mix)",
+        "grandparentKey": "/library/metadata/156",
+        "parentKey": "/library/metadata/157",
+        "grandparentTitle": "Skrillex",
+        "parentTitle": "Try It Out",
+        "summary": "",
+        "index": 3,
+        "parentIndex": 1,
+        "thumb": "/library/metadata/157/thumb/1579520116",
+        "parentThumb": "/library/metadata/157/thumb/1579520116",
+        "grandparentThumb": "/library/metadata/156/thumb/1579520110",
+        "duration": 5491,
+        "addedAt": 1579520106,
+        "updatedAt": 1579520116,
+        "Media": [
+          {
+            "id": 139,
+            "duration": 5491,
+            "bitrate": 146,
+            "audioChannels": 1,
+            "audioCodec": "aac",
+            "container": "aac",
+            "audioProfile": "lc",
+            "Part": [
+              {
+                "id": 153,
+                "key": "/library/parts/153/1579520044/file.aac",
+                "duration": 5491,
+                "file": "/data/Music/Skrillex - Try It Out (2003)/03 - Try It Out (Put Em Up Mix).aac",
+                "size": 100262,
+                "audioProfile": "lc",
+                "container": "aac"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

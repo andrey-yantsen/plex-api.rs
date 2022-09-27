@@ -1,0 +1,76 @@
+{
+  "MediaContainer": {
+    "size": 5,
+    "allowSync": true,
+    "art": "/library/metadata/43/art/1579514153",
+    "identifier": "com.plexapp.plugins.library",
+    "key": "43",
+    "librarySectionID": 3,
+    "librarySectionTitle": "Photos",
+    "librarySectionUUID": "f173bb82-a89d-44ba-87d8-b818c62ba54d",
+    "mediaTagPrefix": "/system/bundle/media/flags/",
+    "mediaTagVersion": 1634922197,
+    "nocache": true,
+    "parentIndex": 1,
+    "parentTitle": "Cats",
+    "thumb": "/library/metadata/43/thumb/1579514153",
+    "title1": "Photos",
+    "title2": "Cats",
+    "viewGroup": "photo",
+    "viewMode": 131633,
+    "Metadata": [
+      {
+        "ratingKey": "64",
+        "key": "/library/metadata/64/children",
+        "parentRatingKey": "43",
+        "guid": "local://64",
+        "type": "photo",
+        "title": "Cats in bed",
+        "parentKey": "/library/metadata/43",
+        "summary": "",
+        "index": 1,
+        "composite": "/library/metadata/64/composite/1579514154",
+        "thumb": "/library/metadata/64/thumb/1579514154",
+        "art": "/library/metadata/64/art/1579514154",
+        "addedAt": 1579514153,
+        "updatedAt": 1579514154
+      },
+      {
+        "ratingKey": "59",
+        "key": "/library/metadata/59",
+        "parentRatingKey": "43",
+        "guid": "local://59",
+        "type": "photo",
+        "title": "Picture1",
+        "parentKey": "/library/metadata/43",
+        "summary": "",
+        "index": 1,
+        "year": 2020,
+        "thumb": "/library/metadata/59/thumb/1579514153",
+        "originallyAvailableAt": "2020-01-20",
+        "addedAt": 1579514152,
+        "updatedAt": 1579514153,
+        "createdAtAccuracy": "local",
+        "createdAtTZOffset": "0",
+        "Media": [
+          {
+            "id": 50,
+            "width": 1280,
+            "height": 720,
+            "aspectRatio": 1.78,
+            "container": "jpeg",
+            "Part": [
+              {
+                "id": 50,
+                "key": "/library/parts/50/1579515736/file.jpg",
+                "file": "/data/Photos/Cats/Picture1.jpg",
+                "size": 315481,
+                "container": "jpeg"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

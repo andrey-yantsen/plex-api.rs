@@ -20,12 +20,15 @@ serde_with = { version = "^1.14", features = ["json"] }
 quick-xml = { version = "^0.25", features = [ "serialize" ] }
 serde_plain = "^1.0.0"
 serde_repr = "^0.1"
-time = { version = "^0.3", features = ["serde-well-known"] }
+time = { version = "^0.3", features = ["serde-well-known", "serde-human-readable"] }
 http = "^0.2.8"
 http-serde = "^1.1"
 serde_urlencoded = "^0.7.1"
 thiserror = "^1.0"
 sys-info = "^0.9"
+monostate = "^0.1.1"
+enum-utils = "^0.1.2"
+serde-aux = "^4.0.0"
 
 [build-dependencies]
 serde = { version = "^1.0", features = ["derive"] }

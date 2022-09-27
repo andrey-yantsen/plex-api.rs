@@ -1,0 +1,240 @@
+{
+  "MediaContainer": {
+    "size": 4,
+    "allowSync": true,
+    "art": "/:/resources/movie-fanart.jpg",
+    "identifier": "com.plexapp.plugins.library",
+    "librarySectionID": 1,
+    "librarySectionTitle": "Movies",
+    "librarySectionUUID": "cebcb7e3-5031-436b-906a-3640d878ba2c",
+    "mediaTagPrefix": "/system/bundle/media/flags/",
+    "mediaTagVersion": 1634922197,
+    "thumb": "/:/resources/movie.png",
+    "title1": "Movies",
+    "title2": "All Movies",
+    "viewGroup": "movie",
+    "viewMode": 65592,
+    "Metadata": [
+      {
+        "ratingKey": "55",
+        "key": "/library/metadata/55",
+        "guid": "com.plexapp.agents.imdb://tt1254207?lang=en",
+        "studio": "Blender Foundation",
+        "type": "movie",
+        "title": "Big Buck Bunny",
+        "contentRating": "G",
+        "summary": "Follow a day of the life of Big Buck Bunny when he meets three bullying rodents: Frank, Rinky, and Gamera. The rodents amuse themselves by harassing helpless creatures by throwing fruits, nuts and rocks at them. After the deaths of two of Bunny's favorite butterflies, and an offensive attack on Bunny himself, Bunny sets aside his gentle nature and orchestrates a complex plan for revenge.",
+        "rating": 6.2,
+        "year": 2008,
+        "thumb": "/library/metadata/55/thumb/1579514152",
+        "art": "/library/metadata/55/art/1579514152",
+        "duration": 5062,
+        "originallyAvailableAt": "2008-04-10",
+        "addedAt": 1579514088,
+        "updatedAt": 1579514152,
+        "Media": [
+          {
+            "id": 46,
+            "duration": 5062,
+            "bitrate": 21178,
+            "width": 1280,
+            "height": 720,
+            "aspectRatio": 1.78,
+            "audioChannels": 1,
+            "audioCodec": "aac",
+            "videoCodec": "h264",
+            "videoResolution": "720",
+            "container": "mkv",
+            "videoFrameRate": "PAL",
+            "audioProfile": "lc",
+            "videoProfile": "main",
+            "Part": [
+              {
+                "id": 46,
+                "key": "/library/parts/46/1579478991/file.mkv",
+                "duration": 5062,
+                "file": "/data/Movies/Big Buck Bunny (2008).mkv",
+                "size": 13400382,
+                "audioProfile": "lc",
+                "container": "mkv",
+                "videoProfile": "main"
+              }
+            ]
+          }
+        ],
+        "Genre": [{ "tag": "Animation" }, { "tag": "Comedy" }],
+        "Director": [{ "tag": "Sacha Goedegebure" }],
+        "Country": [{ "tag": "Netherlands" }],
+        "Collection": [{ "tag": "Animation" }]
+      },
+      {
+        "ratingKey": "56",
+        "key": "/library/metadata/56",
+        "guid": "com.plexapp.agents.imdb://tt0807840?lang=en",
+        "studio": "Blender Foundation",
+        "type": "movie",
+        "title": "Elephants Dream",
+        "contentRating": "NR",
+        "summary": "Elephants Dream is the story of two strange characters exploring a capricious and seemingly infinite machine. The elder, Proog, acts as a tour-guide and protector, happily showing off the sights and dangers of the machine to his initially curious but increasingly skeptical protege Emo. As their journey unfolds we discover signs that the machine is not all Proog thinks it is, and his guiding takes on a more desperate aspect.  Elephants Dream is a story about communication and fiction, made purposefully open-ended as the world’s first 3D animated “Open movie”. The film itself is released under the Creative Commons license, along with the entirety of the production files used to make it (roughly 7 Gigabytes of data). The software used to make the movie is the free/open source animation suite Blender along with other open source software, thus allowing the movie to be remade, remixed and re-purposed with only a computer and the data on the DVD or download.",
+        "rating": 5.9,
+        "year": 2006,
+        "thumb": "/library/metadata/56/thumb/1579514204",
+        "art": "/library/metadata/56/art/1579514204",
+        "duration": 5062,
+        "originallyAvailableAt": "2006-03-24",
+        "addedAt": 1579514088,
+        "updatedAt": 1579514204,
+        "Media": [
+          {
+            "id": 47,
+            "duration": 5062,
+            "bitrate": 21178,
+            "width": 1280,
+            "height": 720,
+            "aspectRatio": 1.78,
+            "audioChannels": 1,
+            "audioCodec": "aac",
+            "videoCodec": "h264",
+            "videoResolution": "720",
+            "container": "mkv",
+            "videoFrameRate": "PAL",
+            "audioProfile": "lc",
+            "videoProfile": "main",
+            "Part": [
+              {
+                "id": 47,
+                "key": "/library/parts/47/1579478991/file.mkv",
+                "duration": 5062,
+                "file": "/data/Movies/Elephants Dream (2006).mkv",
+                "size": 13400382,
+                "audioProfile": "lc",
+                "container": "mkv",
+                "videoProfile": "main"
+              }
+            ]
+          }
+        ],
+        "Genre": [{ "tag": "Animation" }, { "tag": "Science Fiction" }],
+        "Director": [{ "tag": "Bassam Kurdali" }],
+        "Writer": [{ "tag": "Andreas Goralczyk" }, { "tag": "Bassam Kurdali" }],
+        "Country": [{ "tag": "Netherlands" }],
+        "Collection": [{ "tag": "Animation" }],
+        "Role": [{ "tag": "Tygo Gernandt" }, { "tag": "Cas Jansen" }]
+      },
+      {
+        "ratingKey": "108",
+        "key": "/library/metadata/108",
+        "guid": "com.plexapp.agents.imdb://tt0165832?lang=en",
+        "studio": "Fireworks Pictures",
+        "type": "movie",
+        "title": "Interstate 60",
+        "contentRating": "R",
+        "summary": "An aspiring painter meets various characters and learns valuable lessons while traveling across America.",
+        "rating": 7.7,
+        "year": 2002,
+        "tagline": "It began as a wish, became an adventure, and ended as the ultimate road trip.",
+        "thumb": "/library/metadata/108/thumb/1663510739",
+        "art": "/library/metadata/108/art/1663510739",
+        "duration": 5062,
+        "originallyAvailableAt": "2002-04-13",
+        "addedAt": 1579514268,
+        "updatedAt": 1663510739,
+        "hasPremiumPrimaryExtra": "1",
+        "ratingImage": "imdb://image.rating",
+        "Media": [
+          {
+            "id": 96,
+            "duration": 5062,
+            "bitrate": 21178,
+            "width": 1280,
+            "height": 720,
+            "aspectRatio": 1.78,
+            "audioChannels": 1,
+            "audioCodec": "aac",
+            "videoCodec": "h264",
+            "videoResolution": "720",
+            "container": "mkv",
+            "videoFrameRate": "PAL",
+            "audioProfile": "lc",
+            "videoProfile": "main",
+            "Part": [
+              {
+                "id": 96,
+                "key": "/library/parts/96/1579478991/file.mkv",
+                "duration": 5062,
+                "file": "/data/Movies/Interstate 60 (2002).mkv",
+                "size": 13400382,
+                "audioProfile": "lc",
+                "container": "mkv",
+                "videoProfile": "main"
+              }
+            ]
+          }
+        ],
+        "Genre": [{ "tag": "Adventure" }, { "tag": "Comedy" }],
+        "Director": [{ "tag": "Bob Gale" }],
+        "Writer": [{ "tag": "Bob Gale" }],
+        "Country": [{ "tag": "Canada" }],
+        "Role": [
+          { "tag": "James Marsden" },
+          { "tag": "Gary Oldman" },
+          { "tag": "Amy Smart" }
+        ]
+      },
+      {
+        "ratingKey": "57",
+        "key": "/library/metadata/57",
+        "guid": "com.plexapp.agents.imdb://tt1727587?lang=en",
+        "studio": "Blender Foundation",
+        "type": "movie",
+        "title": "Sintel",
+        "contentRating": "PG",
+        "summary": "A wandering warrior finds an unlikely friend in the form of a young dragon. The two develop a close bond, until one day the dragon is snatched away. She then sets out on a relentless quest to reclaim her friend, finding in the end that her quest exacts a far greater price than she had ever imagined.",
+        "rating": 7.6,
+        "year": 2010,
+        "thumb": "/library/metadata/57/thumb/1579514208",
+        "art": "/library/metadata/57/art/1579514208",
+        "duration": 5062,
+        "originallyAvailableAt": "2010-09-30",
+        "addedAt": 1579514088,
+        "updatedAt": 1579514208,
+        "Media": [
+          {
+            "id": 48,
+            "duration": 5062,
+            "bitrate": 21178,
+            "width": 1280,
+            "height": 720,
+            "aspectRatio": 1.78,
+            "audioChannels": 1,
+            "audioCodec": "aac",
+            "videoCodec": "h264",
+            "videoResolution": "720",
+            "container": "mkv",
+            "videoFrameRate": "PAL",
+            "audioProfile": "lc",
+            "videoProfile": "main",
+            "Part": [
+              {
+                "id": 48,
+                "key": "/library/parts/48/1579478991/file.mkv",
+                "duration": 5062,
+                "file": "/data/Movies/Sintel (2010).mkv",
+                "size": 13400382,
+                "audioProfile": "lc",
+                "container": "mkv",
+                "videoProfile": "main"
+              }
+            ]
+          }
+        ],
+        "Genre": [{ "tag": "Animation" }, { "tag": "Fantasy" }],
+        "Director": [{ "tag": "Colin Levy" }],
+        "Writer": [{ "tag": "Esther Wouda" }],
+        "Country": [{ "tag": "Netherlands" }],
+        "Collection": [{ "tag": "Animation" }],
+        "Role": [{ "tag": "Halina Reijn" }, { "tag": "Thom Hoffman" }]
+      }
+    ]
+  }
+}

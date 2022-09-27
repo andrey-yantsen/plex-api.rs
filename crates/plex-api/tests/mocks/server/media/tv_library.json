@@ -1,0 +1,83 @@
+{
+  "MediaContainer": {
+    "size": 2,
+    "allowSync": true,
+    "art": "/:/resources/show-fanart.jpg",
+    "identifier": "com.plexapp.plugins.library",
+    "librarySectionID": 2,
+    "librarySectionTitle": "TV Shows",
+    "librarySectionUUID": "95c0f894-3716-41c8-9f70-38e344a93019",
+    "mediaTagPrefix": "/system/bundle/media/flags/",
+    "mediaTagVersion": 1634922197,
+    "nocache": true,
+    "thumb": "/:/resources/show.png",
+    "title1": "TV Shows",
+    "title2": "All Shows",
+    "viewGroup": "show",
+    "viewMode": 65592,
+    "Metadata": [
+      {
+        "ratingKey": "22",
+        "key": "/library/metadata/22/children",
+        "guid": "com.plexapp.agents.thetvdb://268592?lang=en",
+        "studio": "The CW",
+        "type": "show",
+        "title": "The 100",
+        "titleSort": "100",
+        "contentRating": "TV-14",
+        "summary": "Set ninety-seven years after a nuclear war has destroyed civilization, when a spaceship housing humanity's lone survivors sends one hundred juvenile delinquents back to Earth, in hopes of possibly re-populating the planet.\r\n",
+        "index": 1,
+        "rating": 8.3,
+        "year": 2014,
+        "thumb": "/library/metadata/22/thumb/1579514246",
+        "art": "/library/metadata/22/art/1579514246",
+        "banner": "/library/metadata/22/banner/1579514246",
+        "theme": "/library/metadata/22/theme/1579514246",
+        "duration": 2700000,
+        "originallyAvailableAt": "2014-03-19",
+        "leafCount": 18,
+        "viewedLeafCount": 0,
+        "childCount": 2,
+        "addedAt": 1579478991,
+        "updatedAt": 1579514246,
+        "Genre": [{ "tag": "Action" }, { "tag": "Drama" }],
+        "Collection": [{ "tag": "SciFi" }],
+        "Role": [
+          { "tag": "Ricky Whittle" },
+          { "tag": "Eliza Taylor" },
+          { "tag": "Eve Harlow" }
+        ]
+      },
+      {
+        "ratingKey": "68",
+        "key": "/library/metadata/68/children",
+        "guid": "com.plexapp.agents.thetvdb://121361?lang=en",
+        "studio": "HBO",
+        "type": "show",
+        "title": "Game of Thrones",
+        "contentRating": "TV-MA",
+        "summary": "Seven noble families fight for control of the mythical land of Westeros. Friction between the houses leads to full-scale war. All while a very ancient evil awakens in the farthest north. Amidst the war, a neglected military order of misfits, the Night's Watch, is all that stands between the realms of men and the icy horrors beyond.",
+        "index": 1,
+        "rating": 9.5,
+        "year": 2010,
+        "thumb": "/library/metadata/68/thumb/1579514260",
+        "art": "/library/metadata/68/art/1579514260",
+        "banner": "/library/metadata/68/banner/1579514260",
+        "theme": "/library/metadata/68/theme/1579514260",
+        "duration": 3300000,
+        "originallyAvailableAt": "2010-12-05",
+        "leafCount": 18,
+        "viewedLeafCount": 0,
+        "childCount": 2,
+        "addedAt": 1579514154,
+        "updatedAt": 1579514260,
+        "Genre": [{ "tag": "Adventure" }, { "tag": "Drama" }],
+        "Role": [
+          { "tag": "Emilia Clarke" },
+          { "tag": "Kit Harington" },
+          { "tag": "Peter Dinklage" }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "MediaContainer": {
+    "size": 2,
+    "allowSync": true,
+    "art": "/:/resources/artist-fanart.jpg",
+    "identifier": "com.plexapp.plugins.library",
+    "librarySectionID": 5,
+    "librarySectionTitle": "Music",
+    "librarySectionUUID": "6248e967-8d45-4957-ba5e-ca85df9104b9",
+    "mediaTagPrefix": "/system/bundle/media/flags/",
+    "mediaTagVersion": 1634922197,
+    "nocache": true,
+    "thumb": "/:/resources/artist.png",
+    "title1": "Music",
+    "title2": "All Artists",
+    "viewGroup": "artist",
+    "viewMode": 65592,
+    "Metadata": [
+      {
+        "ratingKey": "156",
+        "key": "/library/metadata/156/children",
+        "guid": "com.plexapp.agents.lastfm://Skrillex?lang=en",
+        "type": "artist",
+        "title": "Skrillex",
+        "summary": "Skrillex is the pseudonym used by Los Angeles, California, USA musician Sonny Moore to differentiate his electronic solo work from his work with From First to Last and his other solo projects.",
+        "index": 1,
+        "thumb": "/library/metadata/156/thumb/1579520110",
+        "addedAt": 1579520106,
+        "updatedAt": 1579520110,
+        "Genre": [{ "tag": "Dubstep" }, { "tag": "Electronic" }]
+      },
+      {
+        "ratingKey": "142",
+        "key": "/library/metadata/142/children",
+        "guid": "com.plexapp.agents.lastfm://System%20of%20a%20Down?lang=en",
+        "type": "artist",
+        "title": "System of a Down",
+        "summary": "System of a Down is an Armenian American alternative metal band, formed in 1994 in Los Angeles, California, USA. All four members are of Armenian descent, and are widely known for their outspoken views expressed in many of their songs confronting the Armenian Genocide of 1915 by the Ottoman Empire and the ongoing War on Terror by the US government. The band consists of Serj Tankian (vocals), Daron Malakian (vocals, guitar), Shavo Odadjian (bass, vocals) and John Dolmayan (drums).\nSystem of a Down has achieved commercial success with five albums, and many singles such as their breakout hit \"Chop Suey!\", \"Toxicity\", \"Aerials\", \"B.Y.O.B.\", \"Question!\", \"Hypnotize\" and \"Lonely Day\". Their works have earned them one Grammy Award amongst three nominations.",
+        "index": 1,
+        "thumb": "/library/metadata/142/thumb/1579519840",
+        "addedAt": 1579519832,
+        "updatedAt": 1579519840,
+        "Genre": [{ "tag": "Metal" }, { "tag": "Alternative metal" }]
+      }
+    ]
+  }
+}

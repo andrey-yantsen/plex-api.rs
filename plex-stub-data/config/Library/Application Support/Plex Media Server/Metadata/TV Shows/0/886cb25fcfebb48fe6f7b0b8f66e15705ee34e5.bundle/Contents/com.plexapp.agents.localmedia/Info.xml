@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TV_Show id="null">
+  <rating/>
+  <title_sort/>
+  <art/>
+  <themes/>
+  <posters/>
+  <duration/>
+  <genres/>
+  <title/>
+  <rating_count/>
+  <collections/>
+  <tags/>
+  <audience_rating_image/>
+  <rating_image/>
+  <audience_rating/>
+  <studio/>
+  <seasons>
+    <item external="True" extension="xml" key="1"/>
+  </seasons>
+  <originally_available_at/>
+  <roles/>
+  <countries/>
+  <content_rating/>
+  <original_title/>
+  <summary/>
+  <reviews/>
+  <banners/>
+  <similar/>
+</TV_Show>

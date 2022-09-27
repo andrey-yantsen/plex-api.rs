@@ -1,0 +1,43 @@
+{
+  "MediaContainer": {
+    "size": 1,
+    "allowSync": true,
+    "art": "/:/resources/artist-fanart.jpg",
+    "identifier": "com.plexapp.plugins.library",
+    "key": "156",
+    "librarySectionID": 5,
+    "librarySectionTitle": "Music",
+    "librarySectionUUID": "6248e967-8d45-4957-ba5e-ca85df9104b9",
+    "mediaTagPrefix": "/system/bundle/media/flags/",
+    "mediaTagVersion": 1634922197,
+    "nocache": true,
+    "parentIndex": 1,
+    "parentTitle": "Skrillex",
+    "summary": "Skrillex is the pseudonym used by Los Angeles, California, USA musician Sonny Moore to differentiate his electronic solo work from his work with From First to Last and his other solo projects.",
+    "thumb": "/library/metadata/156/thumb/1579520110",
+    "title1": "Music",
+    "title2": "Skrillex",
+    "viewGroup": "album",
+    "viewMode": 65592,
+    "Metadata": [
+      {
+        "ratingKey": "157",
+        "key": "/library/metadata/157/children",
+        "parentRatingKey": "156",
+        "guid": "com.plexapp.agents.lastfm://Skrillex/Try%20It%20Out?lang=en",
+        "parentGuid": "com.plexapp.agents.lastfm://Skrillex?lang=en",
+        "type": "album",
+        "title": "Try It Out",
+        "parentKey": "/library/metadata/156",
+        "parentTitle": "Skrillex",
+        "summary": "",
+        "index": 1,
+        "thumb": "/library/metadata/157/thumb/1579520116",
+        "parentThumb": "/library/metadata/156/thumb/1579520110",
+        "addedAt": 1579520106,
+        "updatedAt": 1579520116,
+        "loudnessAnalysisVersion": "1"
+      }
+    ]
+  }
+}
