@@ -251,6 +251,11 @@ pub enum Feature {
     )]
     ItemClusters,
     #[serde(
+        rename = "iterable-notification-tokens",
+        alias = "81c8d5fa-8d90-4833-aa10-a31a51310e2f"
+    )]
+    IterableNotificationTokens,
+    #[serde(
         rename = "join-discover-together",
         alias = "f8f68869-07a5-4fc3-9359-d0b5ba9c487c"
     )]
