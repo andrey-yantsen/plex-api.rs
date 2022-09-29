@@ -2,13 +2,12 @@ pub mod library;
 pub mod prefs;
 
 use self::{library::Library, prefs::Preferences};
+#[cfg(not(feature = "tests_deny_unknown_fields"))]
+use crate::media_container::server::library::LibraryType;
 use crate::{
     http_client::HttpClient,
     media_container::{
-        server::{
-            library::{ContentDirectory, LibraryType},
-            MediaProviderFeature, Server as ServerMediaContainer,
-        },
+        server::{library::ContentDirectory, MediaProviderFeature, Server as ServerMediaContainer},
         MediaContainerWrapper,
     },
     myplex::MyPlex,
@@ -89,7 +88,8 @@ impl Server {
                 .iter()
                 .filter_map(|d| match d {
                     ContentDirectory::Media(lib) => match lib.library_type {
-                        LibraryType::Unknown(_) => None,
+                        #[cfg(not(feature = "tests_deny_unknown_fields"))]
+                        LibraryType::Unknown => None,
                         _ => Some(Library::new(self.client.clone(), *lib.clone())),
                     },
                     _ => None,

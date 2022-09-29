@@ -1,5 +1,4 @@
-use std::str::FromStr;
-
+use crate::media_container::MediaContainer;
 use monostate::MustBe;
 use serde::{Deserialize, Deserializer};
 use serde_aux::prelude::{
@@ -7,9 +6,8 @@ use serde_aux::prelude::{
     deserialize_option_number_from_string,
 };
 use serde_json::Value;
+use serde_plain::derive_fromstr_from_deserialize;
 use time::{Date, OffsetDateTime};
-
-use crate::media_container::MediaContainer;
 
 fn optional_boolish<'de, D>(deserializer: D) -> Result<Option<bool>, D::Error>
 where
@@ -18,34 +16,21 @@ where
     Ok(Some(deserialize_bool_from_anything(deserializer)?))
 }
 
-#[derive(Debug, Clone, Deserialize, enum_utils::FromStr)]
-#[enumeration(rename_all = "lowercase")]
-#[serde(from = "String")]
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "lowercase")]
 pub enum ChapterSource {
     Media,
     Mixed,
     Agent,
-    #[enumeration(skip)]
-    Unknown(String),
+    #[cfg(not(feature = "tests_deny_unknown_fields"))]
+    #[serde(other)]
+    Unknown,
 }
 
-impl From<String> for ChapterSource {
-    fn from(s: String) -> Self {
-        match Self::from_str(&s) {
-            Ok(v) => v,
-            Err(_) => {
-                if cfg!(feature = "tests_deny_unknown_fields") {
-                    panic!("Failed to parse chapter source {}", s);
-                }
-                Self::Unknown(s)
-            }
-        }
-    }
-}
+derive_fromstr_from_deserialize!(ChapterSource);
 
-#[derive(Debug, Clone, Deserialize, PartialEq, Eq, enum_utils::FromStr)]
-#[enumeration(rename_all = "kebab-case")]
-#[serde(from = "String")]
+#[derive(Debug, Clone, Deserialize, PartialEq, Eq)]
+#[serde(rename_all = "kebab-case")]
 pub enum AudioCodec {
     Aac,
     Ac3,
@@ -57,27 +42,15 @@ pub enum AudioCodec {
     Opus,
     Pcm,
     Vorbis,
-    #[enumeration(skip)]
-    Unknown(String),
+    #[cfg(not(feature = "tests_deny_unknown_fields"))]
+    #[serde(other)]
+    Unknown,
 }
 
-impl From<String> for AudioCodec {
-    fn from(s: String) -> Self {
-        match Self::from_str(&s) {
-            Ok(v) => v,
-            Err(_) => {
-                if cfg!(feature = "tests_deny_unknown_fields") {
-                    panic!("Failed to parse audio codec {}", s);
-                }
-                Self::Unknown(s)
-            }
-        }
-    }
-}
+derive_fromstr_from_deserialize!(AudioCodec);
 
-#[derive(Debug, Clone, Deserialize, PartialEq, Eq, enum_utils::FromStr)]
-#[enumeration(rename_all = "kebab-case")]
-#[serde(from = "String")]
+#[derive(Debug, Clone, Deserialize, PartialEq, Eq)]
+#[serde(rename_all = "kebab-case")]
 pub enum VideoCodec {
     H264,
     Hevc,
@@ -88,27 +61,15 @@ pub enum VideoCodec {
     Vc1,
     Vp8,
     Vp9,
-    #[enumeration(skip)]
-    Unknown(String),
+    #[cfg(not(feature = "tests_deny_unknown_fields"))]
+    #[serde(other)]
+    Unknown,
 }
 
-impl From<String> for VideoCodec {
-    fn from(s: String) -> Self {
-        match Self::from_str(&s) {
-            Ok(v) => v,
-            Err(_) => {
-                if cfg!(feature = "tests_deny_unknown_fields") {
-                    panic!("Failed to parse video vodec {}", s);
-                }
-                Self::Unknown(s)
-            }
-        }
-    }
-}
+derive_fromstr_from_deserialize!(VideoCodec);
 
-#[derive(Debug, Clone, Deserialize, PartialEq, Eq, enum_utils::FromStr)]
-#[enumeration(rename_all = "lowercase")]
-#[serde(from = "String")]
+#[derive(Debug, Clone, Deserialize, PartialEq, Eq)]
+#[serde(rename_all = "lowercase")]
 pub enum ContainerFormat {
     Aac,
     Avi,
@@ -119,23 +80,12 @@ pub enum ContainerFormat {
     Mp4,
     Mpeg,
     MpegTs,
-    #[enumeration(skip)]
-    Unknown(String),
+    #[cfg(not(feature = "tests_deny_unknown_fields"))]
+    #[serde(other)]
+    Unknown,
 }
 
-impl From<String> for ContainerFormat {
-    fn from(s: String) -> Self {
-        match Self::from_str(&s) {
-            Ok(v) => v,
-            Err(_) => {
-                if cfg!(feature = "tests_deny_unknown_fields") {
-                    panic!("Failed to parse container format {}", s);
-                }
-                Self::Unknown(s)
-            }
-        }
-    }
-}
+derive_fromstr_from_deserialize!(ContainerFormat);
 
 #[derive(Debug, Deserialize, Clone)]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
@@ -261,9 +211,8 @@ pub struct GrandParentMetadata {
     pub grandparent_theme: Option<String>,
 }
 
-#[derive(Debug, Deserialize, Clone, enum_utils::FromStr)]
-#[enumeration(rename_all = "lowercase")]
-#[serde(from = "String")]
+#[derive(Debug, Deserialize, Clone)]
+#[serde(rename_all = "lowercase")]
 pub enum MetadataType {
     Movie,
     Episode,
@@ -275,23 +224,12 @@ pub enum MetadataType {
     Season,
     Track,
     Playlist,
-    #[enumeration(skip)]
-    Unknown(String),
+    #[cfg(not(feature = "tests_deny_unknown_fields"))]
+    #[serde(other)]
+    Unknown,
 }
 
-impl From<String> for MetadataType {
-    fn from(s: String) -> Self {
-        match Self::from_str(&s) {
-            Ok(v) => v,
-            Err(_) => {
-                if cfg!(feature = "tests_deny_unknown_fields") {
-                    panic!("Failed to parse metadata type {}", s);
-                }
-                Self::Unknown(s)
-            }
-        }
-    }
-}
+derive_fromstr_from_deserialize!(MetadataType);
 
 #[derive(Debug, Deserialize, Clone)]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
@@ -454,30 +392,18 @@ pub struct MetadataMediaContainer {
     pub metadata: Vec<Metadata>,
 }
 
-#[derive(Debug, Deserialize, Clone, enum_utils::FromStr)]
-#[enumeration(rename_all = "lowercase")]
-#[serde(from = "String")]
+#[derive(Debug, Deserialize, Clone)]
+#[serde(rename_all = "lowercase")]
 pub enum PivotType {
     Hub,
     List,
     View,
-    #[enumeration(skip)]
-    Unknown(String),
+    #[cfg(not(feature = "tests_deny_unknown_fields"))]
+    #[serde(other)]
+    Unknown,
 }
 
-impl From<String> for PivotType {
-    fn from(s: String) -> Self {
-        match Self::from_str(&s) {
-            Ok(v) => v,
-            Err(_) => {
-                if cfg!(feature = "tests_deny_unknown_fields") {
-                    panic!("Failed to parse pivot type {}", s);
-                }
-                Self::Unknown(s)
-            }
-        }
-    }
-}
+derive_fromstr_from_deserialize!(PivotType);
 
 #[derive(Debug, Deserialize, Clone)]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
@@ -492,31 +418,19 @@ pub struct Pivot {
     pub pivot_type: PivotType,
 }
 
-#[derive(Debug, Deserialize, Clone, enum_utils::FromStr)]
-#[enumeration(rename_all = "lowercase")]
-#[serde(from = "String")]
+#[derive(Debug, Deserialize, Clone)]
+#[serde(rename_all = "lowercase")]
 pub enum LibraryType {
     Movie,
     Show,
     Artist,
     Photo,
-    #[enumeration(skip)]
-    Unknown(String),
+    #[cfg(not(feature = "tests_deny_unknown_fields"))]
+    #[serde(other)]
+    Unknown,
 }
 
-impl From<String> for LibraryType {
-    fn from(s: String) -> Self {
-        match Self::from_str(&s) {
-            Ok(v) => v,
-            Err(_) => {
-                if cfg!(feature = "tests_deny_unknown_fields") {
-                    panic!("Failed to parse library type {}", s);
-                }
-                Self::Unknown(s)
-            }
-        }
-    }
-}
+derive_fromstr_from_deserialize!(LibraryType);
 
 #[derive(Debug, Deserialize, Clone)]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
