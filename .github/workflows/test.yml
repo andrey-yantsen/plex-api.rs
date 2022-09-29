@@ -47,7 +47,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        plex_server_version: ["1.28.2.6151-914ddd2b3","1.26.2.5797-5bd057d2b","1.24.5.5173-8dcc73a59"]
+        plex_server_version: ["1.29.0.6244-819d3678c","1.27.2.5929-a806c5905","1.25.9.5721-965587f64"]
     steps:
       - name: Checkout sources
         uses: actions/checkout@v3
@@ -72,7 +72,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        plex_server_version: ["1.28.2.6151-914ddd2b3","1.26.2.5797-5bd057d2b","1.24.5.5173-8dcc73a59"]
+        plex_server_version: ["1.29.0.6244-819d3678c","1.27.2.5929-a806c5905","1.25.9.5721-965587f64"]
     name: Test on a real server (authenticated free account)
     runs-on: ubuntu-latest
     env:
@@ -101,7 +101,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        plex_server_version: ["1.28.2.6151-914ddd2b3","1.26.2.5797-5bd057d2b","1.24.5.5173-8dcc73a59"]
+        plex_server_version: ["1.29.0.6244-819d3678c","1.27.2.5929-a806c5905","1.25.9.5721-965587f64"]
     name: Test on a real server (authenticated plexpass account)
     runs-on: ubuntu-latest
     env:
