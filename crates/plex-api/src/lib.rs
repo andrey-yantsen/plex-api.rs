@@ -17,7 +17,7 @@ pub use media_container::preferences::Value as SettingValue;
 pub use myplex::{device, pin::PinManager, MyPlex, MyPlexBuilder};
 pub use player::Player;
 pub use server::library::{
-    Artist, Collection, Episode, Library, MetadataItem, Movie, MusicAlbum, Photo, PhotoAlbum,
+    Artist, Collection, Episode, Item, Library, MetadataItem, Movie, MusicAlbum, Photo, PhotoAlbum,
     PhotoAlbumItem, Playlist, Season, Show, Track, Video,
 };
 pub use server::Server;

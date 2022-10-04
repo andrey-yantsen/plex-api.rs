@@ -1,0 +1,330 @@
+{
+  "MediaContainer": {
+    "size": 1,
+    "allowSync": true,
+    "identifier": "com.plexapp.plugins.library",
+    "librarySectionID": 1,
+    "librarySectionTitle": "Movies",
+    "librarySectionUUID": "cebcb7e3-5031-436b-906a-3640d878ba2c",
+    "mediaTagPrefix": "/system/bundle/media/flags/",
+    "mediaTagVersion": 1652169221,
+    "Metadata": [
+      {
+        "ratingKey": "108",
+        "key": "/library/metadata/108",
+        "guid": "com.plexapp.agents.imdb://tt0165832?lang=en",
+        "studio": "Fireworks Pictures",
+        "type": "movie",
+        "title": "Interstate 60",
+        "librarySectionTitle": "Movies",
+        "librarySectionID": 1,
+        "librarySectionKey": "/library/sections/1",
+        "contentRating": "R",
+        "summary": "An aspiring painter meets various characters and learns valuable lessons while traveling across America.",
+        "rating": 7.7,
+        "year": 2002,
+        "tagline": "It began as a wish, became an adventure, and ended as the ultimate road trip.",
+        "thumb": "/library/metadata/108/thumb/1663510739",
+        "art": "/library/metadata/108/art/1663510739",
+        "duration": 5062,
+        "originallyAvailableAt": "2002-04-13",
+        "addedAt": 1579514268,
+        "updatedAt": 1663510739,
+        "hasPremiumPrimaryExtra": "1",
+        "ratingImage": "imdb://image.rating",
+        "Media": [
+          {
+            "id": 96,
+            "duration": 5062,
+            "bitrate": 21178,
+            "width": 1280,
+            "height": 720,
+            "aspectRatio": 1.78,
+            "audioChannels": 1,
+            "audioCodec": "aac",
+            "videoCodec": "h264",
+            "videoResolution": "720",
+            "container": "mkv",
+            "videoFrameRate": "PAL",
+            "audioProfile": "lc",
+            "videoProfile": "main",
+            "Part": [
+              {
+                "id": 96,
+                "key": "/library/parts/96/1579478991/file.mkv",
+                "duration": 5062,
+                "file": "/data/Movies/Interstate 60 (2002).mkv",
+                "size": 13400382,
+                "audioProfile": "lc",
+                "container": "mkv",
+                "videoProfile": "main",
+                "Stream": [
+                  {
+                    "id": 87,
+                    "streamType": 1,
+                    "default": true,
+                    "codec": "h264",
+                    "index": 0,
+                    "bitrate": 21178,
+                    "bitDepth": 8,
+                    "chromaLocation": "left",
+                    "chromaSubsampling": "4:2:0",
+                    "codedHeight": 720,
+                    "codedWidth": 1280,
+                    "colorPrimaries": "bt709",
+                    "colorRange": "tv",
+                    "colorSpace": "bt709",
+                    "colorTrc": "bt709",
+                    "frameRate": 25.0,
+                    "hasScalingMatrix": false,
+                    "height": 720,
+                    "level": 40,
+                    "profile": "main",
+                    "refFrames": 4,
+                    "scanType": "progressive",
+                    "width": 1280,
+                    "displayTitle": "720p (H.264)",
+                    "extendedDisplayTitle": "720p (H.264)"
+                  },
+                  {
+                    "id": 88,
+                    "streamType": 2,
+                    "selected": true,
+                    "default": true,
+                    "codec": "aac",
+                    "index": 1,
+                    "channels": 1,
+                    "profile": "lc",
+                    "samplingRate": 44100,
+                    "title": "Mono",
+                    "displayTitle": "Unknown (AAC Mono)",
+                    "extendedDisplayTitle": "Mono (AAC)"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "Genre": [
+          { "id": 177, "filter": "genre=177", "tag": "Adventure" },
+          { "id": 6, "filter": "genre=6", "tag": "Comedy", "count": 2 },
+          { "id": 118, "filter": "genre=118", "tag": "Drama" },
+          { "id": 41, "filter": "genre=41", "tag": "Fantasy", "count": 2 }
+        ],
+        "Director": [
+          { "id": 256, "filter": "director=256", "tag": "Bob Gale" }
+        ],
+        "Writer": [{ "id": 257, "filter": "writer=257", "tag": "Bob Gale" }],
+        "Producer": [
+          { "id": 280, "filter": "producer=280", "tag": "Bob Gale" },
+          { "id": 281, "filter": "producer=281", "tag": "Neil Canton" },
+          { "id": 282, "filter": "producer=282", "tag": "Ira Deutchman" },
+          { "id": 283, "filter": "producer=283", "tag": "Peter Newman" },
+          { "id": 284, "filter": "producer=284", "tag": "Peter Bray" }
+        ],
+        "Country": [{ "id": 285, "filter": "country=285", "tag": "Canada" }],
+        "Role": [
+          {
+            "id": 258,
+            "filter": "actor=258",
+            "tag": "James Marsden",
+            "role": "Neal Oliver",
+            "thumb": "http://image.tmdb.org/t/p/original/tJK1PbhcJj5cBNqnuFKHtAFPQKz.jpg"
+          },
+          {
+            "id": 259,
+            "filter": "actor=259",
+            "tag": "Gary Oldman",
+            "role": "O.W. Grant",
+            "thumb": "http://image.tmdb.org/t/p/original/zvofPivWI5FASkmimoy3i8HPoDw.jpg"
+          },
+          {
+            "id": 260,
+            "filter": "actor=260",
+            "tag": "Amy Smart",
+            "role": "Lynn Linden",
+            "thumb": "http://image.tmdb.org/t/p/original/yTWkJVYq1wtn2NrnPIwXshTWqby.jpg"
+          },
+          {
+            "id": 261,
+            "filter": "actor=261",
+            "tag": "Christopher Lloyd",
+            "role": "Ray",
+            "thumb": "http://image.tmdb.org/t/p/original/iQzG9apaIsHnn7iGrer3YEDp8Zo.jpg"
+          },
+          {
+            "id": 262,
+            "filter": "actor=262",
+            "tag": "Chris Cooper",
+            "role": "Bob Cody",
+            "thumb": "http://image.tmdb.org/t/p/original/ytZY7YofdiAZyiyr4NyiB77lwwQ.jpg"
+          },
+          {
+            "id": 263,
+            "filter": "actor=263",
+            "tag": "Matthew Edison",
+            "role": "Quincy",
+            "thumb": "http://image.tmdb.org/t/p/original/hYMwq4AP58Sr3YlmUeCMyFBUQdG.jpg"
+          },
+          {
+            "id": 264,
+            "filter": "actor=264",
+            "tag": "Paul Brogren",
+            "role": "Zack"
+          },
+          {
+            "id": 265,
+            "filter": "actor=265",
+            "tag": "Wayne Robson",
+            "role": "Tolbert",
+            "thumb": "http://image.tmdb.org/t/p/original/x1nuwmSBx49UXYxrVYyr8sZi12t.jpg"
+          },
+          {
+            "id": 266,
+            "filter": "actor=266",
+            "tag": "Michael J. Fox",
+            "role": "Mr. Baker",
+            "thumb": "http://image.tmdb.org/t/p/original/bGUjr2FSbhvCJeu6J8NPMASiH4S.jpg"
+          },
+          {
+            "id": 267,
+            "filter": "actor=267",
+            "tag": "John Bourgeois",
+            "role": "Dad",
+            "thumb": "http://image.tmdb.org/t/p/original/mJNxyU5kSAXhJOkdWSsKKTOp0ee.jpg"
+          },
+          {
+            "id": 268,
+            "filter": "actor=268",
+            "tag": "Melyssa Ade",
+            "role": "Sally",
+            "thumb": "http://image.tmdb.org/t/p/original/u7hK9hb2HOfqZ8ygifGcV0amX0R.jpg"
+          },
+          {
+            "id": 269,
+            "filter": "actor=269",
+            "tag": "Roz Michaels",
+            "role": "Mom"
+          },
+          {
+            "id": 270,
+            "filter": "actor=270",
+            "tag": "Amy Stewart",
+            "role": "Nancy",
+            "thumb": "http://image.tmdb.org/t/p/original/s2oxa3wfJ13dYFP2s2aQygQfooa.jpg"
+          },
+          {
+            "id": 271,
+            "filter": "actor=271",
+            "tag": "Mark Lutz",
+            "role": "Frank",
+            "thumb": "http://image.tmdb.org/t/p/original/2Cng4sijH0HyFfWdUkvrjOdPgxO.jpg"
+          },
+          {
+            "id": 272,
+            "filter": "actor=272",
+            "tag": "Krista Leis",
+            "role": "Ann"
+          },
+          {
+            "id": 273,
+            "filter": "actor=273",
+            "tag": "Michael Rhoades",
+            "role": "Kirby"
+          },
+          {
+            "id": 274,
+            "filter": "actor=274",
+            "tag": "Amy Jo Johnson",
+            "role": "Laura",
+            "thumb": "http://image.tmdb.org/t/p/original/u4dOlRCMMcs4pzXjUeNCfzWUl8v.jpg"
+          },
+          {
+            "id": 275,
+            "filter": "actor=275",
+            "tag": "Deborah Odell",
+            "role": "Valerie McCabe"
+          },
+          {
+            "id": 276,
+            "filter": "actor=276",
+            "tag": "Jonathan Whittaker",
+            "role": "Dr. Craig",
+            "thumb": "http://image.tmdb.org/t/p/original/dST9iLc2THBL4onErxrAo9XY1AS.jpg"
+          },
+          {
+            "id": 277,
+            "filter": "actor=277",
+            "tag": "Ann-Margret",
+            "role": "Mrs. James",
+            "thumb": "http://image.tmdb.org/t/p/original/pr9e0R11px4BvNOvGQuGl0pN5B3.jpg"
+          },
+          {
+            "id": 278,
+            "filter": "actor=278",
+            "tag": "Art Evans",
+            "role": "Otis",
+            "thumb": "http://image.tmdb.org/t/p/original/oFxv6KQdXU30MY00ASwoMqbKVAg.jpg"
+          },
+          {
+            "id": 279,
+            "filter": "actor=279",
+            "tag": "Kurt Russell",
+            "role": "Captain Ives",
+            "thumb": "http://image.tmdb.org/t/p/original/rlnFuNkisPpuypARI7QaGCmOY6V.jpg"
+          }
+        ],
+        "Similar": [
+          { "id": 286, "filter": "similar=286", "tag": "Gentlemen of Fortune" },
+          { "id": 287, "filter": "similar=287", "tag": "Brother 2" },
+          {
+            "id": 288,
+            "filter": "similar=288",
+            "tag": "Ivan Vasilyevich Changes His Profession"
+          },
+          { "id": 289, "filter": "similar=289", "tag": "Heart of a Dog" },
+          {
+            "id": 290,
+            "filter": "similar=290",
+            "tag": "Kidnapping, Caucasian Style"
+          },
+          {
+            "id": 291,
+            "filter": "similar=291",
+            "tag": "Knockin' on Heaven's Door"
+          },
+          { "id": 292, "filter": "similar=292", "tag": "The Diamond Arm" },
+          {
+            "id": 293,
+            "filter": "similar=293",
+            "tag": "The White Sun of the Desert"
+          },
+          { "id": 294, "filter": "similar=294", "tag": "Six-String Samurai" },
+          {
+            "id": 295,
+            "filter": "similar=295",
+            "tag": "Operation Y and Other Shurik's Adventures"
+          },
+          { "id": 296, "filter": "similar=296", "tag": "Brother" },
+          { "id": 297, "filter": "similar=297", "tag": "Night Watch" },
+          { "id": 298, "filter": "similar=298", "tag": "The Thirteenth Floor" },
+          { "id": 299, "filter": "similar=299", "tag": "What Men Talk About" },
+          {
+            "id": 300,
+            "filter": "similar=300",
+            "tag": "The Irony of Fate, or Enjoy Your Bath!"
+          },
+          { "id": 301, "filter": "similar=301", "tag": "The Jacket" },
+          {
+            "id": 302,
+            "filter": "similar=302",
+            "tag": "The Rifleman of the Voroshilov Regiment"
+          },
+          { "id": 303, "filter": "similar=303", "tag": "Cypher" },
+          { "id": 304, "filter": "similar=304", "tag": "9th Company" },
+          { "id": 305, "filter": "similar=305", "tag": "Bootleggers" }
+        ]
+      }
+    ]
+  }
+}
