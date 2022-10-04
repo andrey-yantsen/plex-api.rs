@@ -3,8 +3,6 @@ use crate::media_container::preferences::{
 };
 use crate::url::SERVER_PREFS;
 use crate::{media_container::MediaContainerWrapper, HttpClient, Result};
-use http::StatusCode;
-use isahc::AsyncReadResponseExt;
 use std::mem::discriminant;
 
 #[derive(Debug, Clone)]
@@ -16,22 +14,14 @@ pub struct Preferences<'a> {
 
 impl<'a> Preferences<'a> {
     pub async fn new(client: &'a HttpClient) -> Result<Preferences<'a>> {
-        let mut response = client
-            .get(SERVER_PREFS)
-            .header("Accept", "application/json")
-            .send()
-            .await?;
+        let mc: MediaContainerWrapper<MediaContainerPreferences> =
+            client.get(SERVER_PREFS).json().await?;
 
-        if response.status() == StatusCode::OK {
-            let mc: MediaContainerWrapper<MediaContainerPreferences> = response.json().await?;
-            Ok(Preferences {
-                client,
-                settings: mc.media_container.settings,
-                changed: vec![],
-            })
-        } else {
-            Err(crate::Error::from_response(response).await)
-        }
+        Ok(Preferences {
+            client,
+            settings: mc.media_container.settings,
+            changed: vec![],
+        })
     }
 
     pub fn get(&self, key: &str) -> Option<&Setting> {
@@ -72,21 +62,12 @@ impl<'a> Preferences<'a> {
 
         let uri = format!("{}?{}", SERVER_PREFS, serde_urlencoded::to_string(params)?);
 
-        let response = self
-            .client
-            .put(uri)
-            .header("Accept", "application/json")
-            .send()
-            .await?;
+        self.client.put(uri).consume().await?;
 
-        if response.status() == StatusCode::OK {
-            Ok(Preferences {
-                client: self.client,
-                settings: self.settings,
-                changed: vec![],
-            })
-        } else {
-            Err(crate::Error::from_response(response).await)
-        }
+        Ok(Preferences {
+            client: self.client,
+            settings: self.settings,
+            changed: vec![],
+        })
     }
 }

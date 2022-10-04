@@ -27,25 +27,14 @@ pub struct Server {
 
 impl Server {
     async fn build(client: HttpClient, myplex_api_url: Uri) -> Result<Self> {
-        let mut response = client
-            .get(SERVER_MEDIA_PROVIDERS)
-            .header("Accept", "application/json")
-            .send()
-            .await?;
+        let media_container_wrapper: MediaContainerWrapper<ServerMediaContainer> =
+            client.get(SERVER_MEDIA_PROVIDERS).json().await?;
 
-        match response.status() {
-            StatusCode::OK => {
-                let media_container_wrapper: MediaContainerWrapper<ServerMediaContainer> =
-                    response.json().await?;
-
-                Ok(Self {
-                    media_container: media_container_wrapper.media_container,
-                    client,
-                    myplex_api_url,
-                })
-            }
-            _ => Err(crate::Error::from_response(response).await),
-        }
+        Ok(Self {
+            media_container: media_container_wrapper.media_container,
+            client,
+            myplex_api_url,
+        })
     }
 
     pub async fn new<U>(url: U, client: HttpClient) -> Result<Self>
