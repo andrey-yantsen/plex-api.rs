@@ -94,23 +94,12 @@ impl<'a> Pin<'a> {
         }
 
         let url = format!("{}/{}", MYPLEX_PINS, self.pin.id);
-        let mut response = self
-            .client
-            .get(url)
-            .header("Accept", "application/json")
-            .send()
-            .await?;
+        let pin: PinInfo = self.client.get(url).json().await?;
 
-        if response.status() == StatusCode::OK {
-            let pin = response.json::<PinInfo>().await?;
-
-            if pin.auth_token.is_some() {
-                Ok(pin)
-            } else {
-                Err(Error::PinNotLinked)
-            }
+        if pin.auth_token.is_some() {
+            Ok(pin)
         } else {
-            Err(Error::from_response(response).await)
+            Err(Error::PinNotLinked)
         }
     }
 }

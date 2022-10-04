@@ -1,9 +1,5 @@
 use std::marker::PhantomData;
 
-use http::StatusCode;
-use isahc::AsyncReadResponseExt;
-use serde_json::from_str;
-
 use crate::{
     media_container::{
         server::library::{
@@ -35,32 +31,15 @@ async fn metadata_items<T>(client: &HttpClient, key: &str) -> Result<Vec<T>>
 where
     T: MetadataItem,
 {
-    let mut response = client
-        .get(key)
-        .header("Accept", "application/json")
-        .send()
-        .await?;
+    let wrapper: MediaContainerWrapper<MetadataMediaContainer> = client.get(key).json().await?;
 
-    match response.status() {
-        StatusCode::OK => {
-            let text = response.text().await?;
-            let wrapper: MediaContainerWrapper<MetadataMediaContainer> = match from_str(&text) {
-                Ok(v) => v,
-                Err(e) => {
-                    eprintln!("{text}");
-                    return Err(e.into());
-                }
-            };
-            let media = wrapper
-                .media_container
-                .metadata
-                .into_iter()
-                .map(|metadata| T::from_metadata(client.clone(), metadata))
-                .collect();
-            Ok(media)
-        }
-        _ => Err(crate::Error::from_response(response).await),
-    }
+    let media = wrapper
+        .media_container
+        .metadata
+        .into_iter()
+        .map(|metadata| T::from_metadata(client.clone(), metadata))
+        .collect();
+    Ok(media)
 }
 
 /// Attempts to retrieve the parent of this item.

@@ -1,11 +1,13 @@
 use crate::{url::MYPLEX_DEFAULT_API_URL, Result};
 use core::convert::TryFrom;
-use http::{uri::PathAndQuery, Uri};
+use http::{uri::PathAndQuery, StatusCode, Uri};
 use isahc::{
     config::{Configurable, RedirectPolicy},
     http::request::Builder,
-    AsyncBody, HttpClient as IsahcHttpClient, Request as HttpRequest, Response as HttpResponse,
+    AsyncBody, AsyncReadResponseExt, HttpClient as IsahcHttpClient, Request as HttpRequest,
+    Response as HttpResponse,
 };
+use serde::de::DeserializeOwned;
 use std::time::Duration;
 use uuid::Uuid;
 
@@ -289,6 +291,29 @@ where
     /// Sends this request generating a response.
     pub async fn send(self) -> Result<HttpResponse<AsyncBody>> {
         self.body(())?.send().await
+    }
+
+    /// Sends this request and attempts to decode the response as JSON.
+    pub async fn json<T: DeserializeOwned + Unpin>(self) -> Result<T> {
+        let mut response = self.header("Accept", "application/json").send().await?;
+
+        match response.status() {
+            StatusCode::OK => Ok(response.json().await?),
+            _ => Err(crate::Error::from_response(response).await),
+        }
+    }
+
+    /// Sends this request, verifies success and then consumes any response.
+    pub async fn consume(self) -> Result<()> {
+        let mut response = self.header("Accept", "application/json").send().await?;
+
+        match response.status() {
+            StatusCode::OK => {
+                response.consume().await?;
+                Ok(())
+            }
+            _ => Err(crate::Error::from_response(response).await),
+        }
     }
 }
 
