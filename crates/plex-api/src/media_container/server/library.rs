@@ -219,7 +219,8 @@ pub enum MetadataType {
     Photo,
     Show,
     Artist,
-    Album,
+    #[serde(rename = "album")]
+    MusicAlbum,
     Collection,
     Season,
     Track,
