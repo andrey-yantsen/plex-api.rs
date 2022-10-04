@@ -711,7 +711,7 @@ mod online {
 
             for item in contents {
                 match item {
-                    PhotoAlbumItem::Album(a) => {
+                    PhotoAlbumItem::PhotoAlbum(a) => {
                         albums.push(a);
                     }
                     PhotoAlbumItem::Photo(p) => {
