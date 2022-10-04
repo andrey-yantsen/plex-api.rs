@@ -1,0 +1,29 @@
+{
+  "MediaContainer": {
+    "size": 1,
+    "allowSync": false,
+    "identifier": "com.plexapp.plugins.library",
+    "mediaTagPrefix": "/system/bundle/media/flags/",
+    "mediaTagVersion": 1652169221,
+    "Metadata": [
+      {
+        "ratingKey": "168",
+        "key": "/playlists/168/items",
+        "guid": "com.plexapp.agents.none://8a730d03-e7a5-4067-b3df-495aba75c5ce",
+        "type": "playlist",
+        "title": "Movies Since 2007",
+        "summary": "",
+        "smart": true,
+        "playlistType": "video",
+        "composite": "/playlists/168/composite/1663511750",
+        "icon": "playlist://image.smart",
+        "viewCount": 1,
+        "lastViewedAt": 1663511468,
+        "duration": 10000,
+        "leafCount": 2,
+        "addedAt": 1663511468,
+        "updatedAt": 1663511750
+      }
+    ]
+  }
+}

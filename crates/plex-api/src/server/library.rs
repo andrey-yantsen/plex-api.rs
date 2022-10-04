@@ -5,7 +5,8 @@ use enum_dispatch::enum_dispatch;
 use crate::{
     media_container::{
         server::library::{
-            LibraryType, Metadata, MetadataMediaContainer, MetadataType, ServerLibrary,
+            LibraryType, Metadata, MetadataMediaContainer, MetadataType, PlaylistType,
+            ServerLibrary,
         },
         MediaContainerWrapper,
     },
@@ -37,6 +38,14 @@ pub trait MetadataItem {
     fn metadata(&self) -> &Metadata;
     /// Returns the http client for this item.
     fn client(&self) -> &HttpClient;
+
+    /// Returns the rating key for this item.
+    ///
+    /// This can be used to re-retrieve the item at a later time through the
+    /// Server::item_by_id function.
+    fn rating_key(&self) -> u32 {
+        self.metadata().rating_key
+    }
 
     /// Returns the title of this item.
     fn title(&self) -> &str {
@@ -72,7 +81,7 @@ macro_rules! derive_metadata_item {
 }
 
 /// Retrieves a list of metadata items given the lookup key.
-async fn metadata_items<T>(client: &HttpClient, key: &str) -> Result<Vec<T>>
+pub(crate) async fn metadata_items<T>(client: &HttpClient, key: &str) -> Result<Vec<T>>
 where
     T: FromMetadata,
 {
@@ -118,6 +127,7 @@ where
 
 /// A video that can be included in a video playlist.
 #[enum_dispatch(MetadataItem)]
+#[derive(Debug, Clone)]
 pub enum Video {
     Movie,
     Episode,
@@ -380,6 +390,76 @@ impl FromMetadata for PhotoAlbumItem {
             PhotoAlbum::from_metadata(client, metadata).into()
         } else {
             Photo::from_metadata(client, metadata).into()
+        }
+    }
+}
+
+#[derive(Debug, Clone)]
+pub struct UnknownItem {
+    client: HttpClient,
+    metadata: Metadata,
+}
+
+derive_from_metadata!(UnknownItem);
+derive_metadata_item!(UnknownItem);
+
+#[enum_dispatch(MetadataItem)]
+#[derive(Debug, Clone)]
+pub enum Item {
+    Movie,
+    Episode,
+    Photo,
+    Show,
+    Artist,
+    MusicAlbum,
+    Season,
+    Track,
+    MovieCollection(Collection<Movie>),
+    ShowCollection(Collection<Show>),
+    VideoPlaylist(Playlist<Video>),
+    PhotoPlaylist(Playlist<Photo>),
+    MusicPlaylist(Playlist<Track>),
+    UnknownItem,
+}
+
+impl FromMetadata for Item {
+    fn from_metadata(client: HttpClient, metadata: Metadata) -> Self {
+        if let Some(ref item_type) = metadata.metadata_type {
+            match item_type {
+                MetadataType::Movie => Movie::from_metadata(client, metadata).into(),
+                MetadataType::Episode => Episode::from_metadata(client, metadata).into(),
+                MetadataType::Photo => Photo::from_metadata(client, metadata).into(),
+                MetadataType::Show => Show::from_metadata(client, metadata).into(),
+                MetadataType::Artist => Artist::from_metadata(client, metadata).into(),
+                MetadataType::MusicAlbum => MusicAlbum::from_metadata(client, metadata).into(),
+                MetadataType::Season => Season::from_metadata(client, metadata).into(),
+                MetadataType::Track => Track::from_metadata(client, metadata).into(),
+                MetadataType::Collection => match metadata.subtype {
+                    Some(MetadataType::Movie) => {
+                        Collection::<Movie>::from_metadata(client, metadata).into()
+                    }
+                    Some(MetadataType::Show) => {
+                        Collection::<Show>::from_metadata(client, metadata).into()
+                    }
+                    _ => UnknownItem::from_metadata(client, metadata).into(),
+                },
+                MetadataType::Playlist => match metadata.playlist_type {
+                    Some(PlaylistType::Video) => {
+                        Playlist::<Video>::from_metadata(client, metadata).into()
+                    }
+                    Some(PlaylistType::Audio) => {
+                        Playlist::<Track>::from_metadata(client, metadata).into()
+                    }
+                    Some(PlaylistType::Photo) => {
+                        Playlist::<Photo>::from_metadata(client, metadata).into()
+                    }
+                    _ => UnknownItem::from_metadata(client, metadata).into(),
+                },
+                #[cfg(not(feature = "tests_deny_unknown_fields"))]
+                _ => UnknownItem::from_metadata(client, metadata).into(),
+            }
+        } else {
+            UnknownItem::from_metadata(client, metadata).into()
         }
     }
 }

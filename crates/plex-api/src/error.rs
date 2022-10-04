@@ -67,6 +67,8 @@ pub enum Error {
     PinExpired,
     #[error("Provided pin is not linked yet.")]
     PinNotLinked,
+    #[error("Item requested was not found on the server.")]
+    ItemNotFound,
 }
 
 const PLEX_API_ERROR_CODE_AUTH_OTP_REQUIRED: i32 = 1029;

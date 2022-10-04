@@ -1,7 +1,10 @@
 pub mod library;
 pub mod prefs;
 
-use self::{library::Library, prefs::Preferences};
+use self::{
+    library::{metadata_items, Library},
+    prefs::Preferences,
+};
 #[cfg(not(feature = "tests_deny_unknown_fields"))]
 use crate::media_container::server::library::LibraryType;
 use crate::{
@@ -12,7 +15,7 @@ use crate::{
     },
     myplex::MyPlex,
     url::{SERVER_MEDIA_PROVIDERS, SERVER_MYPLEX_ACCOUNT, SERVER_MYPLEX_CLAIM},
-    HttpClientBuilder, Result,
+    Error, HttpClientBuilder, Item, Result,
 };
 use core::convert::TryFrom;
 use http::{StatusCode, Uri};
@@ -86,6 +89,31 @@ impl Server {
                 .collect()
         } else {
             Vec::new()
+        }
+    }
+
+    /// Allows retrieving media, playlists, collections and other items using
+    /// their rating key.
+    pub async fn item_by_id(&self, rating_key: u32) -> Result<Item> {
+        let path = format!("/library/metadata/{rating_key}");
+
+        match metadata_items(&self.client, &path).await {
+            Ok(items) => items.into_iter().next().ok_or(Error::ItemNotFound),
+            Err(Error::UnexpectedApiResponse {
+                status_code,
+                content,
+            }) => {
+                // A 404 error indicates the item does not exist.
+                if status_code == 404 {
+                    Err(Error::ItemNotFound)
+                } else {
+                    Err(Error::UnexpectedApiResponse {
+                        status_code,
+                        content,
+                    })
+                }
+            }
+            Err(err) => Err(err),
         }
     }
 

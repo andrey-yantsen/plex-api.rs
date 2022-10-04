@@ -1,0 +1,35 @@
+{
+  "MediaContainer": {
+    "size": 1,
+    "allowSync": true,
+    "identifier": "com.plexapp.plugins.library",
+    "librarySectionID": 1,
+    "librarySectionTitle": "Movies",
+    "librarySectionUUID": "cebcb7e3-5031-436b-906a-3640d878ba2c",
+    "mediaTagPrefix": "/system/bundle/media/flags/",
+    "mediaTagVersion": 1652169221,
+    "Metadata": [
+      {
+        "ratingKey": "161",
+        "key": "/library/collections/161/children",
+        "guid": "collection://4f195cc1-8a08-4ee0-bc22-1946f2d6293f",
+        "type": "collection",
+        "title": "Animation",
+        "librarySectionTitle": "Movies",
+        "librarySectionID": 1,
+        "librarySectionKey": "/library/sections/1",
+        "contentRating": "G",
+        "subtype": "movie",
+        "summary": "",
+        "index": 395,
+        "ratingCount": 1,
+        "thumb": "/library/collections/161/composite/1663510762?width=400&height=600",
+        "addedAt": 1663510762,
+        "updatedAt": 1663510762,
+        "childCount": "3",
+        "maxYear": "2010",
+        "minYear": "2006"
+      }
+    ]
+  }
+}

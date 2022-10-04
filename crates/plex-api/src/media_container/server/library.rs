@@ -108,6 +108,10 @@ pub struct Part {
     #[serde(default, deserialize_with = "optional_boolish")]
     pub optimized_for_streaming: Option<bool>,
     pub has_chapter_text_stream: Option<bool>,
+    // Not deserialized for now but included to allow the deny_unknown_field tests to pass.
+    #[cfg(feature = "tests_deny_unknown_fields")]
+    #[serde(rename = "Stream")]
+    _streams: Option<Vec<Value>>,
 }
 
 #[derive(Debug, Deserialize, Clone)]
@@ -131,7 +135,7 @@ pub struct Media {
     pub audio_profile: Option<String>,
     pub video_profile: Option<String>,
     #[serde(rename = "Part")]
-    pub part: Vec<Part>,
+    pub parts: Vec<Part>,
     #[serde(rename = "has64bitOffsets")]
     pub has_64bit_offsets: Option<bool>,
     #[serde(default, deserialize_with = "optional_boolish")]
@@ -233,6 +237,17 @@ pub enum MetadataType {
 derive_fromstr_from_deserialize!(MetadataType);
 
 #[derive(Debug, Deserialize, Clone)]
+#[serde(rename_all = "lowercase")]
+pub enum PlaylistType {
+    Video,
+    Audio,
+    Photo,
+    #[cfg(not(feature = "tests_deny_unknown_fields"))]
+    #[serde(other)]
+    Unknown,
+}
+
+#[derive(Debug, Deserialize, Clone)]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct Metadata {
@@ -243,8 +258,8 @@ pub struct Metadata {
 
     #[serde(rename = "type")]
     pub metadata_type: Option<MetadataType>,
-    pub subtype: Option<String>,
-    pub playlist_type: Option<String>,
+    pub subtype: Option<MetadataType>,
+    pub playlist_type: Option<PlaylistType>,
     pub smart: Option<bool>,
     pub allow_sync: Option<bool>,
 
@@ -325,6 +340,8 @@ pub struct Metadata {
     pub genres: Vec<Tag>,
     #[serde(default, rename = "Director")]
     pub directors: Vec<Tag>,
+    #[serde(default, rename = "Producer")]
+    pub producers: Vec<Tag>,
     #[serde(default, rename = "Writer")]
     pub writers: Vec<Tag>,
     #[serde(default, rename = "Country")]
@@ -385,7 +402,7 @@ pub struct MetadataMediaContainer {
     pub view_group: Option<String>,
     pub view_mode: Option<u32>,
     pub leaf_count: Option<u32>,
-    pub playlist_type: Option<String>,
+    pub playlist_type: Option<PlaylistType>,
 
     #[serde(default, rename = "Directory")]
     pub directories: Vec<Value>,
