@@ -14,7 +14,7 @@ independent = true
 anyhow = "^1.0"
 flate2 = "^1.0"
 xshell = "^0.1"
-xflags = "^0.2"
+xflags = "^0.3"
 uuid = { version = "^1.2", features = ["v4"] }
 plex-api = { path = "../plex-api" }
 tokio = { version = "^1.16", features = ["rt-multi-thread"] }
