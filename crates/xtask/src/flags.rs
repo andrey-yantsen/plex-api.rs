@@ -3,11 +3,6 @@ xflags::xflags! {
 
     /// Run custom build command.
     cmd xtask {
-        default cmd help {
-            /// Print help information.
-            optional -h, --help
-        }
-
         /// Run the tests.
         cmd test {
             /// A tag from https://hub.docker.com/r/plexinc/pms-docker/tags to use for the tests.
@@ -94,16 +89,10 @@ pub struct Xtask {
 
 #[derive(Debug)]
 pub enum XtaskCmd {
-    Help(Help),
     Test(Test),
     PlexData(PlexData),
     ModifyData(ModifyData),
     GetLastPlexTags(GetLastPlexTags),
-}
-
-#[derive(Debug)]
-pub struct Help {
-    pub help: bool,
 }
 
 #[derive(Debug)]
@@ -140,7 +129,10 @@ pub struct GetLastPlexTags {
 }
 
 impl Xtask {
-    pub const HELP: &'static str = Self::HELP_;
+    #[allow(dead_code)]
+    pub fn from_env_or_exit() -> Self {
+        Self::from_env_or_exit_()
+    }
 
     #[allow(dead_code)]
     pub fn from_env() -> xflags::Result<Self> {
@@ -153,10 +145,3 @@ impl Xtask {
     }
 }
 // generated end
-
-impl Help {
-    pub(crate) fn run(self) -> anyhow::Result<()> {
-        println!("{}", Xtask::HELP);
-        Ok(())
-    }
-}

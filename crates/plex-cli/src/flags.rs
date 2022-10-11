@@ -8,11 +8,6 @@ xflags::xflags! {
         /// Authentication token, if needed. Mandatory for the claimed server.
         optional -t, --token token: String
 
-        default cmd help {
-            /// Print help information.
-            optional -h, --help
-        }
-
         /// Wait for the server to be available.
         cmd wait {
             /// Delay between attempts
@@ -66,14 +61,8 @@ pub struct PlexCli {
 
 #[derive(Debug)]
 pub enum PlexCliCmd {
-    Help(Help),
     Wait(Wait),
     Preferences(Preferences),
-}
-
-#[derive(Debug)]
-pub struct Help {
-    pub help: bool,
 }
 
 #[derive(Debug)]
@@ -109,7 +98,10 @@ pub struct Set {
 }
 
 impl PlexCli {
-    pub const HELP: &'static str = Self::HELP_;
+    #[allow(dead_code)]
+    pub fn from_env_or_exit() -> Self {
+        Self::from_env_or_exit_()
+    }
 
     #[allow(dead_code)]
     pub fn from_env() -> xflags::Result<Self> {
@@ -123,13 +115,6 @@ impl PlexCli {
 }
 // generated end
 
-impl Help {
-    pub(crate) fn run(self) -> anyhow::Result<()> {
-        println!("{}", PlexCli::HELP);
-        Ok(())
-    }
-}
-
 impl PlexCli {
     pub async fn run(self) -> anyhow::Result<()> {
         let server = self
@@ -140,7 +125,6 @@ impl PlexCli {
         let auth_token = self.token.unwrap_or_default();
 
         match self.subcommand {
-            PlexCliCmd::Help(cmd) => cmd.run(),
             PlexCliCmd::Wait(cmd) => cmd.run(&server, &auth_token).await,
             PlexCliCmd::Preferences(cmd) => cmd.run(&server, &auth_token).await,
         }

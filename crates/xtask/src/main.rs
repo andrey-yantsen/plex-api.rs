@@ -26,7 +26,6 @@ fn main() -> Result<()> {
     let flags = flags::Xtask::from_env()?;
 
     match flags.subcommand {
-        flags::XtaskCmd::Help(cmd) => cmd.run(),
         flags::XtaskCmd::Test(cmd) => cmd.run(),
         flags::XtaskCmd::PlexData(cmd) => cmd.run(),
         flags::XtaskCmd::ModifyData(cmd) => cmd.run(),
