@@ -29,7 +29,7 @@ the latest 5 minor releases. At the moment the following versions are
 tested:
 
 <!-- plex releases list start -->
-* 1.29.0.6244-819d3678c
+* 1.29.1.6313-f4cdfea9c
 * 1.27.2.5929-a806c5905
 * 1.25.9.5721-965587f64
 <!-- plex releases list end -->
