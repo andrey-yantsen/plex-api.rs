@@ -92,18 +92,19 @@ fn generate_features() {
     }
 
     let mut f = File::create(FEATURE_ENUM_FILE_PATH).unwrap();
-    f.write_all(b"#![allow(deprecated)]\n\n").unwrap();
+    f.write_all(
+        br#"#![allow(deprecated)]
 
-    f.write_all(b"use serde::{Deserialize, Serialize};\n")
-        .unwrap();
-    f.write_all(b"use serde_plain::derive_display_from_serialize;\n\n")
-        .unwrap();
-    f.write_all(b"#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Eq)]\n")
-        .unwrap();
-    f.write_all(b"#[allow(clippy::enum_variant_names)]\n")
-        .unwrap();
-    f.write_all(b"#[rustfmt::skip]\n").unwrap();
-    f.write_all(b"pub enum Feature {\n").unwrap();
+use serde::{Deserialize, Serialize};
+use serde_plain::derive_display_from_serialize;
+
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Eq)]
+#[allow(clippy::enum_variant_names)]
+#[rustfmt::skip]
+pub enum Feature {
+"#,
+    )
+    .unwrap();
 
     let mut data: Vec<Feature> = from_reader(File::open(FEATURE_MOCK_FILE_PATH).unwrap()).unwrap();
 
@@ -152,22 +153,21 @@ fn generate_features() {
             .unwrap();
     }
 
-    f.write_all(b"    UnknownUuid(String),\n").unwrap();
-    f.write_all(b"    #[cfg(not(feature = \"tests_deny_unknown_fields\"))]\n")
-        .unwrap();
-    f.write_all(b"    #[serde(other)]\n").unwrap();
-    f.write_all(b"    UnknownValue,\n").unwrap();
-    f.write_all(b"}\n").unwrap();
     f.write_all(
-        b"
+        br#"    UnknownUuid(String),
+    #[cfg(not(feature = "tests_deny_unknown_fields"))]
+    #[serde(other)]
+    UnknownValue,
+}
+
 impl ::std::str::FromStr for Feature {
     type Err = serde_plain::Error;
     fn from_str(s: &str) -> ::std::result::Result<Feature, Self::Err> {
         let result = serde_plain::from_str(s);
 
-        #[cfg(not(feature = \"tests_deny_unknown_fields\"))]
+        #[cfg(not(feature = "tests_deny_unknown_fields"))]
         let is_unknown_value = matches!(result, Ok(Feature::UnknownValue));
-        #[cfg(feature = \"tests_deny_unknown_fields\")]
+        #[cfg(feature = "tests_deny_unknown_fields")]
         let is_unknown_value = result.is_err();
 
         if is_unknown_value
@@ -183,9 +183,48 @@ impl ::std::str::FromStr for Feature {
         result
     }
 }
-",
+derive_display_from_serialize!(Feature);
+
+#[cfg(test)]
+mod test {
+    use crate::media_container::server::Feature;
+    use std::str::FromStr;
+
+    #[cfg(not(feature = "tests_deny_unknown_fields"))]
+    #[plex_api_test_helper::offline_test]
+    fn test_unknown_feature() {
+        let f = Feature::from_str("unknown_value").unwrap();
+        assert_eq!(f, Feature::UnknownValue);
+    }
+
+    #[plex_api_test_helper::offline_test]
+    fn test_unknown_feature_uuid() {
+        let f = Feature::from_str("cc9bea3b-aaaa-bbbb-cccc-4958bb129caa").unwrap();
+        assert_eq!(
+            f,
+            Feature::UnknownUuid("cc9bea3b-aaaa-bbbb-cccc-4958bb129caa".to_owned())
+        );
+    }
+
+    #[plex_api_test_helper::offline_test]
+    fn test_known_feature() {
+        let f = Feature::from_str("webhooks").unwrap();
+        assert_eq!(f, Feature::Webhooks);
+
+        let f = Feature::from_str("6f82ca43-6117-4e55-ae0e-5ea3b3e99a96").unwrap();
+        assert_eq!(f, Feature::Webhooks);
+    }
+
+    #[plex_api_test_helper::offline_test]
+    fn test_known_deprecated_feature() {
+        let f = Feature::from_str("optimize-server-users-endpoint").unwrap();
+        assert_eq!(f, Feature::OptimizeServerUsersEndpoint);
+
+        let f = Feature::from_str("ddd730e1-a0a0-429f-a7d3-7c5001d24497").unwrap();
+        assert_eq!(f, Feature::OptimizeServerUsersEndpoint);
+    }
+}
+"#,
     )
     .unwrap();
-    f.write_all(b"derive_display_from_serialize!(Feature);\n")
-        .unwrap();
 }

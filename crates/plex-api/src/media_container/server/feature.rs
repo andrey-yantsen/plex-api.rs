@@ -727,3 +727,43 @@ impl ::std::str::FromStr for Feature {
     }
 }
 derive_display_from_serialize!(Feature);
+
+#[cfg(test)]
+mod test {
+    use crate::media_container::server::Feature;
+    use std::str::FromStr;
+
+    #[cfg(not(feature = "tests_deny_unknown_fields"))]
+    #[plex_api_test_helper::offline_test]
+    fn test_unknown_feature() {
+        let f = Feature::from_str("unknown_value").unwrap();
+        assert_eq!(f, Feature::UnknownValue);
+    }
+
+    #[plex_api_test_helper::offline_test]
+    fn test_unknown_feature_uuid() {
+        let f = Feature::from_str("cc9bea3b-aaaa-bbbb-cccc-4958bb129caa").unwrap();
+        assert_eq!(
+            f,
+            Feature::UnknownUuid("cc9bea3b-aaaa-bbbb-cccc-4958bb129caa".to_owned())
+        );
+    }
+
+    #[plex_api_test_helper::offline_test]
+    fn test_known_feature() {
+        let f = Feature::from_str("webhooks").unwrap();
+        assert_eq!(f, Feature::Webhooks);
+
+        let f = Feature::from_str("6f82ca43-6117-4e55-ae0e-5ea3b3e99a96").unwrap();
+        assert_eq!(f, Feature::Webhooks);
+    }
+
+    #[plex_api_test_helper::offline_test]
+    fn test_known_deprecated_feature() {
+        let f = Feature::from_str("optimize-server-users-endpoint").unwrap();
+        assert_eq!(f, Feature::OptimizeServerUsersEndpoint);
+
+        let f = Feature::from_str("ddd730e1-a0a0-429f-a7d3-7c5001d24497").unwrap();
+        assert_eq!(f, Feature::OptimizeServerUsersEndpoint);
+    }
+}
