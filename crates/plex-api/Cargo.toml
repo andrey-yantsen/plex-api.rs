@@ -15,10 +15,10 @@ isahc = { version = "^1.7.2", features = ["json", "text-decoding"] }
 uuid = { version = "^1.2", features = ["v4", "serde"] }
 serde = { version = "^1.0", features = ["derive"] }
 serde_json = "^1.0"
-futures = "^0.3.24"
+futures = "^0.3.25"
 serde_with = { version = "^1.14", features = ["json"] }
 quick-xml = { version = "^0.26", features = [ "serialize" ] }
-serde_plain = "^1.0.0"
+serde_plain = "^1.0.1"
 serde_repr = "^0.1"
 time = { version = "^0.3", features = ["serde-well-known", "serde-human-readable"] }
 http = "^0.2.8"
@@ -40,7 +40,7 @@ httpmock = "^0.6"
 async-std = { version = "^1.12", features = ["attributes"] }
 plex-api-test-helper = { path = "../plex-api-test-helper" }
 rstest = "^0.15.0"
-rpassword = "^7.0"
+rpassword = "^7.1"
 
 [dev-dependencies.cargo-husky]
 version = "1"
