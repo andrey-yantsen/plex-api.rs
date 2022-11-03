@@ -611,7 +611,6 @@ pub enum Feature {
         rename = "vod_channels",
         alias = "5050545e-95c6-4a25-b94e-1fe5a5a603d0"
     )]
-    #[deprecated]
     VodChannels,
     #[serde(
         rename = "vod_cloudflare",
