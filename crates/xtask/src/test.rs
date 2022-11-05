@@ -24,7 +24,7 @@ impl flags::Test {
                 random_uuid.to_string()
             };
 
-            let _client_id = pushenv("X_PLEX_CLIENT_IDENTIFIER", &client_id);
+            let _client_id = pushenv("X_PLEX_CLIENT_IDENTIFIER", client_id);
 
             let plex_data_path = if let Some(plex_data_path) = self.plex_data_path.as_ref() {
                 plex_data_path.to_owned()
