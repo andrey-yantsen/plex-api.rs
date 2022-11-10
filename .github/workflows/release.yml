@@ -7,11 +7,6 @@ name: release-please
 jobs:
   release-please:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        crate:
-          - plex-api
-          - plex-cli
     steps:
       - uses: google-github-actions/release-please-action@v3
         id: release
@@ -22,6 +17,11 @@ jobs:
           monorepo-tags: true
           bump-minor-pre-major: true
           bump-patch-for-minor-pre-major: true
+          prerelease: true
+          versioning-strategy: always-bump-patch # while we're in the pre-alpha stage
+          plugins: cargo-workspace
+          separate-pull-requests: true
+          bootstrap-sha: d12010bbff5687e80dd9c14cfa3fbeae1f106f0d
           changelog-types: |
             [{"type":"feat","section":"Features","hidden":false},
              {"type":"fix","section":"Bug Fixes","hidden":false},
