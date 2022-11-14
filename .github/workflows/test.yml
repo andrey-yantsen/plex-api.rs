@@ -30,7 +30,7 @@ jobs:
           profile: minimal
           toolchain: stable
           override: true
-      - uses: Swatinem/rust-cache@v2.1.0
+      - uses: Swatinem/rust-cache@v2.2.0
         with:
           shared-key: cache
       - name: Run tests
@@ -57,7 +57,7 @@ jobs:
           profile: minimal
           toolchain: stable
           override: true
-      - uses: Swatinem/rust-cache@v2.1.0
+      - uses: Swatinem/rust-cache@v2.2.0
         with:
           shared-key: cache-anonymous
       - name: "Test against real server [anonymous]"
@@ -86,7 +86,7 @@ jobs:
           profile: minimal
           toolchain: stable
           override: true
-      - uses: Swatinem/rust-cache@v2.1.0
+      - uses: Swatinem/rust-cache@v2.2.0
         with:
           shared-key: cache-authenticated
       - name: "Test against real server [authenticated]"
@@ -115,7 +115,7 @@ jobs:
           profile: minimal
           toolchain: stable
           override: true
-      - uses: Swatinem/rust-cache@v2.1.0
+      - uses: Swatinem/rust-cache@v2.2.0
         with:
           shared-key: cache-authenticated
       - name: "Test against real server [authenticated]"
