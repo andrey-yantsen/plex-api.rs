@@ -24,7 +24,7 @@ jobs:
           profile: minimal
           toolchain: ${{steps.current_msrv.outputs.msrv}}
           override: true
-      - uses: Swatinem/rust-cache@v2.1.0
+      - uses: Swatinem/rust-cache@v2.2.0
         with:
           shared-key: cache
       - name: Check
@@ -50,7 +50,7 @@ jobs:
           profile: minimal
           toolchain: stable
           override: true
-      - uses: Swatinem/rust-cache@v2.1.0
+      - uses: Swatinem/rust-cache@v2.2.0
         with:
           shared-key: cache
       - name: Run cargo check
@@ -71,7 +71,7 @@ jobs:
           toolchain: stable
           override: true
           components: "rustfmt, clippy"
-      - uses: Swatinem/rust-cache@v2.1.0
+      - uses: Swatinem/rust-cache@v2.2.0
         with:
           shared-key: cache
       - name: Run cargo fmt
