@@ -39,7 +39,7 @@ regex = "^1.7"
 httpmock = "^0.6"
 async-std = { version = "^1.12", features = ["attributes"] }
 plex-api-test-helper = { path = "../plex-api-test-helper" }
-rstest = "^0.15.0"
+rstest = "^0.16.0"
 rpassword = "^7.1"
 
 [dev-dependencies.cargo-husky]
