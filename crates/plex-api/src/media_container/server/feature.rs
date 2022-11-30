@@ -48,6 +48,11 @@ pub enum Feature {
     )]
     ArtistTv,
     #[serde(
+        rename = "avod-new-media",
+        alias = "e703655b-ee05-4e24-97e3-a138da62c425"
+    )]
+    AvodNewMedia,
+    #[serde(
         rename = "boost-voices",
         alias = "c2409baa-d044-45c7-b1f4-e9e7ccd2d128"
     )]
