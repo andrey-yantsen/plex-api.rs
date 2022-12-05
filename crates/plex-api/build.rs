@@ -65,7 +65,7 @@ fn generate_features() {
     use std::fs::File;
     use std::io::Write;
 
-    println!("cargo:rerun-if-changed={}", FEATURE_MOCK_FILE_PATH);
+    println!("cargo:rerun-if-changed={FEATURE_MOCK_FILE_PATH}");
 
     let old_features_enum_file =
         std::fs::read_to_string(FEATURE_ENUM_FILE_PATH).unwrap_or_default();
