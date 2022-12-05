@@ -30,7 +30,7 @@ impl flags::Test {
                 plex_data_path.to_owned()
             } else {
                 match self.docker_tag.as_ref() {
-                    Some(t) => format!("plex-data-{}", t),
+                    Some(t) => format!("plex-data-{t}"),
                     None => "plex-data".to_owned(),
                 }
             };

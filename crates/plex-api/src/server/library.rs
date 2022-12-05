@@ -47,7 +47,7 @@ where
             let wrapper: MediaContainerWrapper<MetadataMediaContainer> = match from_str(&text) {
                 Ok(v) => v,
                 Err(e) => {
-                    eprintln!("{}", text);
+                    eprintln!("{text}");
                     return Err(e.into());
                 }
             };

@@ -184,13 +184,13 @@ impl<'de> Deserialize<'de> for Setting {
                             match v {
                                 serde_json::Value::Number(n) => n
                                     .as_i64()
-                                    .ok_or_else(|| de::Error::custom(format_args!("invalid value for {}: {}, expected numeric or numeric string", id, n))),
+                                    .ok_or_else(|| de::Error::custom(format_args!("invalid value for {id}: {n}, expected numeric or numeric string"))),
 
                                 serde_json::Value::String(s) => s
                                     .parse::<i64>()
-                                    .map_err(|_| de::Error::custom(format_args!("invalid value for {}: \"{}\", expected numeric or numeric string", id, s))),
+                                    .map_err(|_| de::Error::custom(format_args!("invalid value for {id}: \"{s}\", expected numeric or numeric string"))),
 
-                                _ => Err(de::Error::custom(format_args!("invalid value for {}: {:?}, expected numeric or numeric string", id, v))),
+                                _ => Err(de::Error::custom(format_args!("invalid value for {id}: {v:?}, expected numeric or numeric string"))),
                             }
                         }
 
@@ -238,13 +238,13 @@ impl<'de> Deserialize<'de> for Setting {
                             match v {
                                 serde_json::Value::Number(n) => n
                                     .as_f64()
-                                    .ok_or_else(|| de::Error::custom(format_args!("invalid value for {}: {}, expected numeric or numeric string", id, n))),
+                                    .ok_or_else(|| de::Error::custom(format_args!("invalid value for {id}: {n}, expected numeric or numeric string"))),
 
                                 serde_json::Value::String(s) => s
                                     .parse::<f64>()
-                                    .map_err(|_| de::Error::custom(format_args!("invalid value for {}: \"{}\", expected numeric or numeric string", id, s))),
+                                    .map_err(|_| de::Error::custom(format_args!("invalid value for {id}: \"{s}\", expected numeric or numeric string"))),
 
-                                _ => Err(de::Error::custom(format_args!("invalid value for {}: {:?}, expected numeric or numeric string", id, v))),
+                                _ => Err(de::Error::custom(format_args!("invalid value for {id}: {v:?}, expected numeric or numeric string"))),
                             }
                         }
 

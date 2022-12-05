@@ -30,7 +30,7 @@ mod offline {
         let error = webhook_manager_result.err().unwrap();
 
         assert!(
-            matches!(error, Error::SubscriptionFeatureNotAvailable(f) if format!("{}", f) == "webhooks"),
+            matches!(error, Error::SubscriptionFeatureNotAvailable(f) if format!("{f}") == "webhooks"),
             "Unexpected error"
         );
     }

@@ -30,8 +30,7 @@ impl flags::GetLastPlexTags {
         }
 
         let url = format!(
-            "https://hub.docker.com/v2/repositories/{image}/tags/?page_size=100&page=1",
-            image = DOCKER_PLEX_IMAGE_NAME
+            "https://hub.docker.com/v2/repositories/{DOCKER_PLEX_IMAGE_NAME}/tags/?page_size=100&page=1"
         );
 
         let available_tags = ureq::get(&url)

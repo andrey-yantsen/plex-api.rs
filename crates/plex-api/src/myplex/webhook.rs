@@ -107,7 +107,7 @@ impl WebhookManager {
             .filter(|value| value.url != webhook_url)
             .collect();
         if original_len == new_webhooks.len() {
-            Err(Error::WebhookNotFound(format!("{}", webhook_url)))
+            Err(Error::WebhookNotFound(format!("{webhook_url}")))
         } else {
             self.set(new_webhooks).await
         }

@@ -82,10 +82,7 @@ impl flags::ModifyData {
         let server_url = format!("http://localhost:{}/", plex_node.get_host_port_ipv4(32400));
         cmd!("cargo run -p plex-cli --  --server {server_url} wait").run()?;
 
-        print!(
-            "// Server is running at {}web/index.html. Press enter when done...",
-            server_url
-        );
+        print!("// Server is running at {server_url}web/index.html. Press enter when done...");
         let _ = std::io::stdout().flush();
 
         let mut input_string = String::new();
