@@ -17,7 +17,7 @@ xshell = "^0.1"
 xflags = "^0.3"
 uuid = { version = "^1.2", features = ["v4"] }
 plex-api = { path = "../plex-api" }
-tokio = { version = "^1.16", features = ["rt-multi-thread"] }
+tokio = { version = "^1.23", features = ["rt-multi-thread"] }
 walkdir = "^2"
 semver = "^1.0.14"
 ureq = "^2.5.0"
