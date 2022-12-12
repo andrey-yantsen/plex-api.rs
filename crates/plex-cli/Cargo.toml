@@ -11,6 +11,6 @@ independent = true
 
 [dependencies]
 plex-api = { version = "0.0.4", path = "../plex-api" }
-tokio = { version = "^1.16", features = ["macros", "rt-multi-thread", "time"] }
+tokio = { version = "^1.23", features = ["macros", "rt-multi-thread", "time"] }
 anyhow = "^1.0"
 xflags = "^0.3"
