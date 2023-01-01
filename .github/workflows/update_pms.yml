@@ -28,13 +28,13 @@ jobs:
       - id: tags
         run: |
           tags=$(cargo run -q --package xtask -- get-last-plex-tags --skip-tag latest --skip-tag beta --skip-tag plexpass)
-          echo "::set-output name=tags::$tags"
+          echo "tags::$tags" >> $GITHUB_OUTPUT
           first_tag=$(echo "$tags" | jq -r '.[0]')
-          echo "::set-output name=first_tag::$first_tag"
+          echo "first_tag::$first_tag" >> $GITHUB_OUTPUT
           second_tag=$(echo "$tags" | jq -r '.[1]')
-          echo "::set-output name=second_tag::$second_tag"
+          echo "second_tag::$second_tag" >> $GITHUB_OUTPUT
           last_tag=$(echo "$tags" | jq -r '.[2]')
-          echo "::set-output name=last_tag::$last_tag"
+          echo "last_tag::$last_tag" >> $GITHUB_OUTPUT
       - name: Update test.yml workflow
         run: |
           sed -i 's/plex_server_version: .*/plex_server_version: ${{ steps.tags.outputs.tags }}/g' .github/workflows/test.yml
