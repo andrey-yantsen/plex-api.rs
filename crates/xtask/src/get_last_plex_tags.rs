@@ -60,7 +60,6 @@ impl flags::GetLastPlexTags {
                     c.name("tag").unwrap().as_str(),
                 )
             })
-            .into_iter()
             .filter(|(s, _)| match s {
                 SemverOrString::Semver(s) => !skip_tags.contains(&s.to_string()),
                 SemverOrString::Str(s) => !skip_tags.contains(&String::from(*s)),
