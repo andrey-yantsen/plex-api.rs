@@ -231,6 +231,11 @@ pub enum Feature {
     )]
     Home,
     #[serde(
+        rename = "HRK_enable_EUR",
+        alias = "f1ac7a53-c524-4311-9a27-713562fc24fa"
+    )]
+    HrkEnableEur,
+    #[serde(
         rename = "hwtranscode",
         alias = "84a754b0-d1ca-4433-af2d-c949bf4b4936"
     )]
