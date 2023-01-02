@@ -73,9 +73,11 @@ impl Device<'_> {
             return Err(Error::DeviceConnectionNotSupported);
         }
 
-        if let Some(connections) = &self.inner.connections {
+        if !self.inner.connections.is_empty() {
             if self.inner.provides.contains(&Feature::Server) {
-                let futures = connections
+                let futures = self
+                    .inner
+                    .connections
                     .iter()
                     .map(|connection| {
                         crate::Server::new(&connection.uri, self.client.to_owned()).boxed()
@@ -85,7 +87,9 @@ impl Device<'_> {
                 let (server, _) = select_ok(futures).await?;
                 Ok(DeviceConnection::Server(Box::new(server)))
             } else {
-                let futures = connections
+                let futures = self
+                    .inner
+                    .connections
                     .iter()
                     .map(|connection| {
                         crate::Player::new(&connection.uri, self.client.to_owned()).boxed()

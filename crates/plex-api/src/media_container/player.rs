@@ -15,16 +15,25 @@ pub struct ResourcesMediaContainer {
 
 #[derive(Debug, Deserialize, Clone)]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
-#[serde(rename_all = "camelCase")]
 pub struct Player {
+    #[serde(rename = "@machineIdentifier")]
     pub machine_identifier: String,
+    #[serde(rename = "@product")]
     pub product: String,
+    #[serde(rename = "@protocol")]
     pub protocol: String,
+    #[serde(rename = "@deviceClass")]
     pub device_class: DeviceClass,
+    #[serde(rename = "@platform")]
     pub platform: String,
+    #[serde(rename = "@platformVersion")]
     pub platform_version: String,
+    #[serde(rename = "@title")]
     pub title: String,
-    #[serde(deserialize_with = "StringWithSeparator::<CommaSeparator>::deserialize")]
+    #[serde(
+        deserialize_with = "StringWithSeparator::<CommaSeparator>::deserialize",
+        rename = "@protocolCapabilities"
+    )]
     pub protocol_capabilities: Vec<ProtocolCapability>,
 }
 

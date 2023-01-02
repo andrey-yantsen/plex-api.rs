@@ -13,8 +13,10 @@ pub struct DevicesMediaContainer {
     // TODO: The rest of the fields should belong to MediaContainer struct, but
     // quick-qml (and serde-xml-rs) has some issues with `flatten`.
     // https://github.com/tafia/quick-xml/issues/226
-    #[serde(default)]
+    #[serde(rename = "@size", default)]
     pub size: Option<i32>,
+
+    #[serde(rename = "@publicAddress")]
     pub public_address: Option<String>,
     // #[serde(flatten)]
     // pub media_container: MediaContainer,
@@ -22,72 +24,105 @@ pub struct DevicesMediaContainer {
 
 #[derive(Debug, Deserialize, Clone)]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
-#[serde(rename_all = "camelCase")]
 pub struct Device {
+    #[serde(rename = "@name")]
     pub name: String,
+    #[serde(rename = "@product")]
     pub product: String,
+    #[serde(rename = "@publicAddress")]
     pub public_address: String,
+    #[serde(rename = "@productVersion")]
     pub product_version: String,
+    #[serde(rename = "@platform")]
     pub platform: String,
+    #[serde(rename = "@platformVersion")]
     pub platform_version: String,
+    #[serde(rename = "@device")]
     pub device: String,
+    #[serde(rename = "@model")]
     pub model: Option<String>,
+    #[serde(rename = "@vendor")]
     pub vendor: Option<String>,
-    #[serde(deserialize_with = "StringWithSeparator::<CommaSeparator>::deserialize")]
+    #[serde(
+        deserialize_with = "StringWithSeparator::<CommaSeparator>::deserialize",
+        rename = "@provides"
+    )]
     pub provides: Vec<Feature>,
+    #[serde(rename = "@clientIdentifier")]
     pub client_identifier: String,
+    #[serde(rename = "@version")]
     pub version: Option<String>,
+    #[serde(rename = "@id")]
     pub id: Option<u32>,
+    #[serde(rename = "@token")]
     pub token: Option<String>,
+    #[serde(rename = "@accessToken")]
     pub access_token: Option<String>,
-    #[serde(with = "time::serde::timestamp")]
+    #[serde(with = "time::serde::timestamp", rename = "@createdAt")]
     pub created_at: OffsetDateTime,
-    #[serde(with = "time::serde::timestamp")]
+    #[serde(with = "time::serde::timestamp", rename = "@lastSeenAt")]
     pub last_seen_at: OffsetDateTime,
     #[serde(
         deserialize_with = "StringWithSeparator::<CommaSeparator>::deserialize",
-        default
+        default,
+        rename = "@screenResolution"
     )]
     pub screen_resolution: Vec<String>,
     #[serde(
         deserialize_with = "serde_with::rust::string_empty_as_none::deserialize",
-        default
+        default,
+        rename = "@screenDensity"
     )]
     pub screen_density: Option<u16>,
-    #[serde(rename = "Connection")]
-    pub connections: Option<Vec<Connection>>,
+    #[serde(rename = "Connection", default)]
+    pub connections: Vec<Connection>,
+    #[serde(rename = "@httpsRequired")]
     pub https_required: Option<bool>,
+    #[serde(rename = "@synced")]
     pub synced: Option<bool>,
+    #[serde(rename = "@relay")]
     pub relay: Option<bool>,
+    #[serde(rename = "@publicAddressMatches")]
     pub public_address_matches: Option<bool>,
+    #[serde(rename = "@presence")]
     pub presence: Option<bool>,
+    #[serde(rename = "@owned")]
     pub owned: Option<bool>,
     #[serde(rename = "SyncList")]
     pub sync_list: Option<SyncList>,
-    #[serde(default)]
+    #[serde(default, rename = "@authToken")]
     pub auth_token: String,
+    #[serde(rename = "@dnsRebindingProtection")]
     pub dns_rebinding_protection: Option<bool>,
+    #[serde(rename = "@natLoopbackSupported")]
     pub nat_loopback_supported: Option<bool>,
 }
 
 #[derive(Debug, Deserialize, Clone)]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
-#[serde(rename_all = "camelCase")]
 pub struct SyncList {
+    #[serde(rename = "@itemsCompleteCount")]
     pub items_complete_count: u32,
+    #[serde(rename = "@totalSize")]
     pub total_size: u64,
+    #[serde(rename = "@version")]
     pub version: u32,
 }
 
 #[derive(Debug, Deserialize, Clone)]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 pub struct Connection {
-    #[serde(with = "http_serde::uri")]
+    #[serde(with = "http_serde::uri", rename = "@uri")]
     pub uri: http::Uri,
+    #[serde(rename = "@protocol")]
     pub protocol: Option<String>,
+    #[serde(rename = "@address")]
     pub address: Option<String>,
+    #[serde(rename = "@port")]
     pub port: Option<u32>,
+    #[serde(rename = "@local")]
     pub local: Option<bool>,
+    #[serde(rename = "@relay")]
     pub relay: Option<bool>,
 }
 
