@@ -1,6 +1,6 @@
 use serde::Deserialize;
 use serde_plain::derive_fromstr_from_deserialize;
-use serde_with::{rust::StringWithSeparator, CommaSeparator};
+use serde_with::{formats::CommaSeparator, serde_as, NoneAsEmptyString, StringWithSeparator};
 use time::OffsetDateTime;
 
 #[derive(Debug, Deserialize, Clone)]
@@ -22,6 +22,7 @@ pub struct DevicesMediaContainer {
     // pub media_container: MediaContainer,
 }
 
+#[serde_as]
 #[derive(Debug, Deserialize, Clone)]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 pub struct Device {
@@ -43,10 +44,8 @@ pub struct Device {
     pub model: Option<String>,
     #[serde(rename = "@vendor")]
     pub vendor: Option<String>,
-    #[serde(
-        deserialize_with = "StringWithSeparator::<CommaSeparator>::deserialize",
-        rename = "@provides"
-    )]
+    #[serde_as(as = "StringWithSeparator::<CommaSeparator, Feature>")]
+    #[serde(rename = "@provides")]
     pub provides: Vec<Feature>,
     #[serde(rename = "@clientIdentifier")]
     pub client_identifier: String,
@@ -62,17 +61,11 @@ pub struct Device {
     pub created_at: OffsetDateTime,
     #[serde(with = "time::serde::timestamp", rename = "@lastSeenAt")]
     pub last_seen_at: OffsetDateTime,
-    #[serde(
-        deserialize_with = "StringWithSeparator::<CommaSeparator>::deserialize",
-        default,
-        rename = "@screenResolution"
-    )]
+    #[serde_as(as = "StringWithSeparator::<CommaSeparator, String>")]
+    #[serde(default, rename = "@screenResolution")]
     pub screen_resolution: Vec<String>,
-    #[serde(
-        deserialize_with = "serde_with::rust::string_empty_as_none::deserialize",
-        default,
-        rename = "@screenDensity"
-    )]
+    #[serde_as(as = "NoneAsEmptyString")]
+    #[serde(default, rename = "@screenDensity")]
     pub screen_density: Option<u16>,
     #[serde(rename = "Connection", default)]
     pub connections: Vec<Connection>,

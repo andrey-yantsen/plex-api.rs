@@ -5,7 +5,7 @@ pub use self::feature::Feature;
 use self::library::ContentDirectory;
 use serde::Deserialize;
 use serde_plain::derive_fromstr_from_deserialize;
-use serde_with::{rust::StringWithSeparator, CommaSeparator};
+use serde_with::{formats::CommaSeparator, serde_as, StringWithSeparator};
 
 #[derive(Debug, Deserialize, Clone)]
 pub struct Action {
@@ -94,20 +94,22 @@ pub enum MediaProviderType {
 
 derive_fromstr_from_deserialize!(MediaProviderType);
 
+#[serde_as]
 #[derive(Debug, Deserialize, Clone)]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct MediaProvider {
     pub identifier: String,
-    #[serde(deserialize_with = "StringWithSeparator::<CommaSeparator>::deserialize")]
+    #[serde_as(as = "StringWithSeparator::<CommaSeparator, MediaProviderProtocol>")]
     pub protocols: Vec<MediaProviderProtocol>,
     pub title: String,
-    #[serde(deserialize_with = "StringWithSeparator::<CommaSeparator>::deserialize")]
+    #[serde_as(as = "StringWithSeparator::<CommaSeparator, MediaProviderType>")]
     pub types: Vec<MediaProviderType>,
     #[serde(rename = "Feature")]
     pub features: Vec<MediaProviderFeature>,
 }
 
+#[serde_as]
 #[derive(Debug, Deserialize, Clone)]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
@@ -123,7 +125,7 @@ pub struct Server {
     pub certificate: Option<bool>,
     pub companion_proxy: bool,
     pub country_code: Option<String>,
-    #[serde(deserialize_with = "StringWithSeparator::<CommaSeparator>::deserialize")]
+    #[serde_as(as = "StringWithSeparator::<CommaSeparator, Diagnostics>")]
     pub diagnostics: Vec<Diagnostics>,
     pub event_stream: bool,
     pub friendly_name: String,
@@ -137,7 +139,7 @@ pub struct Server {
     pub my_plex_subscription: bool,
     pub my_plex_username: Option<String>,
     pub offline_transcode: Option<u8>,
-    #[serde(deserialize_with = "StringWithSeparator::<CommaSeparator>::deserialize")]
+    #[serde_as(as = "StringWithSeparator::<CommaSeparator, Feature>")]
     pub owner_features: Vec<Feature>,
     pub photo_auto_tag: bool,
     pub platform: String,
@@ -155,11 +157,11 @@ pub struct Server {
     pub transcoder_lyrics: bool,
     pub transcoder_subtitles: bool,
     pub transcoder_video: bool,
-    #[serde(deserialize_with = "StringWithSeparator::<CommaSeparator>::deserialize")]
+    #[serde_as(as = "StringWithSeparator::<CommaSeparator, u32>")]
     pub transcoder_video_bitrates: Vec<u32>,
-    #[serde(deserialize_with = "StringWithSeparator::<CommaSeparator>::deserialize")]
+    #[serde_as(as = "StringWithSeparator::<CommaSeparator, u8>")]
     pub transcoder_video_qualities: Vec<u8>,
-    #[serde(deserialize_with = "StringWithSeparator::<CommaSeparator>::deserialize")]
+    #[serde_as(as = "StringWithSeparator::<CommaSeparator, u16>")]
     pub transcoder_video_resolutions: Vec<u16>,
     pub updated_at: i64,
     pub updater: bool,
