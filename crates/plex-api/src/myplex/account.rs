@@ -1,5 +1,6 @@
 use serde::{Deserialize, Deserializer};
 use serde_repr::Deserialize_repr;
+use serde_with::{json::JsonString, serde_as};
 use std::collections::HashMap;
 use time::OffsetDateTime;
 
@@ -165,11 +166,11 @@ pub struct ExperienceSettingsContainer {
     pub settings: ExperienceSettingsFormat,
 }
 
+#[serde_as]
 #[derive(Debug, Deserialize)]
 #[serde(tag = "type", content = "value", rename_all = "camelCase")]
 pub enum ExperienceSettingsFormat {
-    #[serde(with = "serde_with::json::nested")]
-    Json(ExperienceSettings),
+    Json(#[serde_as(as = "JsonString")] ExperienceSettings),
 }
 
 #[derive(Debug, Deserialize)]

@@ -1,7 +1,7 @@
 use super::MediaContainer;
 use serde::Deserialize;
 use serde_plain::derive_fromstr_from_deserialize;
-use serde_with::{rust::StringWithSeparator, CommaSeparator};
+use serde_with::{formats::CommaSeparator, serde_as, StringWithSeparator};
 
 #[derive(Debug, Deserialize, Clone)]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
@@ -13,6 +13,7 @@ pub struct ResourcesMediaContainer {
     pub media_container: MediaContainer,
 }
 
+#[serde_as]
 #[derive(Debug, Deserialize, Clone)]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 pub struct Player {
@@ -30,10 +31,8 @@ pub struct Player {
     pub platform_version: String,
     #[serde(rename = "@title")]
     pub title: String,
-    #[serde(
-        deserialize_with = "StringWithSeparator::<CommaSeparator>::deserialize",
-        rename = "@protocolCapabilities"
-    )]
+    #[serde_as(as = "StringWithSeparator::<CommaSeparator, ProtocolCapability>")]
+    #[serde(rename = "@protocolCapabilities")]
     pub protocol_capabilities: Vec<ProtocolCapability>,
 }
 
