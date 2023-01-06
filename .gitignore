@@ -1,4 +1,4 @@
 target/
 **/*.rs.bk
-crates/plex-api/Cargo.lock
+Cargo.lock
 plex-data*/
