@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.6](https://github.com/andrey-yantsen/plex-api.rs/compare/plex-api-v0.0.5...plex-api-v0.0.6) (2023-01-08)
+
+
+### Features
+
+* testing release-please ([9d461a2](https://github.com/andrey-yantsen/plex-api.rs/commit/9d461a25e9eac81ebc5caadc4506885cde9f18cf))
+
 ## 0.0.5 (2023-01-06)
 
 
