@@ -8,7 +8,6 @@ impl flags::Preferences {
             .build()?;
         let server = plex_api::Server::new(server, client.clone()).await?;
         let preferences = server.preferences().await?;
-
         match &self.subcommand {
             flags::PreferencesCmd::Get(cmd) => {
                 if let Some(key) = &cmd.key {
