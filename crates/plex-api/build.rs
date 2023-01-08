@@ -5,6 +5,7 @@ fn main() {
 }
 
 const FEATURE_ENUM_FILE_PATH: &str = "src/media_container/server/feature.rs";
+
 const FEATURE_MOCK_FILE_PATH: &str = "tests/mocks/myplex/api/v2/features.json";
 
 // Features that are not reported by the API, but returned by the server.
