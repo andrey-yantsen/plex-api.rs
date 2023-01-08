@@ -19,6 +19,9 @@ jobs:
           path: "crates/${{ matrix.crate }}"
           package-name: ${{ matrix.crate }}
           release-type: rust
+          token: "${{ secrets.PAT_GITHUB_PR }}"
+          bootstrap-sha: "0478c04c4d92a5ba95a6933663c46f9269695bd5"
+          versioning-strategy: "always-bump-patch"
           monorepo-tags: true
           bump-minor-pre-major: true
           bump-patch-for-minor-pre-major: true
