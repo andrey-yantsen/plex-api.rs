@@ -18,8 +18,14 @@ jobs:
         with:
           path: "crates/${{ matrix.crate }}"
           package-name: ${{ matrix.crate }}
+          component: ${{ matrix.crate }}
           release-type: rust
+          token: "${{ secrets.PAT_GITHUB_PR }}"
+          plugins: "cargo-workspace"
+          bootstrap-sha: "0478c04c4d92a5ba95a6933663c46f9269695bd5"
+          separate-pull-requests: true
           monorepo-tags: true
+          versioning-strategy: "always-bump-patch"
           bump-minor-pre-major: true
           bump-patch-for-minor-pre-major: true
           changelog-types: |
@@ -28,7 +34,7 @@ jobs:
              {"type":"chore","section":"Miscellaneous","hidden":false},
              {"type":"test","section":"Tests","hidden":true},
              {"type":"ci","section":"Continuous Integration","hidden":true},
-             {"type":"docs","section":"Documentation","hidden":true},
+             {"type":"docs","section":"Documentation","hidden":false},
              {"type":"refactor","section":"Code Refactoring","hidden":true},
              {"type":"style","section":"Styles","hidden":true}]
 
