@@ -1,0 +1,37 @@
+{
+    "packages": {
+        "crates/plex-api": {
+            "package-name": "plex-api"
+        },
+        "crates/plex-cli": {
+            "package-name": "plex-cli"
+        }
+    },
+    "plugins": [
+        "cargo-workspace"
+    ],
+    "changelog-path": "CHANGELOG.md",
+    "release-type": "rust",
+    "bump-minor-pre-major": true,
+    "bump-patch-for-minor-pre-major": true,
+    "versioning": "always-bump-patch",
+    "changelog-sections": [
+        {
+            "type": "feat",
+            "section": "Features"
+        },
+        {
+            "type": "fix",
+            "section": "Bug Fixes"
+        },
+        {
+            "type": "docs",
+            "section": "Documentation"
+        }
+    ],
+    "include-component-in-tag": true,
+    "separate-pull-requests": true,
+    "draft": false,
+    "prerelease": false,
+    "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json"
+}
