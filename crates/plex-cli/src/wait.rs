@@ -9,7 +9,6 @@ impl flags::Wait {
         let start_time = std::time::SystemTime::now();
         let time_limit = std::time::Duration::from_secs(self.timeout.unwrap_or(120) as u64);
         let sleep_duration = std::time::Duration::from_secs(self.delay.unwrap_or(1) as u64);
-
         while start_time.elapsed()? < time_limit {
             let server_result = plex_api::Server::new(server, client.clone()).await;
             if let Ok(server) = server_result {
