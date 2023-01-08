@@ -1,5 +1,9 @@
 # Changelog
 
+* The following workspace dependencies were updated
+  * dependencies
+    * plex-api bumped from 0.0.5 to 0.0.6
+
 ## 0.0.2 (2023-01-06)
 
 
