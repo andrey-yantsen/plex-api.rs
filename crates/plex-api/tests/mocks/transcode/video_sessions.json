@@ -1,0 +1,33 @@
+{
+  "MediaContainer": {
+    "size": 1,
+    "TranscodeSession": [
+      {
+        "key": "6c624c15015644a2801002562d2c33e4fdbf54cb",
+        "throttled": false,
+        "complete": false,
+        "progress": 2.5999999046325685,
+        "size": 33554480,
+        "speed": 1.2000000476837159,
+        "error": false,
+        "duration": 9678688,
+        "remaining": 8104,
+        "context": "static",
+        "sourceVideoCodec": "hevc",
+        "sourceAudioCodec": "eac3",
+        "videoDecision": "transcode",
+        "audioDecision": "transcode",
+        "subtitleDecision": "burn",
+        "protocol": "http",
+        "container": "mkv",
+        "videoCodec": "h264",
+        "audioCodec": "mp3",
+        "audioChannels": 2,
+        "width": 1280,
+        "height": 720,
+        "transcodeHwRequested": true,
+        "offlineTranscode": true
+      }
+    ]
+  }
+}

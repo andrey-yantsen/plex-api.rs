@@ -5,6 +5,7 @@
 //! please read it for further information.
 
 use serde::{Deserialize, Serialize};
+use serde_aux::prelude::deserialize_option_number_from_string;
 use time::OffsetDateTime;
 
 #[derive(Deserialize, Debug)]
@@ -67,6 +68,7 @@ pub struct Metadata {
     pub grandparent_rating_key: Option<String>,
     pub guid: Option<String>,
     #[serde(rename = "librarySectionID")]
+    #[serde(deserialize_with = "deserialize_option_number_from_string")]
     pub library_section_id: Option<u32>,
     pub r#type: Option<String>,
     pub parent_title: Option<String>,

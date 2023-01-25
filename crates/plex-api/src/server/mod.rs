@@ -1,9 +1,11 @@
 pub mod library;
 pub mod prefs;
+pub mod transcode;
 
 use self::{
     library::{metadata_items, Library},
     prefs::Preferences,
+    transcode::TranscodeSessionsMediaContainer,
 };
 #[cfg(not(feature = "tests_deny_unknown_fields"))]
 use crate::media_container::server::library::LibraryType;
@@ -14,8 +16,11 @@ use crate::{
         MediaContainerWrapper,
     },
     myplex::MyPlex,
-    url::{SERVER_MEDIA_PROVIDERS, SERVER_MYPLEX_ACCOUNT, SERVER_MYPLEX_CLAIM},
-    Error, HttpClientBuilder, Item, Result,
+    url::{
+        SERVER_MEDIA_PROVIDERS, SERVER_MYPLEX_ACCOUNT, SERVER_MYPLEX_CLAIM,
+        SERVER_TRANSCODE_SESSIONS,
+    },
+    Error, HttpClientBuilder, Item, Result, TranscodeSession,
 };
 use core::convert::TryFrom;
 use http::{StatusCode, Uri};
@@ -90,6 +95,36 @@ impl Server {
         } else {
             Vec::new()
         }
+    }
+
+    /// Retrieves a list of the current transcode sessions.
+    pub async fn transcode_sessions(&self) -> Result<Vec<TranscodeSession>> {
+        let wrapper: MediaContainerWrapper<TranscodeSessionsMediaContainer> =
+            self.client.get(SERVER_TRANSCODE_SESSIONS).json().await?;
+
+        Ok(wrapper
+            .media_container
+            .transcode_sessions
+            .into_iter()
+            .map(move |stats| TranscodeSession::from_stats(self.client.clone(), stats))
+            .collect())
+    }
+
+    /// Retrieves the transcode session with the passed ID.
+    pub async fn transcode_session(&self, session_id: &str) -> Result<TranscodeSession> {
+        let wrapper: MediaContainerWrapper<TranscodeSessionsMediaContainer> = self
+            .client
+            .get(format!("{SERVER_TRANSCODE_SESSIONS}/{session_id}"))
+            .json()
+            .await?;
+        let stats = wrapper
+            .media_container
+            .transcode_sessions
+            .get(0)
+            .cloned()
+            .ok_or(crate::Error::ItemNotFound)?;
+
+        Ok(TranscodeSession::from_stats(self.client.clone(), stats))
     }
 
     /// Allows retrieving media, playlists, collections and other items using

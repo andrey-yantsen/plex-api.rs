@@ -1,0 +1,26 @@
+{
+  "MediaContainer": {
+    "size": 1,
+    "TranscodeSession": [
+      {
+        "key": "dfghtybntbretybrtyb",
+        "throttled": false,
+        "complete": false,
+        "progress": 2.5999999046325685,
+        "size": 33554480,
+        "speed": 1.2000000476837159,
+        "error": false,
+        "duration": 9678688,
+        "remaining": 8104,
+        "context": "streaming",
+        "sourceAudioCodec": "mp3",
+        "audioDecision": "copy",
+        "protocol": "dash",
+        "container": "mp4",
+        "audioCodec": "mp3",
+        "audioChannels": 2,
+        "transcodeHwRequested": true
+      }
+    ]
+  }
+}

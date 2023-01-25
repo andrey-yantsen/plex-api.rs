@@ -43,6 +43,10 @@ async-std = { version = "^1.12", features = ["attributes"] }
 plex-api-test-helper = { path = "../plex-api-test-helper" }
 rstest = "^0.16.0"
 rpassword = "^7.2"
+dash-mpd = "^0.7.0"
+hls_m3u8 = "^0.4.1"
+mp4 = "^0.13.0"
+mp3-metadata = "^0.3.4"
 
 [dev-dependencies.cargo-husky]
 version = "1"

@@ -1,0 +1,545 @@
+{
+  "MediaContainer": {
+    "size": 1,
+    "allowSync": true,
+    "identifier": "com.plexapp.plugins.library",
+    "librarySectionID": 1,
+    "librarySectionTitle": "Movies",
+    "librarySectionUUID": "a006b58966aa34f3c577ca3106e99c5d1d6ea8b1",
+    "mediaTagPrefix": "/system/bundle/media/flags/",
+    "mediaTagVersion": 1676975406,
+    "Metadata": [
+      {
+        "ratingKey": "1036",
+        "key": "/library/metadata/1036",
+        "guid": "plex://movie/5d776830f59e58002189813a",
+        "studio": "The Zanuck Company",
+        "type": "movie",
+        "title": "Reign of Fire",
+        "librarySectionTitle": "Movies",
+        "librarySectionID": 1,
+        "librarySectionKey": "/library/sections/1",
+        "contentRating": "gb/12",
+        "summary": "In post-apocalyptic England, an American volunteer and a British survivor team up to fight off a brood of fire-breathing dragons seeking to return to global dominance after centuries of rest underground. The Brit -- leading a clan of survivors to hunt down the King of the Dragons -- has much at stake: His mother was killed by a dragon, but his love is still alive.",
+        "rating": 4.2,
+        "audienceRating": 4.9,
+        "viewCount": 1,
+        "lastViewedAt": 1368998603,
+        "year": 2002,
+        "tagline": "Fight Fire With Fire",
+        "thumb": "/library/metadata/1036/thumb/1677122881",
+        "art": "/library/metadata/1036/art/1677122881",
+        "duration": 6118122,
+        "originallyAvailableAt": "2002-07-12",
+        "addedAt": 1368992739,
+        "updatedAt": 1677122881,
+        "audienceRatingImage": "rottentomatoes://image.rating.spilled",
+        "primaryExtraKey": "/library/metadata/145150",
+        "ratingImage": "rottentomatoes://image.rating.rotten",
+        "Media": [
+          {
+            "id": 307448,
+            "duration": 6118122,
+            "bitrate": 2108,
+            "width": 1920,
+            "height": 820,
+            "aspectRatio": 2.35,
+            "audioChannels": 2,
+            "audioCodec": "aac",
+            "videoCodec": "h264",
+            "videoResolution": "1080",
+            "container": "mp4",
+            "videoFrameRate": "24p",
+            "optimizedForStreaming": 1,
+            "audioProfile": "lc",
+            "has64bitOffsets": false,
+            "videoProfile": "high",
+            "Part": [
+              {
+                "id": 320566,
+                "key": "/library/parts/320566/1677272892/file.mp4",
+                "duration": 6118122,
+                "file": "/mnt/media/Libraries/movies/Reign of Fire (2002)/Reign of Fire (2002).mp4",
+                "size": 1615558857,
+                "audioProfile": "lc",
+                "container": "mp4",
+                "has64bitOffsets": false,
+                "indexes": "sd",
+                "optimizedForStreaming": true,
+                "videoProfile": "high",
+                "Stream": [
+                  {
+                    "id": 566406,
+                    "streamType": 1,
+                    "default": true,
+                    "codec": "h264",
+                    "index": 0,
+                    "bitrate": 2016,
+                    "bitDepth": 8,
+                    "chromaLocation": "left",
+                    "chromaSubsampling": "4:2:0",
+                    "codedHeight": 832,
+                    "codedWidth": 1920,
+                    "frameRate": 23.976,
+                    "hasScalingMatrix": false,
+                    "height": 820,
+                    "level": 40,
+                    "profile": "high",
+                    "refFrames": 5,
+                    "scanType": "progressive",
+                    "streamIdentifier": "1",
+                    "width": 1920,
+                    "displayTitle": "1080p (H.264)",
+                    "extendedDisplayTitle": "1080p (H.264)"
+                  },
+                  {
+                    "id": 566407,
+                    "streamType": 2,
+                    "selected": true,
+                    "default": true,
+                    "codec": "aac",
+                    "index": 1,
+                    "channels": 2,
+                    "bitrate": 92,
+                    "audioChannelLayout": "stereo",
+                    "profile": "lc",
+                    "samplingRate": 48000,
+                    "streamIdentifier": "2",
+                    "displayTitle": "Unknown (AAC Stereo)",
+                    "extendedDisplayTitle": "Unknown (AAC Stereo)"
+                  },
+                  {
+                    "id": 566408,
+                    "key": "/library/streams/566408",
+                    "streamType": 3,
+                    "codec": "srt",
+                    "format": "srt",
+                    "displayTitle": "Unknown (SRT External)",
+                    "extendedDisplayTitle": "Unknown (SRT External)"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "Genre": [
+          {
+            "id": 48,
+            "filter": "genre=48",
+            "tag": "Fantasy"
+          },
+          {
+            "id": 128,
+            "filter": "genre=128",
+            "tag": "Thriller"
+          },
+          {
+            "id": 39,
+            "filter": "genre=39",
+            "tag": "Action"
+          },
+          {
+            "id": 130,
+            "filter": "genre=130",
+            "tag": "Adventure"
+          }
+        ],
+        "Director": [
+          {
+            "id": 92561,
+            "filter": "director=92561",
+            "tag": "Rob Bowman"
+          }
+        ],
+        "Writer": [
+          {
+            "id": 124916,
+            "filter": "writer=124916",
+            "tag": "Gregg Shabot"
+          }
+        ],
+        "Producer": [
+          {
+            "id": 92586,
+            "filter": "producer=92586",
+            "tag": "Richard D. Zanuck"
+          },
+          {
+            "id": 92587,
+            "filter": "producer=92587",
+            "tag": "Roger Birnbaum"
+          },
+          {
+            "id": 92588,
+            "filter": "producer=92588",
+            "tag": "Gary Barber"
+          },
+          {
+            "id": 92589,
+            "filter": "producer=92589",
+            "tag": "Lili Fini Zanuck"
+          }
+        ],
+        "Country": [
+          {
+            "id": 51039,
+            "filter": "country=51039",
+            "tag": "Ireland"
+          },
+          {
+            "id": 113,
+            "filter": "country=113",
+            "tag": "United Kingdom"
+          },
+          {
+            "id": 55636,
+            "filter": "country=55636",
+            "tag": "United States of America"
+          }
+        ],
+        "Guid": [
+          {
+            "id": "imdb://tt0253556"
+          },
+          {
+            "id": "tmdb://6278"
+          },
+          {
+            "id": "tvdb://1709"
+          }
+        ],
+        "Rating": [
+          {
+            "image": "imdb://image.rating",
+            "value": 6.2,
+            "type": "audience"
+          },
+          {
+            "image": "rottentomatoes://image.rating.rotten",
+            "value": 4.2,
+            "type": "critic"
+          },
+          {
+            "image": "rottentomatoes://image.rating.spilled",
+            "value": 4.9,
+            "type": "audience"
+          },
+          {
+            "image": "themoviedb://image.rating",
+            "value": 6.1,
+            "type": "audience"
+          }
+        ],
+        "Role": [
+          {
+            "id": 89823,
+            "filter": "actor=89823",
+            "tag": "Christian Bale",
+            "tagKey": "5d776825880197001ec9038f",
+            "role": "Quinn Abercromby",
+            "thumb": "https://metadata-static.plex.tv/f/people/fde8f8b1be96957d9659bee97b0fab30.jpg"
+          },
+          {
+            "id": 92563,
+            "filter": "actor=92563",
+            "tag": "Matthew McConaughey",
+            "tagKey": "5d7768287e9a3c0020c6adeb",
+            "role": "Denton Van Zan",
+            "thumb": "https://metadata-static.plex.tv/8/people/8750c9fb7d18bbb37ac2a14e13b81b3a.jpg"
+          },
+          {
+            "id": 92564,
+            "filter": "actor=92564",
+            "tag": "Izabella Scorupco",
+            "tagKey": "5d77682854c0f0001f301f75",
+            "role": "Alex Jensen",
+            "thumb": "https://metadata-static.plex.tv/d/people/d429e638a59b28634ec6af3140960d2e.jpg"
+          },
+          {
+            "id": 92565,
+            "filter": "actor=92565",
+            "tag": "Gerard Butler",
+            "tagKey": "5d776827103a2d001f564587",
+            "role": "Creedy",
+            "thumb": "https://metadata-static.plex.tv/d/people/dbc4b9437e4ce8025baaae2d732b332c.jpg"
+          },
+          {
+            "id": 89320,
+            "filter": "actor=89320",
+            "tag": "Alexander Siddig",
+            "tagKey": "5d7768253c3c2a001fbca997",
+            "role": "Ajay",
+            "thumb": "https://metadata-static.plex.tv/3/people/361ac76f8a192a9c0ac3456b57bd247d.jpg"
+          },
+          {
+            "id": 92566,
+            "filter": "actor=92566",
+            "tag": "Scott Moutter",
+            "tagKey": "5d776830f59e58002189824c",
+            "role": "Jared Wilke",
+            "thumb": "https://metadata-static.plex.tv/people/5d776830f59e58002189824c.jpg"
+          },
+          {
+            "id": 92567,
+            "filter": "actor=92567",
+            "tag": "David Kennedy",
+            "tagKey": "5d776824103a2d001f563af2",
+            "role": "Eddie Stax",
+            "thumb": "https://metadata-static.plex.tv/people/5d776824103a2d001f563af2.jpg"
+          },
+          {
+            "id": 92568,
+            "filter": "actor=92568",
+            "tag": "Ned Dennehy",
+            "tagKey": "5d776830f59e58002189824d",
+            "role": "Barlow",
+            "thumb": "https://metadata-static.plex.tv/people/5d776830f59e58002189824d.jpg"
+          },
+          {
+            "id": 92569,
+            "filter": "actor=92569",
+            "tag": "Rory Keenan",
+            "tagKey": "5d776830f59e58002189824e",
+            "role": "Devon",
+            "thumb": "https://metadata-static.plex.tv/people/5d776830f59e58002189824e.jpg"
+          },
+          {
+            "id": 92570,
+            "filter": "actor=92570",
+            "tag": "Terence Maynard",
+            "tagKey": "5d776830f59e58002189824f",
+            "role": "Gideon",
+            "thumb": "https://metadata-static.plex.tv/c/people/c575b6dc7431d4e9531e0b0b36964a57.jpg"
+          },
+          {
+            "id": 92571,
+            "filter": "actor=92571",
+            "tag": "Doug Cockle",
+            "tagKey": "5d77682a103a2d001f56544b",
+            "role": "Goosh",
+            "thumb": "https://metadata-static.plex.tv/people/5d77682a103a2d001f56544b.jpg"
+          },
+          {
+            "id": 92572,
+            "filter": "actor=92572",
+            "tag": "Randall Carlton",
+            "tagKey": "5d776830f59e580021898250",
+            "role": "Burke (Tito)"
+          },
+          {
+            "id": 131769,
+            "filter": "actor=131769",
+            "tag": "Chris Kelly",
+            "tagKey": "5f402a2c864225004283df99",
+            "role": "Mead"
+          },
+          {
+            "id": 92574,
+            "filter": "actor=92574",
+            "tag": "Ben Thornton",
+            "tagKey": "5d776830f59e580021898252",
+            "role": "Young Quinn",
+            "thumb": "https://metadata-static.plex.tv/people/5d776830f59e580021898252.jpg"
+          },
+          {
+            "id": 92575,
+            "filter": "actor=92575",
+            "tag": "Alice Krige",
+            "tagKey": "5d7768256f4521001ea989e5",
+            "role": "Karen Abercromby",
+            "thumb": "https://metadata-static.plex.tv/a/people/a6a97be93e67ef006335a3053cebbccc.jpg"
+          },
+          {
+            "id": 124918,
+            "filter": "actor=124918",
+            "tag": "Malcolm Douglas",
+            "tagKey": "6323ac6993de28374b3036a6",
+            "role": "Stuart",
+            "thumb": "https://metadata-static.plex.tv/c/people/c14ed37571ff876919c23eb2afc6bd68.jpg"
+          },
+          {
+            "id": 92577,
+            "filter": "actor=92577",
+            "tag": "Berts Folan",
+            "tagKey": "5d776830f59e580021898254",
+            "role": "Construction Worker #1"
+          },
+          {
+            "id": 92578,
+            "filter": "actor=92578",
+            "tag": "Brian McGuinness",
+            "tagKey": "5d776830f59e580021898255",
+            "role": "Construction Worker #2",
+            "thumb": "https://metadata-static.plex.tv/people/5d776830f59e580021898255.jpg"
+          },
+          {
+            "id": 92579,
+            "filter": "actor=92579",
+            "tag": "Barry Barnes",
+            "tagKey": "5d776830f59e580021898256",
+            "role": "Construction Worker #3",
+            "thumb": "https://metadata-static.plex.tv/people/5d776830f59e580021898256.jpg"
+          },
+          {
+            "id": 92580,
+            "filter": "actor=92580",
+            "tag": "Gerry O'Brien",
+            "tagKey": "5d776830f59e580021898257",
+            "role": "Jerry",
+            "thumb": "https://metadata-static.plex.tv/people/5d776830f59e580021898257.jpg"
+          },
+          {
+            "id": 92581,
+            "filter": "actor=92581",
+            "tag": "Laura Pyper",
+            "tagKey": "5d776830f59e580021898258",
+            "role": "Lin",
+            "thumb": "https://metadata-static.plex.tv/5/people/5ccf760be76f2d9a77fc6692a333461b.jpg"
+          },
+          {
+            "id": 92582,
+            "filter": "actor=92582",
+            "tag": "Maree Duffy",
+            "tagKey": "5d776830f59e580021898259",
+            "role": "Rachel",
+            "thumb": "https://metadata-static.plex.tv/people/5d776830f59e580021898259.jpg"
+          },
+          {
+            "id": 92583,
+            "filter": "actor=92583",
+            "tag": "David Garrick",
+            "tagKey": "5d776830f59e58002189825a",
+            "role": "Jefferson",
+            "thumb": "https://metadata-static.plex.tv/people/5d776830f59e58002189825a.jpg"
+          },
+          {
+            "id": 92584,
+            "filter": "actor=92584",
+            "tag": "Anne Maria McAuley",
+            "tagKey": "5d776830f59e58002189825b",
+            "role": "Rose",
+            "thumb": "https://metadata-static.plex.tv/2/people/22b4d2774882f886b8b552ed35d6e61f.jpg"
+          },
+          {
+            "id": 92585,
+            "filter": "actor=92585",
+            "tag": "Dessie Gallagher",
+            "tagKey": "5d776830f59e58002189825c",
+            "role": "Jess",
+            "thumb": "https://metadata-static.plex.tv/people/5d776830f59e58002189825c.jpg"
+          },
+          {
+            "id": 115830,
+            "filter": "actor=115830",
+            "tag": "Jack Gleeson",
+            "tagKey": "5d77686a374a5b001fec4f9b",
+            "role": "Kid (uncredited)",
+            "thumb": "https://metadata-static.plex.tv/9/people/924ab7470eee26ca525ec2499ec4a6c8.jpg"
+          }
+        ],
+        "Similar": [
+          {
+            "id": 49276,
+            "filter": "similar=49276",
+            "tag": "The 6th Day"
+          },
+          {
+            "id": 51030,
+            "filter": "similar=51030",
+            "tag": "The 13th Warrior"
+          },
+          {
+            "id": 50430,
+            "filter": "similar=50430",
+            "tag": "The One"
+          },
+          {
+            "id": 53334,
+            "filter": "similar=53334",
+            "tag": "Outlander"
+          },
+          {
+            "id": 49161,
+            "filter": "similar=49161",
+            "tag": "Sky Captain and the World of Tomorrow"
+          },
+          {
+            "id": 51643,
+            "filter": "similar=51643",
+            "tag": "Paycheck"
+          },
+          {
+            "id": 52522,
+            "filter": "similar=52522",
+            "tag": "DragonHeart"
+          },
+          {
+            "id": 51111,
+            "filter": "similar=51111",
+            "tag": "The Time Machine"
+          },
+          {
+            "id": 51434,
+            "filter": "similar=51434",
+            "tag": "Hollow Man"
+          },
+          {
+            "id": 49265,
+            "filter": "similar=49265",
+            "tag": "Broken Arrow"
+          },
+          {
+            "id": 49152,
+            "filter": "similar=49152",
+            "tag": "Æon Flux"
+          },
+          {
+            "id": 51440,
+            "filter": "similar=51440",
+            "tag": "Sphere"
+          },
+          {
+            "id": 49151,
+            "filter": "similar=49151",
+            "tag": "Final Fantasy: The Spirits Within"
+          },
+          {
+            "id": 51441,
+            "filter": "similar=51441",
+            "tag": "Outbreak"
+          },
+          {
+            "id": 50909,
+            "filter": "similar=50909",
+            "tag": "The League of Extraordinary Gentlemen"
+          },
+          {
+            "id": 53335,
+            "filter": "similar=53335",
+            "tag": "Waterworld"
+          },
+          {
+            "id": 53336,
+            "filter": "similar=53336",
+            "tag": "Doom"
+          },
+          {
+            "id": 49372,
+            "filter": "similar=49372",
+            "tag": "Godzilla"
+          },
+          {
+            "id": 49153,
+            "filter": "similar=49153",
+            "tag": "Daybreakers"
+          },
+          {
+            "id": 49267,
+            "filter": "similar=49267",
+            "tag": "Payback"
+          }
+        ]
+      }
+    ]
+  }
+}
