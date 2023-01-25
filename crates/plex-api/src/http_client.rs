@@ -95,10 +95,12 @@ impl HttpClient {
         request
     }
 
+    /// Verifies that this client has an authentication token.
     pub fn is_authenticated(&self) -> bool {
         !self.x_plex_token.is_empty()
     }
 
+    /// Begins building a request using the HTTP POST method.
     pub fn post<T>(&self, path: T) -> RequestBuilder<'_, T>
     where
         PathAndQuery: TryFrom<T>,
@@ -127,6 +129,7 @@ impl HttpClient {
         }
     }
 
+    /// Begins building a request using the HTTP GET method.
     pub fn get<T>(&self, path: T) -> RequestBuilder<'_, T>
     where
         PathAndQuery: TryFrom<T>,
@@ -155,6 +158,7 @@ impl HttpClient {
         }
     }
 
+    /// Begins building a request using the HTTP PUT method.
     pub fn put<T>(&self, path: T) -> RequestBuilder<'_, T>
     where
         PathAndQuery: TryFrom<T>,
@@ -183,6 +187,7 @@ impl HttpClient {
         }
     }
 
+    /// Begins building a request using the HTTP DELETE method.
     pub fn delete<T>(&self, path: T) -> RequestBuilder<'_, T>
     where
         PathAndQuery: TryFrom<T>,
@@ -241,6 +246,7 @@ where
     PathAndQuery: TryFrom<P>,
     <PathAndQuery as TryFrom<P>>::Error: Into<http::Error>,
 {
+    /// Adds a body to the request.
     pub fn body<B>(self, body: B) -> Result<Request<'a, B>>
     where
         B: Into<AsyncBody> + std::fmt::Debug,
@@ -256,6 +262,7 @@ where
         })
     }
 
+    /// Adds a form encoded parameters to the request body.
     pub fn form(self, params: &[(&str, &str)]) -> Result<Request<'a, String>> {
         let body = serde_urlencoded::to_string(params)?;
         self.header("Content-type", "application/x-www-form-urlencoded")
@@ -263,6 +270,7 @@ where
             .body(body)
     }
 
+    /// Adds a request header.
     pub fn header<K, V>(self, key: K, value: V) -> RequestBuilder<'a, P>
     where
         http::header::HeaderName: TryFrom<K>,
@@ -278,6 +286,7 @@ where
         }
     }
 
+    /// Sends this request generating a response.
     pub async fn send(self) -> Result<HttpResponse<AsyncBody>> {
         self.body(())?.send().await
     }
