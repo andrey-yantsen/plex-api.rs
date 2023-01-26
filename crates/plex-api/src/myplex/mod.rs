@@ -168,7 +168,7 @@ impl MyPlex {
 
 #[derive(Debug, Clone)]
 pub struct MyPlexBuilder<'a> {
-    client: HttpClient,
+    client: Option<HttpClient>,
     token: Option<&'a str>,
     username: Option<&'a str>,
     password: Option<&'a str>,
@@ -179,9 +179,7 @@ pub struct MyPlexBuilder<'a> {
 impl<'a> Default for MyPlexBuilder<'a> {
     fn default() -> Self {
         Self {
-            client: HttpClientBuilder::default()
-                .build()
-                .expect("failed to build default client"),
+            client: None,
             token: None,
             username: None,
             password: None,
@@ -194,7 +192,7 @@ impl<'a> Default for MyPlexBuilder<'a> {
 impl MyPlexBuilder<'_> {
     pub fn set_client(self, client: HttpClient) -> Self {
         Self {
-            client,
+            client: Some(client),
             token: self.token,
             username: self.username,
             password: self.password,
@@ -215,7 +213,11 @@ impl MyPlexBuilder<'_> {
     }
 
     pub async fn build(self) -> Result<MyPlex> {
-        let mut client = self.client;
+        let mut client = if let Some(client) = self.client {
+            client
+        } else {
+            HttpClientBuilder::default().build()?
+        };
 
         if let (Some(username), Some(password)) = (self.username, self.password) {
             if let Some(otp) = self.otp {
