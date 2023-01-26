@@ -1,12 +1,12 @@
 use crate::{flags, get_last_plex_tags::DOCKER_PLEX_IMAGE_NAME, utils::copy_tree};
 use std::{fs::remove_dir_all, io::Write};
 use testcontainers::{clients, core::WaitFor, images::generic::GenericImage, RunnableImage};
-use xshell::{cmd, cwd};
+use xshell::{cmd, Shell};
 
 const DEFAULT_TAG: &str = "1.26.2.5797-5bd057d2b";
 
 impl flags::ModifyData {
-    pub(crate) fn run(self) -> anyhow::Result<()> {
+    pub(crate) fn run(self, sh: &Shell) -> anyhow::Result<()> {
         // First rebuild the data if desired
         if !self.no_replace {
             let init_data = flags::PlexData {
@@ -15,7 +15,7 @@ impl flags::ModifyData {
                 verbose: self.verbose,
             };
 
-            init_data.run()?;
+            init_data.run(sh)?;
         }
 
         let path = match self.plex_data_path.as_ref() {
@@ -23,13 +23,14 @@ impl flags::ModifyData {
             None => "plex-data",
         };
 
-        let plex_data_path = cwd()?.join(path);
+        let plex_data_path = sh.current_dir().join(path);
         let plex_config_path = plex_data_path
             .join("config")
             .join("Library")
             .join("Application Support")
             .join("Plex Media Server");
-        let plex_stub_config_path = cwd()?
+        let plex_stub_config_path = sh
+            .current_dir()
             .join("plex-stub-data")
             .join("config")
             .join("Library")
@@ -80,7 +81,7 @@ impl flags::ModifyData {
         let _ = std::io::stdout().flush();
 
         let server_url = format!("http://localhost:{}/", plex_node.get_host_port_ipv4(32400));
-        cmd!("cargo run -p plex-cli --  --server {server_url} wait").run()?;
+        cmd!(sh, "cargo run -p plex-cli --  --server {server_url} wait").run()?;
 
         print!("// Server is running at {server_url}web/index.html. Press enter when done...");
         let _ = std::io::stdout().flush();

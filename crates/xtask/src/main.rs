@@ -18,17 +18,18 @@ use std::{
     env,
     path::{Path, PathBuf},
 };
-use xshell::pushd;
+use xshell::Shell;
 
 fn main() -> Result<()> {
-    let _d = pushd(project_root())?;
+    let sh = Shell::new()?;
+    let _d = sh.push_dir(project_root());
 
     let flags = flags::Xtask::from_env()?;
 
     match flags.subcommand {
-        flags::XtaskCmd::Test(cmd) => cmd.run(),
-        flags::XtaskCmd::PlexData(cmd) => cmd.run(),
-        flags::XtaskCmd::ModifyData(cmd) => cmd.run(),
+        flags::XtaskCmd::Test(cmd) => cmd.run(&sh),
+        flags::XtaskCmd::PlexData(cmd) => cmd.run(&sh),
+        flags::XtaskCmd::ModifyData(cmd) => cmd.run(&sh),
         flags::XtaskCmd::GetLastPlexTags(cmd) => cmd.run(),
     }
 }

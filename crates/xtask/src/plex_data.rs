@@ -6,7 +6,7 @@ use std::{
     fs::{create_dir_all, hard_link, remove_dir_all, remove_file},
     path::Path,
 };
-use xshell::cwd;
+use xshell::Shell;
 
 const STUB_PICTURE: &str = "white_noise_720p.jpg";
 const STUB_VIDEO: &str = "white_noise_720p.mkv";
@@ -104,14 +104,14 @@ const LIBRARY_AUDIO: [(&str, &str); 9] = [
 ];
 
 impl flags::PlexData {
-    pub(crate) fn run(self) -> anyhow::Result<()> {
+    pub(crate) fn run(self, sh: &Shell) -> anyhow::Result<()> {
         let path = match self.plex_data_path.as_ref() {
             Some(path) => path.as_str(),
             None => "plex-data",
         };
 
-        let plex_data_path = cwd()?.join(path);
-        let plex_stub_data_path = cwd()?.join("plex-stub-data");
+        let plex_data_path = sh.current_dir().join(path);
+        let plex_stub_data_path = sh.current_dir().join("plex-stub-data");
         let plex_stub_data_media_path = plex_stub_data_path.join("media");
 
         if self.replace && plex_data_path.exists() {
