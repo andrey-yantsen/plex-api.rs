@@ -46,11 +46,11 @@ data can be parsed completely (i.e. the `tests_deny_unknown_fields` feature will
 be enabled), then the online tests using an unclaimed server, and then online
 tests using the claimed server. This ensures that your code "works in general".
 
-The second command will also run the online tests over claimed and unclaimed
-servers, but this time it will fail the tests if an unexpected struct field or
-enum value were met in any of the API responses. This is useful when you add
-some new functionality, it ensures that all the fields returned by the API are
-parsed.
+The second command will run the online tests over claimed server (or an
+unclaimed one, if you run it without providing the token), but this time it will
+fail the tests if an unexpected struct field or enum value were met in any of
+the API responses. This is useful when you add some new functionality, it
+ensures that all the fields returned by the API are parsed.
 
 You can get your Plex API token by executing the following command and following
 the on-screen instructions:
@@ -75,13 +75,16 @@ messages.
 
 ## Writing tests
 
-I don't have much exprience with testing in Rust, so please write the tests the way you see fit.
-At the same time, I created a few macros to reduce the boilerplate amount:
+I don't have much exprience with testing in Rust, so please write the tests the
+way you see fit. At the same time, I created a few macros to reduce the
+boilerplate amount:
 
 * `#[plex_api_test_helper::offline_test]`
 * `#[plex_api_test_helper::online_test_unclaimed_server]`
 * `#[plex_api_test_helper::online_test_claimed_server]`
 * `#[plex_api_test_helper::online_test]`
+
+I hope it's clear from their names when to use any of them.
 
 [rstest](http://docs.rs/rstest) is used under the hood for handling the tests — this way
 it's possible to use [fixtures](https://docs.rs/rstest/latest/rstest/attr.rstest.html#injecting-fixtures) and
