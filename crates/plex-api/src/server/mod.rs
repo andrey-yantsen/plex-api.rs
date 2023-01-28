@@ -82,7 +82,7 @@ impl Server {
                     ContentDirectory::Media(lib) => match lib.library_type {
                         #[cfg(not(feature = "tests_deny_unknown_fields"))]
                         LibraryType::Unknown => None,
-                        _ => Some(Library::new(self.client.clone(), *lib.clone())),
+                        _ => Some(Library::new(&self.client, *lib.clone())),
                     },
                     _ => None,
                 })

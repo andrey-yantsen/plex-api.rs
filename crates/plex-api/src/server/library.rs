@@ -13,18 +13,18 @@ use crate::{
     HttpClient, Result,
 };
 
-pub trait FromMetadata {
+pub trait FromMetadata<'a> {
     /// Creates an item given the http configuration and item metadata. No
     /// validation is performed that the metadata is correct.
-    fn from_metadata(client: HttpClient, metadata: Metadata) -> Self;
+    fn from_metadata(client: &'a HttpClient, metadata: Metadata) -> Self;
 }
 
 /// Implements MetadataItem for the given struct which must only contain `client`
 /// and `metadata` fields.
 macro_rules! derive_from_metadata {
     ($typ:ident) => {
-        impl FromMetadata for $typ {
-            fn from_metadata(client: HttpClient, metadata: Metadata) -> Self {
+        impl<'a> FromMetadata<'a> for $typ<'a> {
+            fn from_metadata(client: &'a HttpClient, metadata: Metadata) -> Self {
                 Self { client, metadata }
             }
         }
@@ -57,33 +57,33 @@ pub trait MetadataItem {
 /// and `metadata` fields.
 macro_rules! derive_metadata_item {
     ($typ:ident) => {
-        impl MetadataItem for $typ {
+        impl<'a> MetadataItem for $typ<'a> {
             fn metadata(&self) -> &Metadata {
                 &self.metadata
             }
 
             fn client(&self) -> &HttpClient {
-                &self.client
+                self.client
             }
         }
     };
     ($typ:ident<$gen:ident>) => {
-        impl<$gen> MetadataItem for $typ<$gen> {
+        impl<'a, $gen> MetadataItem for $typ<'a, $gen> {
             fn metadata(&self) -> &Metadata {
                 &self.metadata
             }
 
             fn client(&self) -> &HttpClient {
-                &self.client
+                self.client
             }
         }
     };
 }
 
 /// Retrieves a list of metadata items given the lookup key.
-pub(crate) async fn metadata_items<T>(client: &HttpClient, key: &str) -> Result<Vec<T>>
+pub(crate) async fn metadata_items<'a, T>(client: &'a HttpClient, key: &str) -> Result<Vec<T>>
 where
-    T: FromMetadata,
+    T: FromMetadata<'a>,
 {
     let wrapper: MediaContainerWrapper<MetadataMediaContainer> = client.get(key).json().await?;
 
@@ -91,16 +91,16 @@ where
         .media_container
         .metadata
         .into_iter()
-        .map(|metadata| T::from_metadata(client.clone(), metadata))
+        .map(|metadata| T::from_metadata(client, metadata))
         .collect();
     Ok(media)
 }
 
 /// Attempts to retrieve the parent of this item.
-async fn parent<T, P>(item: &T, client: &HttpClient) -> Result<Option<P>>
+async fn parent<'a, T, P>(item: &T, client: &'a HttpClient) -> Result<Option<P>>
 where
     T: MetadataItem,
-    P: FromMetadata,
+    P: FromMetadata<'a>,
 {
     if let Some(ref parent_key) = item.metadata().parent.parent_key {
         Ok(metadata_items(client, parent_key).await?.into_iter().next())
@@ -110,13 +110,13 @@ where
 }
 
 /// Retrieves the metadata items from a pivot from a library.
-async fn pivot_items<M>(
-    client: &HttpClient,
+async fn pivot_items<'a, M>(
+    client: &'a HttpClient,
     directory: &ServerLibrary,
     context: &str,
 ) -> Result<Vec<M>>
 where
-    M: FromMetadata,
+    M: FromMetadata<'a>,
 {
     if let Some(pivot) = directory.pivots.iter().find(|p| p.context == context) {
         metadata_items(client, &pivot.key).await
@@ -128,13 +128,13 @@ where
 /// A video that can be included in a video playlist.
 #[enum_dispatch(MetadataItem)]
 #[derive(Debug, Clone)]
-pub enum Video {
-    Movie,
-    Episode,
+pub enum Video<'a> {
+    Movie(Movie<'a>),
+    Episode(Episode<'a>),
 }
 
-impl FromMetadata for Video {
-    fn from_metadata(client: HttpClient, metadata: Metadata) -> Self {
+impl<'a> FromMetadata<'a> for Video<'a> {
+    fn from_metadata(client: &'a HttpClient, metadata: Metadata) -> Self {
         if let Some(MetadataType::Episode) = metadata.metadata_type {
             Episode::from_metadata(client, metadata).into()
         } else {
@@ -144,14 +144,14 @@ impl FromMetadata for Video {
 }
 
 #[derive(Debug, Clone)]
-pub struct Playlist<M> {
+pub struct Playlist<'a, M> {
     _items: PhantomData<M>,
-    client: HttpClient,
+    client: &'a HttpClient,
     metadata: Metadata,
 }
 
-impl<M> FromMetadata for Playlist<M> {
-    fn from_metadata(client: HttpClient, metadata: Metadata) -> Self {
+impl<'a, M> FromMetadata<'a> for Playlist<'a, M> {
+    fn from_metadata(client: &'a HttpClient, metadata: Metadata) -> Self {
         Self {
             _items: PhantomData,
             client,
@@ -162,24 +162,24 @@ impl<M> FromMetadata for Playlist<M> {
 
 derive_metadata_item!(Playlist<M>);
 
-impl<M> Playlist<M>
+impl<'a, M> Playlist<'a, M>
 where
-    M: FromMetadata,
+    M: FromMetadata<'a>,
 {
     pub async fn children(&self) -> Result<Vec<M>> {
-        metadata_items(&self.client, &self.metadata.key).await
+        metadata_items(self.client, &self.metadata.key).await
     }
 }
 
 #[derive(Debug, Clone)]
-pub struct Collection<M> {
+pub struct Collection<'a, M> {
     _items: PhantomData<M>,
-    client: HttpClient,
+    client: &'a HttpClient,
     metadata: Metadata,
 }
 
-impl<M> FromMetadata for Collection<M> {
-    fn from_metadata(client: HttpClient, metadata: Metadata) -> Self {
+impl<'a, M> FromMetadata<'a> for Collection<'a, M> {
+    fn from_metadata(client: &'a HttpClient, metadata: Metadata) -> Self {
         Self {
             _items: PhantomData,
             client,
@@ -190,19 +190,19 @@ impl<M> FromMetadata for Collection<M> {
 
 derive_metadata_item!(Collection<M>);
 
-impl<M> Collection<M>
+impl<'a, M> Collection<'a, M>
 where
-    M: FromMetadata,
+    M: FromMetadata<'a>,
 {
     pub async fn children(&self) -> Result<Vec<M>> {
-        metadata_items(&self.client, &self.metadata.key).await
+        metadata_items(self.client, &self.metadata.key).await
     }
 }
 
 #[derive(Debug, Clone)]
-pub struct Movie {
+pub struct Movie<'a> {
     #[allow(dead_code)]
-    client: HttpClient,
+    client: &'a HttpClient,
     metadata: Metadata,
 }
 
@@ -210,62 +210,62 @@ derive_from_metadata!(Movie);
 derive_metadata_item!(Movie);
 
 #[derive(Debug, Clone)]
-pub struct Show {
-    client: HttpClient,
+pub struct Show<'a> {
+    client: &'a HttpClient,
     metadata: Metadata,
 }
 
 derive_from_metadata!(Show);
 derive_metadata_item!(Show);
 
-impl Show {
+impl<'a> Show<'a> {
     /// Retrieves all of the seasons of this show.
     pub async fn seasons(&self) -> Result<Vec<Season>> {
-        metadata_items(&self.client, &self.metadata.key).await
+        metadata_items(self.client, &self.metadata.key).await
     }
 
     /// Retrieves all of the episodes in all seasons of this show.
     pub async fn episodes(&self) -> Result<Vec<Episode>> {
         let path = format!("/library/metadata/{}/allLeaves", self.metadata.rating_key);
-        metadata_items(&self.client, &path).await
+        metadata_items(self.client, &path).await
     }
 }
 
 #[derive(Debug, Clone)]
-pub struct Season {
-    client: HttpClient,
+pub struct Season<'a> {
+    client: &'a HttpClient,
     metadata: Metadata,
 }
 
 derive_from_metadata!(Season);
 derive_metadata_item!(Season);
 
-impl Season {
+impl<'a> Season<'a> {
     pub fn season_number(&self) -> Option<u32> {
         self.metadata.index
     }
 
     /// Retrieves all of the episodes in this season.
     pub async fn episodes(&self) -> Result<Vec<Episode>> {
-        metadata_items(&self.client, &self.metadata.key).await
+        metadata_items(self.client, &self.metadata.key).await
     }
 
     // Retrieves the show that this season is from.
     pub async fn show(&self) -> Result<Option<Show>> {
-        parent(self, &self.client).await
+        parent(self, self.client).await
     }
 }
 
 #[derive(Debug, Clone)]
-pub struct Episode {
-    client: HttpClient,
+pub struct Episode<'a> {
+    client: &'a HttpClient,
     metadata: Metadata,
 }
 
 derive_from_metadata!(Episode);
 derive_metadata_item!(Episode);
 
-impl Episode {
+impl<'a> Episode<'a> {
     // Returns the number of this season within the show.
     pub fn season_number(&self) -> Option<u32> {
         self.metadata.parent.parent_index
@@ -278,57 +278,57 @@ impl Episode {
 
     // Retrieves the season that this episode is from.
     pub async fn season(&self) -> Result<Option<Season>> {
-        parent(self, &self.client).await
+        parent(self, self.client).await
     }
 }
 
 #[derive(Debug, Clone)]
-pub struct Artist {
-    client: HttpClient,
+pub struct Artist<'a> {
+    client: &'a HttpClient,
     metadata: Metadata,
 }
 
 derive_from_metadata!(Artist);
 derive_metadata_item!(Artist);
 
-impl Artist {
+impl<'a> Artist<'a> {
     /// Retrieves all of the albums by this artist.
     pub async fn albums(&self) -> Result<Vec<MusicAlbum>> {
-        metadata_items(&self.client, &self.metadata.key).await
+        metadata_items(self.client, &self.metadata.key).await
     }
 }
 
 #[derive(Debug, Clone)]
-pub struct MusicAlbum {
-    client: HttpClient,
+pub struct MusicAlbum<'a> {
+    client: &'a HttpClient,
     metadata: Metadata,
 }
 
 derive_from_metadata!(MusicAlbum);
 derive_metadata_item!(MusicAlbum);
 
-impl MusicAlbum {
+impl<'a> MusicAlbum<'a> {
     /// Retrieves all of the tracks in this album.
     pub async fn tracks(&self) -> Result<Vec<Track>> {
-        metadata_items(&self.client, &self.metadata.key).await
+        metadata_items(self.client, &self.metadata.key).await
     }
 
     /// Retrieves the artist for this album.
     pub async fn artist(&self) -> Result<Option<Artist>> {
-        parent(self, &self.client).await
+        parent(self, self.client).await
     }
 }
 
 #[derive(Debug, Clone)]
-pub struct Track {
-    client: HttpClient,
+pub struct Track<'a> {
+    client: &'a HttpClient,
     metadata: Metadata,
 }
 
 derive_from_metadata!(Track);
 derive_metadata_item!(Track);
 
-impl Track {
+impl<'a> Track<'a> {
     // Returns the number of this track within the album.
     pub fn track_number(&self) -> Option<u32> {
         self.metadata.index
@@ -336,55 +336,55 @@ impl Track {
 
     /// Retrieves the album for this track.
     pub async fn album(&self) -> Result<Option<MusicAlbum>> {
-        parent(self, &self.client).await
+        parent(self, self.client).await
     }
 }
 
 #[derive(Debug, Clone)]
-pub struct Photo {
-    client: HttpClient,
+pub struct Photo<'a> {
+    client: &'a HttpClient,
     metadata: Metadata,
 }
 
 derive_from_metadata!(Photo);
 derive_metadata_item!(Photo);
 
-impl Photo {
+impl<'a> Photo<'a> {
     /// Retrieves the album that this photo is in.
     pub async fn album(&self) -> Result<Option<PhotoAlbum>> {
-        parent(self, &self.client).await
+        parent(self, self.client).await
     }
 }
 
 #[derive(Debug, Clone)]
-pub struct PhotoAlbum {
-    client: HttpClient,
+pub struct PhotoAlbum<'a> {
+    client: &'a HttpClient,
     metadata: Metadata,
 }
 
 derive_from_metadata!(PhotoAlbum);
 derive_metadata_item!(PhotoAlbum);
 
-impl PhotoAlbum {
+impl<'a> PhotoAlbum<'a> {
     /// Retrieves all of the albums and photos in this album.
-    pub async fn contents(&self) -> Result<Vec<PhotoAlbumItem>> {
-        metadata_items(&self.client, &self.metadata.key).await
+    pub async fn contents(&self) -> Result<Vec<PhotoAlbumItem<'a>>> {
+        metadata_items(self.client, &self.metadata.key).await
     }
 
     /// Retrieves the album that this album is in.
     pub async fn album(&self) -> Result<Option<PhotoAlbum>> {
-        parent(self, &self.client).await
+        parent(self, self.client).await
     }
 }
 
 #[enum_dispatch(MetadataItem)]
-pub enum PhotoAlbumItem {
-    PhotoAlbum,
-    Photo,
+pub enum PhotoAlbumItem<'a> {
+    PhotoAlbum(PhotoAlbum<'a>),
+    Photo(Photo<'a>),
 }
 
-impl FromMetadata for PhotoAlbumItem {
-    fn from_metadata(client: HttpClient, metadata: Metadata) -> Self {
+impl<'a> FromMetadata<'a> for PhotoAlbumItem<'a> {
+    fn from_metadata(client: &'a HttpClient, metadata: Metadata) -> Self {
         // This isn't a great test but there doesn't seem to be much better.
         if metadata.key.ends_with("/children") {
             PhotoAlbum::from_metadata(client, metadata).into()
@@ -395,8 +395,8 @@ impl FromMetadata for PhotoAlbumItem {
 }
 
 #[derive(Debug, Clone)]
-pub struct UnknownItem {
-    client: HttpClient,
+pub struct UnknownItem<'a> {
+    client: &'a HttpClient,
     metadata: Metadata,
 }
 
@@ -405,25 +405,25 @@ derive_metadata_item!(UnknownItem);
 
 #[enum_dispatch(MetadataItem)]
 #[derive(Debug, Clone)]
-pub enum Item {
-    Movie,
-    Episode,
-    Photo,
-    Show,
-    Artist,
-    MusicAlbum,
-    Season,
-    Track,
-    MovieCollection(Collection<Movie>),
-    ShowCollection(Collection<Show>),
-    VideoPlaylist(Playlist<Video>),
-    PhotoPlaylist(Playlist<Photo>),
-    MusicPlaylist(Playlist<Track>),
-    UnknownItem,
+pub enum Item<'a> {
+    Movie(Movie<'a>),
+    Episode(Episode<'a>),
+    Photo(Photo<'a>),
+    Show(Show<'a>),
+    Artist(Artist<'a>),
+    MusicAlbum(MusicAlbum<'a>),
+    Season(Season<'a>),
+    Track(Track<'a>),
+    MovieCollection(Collection<'a, Movie<'a>>),
+    ShowCollection(Collection<'a, Show<'a>>),
+    VideoPlaylist(Playlist<'a, Video<'a>>),
+    PhotoPlaylist(Playlist<'a, Photo<'a>>),
+    MusicPlaylist(Playlist<'a, Track<'a>>),
+    UnknownItem(UnknownItem<'a>),
 }
 
-impl FromMetadata for Item {
-    fn from_metadata(client: HttpClient, metadata: Metadata) -> Self {
+impl<'a> FromMetadata<'a> for Item<'a> {
+    fn from_metadata(client: &'a HttpClient, metadata: Metadata) -> Self {
         if let Some(ref item_type) = metadata.metadata_type {
             match item_type {
                 MetadataType::Movie => Movie::from_metadata(client, metadata).into(),
@@ -465,12 +465,12 @@ impl FromMetadata for Item {
 }
 
 #[derive(Debug, Clone)]
-pub struct MovieLibrary {
-    client: HttpClient,
+pub struct MovieLibrary<'a> {
+    client: &'a HttpClient,
     directory: ServerLibrary,
 }
 
-impl MovieLibrary {
+impl<'a> MovieLibrary<'a> {
     /// Returns the title of this library.
     pub fn title(&self) -> &str {
         &self.directory.title
@@ -478,27 +478,27 @@ impl MovieLibrary {
 
     /// Retrieves all of the movies in this library.
     pub async fn movies(&self) -> Result<Vec<Movie>> {
-        pivot_items(&self.client, &self.directory, "content.library").await
+        pivot_items(self.client, &self.directory, "content.library").await
     }
 
     /// Retrieves all of the collections in this library.
     pub async fn collections(&self) -> Result<Vec<Collection<Movie>>> {
-        pivot_items(&self.client, &self.directory, "content.collections").await
+        pivot_items(self.client, &self.directory, "content.collections").await
     }
 
     /// Retrieves all of the playlists containing movies from this library.
     pub async fn playlists(&self) -> Result<Vec<Playlist<Video>>> {
-        pivot_items(&self.client, &self.directory, "content.playlists").await
+        pivot_items(self.client, &self.directory, "content.playlists").await
     }
 }
 
 #[derive(Debug, Clone)]
-pub struct TVLibrary {
-    client: HttpClient,
+pub struct TVLibrary<'a> {
+    client: &'a HttpClient,
     directory: ServerLibrary,
 }
 
-impl TVLibrary {
+impl<'a> TVLibrary<'a> {
     /// Returns the title of this library.
     pub fn title(&self) -> &str {
         &self.directory.title
@@ -506,27 +506,27 @@ impl TVLibrary {
 
     /// Retrieves all of the shows in this library.
     pub async fn shows(&self) -> Result<Vec<Show>> {
-        pivot_items(&self.client, &self.directory, "content.library").await
+        pivot_items(self.client, &self.directory, "content.library").await
     }
 
     /// Retrieves all of the collections in this library.
     pub async fn collections(&self) -> Result<Vec<Collection<Show>>> {
-        pivot_items(&self.client, &self.directory, "content.collections").await
+        pivot_items(self.client, &self.directory, "content.collections").await
     }
 
     /// Retrieves all of the playlists containing episodes from this library.
     pub async fn playlists(&self) -> Result<Vec<Playlist<Video>>> {
-        pivot_items(&self.client, &self.directory, "content.playlists").await
+        pivot_items(self.client, &self.directory, "content.playlists").await
     }
 }
 
 #[derive(Debug, Clone)]
-pub struct MusicLibrary {
-    client: HttpClient,
+pub struct MusicLibrary<'a> {
+    client: &'a HttpClient,
     directory: ServerLibrary,
 }
 
-impl MusicLibrary {
+impl<'a> MusicLibrary<'a> {
     /// Returns the title of this library.
     pub fn title(&self) -> &str {
         &self.directory.title
@@ -534,22 +534,22 @@ impl MusicLibrary {
 
     /// Retrieves all of the artists in this library.
     pub async fn artists(&self) -> Result<Vec<Artist>> {
-        pivot_items(&self.client, &self.directory, "content.library").await
+        pivot_items(self.client, &self.directory, "content.library").await
     }
 
     /// Retrieves all of the playlists containing tracks from this library.
     pub async fn playlists(&self) -> Result<Vec<Playlist<Track>>> {
-        pivot_items(&self.client, &self.directory, "content.playlists").await
+        pivot_items(self.client, &self.directory, "content.playlists").await
     }
 }
 
 #[derive(Debug, Clone)]
-pub struct PhotoLibrary {
-    client: HttpClient,
+pub struct PhotoLibrary<'a> {
+    client: &'a HttpClient,
     directory: ServerLibrary,
 }
 
-impl PhotoLibrary {
+impl<'a> PhotoLibrary<'a> {
     /// Returns the title of this library.
     pub fn title(&self) -> &str {
         &self.directory.title
@@ -557,26 +557,26 @@ impl PhotoLibrary {
 
     /// Retrieves all of the albums in this library.
     pub async fn albums(&self) -> Result<Vec<PhotoAlbum>> {
-        pivot_items(&self.client, &self.directory, "content.library").await
+        pivot_items(self.client, &self.directory, "content.library").await
     }
 
     /// Retrieves all of the playlists containing photos from this library.
     pub async fn playlists(&self) -> Result<Vec<Playlist<Photo>>> {
-        pivot_items(&self.client, &self.directory, "content.playlists").await
+        pivot_items(self.client, &self.directory, "content.playlists").await
     }
 }
 
 #[derive(Debug, Clone)]
-pub enum Library {
-    Movie(MovieLibrary),
-    TV(TVLibrary),
-    Music(MusicLibrary),
-    Video(MovieLibrary),
-    Photo(PhotoLibrary),
+pub enum Library<'a> {
+    Movie(MovieLibrary<'a>),
+    TV(TVLibrary<'a>),
+    Music(MusicLibrary<'a>),
+    Video(MovieLibrary<'a>),
+    Photo(PhotoLibrary<'a>),
 }
 
-impl Library {
-    pub(super) fn new(client: HttpClient, directory: ServerLibrary) -> Self {
+impl<'a> Library<'a> {
+    pub(super) fn new(client: &'a HttpClient, directory: ServerLibrary) -> Self {
         match directory.library_type {
             LibraryType::Movie => {
                 if directory.subtype.as_deref() == Some("clip") {
