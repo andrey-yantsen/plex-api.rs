@@ -31,7 +31,7 @@ jobs:
              {"type":"chore","section":"Miscellaneous","hidden":false},
              {"type":"test","section":"Tests","hidden":true},
              {"type":"ci","section":"Continuous Integration","hidden":true},
-             {"type":"docs","section":"Documentation","hidden":true},
+             {"type":"docs","section":"Documentation","hidden":false},
              {"type":"refactor","section":"Code Refactoring","hidden":true},
              {"type":"style","section":"Styles","hidden":true}]
 
