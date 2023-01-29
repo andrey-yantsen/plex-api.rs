@@ -1,12 +1,15 @@
-use std::marker::PhantomData;
+use std::{marker::PhantomData, ops::RangeBounds};
 
 use enum_dispatch::enum_dispatch;
+use futures::AsyncWrite;
+use http::StatusCode;
+use isahc::AsyncReadResponseExt;
 
 use crate::{
     media_container::{
         server::library::{
-            LibraryType, Metadata, MetadataMediaContainer, MetadataType, PlaylistType,
-            ServerLibrary,
+            LibraryType, Media as MediaMetadata, Metadata, MetadataMediaContainer, MetadataType,
+            Part as PartMetadata, PlaylistType, ServerLibrary,
         },
         MediaContainerWrapper,
     },
@@ -125,6 +128,110 @@ where
     }
 }
 
+/// A single media format for a `MediaItem`.
+pub struct Media<'a> {
+    client: &'a HttpClient,
+    media: &'a MediaMetadata,
+}
+
+impl<'a> Media<'a> {
+    /// The different parts that make up this media. They should be played in
+    /// order.
+    pub fn parts(&self) -> Vec<Part> {
+        self.media
+            .parts
+            .iter()
+            .map(|part| Part {
+                client: self.client,
+                part,
+            })
+            .collect()
+    }
+
+    /// The internal metadata for the media.
+    pub fn metadata(&self) -> &MediaMetadata {
+        self.media
+    }
+}
+
+/// One part of a `Media`.
+pub struct Part<'a> {
+    client: &'a HttpClient,
+    part: &'a PartMetadata,
+}
+
+impl<'a> Part<'a> {
+    /// The length of this file on disk in bytes.
+    pub fn len(&self) -> Option<u64> {
+        self.part.size
+    }
+
+    /// Downloads the original media file for this part writing the data into
+    /// the provided writer. S range of bytes within the file can be requested
+    /// allowing for resumable transfers.
+    pub async fn download<W, R>(&self, writer: W, range: R) -> Result
+    where
+        W: AsyncWrite + Unpin,
+        R: RangeBounds<u64>,
+    {
+        let path = format!("{}?download=1", self.part.key);
+
+        let start = match range.start_bound() {
+            std::ops::Bound::Included(v) => *v,
+            std::ops::Bound::Excluded(v) => v + 1,
+            std::ops::Bound::Unbounded => 0,
+        };
+
+        let end = match range.end_bound() {
+            std::ops::Bound::Included(v) => Some(*v),
+            std::ops::Bound::Excluded(v) => Some(v - 1),
+            std::ops::Bound::Unbounded => None,
+        };
+
+        let mut builder = self.client.get(path);
+        if start != 0 || (end.is_some() && end != self.part.size) {
+            // We're requesting part of the file.
+            let end = end.map(|v| v.to_string()).unwrap_or_default();
+            builder = builder.header("Range", format!("bytes={start}-{end}"))
+        }
+
+        let mut response = builder.send().await?;
+        match response.status() {
+            StatusCode::OK | StatusCode::PARTIAL_CONTENT => {
+                response.copy_to(writer).await?;
+                Ok(())
+            }
+            _ => Err(crate::Error::from_response(response).await),
+        }
+    }
+
+    /// The internal metadata for the media.
+    pub fn metadata(&self) -> &PartMetadata {
+        self.part
+    }
+}
+
+/// Represents some playable media. In Plex each playable item can be available
+/// in a number of different formats which in turn can be made up of a number of
+/// different parts.
+pub trait MediaItem: MetadataItem {
+    /// The different media formats that this item is available in.
+    fn media(&self) -> Vec<Media> {
+        let metadata = self.metadata();
+        if let Some(ref media) = metadata.media {
+            media
+                .iter()
+                .map(|media| Media {
+                    client: self.client(),
+                    media,
+                })
+                .collect()
+        } else {
+            Vec::new()
+        }
+    }
+}
+
 /// A video that can be included in a video playlist.
 #[enum_dispatch(MetadataItem)]
 #[derive(Debug, Clone)]
@@ -209,6 +316,8 @@ pub struct Movie {
 derive_from_metadata!(Movie);
 derive_metadata_item!(Movie);
 
+impl MediaItem for Movie {}
+
 #[derive(Debug, Clone)]
 pub struct Show {
     client: HttpClient,
@@ -264,6 +373,8 @@ pub struct Episode {
 
 derive_from_metadata!(Episode);
 derive_metadata_item!(Episode);
+
+impl MediaItem for Episode {}
 
 impl Episode {
     // Returns the number of this season within the show.
@@ -328,6 +439,8 @@ pub struct Track {
 derive_from_metadata!(Track);
 derive_metadata_item!(Track);
 
+impl MediaItem for Track {}
+
 impl Track {
     // Returns the number of this track within the album.
     pub fn track_number(&self) -> Option<u32> {
@@ -348,6 +461,8 @@ pub struct Photo {
 
 derive_from_metadata!(Photo);
 derive_metadata_item!(Photo);
+
+impl MediaItem for Photo {}
 
 impl Photo {
     /// Retrieves the album that this photo is in.
@@ -601,6 +716,11 @@ impl Library {
             Self::Video(l) => &l.directory,
             Self::Photo(l) => &l.directory,
         }
+    }
+
+    /// Returns the unique ID of this library.
+    pub fn id(&self) -> &str {
+        &self.directory().id
     }
 
     /// Returns the title of this library.

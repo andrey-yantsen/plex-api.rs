@@ -93,7 +93,7 @@ derive_fromstr_from_deserialize!(ContainerFormat);
 pub struct Part {
     #[serde(deserialize_with = "deserialize_number_from_string")]
     pub id: u64,
-    pub key: Option<String>,
+    pub key: String,
     pub duration: Option<u64>,
     pub file: Option<String>,
     pub size: Option<u64>,
@@ -321,6 +321,7 @@ pub struct Metadata {
     pub view_offset: Option<u64>,
     pub chapter_source: Option<ChapterSource>,
     pub primary_extra_key: Option<String>,
+    pub has_premium_lyrics: Option<bool>,
 
     #[serde(rename = "librarySectionID")]
     pub library_section_id: Option<u32>,

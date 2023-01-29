@@ -352,13 +352,18 @@ mod online {
     use super::fixtures::online::client::*;
     use super::fixtures::online::server::*;
     use isahc::{config::Configurable, HttpClient as IsahcHttpClient};
+    use plex_api::ContainerFormat;
+    use plex_api::Episode;
     use plex_api::Error;
     use plex_api::Item;
     use plex_api::Library;
+    use plex_api::MediaItem;
     use plex_api::MetadataItem;
+    use plex_api::Movie;
     use plex_api::Photo;
     use plex_api::PhotoAlbum;
     use plex_api::PhotoAlbumItem;
+    use plex_api::Track;
     use plex_api::Video;
     use plex_api::{HttpClient, HttpClientBuilder, Server};
 
@@ -923,6 +928,161 @@ mod online {
 
         let err = server.item_by_id(73463523).await.unwrap_err();
         assert!(matches!(err, Error::ItemNotFound));
+    }
+
+    #[plex_api_test_helper::online_test]
+    async fn download(#[future] server: Server) {
+        let mkv_file = include_bytes!("../../../plex-stub-data/media/white_noise_720p.mkv");
+        let mp4_file = include_bytes!("../../../plex-stub-data/media/white_noise_720p_h265.mp4");
+        let aac_file = include_bytes!("../../../plex-stub-data/media/white_noise.aac");
+        let jpg_file = include_bytes!("../../../plex-stub-data/media/white_noise_720p.jpg");
+
+        let server = server.await;
+        let client = server.client().to_owned();
+
+        // It isn't clear why but item metadata requests seem to timeout frequently.
+        let server = get_server_with_longer_timeout(server, client).await;
+
+        // We want to check that the same works for different ways of getting the item's metadata
+        async fn find_movie(server: &Server, library_id: &str, rating_key: u32) -> [Movie; 2] {
+            let library = server
+                .libraries()
+                .into_iter()
+                .find(|l| l.id() == library_id)
+                .unwrap();
+            let movies = if let Library::Movie(m) = library {
+                m
+            } else {
+                panic!("Expected a movie library");
+            };
+
+            let movie_from_library = movies
+                .movies()
+                .await
+                .unwrap()
+                .into_iter()
+                .find(|m| m.rating_key() == rating_key)
+                .unwrap();
+            let item = server.item_by_id(rating_key).await.unwrap();
+            let movie_by_id: Movie = item.try_into().unwrap();
+            [movie_by_id, movie_from_library]
+        }
+
+        for movie in find_movie(&server, "1", 55).await {
+            assert_eq!(movie.title(), "Big Buck Bunny");
+            let media = movie.media();
+            assert_eq!(media.len(), 1);
+            let parts = media[0].parts();
+            assert_eq!(parts.len(), 2);
+            assert_eq!(parts[0].len(), Some(mkv_file.len() as u64));
+
+            let mut buf = Vec::new();
+            parts[0].download(&mut buf, 0..24).await.unwrap();
+            assert_eq!(buf.len(), 24);
+            assert_eq!(&buf[..], &mkv_file[0..24]);
+
+            let mut buf = Vec::new();
+            parts[0].download(&mut buf, ..17).await.unwrap();
+            assert_eq!(buf.len(), 17);
+            assert_eq!(&buf[..], &mkv_file[..17]);
+
+            let mut buf = Vec::new();
+            parts[0].download(&mut buf, 7..21).await.unwrap();
+            assert_eq!(buf.len(), 14);
+            assert_eq!(&buf[..], &mkv_file[7..21]);
+
+            let mut buf = Vec::new();
+            parts[0].download(&mut buf, 7..=21).await.unwrap();
+            assert_eq!(buf.len(), 15);
+            assert_eq!(&buf[..], &mkv_file[7..=21]);
+
+            let mut buf = Vec::new();
+            parts[0].download(&mut buf, ..=21).await.unwrap();
+            assert_eq!(buf.len(), 22);
+            assert_eq!(&buf[..], &mkv_file[..=21]);
+
+            let mut buf = Vec::new();
+            parts[1].download(&mut buf, 4..5).await.unwrap();
+            assert_eq!(buf.len(), 1);
+            assert_eq!(&buf[..], &mkv_file[4..5]);
+
+            let mut buf = Vec::new();
+            parts[0]
+                .download(&mut buf, mkv_file.len() as u64 - 16..)
+                .await
+                .unwrap();
+            assert_eq!(buf.len(), 16);
+            assert_eq!(&buf[..], &mkv_file[mkv_file.len() - 16..]);
+        }
+
+        for movie in find_movie(&server, "1", 56).await {
+            assert_eq!(movie.title(), "Elephants Dream");
+            let media = movie.media();
+            assert_eq!(media.len(), 2);
+
+            assert_eq!(media[0].metadata().container, Some(ContainerFormat::Mkv));
+            let parts = media[0].parts();
+            assert_eq!(parts.len(), 1);
+            assert_eq!(parts[0].len(), Some(mkv_file.len() as u64));
+
+            let mut buf = Vec::new();
+            parts[0].download(&mut buf, 7..=21).await.unwrap();
+            assert_eq!(buf.len(), 15);
+            assert_eq!(&buf[..], &mkv_file[7..=21]);
+
+            assert_eq!(media[1].metadata().container, Some(ContainerFormat::Mp4));
+            let parts = media[1].parts();
+            assert_eq!(parts.len(), 1);
+            assert_eq!(parts[0].len(), Some(mp4_file.len() as u64));
+
+            let mut buf = Vec::new();
+            parts[0].download(&mut buf, ..16).await.unwrap();
+            assert_eq!(buf.len(), 16);
+            assert_eq!(&buf[..], &mp4_file[..16]);
+
+            let mut buf = Vec::new();
+            parts[0].download(&mut buf, ..).await.unwrap();
+            assert_eq!(buf.len(), mp4_file.len());
+            assert_eq!(&buf[..16], &mp4_file[..16]);
+
+            let mut buf = Vec::new();
+            parts[0].download(&mut buf, 6..).await.unwrap();
+            assert_eq!(buf.len(), mp4_file.len() - 6);
+            assert_eq!(&buf[..10], &mp4_file[6..16]);
+        }
+
+        let episode: Episode = server.item_by_id(93).await.unwrap().try_into().unwrap();
+        let media = episode.media();
+        assert_eq!(media.len(), 1);
+        let parts = media[0].parts();
+        assert_eq!(parts.len(), 1);
+
+        let mut buf = Vec::new();
+        parts[0].download(&mut buf, 4..5).await.unwrap();
+        assert_eq!(buf.len(), 1);
+        assert_eq!(&buf[..], &mkv_file[4..5]);
+
+        let track: Track = server.item_by_id(158).await.unwrap().try_into().unwrap();
+        let media = track.media();
+        assert_eq!(media.len(), 1);
+        let parts = media[0].parts();
+        assert_eq!(parts.len(), 1);
+
+        let mut buf = Vec::new();
+        parts[0].download(&mut buf, ..).await.unwrap();
+        assert_eq!(buf.len(), aac_file.len());
+        assert_eq!(&buf[..16], &aac_file[..16]);
+
+        let photo: Photo = server.item_by_id(60).await.unwrap().try_into().unwrap();
+        let media = photo.media();
+        assert_eq!(media.len(), 1);
+        let parts = media[0].parts();
+        assert_eq!(parts.len(), 1);
+
+        let mut buf = Vec::new();
+        parts[0].download(&mut buf, ..).await.unwrap();
+        assert_eq!(buf.len(), jpg_file.len());
+        assert_eq!(&buf[..16], &jpg_file[..16]);
     }
 
     #[allow(unused_attributes)]
