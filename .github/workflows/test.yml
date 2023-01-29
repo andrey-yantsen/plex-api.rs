@@ -40,7 +40,7 @@ jobs:
           args: "--package xtask -- test --offline"
 
   test_on_real_server_anonymous:
-    if: "!github.event.review || github.event.review.state == 'approved'"
+    if: "!github.event.review"
     needs: test_offline
     name: Test on a real server (anonymous)
     runs-on: ubuntu-latest
