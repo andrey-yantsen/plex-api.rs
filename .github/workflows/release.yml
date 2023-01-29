@@ -35,6 +35,9 @@ jobs:
              {"type":"refactor","section":"Code Refactoring","hidden":true},
              {"type":"style","section":"Styles","hidden":true}]
 
+      - name: Print release-please outputs
+        run: echo "${{join(steps.release.outputs.*, '\n')}}"
+
       # The logic below handles the crates.io publication:
       - name: Checkout sources
         uses: actions/checkout@v3
