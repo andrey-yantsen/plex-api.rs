@@ -117,7 +117,7 @@ pub struct Server {
     pub size: u32,
     pub allow_camera_upload: bool,
     pub allow_channel_access: bool,
-    pub allow_media_deletion: bool,
+    pub allow_media_deletion: Option<bool>,
     pub allow_sharing: bool,
     pub allow_sync: bool,
     pub allow_tuners: bool,
