@@ -29,9 +29,9 @@ the latest 5 minor releases. At the moment the following versions are
 tested:
 
 <!-- plex releases list start -->
-* 1.30.2.6563-3d4dc0cce
-* 1.28.2.6151-914ddd2b3
-* 1.26.2.5797-5bd057d2b
+* 1.31.0.6654-02189b09f
+* 1.29.2.6364-6d72b0cf6
+* 1.27.2.5929-a806c5905
 <!-- plex releases list end -->
 
 # TODO
