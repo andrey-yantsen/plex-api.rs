@@ -3,7 +3,7 @@ use std::{fs::remove_dir_all, io::Write};
 use testcontainers::{clients, core::WaitFor, images::generic::GenericImage, RunnableImage};
 use xshell::{cmd, Shell};
 
-const DEFAULT_TAG: &str = "1.26.2.5797-5bd057d2b";
+const DEFAULT_TAG: &str = "1.27.2.5929-a806c5905";
 
 impl flags::ModifyData {
     pub(crate) fn run(self, sh: &Shell) -> anyhow::Result<()> {
