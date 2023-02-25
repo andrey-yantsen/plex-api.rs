@@ -84,13 +84,20 @@ mod online {
             .expect("failed to commit updated preferences");
 
         // Server responds with 400 Bad Request if the next request is
-        // sent too soon after the PUT.
-        async_std::task::sleep(Duration::from_secs(1)).await;
+        // sent too soon after the PUT, so let's add some retries
+        async_std::task::sleep(Duration::from_millis(500)).await;
+        let mut prefs = server.preferences().await;
 
-        let prefs = server
-            .preferences()
-            .await
-            .expect("failed to load preferences 2nd time");
+        for _ in 0..10 {
+            async_std::task::sleep(Duration::from_millis(500)).await;
+            prefs = server.preferences().await;
+
+            if prefs.is_ok() {
+                break;
+            }
+        }
+
+        let prefs = prefs.expect("failed to load preferences 2nd time");
 
         let new_value = {
             let s = prefs
