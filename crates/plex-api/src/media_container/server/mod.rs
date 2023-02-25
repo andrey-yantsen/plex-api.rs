@@ -102,6 +102,7 @@ derive_fromstr_from_deserialize!(MediaProviderType);
 #[serde(rename_all = "camelCase")]
 pub struct MediaProvider {
     pub identifier: String,
+    pub id: Option<u32>,
     #[serde_as(as = "StringWithSeparator::<CommaSeparator, MediaProviderProtocol>")]
     pub protocols: Vec<MediaProviderProtocol>,
     pub title: String,
@@ -109,6 +110,11 @@ pub struct MediaProvider {
     pub types: Vec<MediaProviderType>,
     #[serde(rename = "Feature")]
     pub features: Vec<MediaProviderFeature>,
+    #[serde(rename = "parentID")]
+    pub parent_id: Option<u32>,
+    pub provider_identifier: Option<String>,
+    pub epg_source: Option<String>,
+    pub friendly_name: Option<String>,
 }
 
 #[serde_as]
