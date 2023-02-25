@@ -37,7 +37,7 @@ jobs:
 
       - name: Print release-please outputs
         run: cat <<END
-          ${{join(steps.release.outputs.*, '\n')}}
+          ${{toJSON(steps.release.outputs)}}
           END
         continue-on-error: true
 
