@@ -80,6 +80,8 @@ pub enum MediaProviderFeature {
 pub enum MediaProviderProtocol {
     Stream,
     Download,
+    #[serde(other)]
+    Unknown,
 }
 
 derive_fromstr_from_deserialize!(MediaProviderProtocol);
