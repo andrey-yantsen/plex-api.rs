@@ -36,7 +36,8 @@ jobs:
              {"type":"style","section":"Styles","hidden":true}]
 
       - name: Print release-please outputs
-        run: cat <<END
+        run: |
+          cat <<END
           ${{toJSON(steps.release.outputs)}}
           END
         continue-on-error: true
