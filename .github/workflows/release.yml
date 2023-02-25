@@ -36,7 +36,10 @@ jobs:
              {"type":"style","section":"Styles","hidden":true}]
 
       - name: Print release-please outputs
-        run: echo "${{join(steps.release.outputs.*, '\n')}}"
+        run: cat <<END
+          ${{join(steps.release.outputs.*, '\n')}}
+          END
+        continue-on-error: true
 
       # The logic below handles the crates.io publication:
       - name: Checkout sources
