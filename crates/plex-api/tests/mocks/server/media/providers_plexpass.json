@@ -267,6 +267,199 @@
                         "type": "subscribe"
                     }
                 ]
+            },
+            {
+                "id": 31,
+                "parentID": 30,
+                "identifier": "tv.plex.providers.epg.cloud:30",
+                "providerIdentifier": "tv.plex.providers.epg.cloud",
+                "title": "Live TV & DVR",
+                "types": "video",
+                "protocols": "livetv",
+                "epgSource": "Gracenote",
+                "friendlyName": "Mandelbrot",
+                "Feature": [
+                    {
+                        "key": "/tv.plex.providers.epg.cloud:30/sections",
+                        "type": "content",
+                        "Directory": [
+                            {
+                                "id": "tv.plex.providers.epg.cloud:30",
+                                "hubKey": "/tv.plex.providers.epg.cloud:30/hubs/discover",
+                                "title": "Live TV & DVR",
+                                "Pivot": [
+                                    {
+                                        "id": "dvr.whatson",
+                                        "key": "/tv.plex.providers.epg.cloud:30/hubs/discover",
+                                        "type": "hub",
+                                        "title": "What's On",
+                                        "context": "content.dvr.discover",
+                                        "symbol": "star"
+                                    },
+                                    {
+                                        "id": "dvr.guide",
+                                        "key": "view://dvr/guide",
+                                        "type": "view",
+                                        "title": "Guide",
+                                        "context": "content.dvr.guide",
+                                        "symbol": "guide"
+                                    },
+                                    {
+                                        "id": "dvr.schedule",
+                                        "key": "view://dvr/recording-schedule",
+                                        "type": "view",
+                                        "title": "DVR Schedule",
+                                        "context": "content.dvr.schedule",
+                                        "symbol": "schedule"
+                                    },
+                                    {
+                                        "id": "dvr.priority",
+                                        "key": "view://dvr/recording-priority",
+                                        "type": "view",
+                                        "title": "Recording Priority",
+                                        "context": "content.dvr.priority",
+                                        "symbol": "list"
+                                    },
+                                    {
+                                        "id": "dvr.browse",
+                                        "key": "/tv.plex.providers.epg.cloud:30/sections/2/all?type=4",
+                                        "type": "list",
+                                        "title": "Browse",
+                                        "context": "content.dvr.browse",
+                                        "symbol": "library"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "mixed",
+                                "key": "/tv.plex.providers.epg.cloud:30/watchnow",
+                                "title": "Guide",
+                                "icon": "/:/resources/dvr/dvr-watchnow-icon.png"
+                            },
+                            {
+                                "key": "/tv.plex.providers.epg.cloud:30/sections/1",
+                                "type": "movie",
+                                "title": "Movies",
+                                "icon": "/:/resources/dvr/dvr-movies-icon.png",
+                                "updatedAt": 1677258333
+                            },
+                            {
+                                "key": "/tv.plex.providers.epg.cloud:30/sections/2",
+                                "type": "show",
+                                "title": "Shows",
+                                "icon": "/:/resources/dvr/dvr-allshows-icon.png",
+                                "updatedAt": 1677258333
+                            },
+                            {
+                                "key": "/tv.plex.providers.epg.cloud:30/sections/3",
+                                "type": "show",
+                                "title": "Sports",
+                                "icon": "/:/resources/dvr/dvr-sports-icon.png",
+                                "updatedAt": 1677258334
+                            }
+                        ]
+                    },
+                    {
+                        "key": "/tv.plex.providers.epg.cloud:30/hubs/search",
+                        "type": "search"
+                    },
+                    {
+                        "key": "/tv.plex.providers.epg.cloud:30/matches",
+                        "type": "match"
+                    },
+                    {
+                        "key": "/tv.plex.providers.epg.cloud:30/metadata",
+                        "type": "metadata"
+                    },
+                    {
+                        "key": "/photo/:/transcode",
+                        "type": "imagetranscoder"
+                    },
+                    {
+                        "key": "/tv.plex.providers.epg.cloud:30/hubs/discover?promoted=1&includeTypeFirst=1",
+                        "type": "promoted"
+                    },
+                    {
+                        "key": "/tv.plex.providers.epg.cloud:30/grid",
+                        "type": "grid",
+                        "GridChannelFilter": [
+                            {
+                                "key": "/tv.plex.providers.epg.cloud:30/lineups/dvr/channels?genre=genre_6006cc1a610ee2002c74f34a",
+                                "title": "Entertainment",
+                                "genreRatingKey": "genre_6006cc1a610ee2002c74f34a"
+                            },
+                            {
+                                "key": "/tv.plex.providers.epg.cloud:30/lineups/dvr/channels?genre=genre_620143f98578b9238e1cdb89",
+                                "title": "Movies",
+                                "genreRatingKey": "genre_620143f98578b9238e1cdb89"
+                            },
+                            {
+                                "key": "/tv.plex.providers.epg.cloud:30/lineups/dvr/channels?genre=genre_6006cc1d610ee2002c74f38c",
+                                "title": "Reality",
+                                "genreRatingKey": "genre_6006cc1d610ee2002c74f38c"
+                            },
+                            {
+                                "key": "/tv.plex.providers.epg.cloud:30/lineups/dvr/channels?genre=genre_6074b802507c8d42cf7e103e",
+                                "title": "News + Opinion",
+                                "genreRatingKey": "genre_6074b802507c8d42cf7e103e"
+                            },
+                            {
+                                "key": "/tv.plex.providers.epg.cloud:30/lineups/dvr/channels?genre=genre_6074b802507c8d42cf7e1678",
+                                "title": "Kids + Family",
+                                "genreRatingKey": "genre_6074b802507c8d42cf7e1678"
+                            },
+                            {
+                                "key": "/tv.plex.providers.epg.cloud:30/lineups/dvr/channels?genre=genre_620143f98578b9238e1cdb88",
+                                "title": "Lifestyle",
+                                "genreRatingKey": "genre_620143f98578b9238e1cdb88"
+                            },
+                            {
+                                "key": "/tv.plex.providers.epg.cloud:30/lineups/dvr/channels?genre=genre_620143f98578b9238e1cdb8a",
+                                "title": "Sports",
+                                "genreRatingKey": "genre_620143f98578b9238e1cdb8a"
+                            },
+                            {
+                                "key": "/tv.plex.providers.epg.cloud:30/lineups/dvr/channels?genre=genre_6074b802507c8d42cf7e22eb",
+                                "title": "Explore",
+                                "genreRatingKey": "genre_6074b802507c8d42cf7e22eb"
+                            },
+                            {
+                                "key": "/tv.plex.providers.epg.cloud:30/lineups/dvr/channels?genre=genre_6006cc18610ee2002c74f2f9",
+                                "title": "Comedy",
+                                "genreRatingKey": "genre_6006cc18610ee2002c74f2f9"
+                            },
+                            {
+                                "key": "/tv.plex.providers.epg.cloud:30/lineups/dvr/channels?genre=genre_6006cc1c610ee2002c74f378",
+                                "title": "Music",
+                                "genreRatingKey": "genre_6006cc1c610ee2002c74f378"
+                            },
+                            {
+                                "key": "/tv.plex.providers.epg.cloud:30/lineups/dvr/channels?genre=genre_60d37385f631b9aabb67bf37",
+                                "title": "Gaming + Anime",
+                                "genreRatingKey": "genre_60d37385f631b9aabb67bf37"
+                            },
+                            {
+                                "key": "/tv.plex.providers.epg.cloud:30/lineups/dvr/channels?genre=genre_6171e01d4c451f5a44debdf6",
+                                "title": "En Español",
+                                "genreRatingKey": "genre_6171e01d4c451f5a44debdf6"
+                            }
+                        ]
+                    },
+                    {
+                        "key": "/tv.plex.providers.epg.cloud:30/collections",
+                        "type": "collection"
+                    },
+                    {
+                        "scrobbleKey": "/:/scrobble",
+                        "unscrobbleKey": "/:/unscrobble",
+                        "key": "/:/timeline",
+                        "type": "timeline"
+                    },
+                    {
+                        "flavor": "record",
+                        "type": "subscribe"
+                    }
+                ]
             }
         ]
     }
