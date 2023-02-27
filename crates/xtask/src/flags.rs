@@ -33,6 +33,9 @@ xflags::xflags! {
 
             /// Path where to store the data. See `plex-data` subcommand for details.
             optional --plex-data-path path: String
+
+            /// Test name to pass to cargo test
+            optional --test-name testname: String
         }
 
         /// Generate the data files to be fed into the Plex instance during testing.
@@ -104,6 +107,7 @@ pub struct Test {
     pub client_id: Option<String>,
     pub deny_unknown_fields: bool,
     pub plex_data_path: Option<String>,
+    pub test_name: Option<String>,
 }
 
 #[derive(Debug)]

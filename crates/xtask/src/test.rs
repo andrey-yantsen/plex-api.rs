@@ -12,9 +12,10 @@ impl flags::Test {
         let _plex_token = sh.push_env("PLEX_API_AUTH_TOKEN", "");
 
         if !self.online {
+            let test_name = self.test_name.clone().unwrap_or_default();
             cmd!(
                 sh,
-                "cargo test --workspace --no-fail-fast --features tests_deny_unknown_fields"
+                "cargo test --workspace --no-fail-fast --features tests_deny_unknown_fields {test_name}"
             )
             .run()?;
         }
@@ -165,9 +166,10 @@ impl flags::Test {
             features.push_str(",tests_deny_unknown_fields");
         }
 
+        let test_name = self.test_name.clone().unwrap_or_default();
         let mut test_run_result = cmd!(
             sh,
-            "cargo test --workspace --no-fail-fast --features {features}"
+            "cargo test --workspace --no-fail-fast --features {features} {test_name}"
         )
         .run();
 
