@@ -9,6 +9,7 @@ const DEFAULT_VERSION_JUMP: u8 = 1;
 
 pub(crate) const DOCKER_PLEX_IMAGE_NAME: &str = "plexinc/pms-docker";
 pub(crate) const DOCKER_PLEX_IMAGE_TAG_LATEST: &str = "latest";
+pub(crate) const DOCKER_PLEX_IMAGE_TAG_MIN_SUPPORTED: &str = "1.27.2.5929-a806c5905";
 
 impl flags::GetLastPlexTags {
     pub(crate) fn run(self) -> anyhow::Result<()> {

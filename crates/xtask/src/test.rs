@@ -1,5 +1,7 @@
-use super::get_last_plex_tags::{DOCKER_PLEX_IMAGE_NAME, DOCKER_PLEX_IMAGE_TAG_LATEST};
-use crate::flags;
+use crate::{
+    flags, get_last_plex_tags::DOCKER_PLEX_IMAGE_NAME,
+    get_last_plex_tags::DOCKER_PLEX_IMAGE_TAG_MIN_SUPPORTED,
+};
 use plex_api::MyPlexBuilder;
 use std::io::Write;
 use testcontainers::{clients, core::WaitFor, images::generic::GenericImage, RunnableImage};
@@ -94,7 +96,7 @@ impl flags::Test {
         let image_tag = self
             .docker_tag
             .clone()
-            .unwrap_or_else(|| DOCKER_PLEX_IMAGE_TAG_LATEST.to_owned());
+            .unwrap_or_else(|| DOCKER_PLEX_IMAGE_TAG_MIN_SUPPORTED.to_owned());
         let docker_image: RunnableImage<GenericImage> =
             GenericImage::new(DOCKER_PLEX_IMAGE_NAME, &image_tag)
                 .with_wait_for(WaitFor::Healthcheck)
@@ -137,7 +139,7 @@ impl flags::Test {
 
         let docker = clients::Cli::default();
 
-        print!("// Spawning docker container... ");
+        print!("// Spawning docker container {DOCKER_PLEX_IMAGE_NAME}:{image_tag}... ");
         let _ = std::io::stdout().flush();
 
         let _plex_node = docker.run(docker_image);
@@ -148,7 +150,7 @@ impl flags::Test {
         let server_url = format!("http://localhost:{}/", _plex_node.get_host_port_ipv4(32400));
         cmd!(
             sh,
-            "cargo run -p plex-cli --  --server {server_url} --token {auth_token} wait"
+            "cargo run -q -p plex-cli --  --server {server_url} --token {auth_token} wait"
         )
         .run()?;
 

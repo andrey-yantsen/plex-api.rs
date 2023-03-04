@@ -1,9 +1,11 @@
-use crate::{flags, get_last_plex_tags::DOCKER_PLEX_IMAGE_NAME, utils::copy_tree};
+use crate::{
+    flags,
+    get_last_plex_tags::{DOCKER_PLEX_IMAGE_NAME, DOCKER_PLEX_IMAGE_TAG_MIN_SUPPORTED},
+    utils::copy_tree,
+};
 use std::{fs::remove_dir_all, io::Write};
 use testcontainers::{clients, core::WaitFor, images::generic::GenericImage, RunnableImage};
 use xshell::{cmd, Shell};
-
-const DEFAULT_TAG: &str = "1.27.2.5929-a806c5905";
 
 impl flags::ModifyData {
     pub(crate) fn run(self, sh: &Shell) -> anyhow::Result<()> {
@@ -40,7 +42,7 @@ impl flags::ModifyData {
         let image_tag = self
             .docker_tag
             .clone()
-            .unwrap_or_else(|| DEFAULT_TAG.to_owned());
+            .unwrap_or_else(|| DOCKER_PLEX_IMAGE_TAG_MIN_SUPPORTED.to_owned());
 
         let docker_image: RunnableImage<GenericImage> =
             GenericImage::new(DOCKER_PLEX_IMAGE_NAME, &image_tag)

@@ -6,7 +6,7 @@ xflags::xflags! {
         /// Run the tests.
         cmd test {
             /// A tag from https://hub.docker.com/r/plexinc/pms-docker/tags to use for the tests.
-            /// By default, `latest` is used.
+            /// By default, the min supported version is used (see README.md for details).
             ///
             /// WARNING! When you specify a tag without defining `--plex-data-path`
             ///          the default path will be changed to `plex-data-{tag}`.
