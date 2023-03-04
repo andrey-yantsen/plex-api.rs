@@ -6,8 +6,6 @@ use std::{
 use pathdiff::diff_paths;
 use walkdir::WalkDir;
 
-pub const DOCKER_TAG_MIN_SUPPORTED: &str = "1.27.2.5929-a806c5905";
-
 fn symlink<P: AsRef<Path>, Q: AsRef<Path>, R: AsRef<Path>>(
     path: P,
     target: Q,
