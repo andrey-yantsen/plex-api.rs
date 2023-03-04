@@ -214,7 +214,7 @@ impl HttpClient {
             http_client: &self.http_client,
             base_url: self.api_url.clone(),
             path_and_query: path,
-            request_builder: self.prepare_request().method("DELETE"),
+            request_builder: self.prepare_request_min().method("DELETE"),
         }
     }
 
