@@ -118,6 +118,15 @@ pub struct MediaProvider {
     pub friendly_name: Option<String>,
 }
 
+#[derive(Debug, Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
+pub enum StartState {
+    StartingPlugins,
+    #[cfg(not(feature = "tests_deny_unknown_fields"))]
+    #[serde(other)]
+    Other,
+}
+
 #[serde_as]
 #[derive(Debug, Deserialize, Clone)]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
@@ -156,7 +165,7 @@ pub struct Server {
     pub plugin_host: bool,
     pub push_notifications: bool,
     pub read_only_libraries: bool,
-    pub start_state: Option<String>,
+    pub start_state: Option<StartState>,
     #[serde(rename = "streamingBrainABRVersion")]
     pub streaming_brain_abr_version: u8,
     pub streaming_brain_version: u8,
