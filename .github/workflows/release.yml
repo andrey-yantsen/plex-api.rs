@@ -49,11 +49,7 @@ jobs:
         # a new release is created:
         if: ${{ steps.release.outputs.release_created }}
       - name: Install stable toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-          override: true
+        uses: dtolnay/rust-toolchain@stable
         if: ${{ steps.release.outputs.release_created }}
       - run: cargo publish -p ${{ matrix.crate }}
         env:

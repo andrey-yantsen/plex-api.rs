@@ -25,19 +25,12 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@v3
       - name: Install stable toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-          override: true
+        uses: dtolnay/rust-toolchain@stable
       - uses: Swatinem/rust-cache@v2.2.1
         with:
           shared-key: cache
       - name: Run tests
-        uses: actions-rs/cargo@v1
-        with:
-          command: run
-          args: "--package xtask -- test --offline"
+        run: cargo run --package xtask -- test --offline
 
   test_on_real_server_anonymous:
     if: "!github.event.review"
@@ -52,19 +45,12 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@v3
       - name: Install stable toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-          override: true
+        uses: dtolnay/rust-toolchain@stable
       - uses: Swatinem/rust-cache@v2.2.1
         with:
           shared-key: cache-anonymous
       - name: "Test against real server [anonymous]"
-        uses: actions-rs/cargo@v1
-        with:
-          command: run
-          args: "--package xtask -- test --online --docker-tag '${{ matrix.plex_server_version }}' --deny-unknown-fields"
+        run: cargo run --package xtask -- test --online --docker-tag '${{ matrix.plex_server_version }}' --deny-unknown-fields
 
   test_on_real_server_authenticated_free:
     if: "(github.ref == 'refs/heads/main' && !github.event.review) || github.event.review.state == 'approved' || github.repository == github.event.pull_request.head.repo.full_name"
@@ -81,19 +67,12 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@v3
       - name: Install stable toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-          override: true
+        uses: dtolnay/rust-toolchain@stable
       - uses: Swatinem/rust-cache@v2.2.1
         with:
           shared-key: cache-authenticated
       - name: "Test against real server [authenticated]"
-        uses: actions-rs/cargo@v1
-        with:
-          command: run
-          args: "--package xtask -- test --online --docker-tag '${{ matrix.plex_server_version }}' --token '${{ secrets.PLEX_API_AUTH_TOKEN_FREE }}' --deny-unknown-fields"
+        run: cargo run --package xtask -- test --online --docker-tag '${{ matrix.plex_server_version }}' --token '${{ secrets.PLEX_API_AUTH_TOKEN_FREE }}' --deny-unknown-fields
 
   test_on_real_server_authenticated_plexpass:
     if: "(github.ref == 'refs/heads/main' && !github.event.review) || github.event.review.state == 'approved' || github.repository == github.event.pull_request.head.repo.full_name"
@@ -110,19 +89,12 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@v3
       - name: Install stable toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-          override: true
+        uses: dtolnay/rust-toolchain@stable
       - uses: Swatinem/rust-cache@v2.2.1
         with:
           shared-key: cache-authenticated
       - name: "Test against real server [authenticated]"
-        uses: actions-rs/cargo@v1
-        with:
-          command: run
-          args: "--package xtask -- test --online --docker-tag '${{ matrix.plex_server_version }}' --token '${{ secrets.PLEX_API_AUTH_TOKEN_PLEXPASS }}' --deny-unknown-fields"
+        run: cargo run --package xtask -- test --online --docker-tag '${{ matrix.plex_server_version }}' --token '${{ secrets.PLEX_API_AUTH_TOKEN_PLEXPASS }}' --deny-unknown-fields
 
   collect_coverage:
     if: "!github.event.review"
