@@ -15,6 +15,9 @@ xflags::xflags! {
 
             /// How long to wait for the success.
             optional --timeout seconds: u32
+
+            /// Wait for the full server start, not only the general availability (might take a few minutes)
+            optional --full
         }
 
         /// Manage server preferences.
@@ -69,6 +72,7 @@ pub enum PlexCliCmd {
 pub struct Wait {
     pub delay: Option<u32>,
     pub timeout: Option<u32>,
+    pub full: bool,
 }
 
 #[derive(Debug)]
