@@ -7,7 +7,7 @@ async fn main() {
     let code = prompt_password("Code: ").unwrap();
 
     MyPlexBuilder::default()
-        .set_token(&token)
+        .set_token(token)
         .build()
         .await
         .unwrap()

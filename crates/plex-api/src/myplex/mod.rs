@@ -16,6 +16,7 @@ use crate::url::{MYPLEX_SIGNIN_PATH, MYPLEX_SIGNOUT_PATH, MYPLEX_USER_INFO_PATH}
 use crate::{Error, Result, Server};
 use http::StatusCode;
 use isahc::{AsyncBody, AsyncReadResponseExt, Response as HttpResponse};
+use secrecy::{ExposeSecret, SecretString};
 use std::sync::Arc;
 
 #[derive(Debug, Clone)]
@@ -169,10 +170,10 @@ impl MyPlex {
 #[derive(Debug, Clone)]
 pub struct MyPlexBuilder<'a> {
     client: Option<HttpClient>,
-    token: Option<&'a str>,
+    token: Option<SecretString>,
     username: Option<&'a str>,
-    password: Option<&'a str>,
-    otp: Option<&'a str>,
+    password: Option<SecretString>,
+    otp: Option<SecretString>,
     test_token_auth: bool,
 }
 
@@ -221,9 +222,15 @@ impl MyPlexBuilder<'_> {
 
         if let (Some(username), Some(password)) = (self.username, self.password) {
             if let Some(otp) = self.otp {
-                return MyPlex::login_with_otp(username, password, otp, client).await;
+                return MyPlex::login_with_otp(
+                    username,
+                    password.expose_secret(),
+                    otp.expose_secret(),
+                    client,
+                )
+                .await;
             } else {
-                return MyPlex::login(username, password, client).await;
+                return MyPlex::login(username, password.expose_secret(), client).await;
             }
         }
 
@@ -232,7 +239,7 @@ impl MyPlexBuilder<'_> {
         }
 
         if let Some(token) = self.token {
-            client = client.set_x_plex_token(token.to_owned());
+            client = client.set_x_plex_token(token);
         }
 
         let mut plex_result = MyPlex::new(client);
@@ -248,10 +255,13 @@ impl MyPlexBuilder<'_> {
 }
 
 impl<'a> MyPlexBuilder<'a> {
-    pub fn set_token(self, token: &'a str) -> Self {
+    pub fn set_token<T>(self, token: T) -> Self
+    where
+        T: Into<SecretString>,
+    {
         Self {
             client: self.client,
-            token: Some(token),
+            token: Some(token.into()),
             username: self.username,
             password: self.password,
             otp: self.otp,
@@ -259,24 +269,30 @@ impl<'a> MyPlexBuilder<'a> {
         }
     }
 
-    pub fn set_username_and_password(self, username: &'a str, password: &'a str) -> Self {
+    pub fn set_username_and_password<T>(self, username: &'a str, password: T) -> Self
+    where
+        T: Into<SecretString>,
+    {
         Self {
             client: self.client,
             token: self.token,
             username: Some(username),
-            password: Some(password),
+            password: Some(password.into()),
             otp: self.otp,
             test_token_auth: self.test_token_auth,
         }
     }
 
-    pub fn set_otp(self, otp: &'a str) -> Self {
+    pub fn set_otp<T>(self, otp: T) -> Self
+    where
+        T: Into<SecretString>,
+    {
         Self {
             client: self.client,
             token: self.token,
             username: self.username,
             password: self.password,
-            otp: Some(otp),
+            otp: Some(otp.into()),
             test_token_auth: self.test_token_auth,
         }
     }

@@ -64,7 +64,7 @@ impl flags::Test {
 
                     let claim_token = tokio::runtime::Runtime::new()?.block_on(async {
                         MyPlexBuilder::default()
-                            .set_token(token)
+                            .set_token(token.to_owned())
                             .set_test_token_auth(false)
                             .build()
                             .await

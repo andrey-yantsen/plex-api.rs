@@ -1,3 +1,4 @@
+use secrecy::SecretString;
 use serde::Deserialize;
 use serde_plain::derive_fromstr_from_deserialize;
 use serde_with::{formats::CommaSeparator, serde_as, NoneAsEmptyString, StringWithSeparator};
@@ -54,9 +55,9 @@ pub struct Device {
     #[serde(rename = "@id")]
     pub id: Option<u32>,
     #[serde(rename = "@token")]
-    pub token: Option<String>,
+    pub token: Option<SecretString>,
     #[serde(rename = "@accessToken")]
-    pub access_token: Option<String>,
+    pub access_token: Option<SecretString>,
     #[serde(with = "time::serde::timestamp", rename = "@createdAt")]
     pub created_at: OffsetDateTime,
     #[serde(with = "time::serde::timestamp", rename = "@lastSeenAt")]
@@ -83,12 +84,16 @@ pub struct Device {
     pub owned: Option<bool>,
     #[serde(rename = "SyncList")]
     pub sync_list: Option<SyncList>,
-    #[serde(default, rename = "@authToken")]
-    pub auth_token: String,
+    #[serde(default = "create_empty_secret_string", rename = "@authToken")]
+    pub auth_token: SecretString,
     #[serde(rename = "@dnsRebindingProtection")]
     pub dns_rebinding_protection: Option<bool>,
     #[serde(rename = "@natLoopbackSupported")]
     pub nat_loopback_supported: Option<bool>,
+}
+
+fn create_empty_secret_string() -> SecretString {
+    SecretString::new("".to_string())
 }
 
 #[derive(Debug, Deserialize, Clone)]

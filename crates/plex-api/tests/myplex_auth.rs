@@ -28,7 +28,7 @@ mod offline {
 
         let plex_result = MyPlexBuilder::default()
             .set_client(client_anonymous)
-            .set_username_and_password("username", "password")
+            .set_username_and_password("username", "password".to_string())
             .build()
             .await;
         m.assert();
@@ -59,7 +59,7 @@ mod offline {
 
         let plex_result = MyPlexBuilder::default()
             .set_client(client_anonymous)
-            .set_username_and_password("username", "password")
+            .set_username_and_password("username", "password".to_string())
             .build()
             .await;
         m.assert();
@@ -90,7 +90,7 @@ mod offline {
 
         let plex_result = MyPlexBuilder::default()
             .set_client(client_anonymous)
-            .set_username_and_password("username", "password")
+            .set_username_and_password("username", "password".to_string())
             .build()
             .await;
         m.assert();
@@ -118,8 +118,8 @@ mod offline {
 
         let plex_result = MyPlexBuilder::default()
             .set_client(client_anonymous)
-            .set_username_and_password("username", "password")
-            .set_otp("123456")
+            .set_username_and_password("username", "password".to_string())
+            .set_otp("123456".to_string())
             .build()
             .await;
         m.assert();
@@ -196,7 +196,7 @@ mod offline {
 
         let plex_result = MyPlexBuilder::default()
             .set_client(client_anonymous)
-            .set_username_and_password("username", "password")
+            .set_username_and_password("username", "password".to_string())
             .build()
             .await;
         assert!(
@@ -208,8 +208,8 @@ mod offline {
 
         let plex_result = MyPlexBuilder::default()
             .set_client(client2)
-            .set_username_and_password("username", "password")
-            .set_otp("123456")
+            .set_username_and_password("username", "password".to_string())
+            .set_otp("123456".to_string())
             .build()
             .await;
         assert!(

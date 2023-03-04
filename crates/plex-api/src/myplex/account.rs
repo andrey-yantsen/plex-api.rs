@@ -1,3 +1,4 @@
+use secrecy::SecretString;
 use serde::{Deserialize, Deserializer};
 use serde_repr::Deserialize_repr;
 use serde_with::{json::JsonString, serde_as};
@@ -67,8 +68,8 @@ pub struct Subscription {
 pub struct Service {
     pub identifier: String,
     pub endpoint: String,
-    pub token: Option<String>,
-    pub secret: Option<String>,
+    pub token: Option<SecretString>,
+    pub secret: Option<SecretString>,
     pub status: String,
 }
 
@@ -88,7 +89,7 @@ pub struct MyPlexAccount {
     pub email_only_auth: bool,
     pub has_password: bool,
     pub cloud_sync_device: Option<String>,
-    pub auth_token: String,
+    pub auth_token: SecretString,
     pub mailing_list_status: Option<String>,
     pub mailing_list_active: bool,
     pub scrobble_types: String,

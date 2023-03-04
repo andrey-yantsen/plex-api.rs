@@ -11,15 +11,15 @@ async fn main() {
     let password = prompt_password("Password: ").unwrap();
 
     let mut myplex_result = MyPlexBuilder::default()
-        .set_username_and_password(&username, &password)
+        .set_username_and_password(&username, password.clone())
         .build()
         .await;
 
     if let Err(plex_api::Error::OtpRequired) = myplex_result {
         let otp = prompt_password("OTP: ").unwrap();
         myplex_result = MyPlexBuilder::default()
-            .set_username_and_password(&username, &password)
-            .set_otp(&otp)
+            .set_username_and_password(&username, password)
+            .set_otp(otp)
             .build()
             .await;
     }

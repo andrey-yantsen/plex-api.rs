@@ -7,6 +7,7 @@ use isahc::{
     AsyncBody, AsyncReadResponseExt, HttpClient as IsahcHttpClient, Request as HttpRequest,
     Response as HttpResponse,
 };
+use secrecy::{ExposeSecret, SecretString};
 use serde::de::DeserializeOwned;
 use std::time::Duration;
 use uuid::Uuid;
@@ -65,7 +66,7 @@ pub struct HttpClient {
     /// `X-Plex-Token` header value.
     ///
     /// Auth token for Plex.
-    x_plex_token: String,
+    x_plex_token: SecretString,
 
     /// `X-Plex-Sync-Version` header value.
     ///
@@ -90,8 +91,8 @@ impl HttpClient {
         let mut request = HttpRequest::builder()
             .header("X-Plex-Client-Identifier", &self.x_plex_client_identifier);
 
-        if !self.x_plex_token.is_empty() {
-            request = request.header("X-Plex-Token", &self.x_plex_token);
+        if !self.x_plex_token.expose_secret().is_empty() {
+            request = request.header("X-Plex-Token", self.x_plex_token.expose_secret());
         }
 
         request
@@ -99,7 +100,7 @@ impl HttpClient {
 
     /// Verifies that this client has an authentication token.
     pub fn is_authenticated(&self) -> bool {
-        !self.x_plex_token.is_empty()
+        !self.x_plex_token.expose_secret().is_empty()
     }
 
     /// Begins building a request using the HTTP POST method.
@@ -219,16 +220,19 @@ impl HttpClient {
     }
 
     /// Set the client's authentication token.
-    pub fn set_x_plex_token(self, x_plex_token: String) -> Self {
+    pub fn set_x_plex_token<T>(self, x_plex_token: T) -> Self
+    where
+        T: Into<SecretString>,
+    {
         Self {
-            x_plex_token,
+            x_plex_token: x_plex_token.into(),
             ..self
         }
     }
 
     /// Get a reference to the client's authentication token.
     pub fn x_plex_token(&self) -> &str {
-        self.x_plex_token.as_ref()
+        self.x_plex_token.expose_secret()
     }
 }
 
@@ -364,7 +368,7 @@ impl Default for HttpClientBuilder {
             x_plex_device_name: sys_hostname,
             x_plex_client_identifier: random_uuid.to_string(),
             x_plex_sync_version: String::from("2"),
-            x_plex_token: String::new(),
+            x_plex_token: SecretString::new("".to_owned()),
         };
 
         Self { client: Ok(client) }
@@ -413,7 +417,7 @@ impl HttpClientBuilder {
     pub fn set_x_plex_token(self, token: String) -> Self {
         Self {
             client: self.client.map(move |mut client| {
-                client.x_plex_token = token;
+                client.x_plex_token = token.into();
                 client
             }),
         }
