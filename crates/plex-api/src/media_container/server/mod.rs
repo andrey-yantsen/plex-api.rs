@@ -6,6 +6,7 @@ use self::library::ContentDirectory;
 use serde::Deserialize;
 use serde_plain::derive_fromstr_from_deserialize;
 use serde_with::{formats::CommaSeparator, serde_as, StringWithSeparator};
+use time::OffsetDateTime;
 
 #[derive(Debug, Deserialize, Clone)]
 pub struct Action {
@@ -171,7 +172,8 @@ pub struct Server {
     pub transcoder_video_qualities: Vec<u8>,
     #[serde_as(as = "StringWithSeparator::<CommaSeparator, u16>")]
     pub transcoder_video_resolutions: Vec<u16>,
-    pub updated_at: i64,
+    #[serde(with = "time::serde::timestamp")]
+    pub updated_at: OffsetDateTime,
     pub updater: bool,
     pub version: String,
     pub voice_search: bool,
