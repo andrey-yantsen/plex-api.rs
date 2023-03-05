@@ -1,6 +1,6 @@
 use super::MediaContainer;
 use serde::Deserialize;
-use serde_repr::Deserialize_repr;
+use serde_repr::{Deserialize_repr, Serialize_repr};
 use time::OffsetDateTime;
 
 #[derive(Debug, Deserialize, Clone)]
@@ -14,7 +14,7 @@ pub struct UsersMediaContainer {
     pub media_container: MediaContainer,
 }
 
-#[derive(Debug, Deserialize_repr, Clone)]
+#[derive(Debug, Deserialize_repr, Clone, Serialize_repr)]
 #[repr(u8)]
 pub enum AllowTuners {
     None = 0,
