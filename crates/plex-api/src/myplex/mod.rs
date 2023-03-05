@@ -3,12 +3,14 @@ pub mod claim_token;
 pub mod device;
 pub mod pin;
 pub mod privacy;
+pub mod sharing;
 pub mod webhook;
 
 use self::claim_token::ClaimToken;
 use self::device::DeviceManager;
 use self::pin::PinManager;
 use self::privacy::Privacy;
+use self::sharing::Sharing;
 use self::webhook::WebhookManager;
 use crate::http_client::{HttpClient, HttpClientBuilder};
 use crate::media_container::server::Feature;
@@ -127,6 +129,10 @@ impl MyPlex {
     /// See [Privacy Preferences on plex.tv](https://www.plex.tv/about/privacy-legal/privacy-preferences/#opd) for details.
     pub async fn privacy(&self) -> Result<Privacy> {
         Privacy::new(self.client.clone()).await
+    }
+
+    pub fn sharing(&self) -> Sharing {
+        Sharing::new(self.client.clone())
     }
 
     pub async fn webhook_manager(&self) -> Result<WebhookManager> {
