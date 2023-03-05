@@ -25,8 +25,8 @@ pub use server::library::{
     PhotoAlbum, PhotoAlbumItem, Playlist, Season, Show, Track, Video,
 };
 pub use server::transcode::{
-    AudioSetting, Constraint, Limitation, MusicTranscodeOptions, TranscodeSession, TranscodeStatus,
-    VideoSetting, VideoTranscodeOptions,
+    ArtTranscodeOptions, AudioSetting, Constraint, Limitation, MusicTranscodeOptions,
+    TranscodeSession, TranscodeStatus, VideoSetting, VideoTranscodeOptions,
 };
 pub use server::Server;
 
