@@ -1,5 +1,45 @@
 # Changelog
 
+## [0.0.6](https://github.com/andrey-yantsen/plex-api.rs/compare/plex-api-v0.0.5...plex-api-v0.0.6) (2023-03-05)
+
+
+### ⚠ BREAKING CHANGES
+
+* store all the tokens/passwords as SecretString
+* decode start_state as enum instead of String
+* decode updated_at as DateTime
+* Add a way to retrieve specific items.
+* Move a lot of the boilerplate from trait implementations into macros.
+
+### Features
+
+* Add a method for downloading media parts. ([72266cf](https://github.com/andrey-yantsen/plex-api.rs/commit/72266cf333fd646e62ddd73c777a08c481c9b68e))
+* Add a way to retrieve specific items. ([34298d9](https://github.com/andrey-yantsen/plex-api.rs/commit/34298d95f6c05bab7254e04973354b1baeb10709))
+* Add functionality for transcoding media. ([2584ed0](https://github.com/andrey-yantsen/plex-api.rs/commit/2584ed00b81bc8f0bbcd2e635409630783368054))
+* Allow resizing item art. ([4a5da5e](https://github.com/andrey-yantsen/plex-api.rs/commit/4a5da5e9d7b2b89120007711c752a6f7d8633d3f))
+* decode start_state as enum instead of String ([5fb355a](https://github.com/andrey-yantsen/plex-api.rs/commit/5fb355a179f63e1d6529eee9709e60cc44d6425d))
+* decode updated_at as DateTime ([2909443](https://github.com/andrey-yantsen/plex-api.rs/commit/29094433bcd05903cf3623720efdb78f4e773aa6))
+* store all the tokens/passwords as SecretString ([ca5e513](https://github.com/andrey-yantsen/plex-api.rs/commit/ca5e513722124c587e61333af6b0d35c7405772d))
+
+
+### Bug Fixes
+
+* Allow more unknown data to be deserialized without failing. ([8257a46](https://github.com/andrey-yantsen/plex-api.rs/commit/8257a46de9540cb569f2a98caaa626906f88b94e))
+* make HttpClient::deletem() use only min headers ([94a2d4a](https://github.com/andrey-yantsen/plex-api.rs/commit/94a2d4aaf4cf6f79406d8f7935a5155dc61c5f92))
+* Move a lot of the boilerplate from trait implementations into macros. ([95ddf42](https://github.com/andrey-yantsen/plex-api.rs/commit/95ddf425cddb4f5e20e1d143663e4e07da90d749))
+* Only allocate default client if one is not provided. ([bcd9449](https://github.com/andrey-yantsen/plex-api.rs/commit/bcd944977f0a11b2866ead7e9ded9f559c75a006))
+* Simplify the common case of requesting JSON data. ([0007c77](https://github.com/andrey-yantsen/plex-api.rs/commit/0007c7763c3e2b10dabd6c830cf01226e5415231))
+
+
+### Documentation
+
+* Add some API documentation. ([0364392](https://github.com/andrey-yantsen/plex-api.rs/commit/0364392d29146542dfb96d06ad17e402cafb7f56))
+
+
+### Miscellaneous
+
+* update msrv to 1.63.0 ([3128ebf](https://github.com/andrey-yantsen/plex-api.rs/commit/3128ebf53cdee18c6acf874c688fd46bcf36f36d))
+
 ## 0.0.5 (2023-01-06)
 
 
