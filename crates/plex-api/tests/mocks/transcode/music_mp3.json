@@ -1,0 +1,153 @@
+{
+  "MediaContainer": {
+    "size": 1,
+    "allowSync": "1",
+    "directPlayDecisionCode": 3000,
+    "directPlayDecisionText": "App cannot direct play this item. Direct play is disabled.",
+    "generalDecisionCode": 1001,
+    "generalDecisionText": "Direct play not available; Conversion OK.",
+    "identifier": "com.plexapp.plugins.library",
+    "librarySectionID": "33",
+    "librarySectionTitle": "Dave's Music",
+    "librarySectionUUID": "5da09f65-108f-470b-a8c1-bc5961da07c5",
+    "mediaTagPrefix": "/system/bundle/media/flags/",
+    "mediaTagVersion": "1676975406",
+    "resourceSession": "{fa5429a4-98ed-4ae6-b140-d5e99a870938}",
+    "transcodeDecisionCode": 1001,
+    "transcodeDecisionText": "Direct play not available; Conversion OK.",
+    "Metadata": [
+      {
+        "addedAt": 1360195318,
+        "art": "/library/metadata/157717/art/1677122331",
+        "duration": 320888,
+        "grandparentArt": "/library/metadata/157717/art/1677122331",
+        "grandparentGuid": "plex://artist/5d07bbfc403c6402904a60d1",
+        "grandparentKey": "/library/metadata/157717",
+        "grandparentRatingKey": "157717",
+        "grandparentThumb": "/library/metadata/157717/thumb/1677122331",
+        "grandparentTitle": "Daft Punk",
+        "guid": "plex://track/5d07cdc4403c640290f653c2",
+        "index": 1,
+        "key": "/library/metadata/157786",
+        "librarySectionID": "33",
+        "librarySectionKey": "/library/sections/33",
+        "librarySectionTitle": "Dave's Music",
+        "musicAnalysisVersion": "1",
+        "parentGuid": "plex://album/5d07c185403c64029084f920",
+        "parentIndex": 1,
+        "parentKey": "/library/metadata/157785",
+        "parentRatingKey": "157785",
+        "parentStudio": "Virgin",
+        "parentThumb": "/library/metadata/157785/thumb/1675091155",
+        "parentTitle": "Discovery",
+        "parentYear": 2001,
+        "ratingCount": 1549072,
+        "ratingKey": "157786",
+        "thumb": "/library/metadata/157785/thumb/1675091155",
+        "title": "One More Time",
+        "type": "track",
+        "updatedAt": 1675091155,
+        "Media": [
+          {
+            "id": "305587",
+            "audioChannels": 2,
+            "audioCodec": "mp3",
+            "bitrate": 182,
+            "container": "mp4",
+            "duration": 320888,
+            "protocol": "dash",
+            "selected": true,
+            "Part": [
+              {
+                "deepAnalysisVersion": "6",
+                "hasThumbnail": "1",
+                "id": "318704",
+                "requiredBandwidths": "316,316,316,316,316,316,316,316",
+                "bitrate": 182,
+                "container": "mp4",
+                "duration": 320888,
+                "decision": "transcode",
+                "selected": true,
+                "Stream": [
+                  {
+                    "albumGain": "-6.89",
+                    "albumPeak": "1.000000",
+                    "albumRange": "8.604516",
+                    "bitrate": 182,
+                    "bitrateMode": "vbr",
+                    "channels": 2,
+                    "codec": "mp3",
+                    "displayTitle": "MP3 (Stereo)",
+                    "extendedDisplayTitle": "MP3 (Stereo)",
+                    "gain": "-6.89",
+                    "id": "560564",
+                    "loudness": "-12.23",
+                    "lra": "6.73",
+                    "peak": "1.000000",
+                    "requiredBandwidths": "316,316,316,316,316,316,316,316",
+                    "selected": true,
+                    "streamType": 2,
+                    "decision": "transcode",
+                    "location": "segments-audio"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "Mood": [
+          {
+            "filter": "mood=133027",
+            "id": "133027",
+            "tag": "Energetic"
+          },
+          {
+            "filter": "mood=132779",
+            "id": "132779",
+            "tag": "Bright"
+          },
+          {
+            "filter": "mood=132778",
+            "id": "132778",
+            "tag": "Freewheeling"
+          },
+          {
+            "filter": "mood=133013",
+            "id": "133013",
+            "tag": "Fun"
+          },
+          {
+            "filter": "mood=132785",
+            "id": "132785",
+            "tag": "Rousing"
+          },
+          {
+            "filter": "mood=132970",
+            "id": "132970",
+            "tag": "Celebratory"
+          },
+          {
+            "filter": "mood=133148",
+            "id": "133148",
+            "tag": "Carefree"
+          },
+          {
+            "filter": "mood=132732",
+            "id": "132732",
+            "tag": "Stylish"
+          },
+          {
+            "filter": "mood=132887",
+            "id": "132887",
+            "tag": "Trippy"
+          },
+          {
+            "filter": "mood=133130",
+            "id": "133130",
+            "tag": "Hypnotic"
+          }
+        ]
+      }
+    ]
+  }
+}

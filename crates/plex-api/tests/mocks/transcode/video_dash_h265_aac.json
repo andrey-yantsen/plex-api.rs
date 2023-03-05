@@ -1,0 +1,857 @@
+{
+  "MediaContainer": {
+    "size": 1,
+    "allowSync": "1",
+    "directPlayDecisionCode": 3000,
+    "directPlayDecisionText": "App cannot direct play this item. Direct play is disabled.",
+    "generalDecisionCode": 1001,
+    "generalDecisionText": "Direct play not available; Conversion OK.",
+    "identifier": "com.plexapp.plugins.library",
+    "librarySectionID": "1",
+    "librarySectionTitle": "Movies",
+    "librarySectionUUID": "a006b58966aa34f3c577ca3106e99c5d1d6ea8b1",
+    "mediaTagPrefix": "/system/bundle/media/flags/",
+    "mediaTagVersion": "1676975406",
+    "resourceSession": "{fa5429a4-98ed-4ae6-b140-d5e99a870938}",
+    "transcodeDecisionCode": 1001,
+    "transcodeDecisionText": "Direct play not available; Conversion OK.",
+    "Metadata": [
+      {
+        "addedAt": 1675330657,
+        "art": "/library/metadata/159637/art/1675330665",
+        "audienceRating": 9.4,
+        "audienceRatingImage": "rottentomatoes://image.rating.upright",
+        "chapterSource": "media",
+        "contentRating": "gb/12A",
+        "duration": 9678688,
+        "guid": "plex://movie/5d77702e6afb3d0020613fd1",
+        "key": "/library/metadata/159637",
+        "lastViewedAt": 1677362803,
+        "librarySectionID": "1",
+        "librarySectionKey": "/library/sections/1",
+        "librarySectionTitle": "Movies",
+        "originallyAvailableAt": "2022-11-09",
+        "primaryExtraKey": "/library/metadata/159638",
+        "rating": 8.4,
+        "ratingImage": "rottentomatoes://image.rating.ripe",
+        "ratingKey": "159637",
+        "studio": "Marvel Studios",
+        "summary": "Queen Ramonda, Shuri, M'Baku, Okoye and the Dora Milaje fight to protect the kingdom of Wakanda from intervening world powers in the wake of King T'Challa's death. As the Wakandans strive to embrace their next chapter, the heroes must band together with the help of War Dog Nakia and Everett Ross and forge a new path for their nation.",
+        "tagline": "Forever.",
+        "thumb": "/library/metadata/159637/thumb/1675330665",
+        "title": "Black Panther: Wakanda Forever",
+        "type": "movie",
+        "updatedAt": 1675330665,
+        "viewCount": 1,
+        "year": 2022,
+        "Media": [
+          {
+            "id": "307380",
+            "videoProfile": "main 10",
+            "audioChannels": 2,
+            "audioCodec": "aac",
+            "bitrate": 1903,
+            "container": "mp4",
+            "duration": 9678688,
+            "height": 302,
+            "optimizedForStreaming": true,
+            "protocol": "dash",
+            "videoCodec": "hevc",
+            "videoFrameRate": "24p",
+            "videoResolution": "SD",
+            "width": 720,
+            "selected": true,
+            "Part": [
+              {
+                "deepAnalysisVersion": "6",
+                "hasThumbnail": "1",
+                "id": "320497",
+                "indexes": "sd",
+                "requiredBandwidths": "53608,45732,31113,27983,26375,24767,18633,12057",
+                "videoProfile": "main 10",
+                "bitrate": 1903,
+                "container": "mp4",
+                "duration": 9678688,
+                "height": 302,
+                "optimizedForStreaming": true,
+                "protocol": "dash",
+                "width": 720,
+                "decision": "transcode",
+                "selected": true,
+                "Stream": [
+                  {
+                    "bitrate": 1697,
+                    "codec": "hevc",
+                    "default": true,
+                    "displayTitle": "4K HDR10 (HEVC Main 10)",
+                    "extendedDisplayTitle": "4K HDR10 (HEVC Main 10)",
+                    "frameRate": 23.97599983215332,
+                    "height": 302,
+                    "id": "566075",
+                    "requiredBandwidths": "52842,44966,30344,27215,25607,23999,17864,11289",
+                    "streamType": 1,
+                    "width": 720,
+                    "decision": "copy",
+                    "location": "segments-video"
+                  },
+                  {
+                    "bitrate": 206,
+                    "bitrateMode": "vbr",
+                    "channels": 2,
+                    "codec": "aac",
+                    "default": true,
+                    "displayTitle": "English (EAC3 5.1)",
+                    "extendedDisplayTitle": "English DDP Atmos 5.1 (EAC3)",
+                    "id": "566076",
+                    "language": "English",
+                    "languageCode": "eng",
+                    "languageTag": "en",
+                    "requiredBandwidths": "768,768,768,768,768,768,768,768",
+                    "selected": true,
+                    "streamType": 2,
+                    "decision": "transcode",
+                    "location": "segments-audio"
+                  },
+                  {
+                    "bitrate": 0,
+                    "burn": "1",
+                    "codec": "srt",
+                    "default": true,
+                    "displayTitle": "English (SRT)",
+                    "extendedDisplayTitle": "English SRT",
+                    "id": "566077",
+                    "language": "English",
+                    "languageCode": "eng",
+                    "languageTag": "en",
+                    "requiredBandwidths": "1,1,1,1,1,1,1,1",
+                    "selected": true,
+                    "streamType": 3,
+                    "title": "English SRT",
+                    "decision": "burn",
+                    "location": "segments-video"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "Genre": [
+          {
+            "filter": "genre=39",
+            "id": "39",
+            "tag": "Action"
+          },
+          {
+            "filter": "genre=130",
+            "id": "130",
+            "tag": "Adventure"
+          },
+          {
+            "filter": "genre=132",
+            "id": "132",
+            "tag": "Science Fiction"
+          },
+          {
+            "filter": "genre=93",
+            "id": "93",
+            "tag": "Drama"
+          },
+          {
+            "filter": "genre=128",
+            "id": "128",
+            "tag": "Thriller"
+          },
+          {
+            "filter": "genre=48",
+            "id": "48",
+            "tag": "Fantasy"
+          }
+        ],
+        "Director": [
+          {
+            "filter": "director=109867",
+            "id": "109867",
+            "tag": "Ryan Coogler"
+          }
+        ],
+        "Writer": [
+          {
+            "filter": "writer=99532",
+            "id": "99532",
+            "tag": "Stan Lee"
+          },
+          {
+            "filter": "writer=92467",
+            "id": "92467",
+            "tag": "Jack Kirby"
+          },
+          {
+            "filter": "writer=109868",
+            "id": "109868",
+            "tag": "Ryan Coogler"
+          },
+          {
+            "filter": "writer=112263",
+            "id": "112263",
+            "tag": "Joe Robert Cole"
+          }
+        ],
+        "Producer": [
+          {
+            "filter": "producer=89536",
+            "id": "89536",
+            "tag": "Kevin Feige"
+          },
+          {
+            "filter": "producer=92508",
+            "id": "92508",
+            "tag": "Nate Moore"
+          }
+        ],
+        "Country": [
+          {
+            "filter": "country=55636",
+            "id": "55636",
+            "tag": "United States of America"
+          }
+        ],
+        "Rating": [
+          {
+            "image": "imdb://image.rating",
+            "type": "audience",
+            "value": "7.2"
+          },
+          {
+            "image": "rottentomatoes://image.rating.ripe",
+            "type": "critic",
+            "value": "8.4"
+          },
+          {
+            "image": "rottentomatoes://image.rating.upright",
+            "type": "audience",
+            "value": "9.4"
+          },
+          {
+            "image": "themoviedb://image.rating",
+            "type": "audience",
+            "value": "7.5"
+          }
+        ],
+        "Collection": [
+          {
+            "filter": "collection=46656",
+            "id": "46656",
+            "tag": "Marvel"
+          }
+        ],
+        "Role": [
+          {
+            "filter": "actor=112266",
+            "id": "112266",
+            "role": "Shuri",
+            "tag": "Letitia Wright",
+            "tagKey": "5d77698896b655001fdd14d1",
+            "thumb": "https://metadata-static.plex.tv/9/people/95bd7f16f95577ccfae11f60e4995edb.jpg"
+          },
+          {
+            "filter": "actor=104353",
+            "id": "104353",
+            "role": "Nakia",
+            "tag": "Lupita Nyong'o",
+            "tagKey": "5d7768ba0ea56a001e2a972f",
+            "thumb": "https://metadata-static.plex.tv/4/people/47ca5ee0d2b76822f10572edaea0195d.jpg"
+          },
+          {
+            "filter": "actor=112265",
+            "id": "112265",
+            "role": "Okoye",
+            "tag": "Danai Gurira",
+            "tagKey": "5d776839f54112001f5bddf9",
+            "thumb": "https://metadata-static.plex.tv/1/people/1ac9c5f4b757cd615eb6734b2909c74e.jpg"
+          },
+          {
+            "filter": "actor=112267",
+            "id": "112267",
+            "role": "M'Baku",
+            "tag": "Winston Duke",
+            "tagKey": "5d776b05fb0d55001f5592d5",
+            "thumb": "https://metadata-static.plex.tv/8/people/8803800d4ee7bcb73052932af60d3f5d.jpg"
+          },
+          {
+            "filter": "actor=140579",
+            "id": "140579",
+            "role": "Riri Williams / Ironheart",
+            "tag": "Dominique Thorne",
+            "tagKey": "5d776d3a7a53e9001e754ddd",
+            "thumb": "https://metadata-static.plex.tv/b/people/bd298c6f1a8fcca0e1fd65dff210e6e5.jpg"
+          },
+          {
+            "filter": "actor=131467",
+            "id": "131467",
+            "role": "Namor",
+            "tag": "Tenoch Huerta Mejía",
+            "tagKey": "5d7768468718ba001e317d8d",
+            "thumb": "https://metadata-static.plex.tv/2/people/2cb6d643da8a1de3a8901edbd3feb97a.jpg"
+          },
+          {
+            "filter": "actor=106584",
+            "id": "106584",
+            "role": "Ramonda",
+            "tag": "Angela Bassett",
+            "tagKey": "5d7768267e9a3c0020c6a9ec",
+            "thumb": "https://metadata-static.plex.tv/7/people/75c2642f58f0bf47de1865633a4f309f.jpg"
+          },
+          {
+            "filter": "actor=110223",
+            "id": "110223",
+            "role": "Ayo",
+            "tag": "Florence Kasumba",
+            "tagKey": "5d77683e7e9a3c0020c6e8e5",
+            "thumb": "https://metadata-static.plex.tv/people/5d77683e7e9a3c0020c6e8e5.jpg"
+          },
+          {
+            "filter": "actor=112043",
+            "id": "112043",
+            "role": "Aneka",
+            "tag": "Michaela Coel",
+            "tagKey": "5d7769b396b655001fdd6fe9",
+            "thumb": "https://metadata-static.plex.tv/c/people/cc2c7c20d21eb0832c5d03d02fecffdc.jpg"
+          },
+          {
+            "filter": "actor=140580",
+            "id": "140580",
+            "role": "Namora",
+            "tag": "Mabel Cadena",
+            "tagKey": "5e16515b27d563003ed660d3",
+            "thumb": "https://metadata-static.plex.tv/b/people/b97e4f92db01516849788fe1b866e1cb.jpg"
+          },
+          {
+            "filter": "actor=113112",
+            "id": "113112",
+            "role": "Dr. Graham",
+            "tag": "Lake Bell",
+            "tagKey": "5d776832151a60001f24d339",
+            "thumb": "https://metadata-static.plex.tv/b/people/b158320c71ecb5befb7d6521818eddbc.jpg"
+          },
+          {
+            "filter": "actor=140581",
+            "id": "140581",
+            "role": "Attuma",
+            "tag": "Alex Livinalli",
+            "tagKey": "5d7768a507c4a5001e67ac21",
+            "thumb": "https://metadata-static.plex.tv/people/5d7768a507c4a5001e67ac21.jpg"
+          },
+          {
+            "filter": "actor=140582",
+            "id": "140582",
+            "role": "Smitty",
+            "tag": "Robert John Burke",
+            "tagKey": "5d77682d8718ba001e3131ac",
+            "thumb": "https://metadata-static.plex.tv/8/people/81a06f9ee23dd8bc19110a33b9e21d76.jpg"
+          },
+          {
+            "filter": "actor=112068",
+            "id": "112068",
+            "role": "Border Tribe Elder",
+            "tag": "Danny Sapani",
+            "tagKey": "5d7768397228e5001f1df331",
+            "thumb": "https://metadata-static.plex.tv/people/5d7768397228e5001f1df331.jpg"
+          },
+          {
+            "filter": "actor=112271",
+            "id": "112271",
+            "role": "River Tribe Elder",
+            "tag": "Isaach De Bankolé",
+            "tagKey": "5d77682485719b001f3a04e1",
+            "thumb": "https://metadata-static.plex.tv/2/people/2185ff1eaea20f2a34a4544a62be5ea7.jpg"
+          },
+          {
+            "filter": "actor=112272",
+            "id": "112272",
+            "role": "Zawavari",
+            "tag": "Connie Chiume",
+            "tagKey": "5d7768472e80df001ebe09e1",
+            "thumb": "https://metadata-static.plex.tv/people/5d7768472e80df001ebe09e1.jpg"
+          },
+          {
+            "filter": "actor=94250",
+            "id": "94250",
+            "role": "Everett Ross",
+            "tag": "Martin Freeman",
+            "tagKey": "5d776826961905001eb9111d",
+            "thumb": "https://metadata-static.plex.tv/5/people/51899e85031bd16b71bf6e33fa20cda0.jpg"
+          },
+          {
+            "filter": "actor=116688",
+            "id": "116688",
+            "role": "Valentina Allegra de Fontaine",
+            "tag": "Julia Louis-Dreyfus",
+            "tagKey": "5d7768275af944001f1f6ec8",
+            "thumb": "https://metadata-static.plex.tv/4/people/4876e6724400778eff550417cf336045.jpg"
+          },
+          {
+            "filter": "actor=95382",
+            "id": "95382",
+            "role": "U.S. Secretary of State",
+            "tag": "Richard Schiff",
+            "tagKey": "5d7768263c3c2a001fbcadd6",
+            "thumb": "https://metadata-static.plex.tv/6/people/68b16270a9766b8d1c776425bebd785f.jpg"
+          },
+          {
+            "filter": "actor=109098",
+            "id": "109098",
+            "role": "N'Jadaka / Erik 'Killmonger' Stevens",
+            "tag": "Michael B. Jordan",
+            "tagKey": "5d7768823ab0e7001f5033c4",
+            "thumb": "https://metadata-static.plex.tv/8/people/855634fdbe74c41a32b4d0b305d09c18.jpg"
+          },
+          {
+            "filter": "actor=127988",
+            "id": "127988",
+            "role": "Merchant Tribe Elder",
+            "tag": "Dorothy Steel",
+            "tagKey": "5d776b05fb0d55001f5592d7",
+            "thumb": "https://metadata-static.plex.tv/people/5d776b05fb0d55001f5592d7.jpg"
+          },
+          {
+            "filter": "actor=140583",
+            "id": "140583",
+            "role": "Mining Tribe Elder",
+            "tag": "Zainab Jah",
+            "tagKey": "5d77684c0ea56a001e2a2aa5",
+            "thumb": "https://metadata-static.plex.tv/4/people/4124460d703e38bb134922737e79053e.jpg"
+          },
+          {
+            "filter": "actor=112280",
+            "id": "112280",
+            "role": "Sope the Shaman",
+            "tag": "Sope Aluko",
+            "tagKey": "5d77692623d5a3001f4f6434",
+            "thumb": "https://metadata-static.plex.tv/people/5d77692623d5a3001f4f6434.jpg"
+          },
+          {
+            "filter": "actor=112290",
+            "id": "112290",
+            "role": "Griot (voice)",
+            "tag": "Trevor Noah",
+            "tagKey": "5d77687eeb5d26001f1edd7e",
+            "thumb": "https://metadata-static.plex.tv/people/5d77687eeb5d26001f1edd7e.jpg"
+          },
+          {
+            "filter": "actor=91804",
+            "id": "91804",
+            "role": "WDG Scientist",
+            "tag": "Shawn Roberts",
+            "tagKey": "5d77682b61141d001fb13e9f",
+            "thumb": "https://metadata-static.plex.tv/people/5d77682b61141d001fb13e9f.jpg"
+          },
+          {
+            "filter": "actor=109262",
+            "id": "109262",
+            "role": "Zola",
+            "tag": "Zola Williams",
+            "tagKey": "5d776b05fb0d55001f5592d9",
+            "thumb": "https://metadata-static.plex.tv/people/5d776b05fb0d55001f5592d9.jpg"
+          },
+          {
+            "filter": "actor=112276",
+            "id": "112276",
+            "role": "Nomble",
+            "tag": "Janeshia Adams-Ginyard",
+            "tagKey": "5d776885fb0d55001f512c08",
+            "thumb": "https://metadata-static.plex.tv/people/5d776885fb0d55001f512c08.jpg"
+          },
+          {
+            "filter": "actor=140584",
+            "id": "140584",
+            "role": "Jemini",
+            "tag": "Jemini Powell",
+            "tagKey": "6370f552136ea85697900668"
+          },
+          {
+            "filter": "actor=112275",
+            "id": "112275",
+            "role": "Dora Milaje",
+            "tag": "Marija Abney",
+            "tagKey": "5d776b05fb0d55001f5592d8",
+            "thumb": "https://metadata-static.plex.tv/people/5d776b05fb0d55001f5592d8.jpg"
+          },
+          {
+            "filter": "actor=114796",
+            "id": "114796",
+            "role": "Dora Milaje",
+            "tag": "Keisha Tucker",
+            "tagKey": "5e4fd461a09d3e0037012ea8",
+            "thumb": "https://metadata-static.plex.tv/2/people/24c05fc4e6f7a23a75db42db842b9765.jpg"
+          },
+          {
+            "filter": "actor=140585",
+            "id": "140585",
+            "role": "Dora Milaje",
+            "tag": "Ivy Haralson",
+            "tagKey": "61698da83ccba719f3f2e3c1"
+          },
+          {
+            "filter": "actor=140586",
+            "id": "140586",
+            "role": "Dora Milaje",
+            "tag": "Maya Macatumpag",
+            "tagKey": "5f1c7db4cc93a100401e972d"
+          },
+          {
+            "filter": "actor=140587",
+            "id": "140587",
+            "role": "Funeral Singer",
+            "tag": "Baaba Maal",
+            "tagKey": "5d77689e7a53e9001e6d4337",
+            "thumb": "https://metadata-static.plex.tv/2/people/27913b88f8663602f5b016441c197741.jpg"
+          },
+          {
+            "filter": "actor=140588",
+            "id": "140588",
+            "role": "Drummer / Naval Guard",
+            "tag": "Jabari Exum",
+            "tagKey": "6370f552136ea85697900666"
+          },
+          {
+            "filter": "actor=140589",
+            "id": "140589",
+            "role": "Drummer",
+            "tag": "Massamba Diop",
+            "tagKey": "6370f552136ea85697900667"
+          },
+          {
+            "filter": "actor=140590",
+            "id": "140590",
+            "role": "Drummer",
+            "tag": "Magatte Saw",
+            "tagKey": "604e374133732c002c9a65ce"
+          },
+          {
+            "filter": "actor=140591",
+            "id": "140591",
+            "role": "Assembly Chairperson",
+            "tag": "Gerardo Aldana",
+            "tagKey": "5d776e62594b2b001e72235a"
+          },
+          {
+            "filter": "actor=140592",
+            "id": "140592",
+            "role": "French Secretary of State",
+            "tag": "Gigi Bermingham",
+            "tagKey": "5d7768412ec6b5001f6be380",
+            "thumb": "https://metadata-static.plex.tv/e/people/e7c50ee53ccea55a9dd63c7c28bdbad4.jpg"
+          },
+          {
+            "filter": "actor=140593",
+            "id": "140593",
+            "role": "Young Mali Technician",
+            "tag": "Rudolph Massanga",
+            "tagKey": "6370f552136ea8569790066a"
+          },
+          {
+            "filter": "actor=108651",
+            "id": "108651",
+            "role": "Jackson",
+            "tag": "Judd Wild",
+            "tagKey": "5d7768baad5437001f74e684",
+            "thumb": "https://metadata-static.plex.tv/7/people/7c144923d23b134a1593269e36aa4d5f.jpg"
+          },
+          {
+            "filter": "actor=140594",
+            "id": "140594",
+            "role": "Rita Salazar",
+            "tag": "Amber Harrington",
+            "tagKey": "616ade1de8e432810e6581f3"
+          },
+          {
+            "filter": "actor=140595",
+            "id": "140595",
+            "role": "Henderson",
+            "tag": "Michael Blake Kruse",
+            "tagKey": "5d776f1b7a53e9001e78b813"
+          },
+          {
+            "filter": "actor=140596",
+            "id": "140596",
+            "role": "Cargo Ship Helo Pilot",
+            "tag": "Justin James Boykin",
+            "tagKey": "5d776d1f96b655001fe4033f",
+            "thumb": "https://metadata-static.plex.tv/6/people/6a7cd7ae8f13700f87f1fa7a7be919eb.jpg"
+          },
+          {
+            "filter": "actor=108521",
+            "id": "108521",
+            "role": "Anderson Cooper",
+            "tag": "Anderson Cooper",
+            "tagKey": "5d77683aeb5d26001f1e1e05",
+            "thumb": "https://metadata-static.plex.tv/people/5d77683aeb5d26001f1e1e05.jpg"
+          },
+          {
+            "filter": "actor=140597",
+            "id": "140597",
+            "role": "River Barrier Naval Guard",
+            "tag": "Mackenro Alexander",
+            "tagKey": "5f3fc3333e5306003e55036c"
+          },
+          {
+            "filter": "actor=140598",
+            "id": "140598",
+            "role": "Naval Officer",
+            "tag": "Kamaru Usman",
+            "tagKey": "5f4027e804a86500409fd230",
+            "thumb": "https://metadata-static.plex.tv/0/people/093884ef6b126272f1c56bb11c8f8f7c.jpg"
+          },
+          {
+            "filter": "actor=123546",
+            "id": "123546",
+            "role": "M'Bele",
+            "tag": "T. Love",
+            "tagKey": "5d776b05fb0d55001f5592ec",
+            "thumb": "https://metadata-static.plex.tv/people/5d776b05fb0d55001f5592ec.jpg"
+          },
+          {
+            "filter": "actor=117708",
+            "id": "117708",
+            "role": "Jabari Warrior",
+            "tag": "Floyd Anthony Johns Jr.",
+            "tagKey": "5d776b53ad5437001f79b9b6",
+            "thumb": "https://metadata-static.plex.tv/people/5d776b53ad5437001f79b9b6.jpg"
+          },
+          {
+            "filter": "actor=140599",
+            "id": "140599",
+            "role": "Jabari Warrior",
+            "tag": "Jermaine Brantley",
+            "tagKey": "5e1649d661c6140040d7fc92",
+            "thumb": "https://metadata-static.plex.tv/people/5e1649d661c6140040d7fc92.jpg"
+          },
+          {
+            "filter": "actor=140600",
+            "id": "140600",
+            "role": "Jabari Warrior",
+            "tag": "Granger Summerset II",
+            "tagKey": "5f406c5786422500428c4fd4"
+          },
+          {
+            "filter": "actor=140601",
+            "id": "140601",
+            "role": "MIT Student",
+            "tag": "Luke Lenza",
+            "tagKey": "6370f552136ea8569790066d"
+          },
+          {
+            "filter": "actor=140602",
+            "id": "140602",
+            "role": "Federal Agent",
+            "tag": "Alan Wells",
+            "tagKey": "5d776838103a2d001f5687ac",
+            "thumb": "https://metadata-static.plex.tv/people/5d776838103a2d001f5687ac.jpg"
+          },
+          {
+            "filter": "actor=140603",
+            "id": "140603",
+            "role": "FBI Special Agent",
+            "tag": "Bill Barrett",
+            "tagKey": "6083d977444a60002da33701"
+          },
+          {
+            "filter": "actor=140604",
+            "id": "140604",
+            "role": "Haitian School Kid",
+            "tag": "Lieiry J. Perez Escalera",
+            "tagKey": "6370f552136ea8569790066e"
+          },
+          {
+            "filter": "actor=140605",
+            "id": "140605",
+            "role": "Haitian School Kid",
+            "tag": "Sevyn Hill",
+            "tagKey": "6370f552136ea8569790066f"
+          },
+          {
+            "filter": "actor=140606",
+            "id": "140606",
+            "role": "Haitian School Kid",
+            "tag": "Gavin Macon",
+            "tagKey": "6370f552136ea85697900670"
+          },
+          {
+            "filter": "actor=140607",
+            "id": "140607",
+            "role": "Haitian School Kid",
+            "tag": "Skylar Ebron",
+            "tagKey": "6370f552136ea85697900671"
+          },
+          {
+            "filter": "actor=140608",
+            "id": "140608",
+            "role": "Haitian School Kid",
+            "tag": "Taylor Holmes",
+            "tagKey": "6370f552136ea85697900672"
+          },
+          {
+            "filter": "actor=140609",
+            "id": "140609",
+            "role": "Talokanil Guard",
+            "tag": "Angela Cipra",
+            "tagKey": "6370f552136ea85697900673"
+          },
+          {
+            "filter": "actor=140610",
+            "id": "140610",
+            "role": "Talokanil Guard",
+            "tag": "Faya Madrid",
+            "tagKey": "6370f552136ea85697900674"
+          },
+          {
+            "filter": "actor=140611",
+            "id": "140611",
+            "role": "Female Mayan Elder",
+            "tag": "María Telón",
+            "tagKey": "5d77698c7a53e9001e6e936c",
+            "thumb": "https://image.tmdb.org/t/p/original/tlfwcpVCjSdYYEvLiiVe1jFAuhP.jpg"
+          },
+          {
+            "filter": "actor=140612",
+            "id": "140612",
+            "role": "Namor's Mother",
+            "tag": "María Mercedes Coroy",
+            "tagKey": "5d776b69594b2b001e6d947e",
+            "thumb": "https://metadata-static.plex.tv/people/5d776b69594b2b001e6d947e.jpg"
+          },
+          {
+            "filter": "actor=140613",
+            "id": "140613",
+            "role": "Shaman",
+            "tag": "Josué Maychi",
+            "tagKey": "5f3fbf3f1ae7100041fc8314",
+            "thumb": "https://metadata-static.plex.tv/2/people/28f970559b110170f1ad2e8cc1230453.jpg"
+          },
+          {
+            "filter": "actor=96885",
+            "id": "96885",
+            "role": "Yucatan Elder",
+            "tag": "Sal Lopez",
+            "tagKey": "5d776827880197001ec90ae3",
+            "thumb": "https://metadata-static.plex.tv/8/people/802548390b27f594650892dfe554a135.jpg"
+          },
+          {
+            "filter": "actor=140614",
+            "id": "140614",
+            "role": "Namor's Mother (Older)",
+            "tag": "Irma Estella La Guerre",
+            "tagKey": "5d77707631d95e001f1a2193",
+            "thumb": "https://metadata-static.plex.tv/0/people/09587182629b809b1054232b36f34035.jpg"
+          },
+          {
+            "filter": "actor=140615",
+            "id": "140615",
+            "role": "Young Namor",
+            "tag": "Manuel Chavez",
+            "tagKey": "62ff4580b2cc0a7ab1f18d4f",
+            "thumb": "https://metadata-static.plex.tv/4/people/4dcea4d82e1a43bed4278eaab585ded8.jpg"
+          },
+          {
+            "filter": "actor=140616",
+            "id": "140616",
+            "role": "Hacienda Owner",
+            "tag": "Leonardo Castro",
+            "tagKey": "619cf7ff4b44ca915078a945"
+          },
+          {
+            "filter": "actor=123615",
+            "id": "123615",
+            "role": "Friar",
+            "tag": "Juan Carlos Cantu",
+            "tagKey": "5d77683c6f4521001ea9d503",
+            "thumb": "https://metadata-static.plex.tv/people/5d77683c6f4521001ea9d503.jpg"
+          },
+          {
+            "filter": "actor=109021",
+            "id": "109021",
+            "role": "Fisherman",
+            "tag": "Shawntae Hughes",
+            "tagKey": "5e69c6d60fdbbd003de628b7",
+            "thumb": "https://metadata-static.plex.tv/people/5e69c6d60fdbbd003de628b7.jpg"
+          },
+          {
+            "filter": "actor=140617",
+            "id": "140617",
+            "role": "Terrified Man",
+            "tag": "Corey Hibbert",
+            "tagKey": "5f3fe5a2bf3e560040b2fb56",
+            "thumb": "https://metadata-static.plex.tv/0/people/0e8b53f991c43876078e150491d1b4db.jpg"
+          },
+          {
+            "filter": "actor=140618",
+            "id": "140618",
+            "role": "Wakandan Kid",
+            "tag": "Zaiden James",
+            "tagKey": "6370f552136ea85697900675"
+          },
+          {
+            "filter": "actor=140619",
+            "id": "140619",
+            "role": "Naval Engineer",
+            "tag": "Aba Arthur",
+            "tagKey": "5d77688c9ab54400214e78fc"
+          },
+          {
+            "filter": "actor=140620",
+            "id": "140620",
+            "role": "Flower Shop Owner",
+            "tag": "Délé Ogundiran",
+            "tagKey": "5d77683554f42c001f8c463e",
+            "thumb": "https://metadata-static.plex.tv/3/people/33e9eea633f784e47144ceb2602f7c19.jpg"
+          },
+          {
+            "filter": "actor=140621",
+            "id": "140621",
+            "role": "Pete",
+            "tag": "Kevin Changaris",
+            "tagKey": "5e1653d310faa500400f8eaa",
+            "thumb": "https://metadata-static.plex.tv/d/people/d25013711d628aea3f0b29ebd2b0a5c3.jpg"
+          },
+          {
+            "filter": "actor=140622",
+            "id": "140622",
+            "role": "Haitian Taxi Passenger",
+            "tag": "Valerio Dorvillen",
+            "tagKey": "6370f552136ea85697900676"
+          },
+          {
+            "filter": "actor=140623",
+            "id": "140623",
+            "role": "Haitian Taxi Passenger",
+            "tag": "Don Castor",
+            "tagKey": "6370f552136ea85697900677"
+          },
+          {
+            "filter": "actor=140624",
+            "id": "140624",
+            "role": "Haitian Taxi Passenger",
+            "tag": "Jonathan González Collins",
+            "tagKey": "6370f552136ea85697900678"
+          },
+          {
+            "filter": "actor=140625",
+            "id": "140625",
+            "role": "Toussaint",
+            "tag": "Divine Love Konadu-Sun",
+            "tagKey": "6370f552136ea85697900679",
+            "thumb": "https://metadata-static.plex.tv/2/people/2a5a9c96ba51088f862e6cfe23509353.jpg"
+          },
+          {
+            "filter": "actor=110217",
+            "id": "110217",
+            "role": "T'Challa / Black Panther (archive footage) (uncredited)",
+            "tag": "Chadwick Boseman",
+            "tagKey": "5d77690996b655001fdc8c8f",
+            "thumb": "https://metadata-static.plex.tv/d/people/d12e4d776c045ce4c8cba456a44e6fb3.jpg"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -25,5 +25,8 @@ pub const SERVER_MEDIA_PROVIDERS: &str = "/media/providers";
 pub const SERVER_MYPLEX_ACCOUNT: &str = "/myplex/account";
 pub const SERVER_MYPLEX_CLAIM: &str = "/myplex/claim";
 pub const SERVER_PREFS: &str = "/:/prefs";
+pub const SERVER_TRANSCODE_SESSIONS: &str = "/transcode/sessions";
+pub const SERVER_TRANSCODE_DECISION: &str = "/video/:/transcode/universal/decision";
+pub const SERVER_TRANSCODE_DOWNLOAD: &str = "/video/:/transcode/universal";
 
 pub const CLIENT_RESOURCES: &str = "/resources";

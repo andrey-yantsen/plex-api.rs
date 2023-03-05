@@ -9,12 +9,14 @@ use crate::{
     media_container::{
         server::library::{
             LibraryType, Media as MediaMetadata, Metadata, MetadataMediaContainer, MetadataType,
-            Part as PartMetadata, PlaylistType, ServerLibrary,
+            Part as PartMetadata, PlaylistType, Protocol, ServerLibrary,
         },
         MediaContainerWrapper,
     },
-    HttpClient, Result,
+    HttpClient, MusicTranscodeOptions, Result, TranscodeSession, VideoTranscodeOptions,
 };
+
+use super::transcode::{create_transcode_session, Context};
 
 pub trait FromMetadata {
     /// Creates an item given the http configuration and item metadata. No
@@ -129,8 +131,10 @@ where
 }
 
 /// A single media format for a `MediaItem`.
+#[derive(Debug, Clone)]
 pub struct Media<'a> {
     client: &'a HttpClient,
+    media_index: usize,
     media: &'a MediaMetadata,
 }
 
@@ -141,8 +145,11 @@ impl<'a> Media<'a> {
         self.media
             .parts
             .iter()
-            .map(|part| Part {
+            .enumerate()
+            .map(|(index, part)| Part {
                 client: self.client,
+                media_index: self.media_index,
+                part_index: index,
                 part,
             })
             .collect()
@@ -155,8 +162,11 @@ impl<'a> Media<'a> {
 }
 
 /// One part of a `Media`.
+#[derive(Debug, Clone)]
 pub struct Part<'a> {
-    client: &'a HttpClient,
+    pub(crate) client: &'a HttpClient,
+    pub(crate) media_index: usize,
+    pub(crate) part_index: usize,
     part: &'a PartMetadata,
 }
 
@@ -174,7 +184,7 @@ impl<'a> Part<'a> {
         W: AsyncWrite + Unpin,
         R: RangeBounds<u64>,
     {
-        let path = format!("{}?download=1", self.part.key);
+        let path = format!("{}?download=1", self.part.key.as_ref().unwrap());
 
         let start = match range.start_bound() {
             std::ops::Bound::Included(v) => *v,
@@ -221,8 +231,10 @@ pub trait MediaItem: MetadataItem {
         if let Some(ref media) = metadata.media {
             media
                 .iter()
-                .map(|media| Media {
+                .enumerate()
+                .map(|(index, media)| Media {
                     client: self.client(),
+                    media_index: index,
                     media,
                 })
                 .collect()
@@ -318,6 +330,39 @@ derive_metadata_item!(Movie);
 
 impl MediaItem for Movie {}
 
+impl Movie {
+    /// Starts an offline transcode of the given media part using the provided
+    /// options.
+    ///
+    /// The server may refuse to transcode if the options suggest that the
+    /// original media file can be played back directly.
+    pub async fn create_download_session<'a>(
+        &'a self,
+        part: &Part<'a>,
+        options: VideoTranscodeOptions,
+    ) -> Result<TranscodeSession> {
+        create_transcode_session(
+            &self.metadata,
+            part,
+            Context::Static,
+            Protocol::Http,
+            options,
+        )
+        .await
+    }
+
+    /// Starts a streaming transcode using of the given media part using the
+    /// streaming protocol and provided options.
+    pub async fn create_streaming_session<'a>(
+        &'a self,
+        part: &Part<'a>,
+        protocol: Protocol,
+        options: VideoTranscodeOptions,
+    ) -> Result<TranscodeSession> {
+        create_transcode_session(&self.metadata, part, Context::Streaming, protocol, options).await
+    }
+}
+
 #[derive(Debug, Clone)]
 pub struct Show {
     client: HttpClient,
@@ -391,6 +436,37 @@ impl Episode {
     pub async fn season(&self) -> Result<Option<Season>> {
         parent(self, &self.client).await
     }
+
+    /// Starts an offline transcode of the given media part using the provided
+    /// options.
+    ///
+    /// The server may refuse to transcode if the options suggest that the
+    /// original media file can be played back directly.
+    pub async fn create_download_session<'a>(
+        &'a self,
+        part: &Part<'a>,
+        options: VideoTranscodeOptions,
+    ) -> Result<TranscodeSession> {
+        create_transcode_session(
+            &self.metadata,
+            part,
+            Context::Static,
+            Protocol::Http,
+            options,
+        )
+        .await
+    }
+
+    /// Starts a streaming transcode using of the given media part using the
+    /// streaming protocol and provided options.
+    pub async fn create_streaming_session<'a>(
+        &'a self,
+        part: &Part<'a>,
+        protocol: Protocol,
+        options: VideoTranscodeOptions,
+    ) -> Result<TranscodeSession> {
+        create_transcode_session(&self.metadata, part, Context::Streaming, protocol, options).await
+    }
 }
 
 #[derive(Debug, Clone)]
@@ -450,6 +526,37 @@ impl Track {
     /// Retrieves the album for this track.
     pub async fn album(&self) -> Result<Option<MusicAlbum>> {
         parent(self, &self.client).await
+    }
+
+    /// Starts an offline transcode of the given media part using the provided
+    /// options.
+    ///
+    /// The server may refuse to transcode if the options suggest that the
+    /// original media file can be played back directly.
+    pub async fn create_download_session<'a>(
+        &'a self,
+        part: &Part<'a>,
+        options: MusicTranscodeOptions,
+    ) -> Result<TranscodeSession> {
+        create_transcode_session(
+            &self.metadata,
+            part,
+            Context::Static,
+            Protocol::Http,
+            options,
+        )
+        .await
+    }
+
+    /// Starts a streaming transcode using of the given media part using the
+    /// streaming protocol and provided options.
+    pub async fn create_streaming_session<'a>(
+        &'a self,
+        part: &Part<'a>,
+        protocol: Protocol,
+        options: MusicTranscodeOptions,
+    ) -> Result<TranscodeSession> {
+        create_transcode_session(&self.metadata, part, Context::Streaming, protocol, options).await
     }
 }
 

@@ -169,9 +169,11 @@ impl flags::Test {
         }
 
         let test_name = self.test_name.clone().unwrap_or_default();
+        // Tests against a live server can change the server state while running
+        // so running more than one test in parallel can cause conflicts.
         let mut test_run_result = cmd!(
             sh,
-            "cargo test --workspace --no-fail-fast --features {features} {test_name}"
+            "cargo test --workspace --no-fail-fast --features {features} {test_name} -- --test-threads=1"
         )
         .run();
 

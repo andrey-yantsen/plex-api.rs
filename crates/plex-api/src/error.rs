@@ -69,6 +69,12 @@ pub enum Error {
     PinNotLinked,
     #[error("Item requested was not found on the server.")]
     ItemNotFound,
+    #[error("The requested transcode parameters were invalid.")]
+    InvalidTranscodeSettings,
+    #[error("The transcode request failed: {0}.")]
+    TranscodeError(String),
+    #[error("The server thinks the client should just play the original media.")]
+    TranscodeRefused,
 }
 
 const PLEX_API_ERROR_CODE_AUTH_OTP_REQUIRED: i32 = 1029;

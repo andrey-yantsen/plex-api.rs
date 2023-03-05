@@ -13,7 +13,7 @@ use std::time::Duration;
 use uuid::Uuid;
 
 const DEFAULT_TIMEOUT: Duration = Duration::from_secs(30);
-const DEFAULT_CONNECTIONT_TIMEOUT: Duration = Duration::from_secs(5);
+const DEFAULT_CONNECTION_TIMEOUT: Duration = Duration::from_secs(5);
 
 #[derive(Debug, Clone)]
 pub struct HttpClient {
@@ -114,6 +114,7 @@ impl HttpClient {
             base_url: self.api_url.clone(),
             path_and_query: path,
             request_builder: self.prepare_request().method("POST"),
+            timeout: Some(DEFAULT_TIMEOUT),
         }
     }
 
@@ -129,6 +130,7 @@ impl HttpClient {
             base_url: self.api_url.clone(),
             path_and_query: path,
             request_builder: self.prepare_request_min().method("POST"),
+            timeout: Some(DEFAULT_TIMEOUT),
         }
     }
 
@@ -143,6 +145,7 @@ impl HttpClient {
             base_url: self.api_url.clone(),
             path_and_query: path,
             request_builder: self.prepare_request().method("GET"),
+            timeout: Some(DEFAULT_TIMEOUT),
         }
     }
 
@@ -158,6 +161,7 @@ impl HttpClient {
             base_url: self.api_url.clone(),
             path_and_query: path,
             request_builder: self.prepare_request_min().method("GET"),
+            timeout: Some(DEFAULT_TIMEOUT),
         }
     }
 
@@ -172,6 +176,7 @@ impl HttpClient {
             base_url: self.api_url.clone(),
             path_and_query: path,
             request_builder: self.prepare_request().method("PUT"),
+            timeout: Some(DEFAULT_TIMEOUT),
         }
     }
 
@@ -187,6 +192,7 @@ impl HttpClient {
             base_url: self.api_url.clone(),
             path_and_query: path,
             request_builder: self.prepare_request_min().method("PUT"),
+            timeout: Some(DEFAULT_TIMEOUT),
         }
     }
 
@@ -201,6 +207,7 @@ impl HttpClient {
             base_url: self.api_url.clone(),
             path_and_query: path,
             request_builder: self.prepare_request().method("DELETE"),
+            timeout: Some(DEFAULT_TIMEOUT),
         }
     }
 
@@ -216,6 +223,7 @@ impl HttpClient {
             base_url: self.api_url.clone(),
             path_and_query: path,
             request_builder: self.prepare_request_min().method("DELETE"),
+            timeout: Some(DEFAULT_TIMEOUT),
         }
     }
 
@@ -245,6 +253,7 @@ where
     base_url: Uri,
     path_and_query: P,
     request_builder: Builder,
+    timeout: Option<Duration>,
 }
 
 impl<'a, P> RequestBuilder<'a, P>
@@ -252,6 +261,17 @@ where
     PathAndQuery: TryFrom<P>,
     <PathAndQuery as TryFrom<P>>::Error: Into<http::Error>,
 {
+    // Sets the maximum timeout for this request or disables timeouts.
+    pub fn timeout(self, timeout: Option<Duration>) -> RequestBuilder<'a, P> {
+        Self {
+            http_client: self.http_client,
+            base_url: self.base_url,
+            path_and_query: self.path_and_query,
+            request_builder: self.request_builder,
+            timeout,
+        }
+    }
+
     /// Adds a body to the request.
     pub fn body<B>(self, body: B) -> Result<Request<'a, B>>
     where
@@ -262,9 +282,14 @@ where
         uri_parts.path_and_query = Some(path_and_query);
         let uri = Uri::from_parts(uri_parts).map_err(Into::<http::Error>::into)?;
 
+        let mut builder = self.request_builder.uri(uri);
+        if let Some(timeout) = self.timeout {
+            builder = builder.timeout(timeout);
+        }
+
         Ok(Request {
             http_client: self.http_client,
-            request: self.request_builder.uri(uri).body(body)?,
+            request: builder.body(body)?,
         })
     }
 
@@ -289,6 +314,7 @@ where
             base_url: self.base_url,
             path_and_query: self.path_and_query,
             request_builder: self.request_builder.header(key, value),
+            timeout: self.timeout,
         }
     }
 
@@ -350,8 +376,7 @@ impl Default for HttpClientBuilder {
         let client = HttpClient {
             api_url: Uri::from_static(MYPLEX_DEFAULT_API_URL),
             http_client: IsahcHttpClient::builder()
-                .timeout(DEFAULT_TIMEOUT)
-                .connect_timeout(DEFAULT_CONNECTIONT_TIMEOUT)
+                .connect_timeout(DEFAULT_CONNECTION_TIMEOUT)
                 .redirect_policy(RedirectPolicy::None)
                 .build()
                 .expect("failed to create default http client"),
@@ -376,6 +401,12 @@ impl Default for HttpClientBuilder {
 }
 
 impl HttpClientBuilder {
+    /// Creates a client that maps to Plex's Generic profile which has no
+    /// particular settings defined for transcoding.
+    pub fn generic() -> Self {
+        Self::default().set_x_plex_platform("Generic".to_string())
+    }
+
     pub fn build(self) -> Result<HttpClient> {
         self.client
     }
