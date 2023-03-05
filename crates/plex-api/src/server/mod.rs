@@ -5,7 +5,7 @@ pub mod transcode;
 use self::{
     library::{metadata_items, Library},
     prefs::Preferences,
-    transcode::TranscodeSessionsMediaContainer,
+    transcode::{transcode_artwork, ArtTranscodeOptions, TranscodeSessionsMediaContainer},
 };
 #[cfg(not(feature = "tests_deny_unknown_fields"))]
 use crate::media_container::server::library::LibraryType;
@@ -23,6 +23,7 @@ use crate::{
     Error, HttpClientBuilder, Item, Result, TranscodeSession,
 };
 use core::convert::TryFrom;
+use futures::AsyncWrite;
 use http::{StatusCode, Uri};
 use isahc::AsyncReadResponseExt;
 
@@ -95,6 +96,24 @@ impl Server {
         } else {
             Vec::new()
         }
+    }
+
+    /// Given the path to some item's artwork (`art` or `thumb` properties for
+    /// example but many other types of images will work) this will request a
+    /// scaled version of that image be written to the passed writer as a JPEG.
+    /// The image will always maintain its aspect ratio.
+    pub async fn transcode_artwork<W>(
+        &self,
+        art: &str,
+        width: u32,
+        height: u32,
+        options: ArtTranscodeOptions,
+        writer: W,
+    ) -> Result<()>
+    where
+        W: AsyncWrite + Unpin,
+    {
+        transcode_artwork(&self.client, art, width, height, options, writer).await
     }
 
     /// Retrieves a list of the current transcode sessions.

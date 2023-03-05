@@ -28,5 +28,6 @@ pub const SERVER_PREFS: &str = "/:/prefs";
 pub const SERVER_TRANSCODE_SESSIONS: &str = "/transcode/sessions";
 pub const SERVER_TRANSCODE_DECISION: &str = "/video/:/transcode/universal/decision";
 pub const SERVER_TRANSCODE_DOWNLOAD: &str = "/video/:/transcode/universal";
+pub const SERVER_TRANSCODE_ART: &str = "/photo/:/transcode";
 
 pub const CLIENT_RESOURCES: &str = "/resources";

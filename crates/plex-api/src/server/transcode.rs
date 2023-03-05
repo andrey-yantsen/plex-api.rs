@@ -31,7 +31,7 @@ use crate::{
         },
         MediaContainer, MediaContainerWrapper,
     },
-    url::{SERVER_TRANSCODE_DECISION, SERVER_TRANSCODE_DOWNLOAD},
+    url::{SERVER_TRANSCODE_ART, SERVER_TRANSCODE_DECISION, SERVER_TRANSCODE_DOWNLOAD},
     AudioCodec, ContainerFormat, HttpClient, Result, VideoCodec,
 };
 
@@ -926,5 +926,58 @@ impl TranscodeSession {
             StatusCode::OK | StatusCode::NOT_FOUND => Ok(response.consume().await?),
             _ => Err(crate::Error::from_response(response).await),
         }
+    }
+}
+
+#[derive(Debug, Clone, Copy)]
+pub struct ArtTranscodeOptions {
+    /// If true and the source image is smaller than that requested it will be
+    /// upscaled.
+    pub upscale: bool,
+    /// Sets whether the requested size is the minimum size desired or the
+    /// maximum.
+    pub min_size: bool,
+}
+
+impl Default for ArtTranscodeOptions {
+    fn default() -> Self {
+        Self {
+            upscale: true,
+            min_size: true,
+        }
+    }
+}
+
+pub(crate) async fn transcode_artwork<W>(
+    client: &HttpClient,
+    art: &str,
+    width: u32,
+    height: u32,
+    options: ArtTranscodeOptions,
+    writer: W,
+) -> Result<()>
+where
+    W: AsyncWrite + Unpin,
+{
+    let query = Query::new()
+        .param("url", art)
+        .param("upscale", bs(options.upscale))
+        .param("minSize", bs(options.min_size))
+        .param("width", width.to_string())
+        .param("height", height.to_string());
+
+    let mut response = client
+        .get(format!("{SERVER_TRANSCODE_ART}?{}", query.to_string()))
+        .send()
+        .await?;
+
+    match response.status() {
+        // Sometimes the server will respond not found but still cancel the
+        // session.
+        StatusCode::OK => {
+            response.copy_to(writer).await?;
+            Ok(())
+        }
+        _ => Err(crate::Error::from_response(response).await),
     }
 }

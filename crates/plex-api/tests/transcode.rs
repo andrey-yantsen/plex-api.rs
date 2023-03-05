@@ -952,6 +952,91 @@ mod offline {
             assert_eq!(session.video_transcode(), None);
         }
     }
+
+    mod artwork {
+        use super::*;
+        use plex_api::{ArtTranscodeOptions, MetadataItem, Movie};
+
+        #[plex_api_test_helper::offline_test]
+        async fn transcode_art(#[future] server_authenticated: Mocked<Server>) {
+            let server = server_authenticated.await;
+            let (server, mock_server) = server.split();
+
+            let mut m = mock_server.mock(|when, then| {
+                when.method(GET).path("/library/metadata/159637");
+                then.status(200)
+                    .header("content-type", "text/json")
+                    .body_from_file("tests/mocks/transcode/metadata_159637.json");
+            });
+
+            let item: Movie = server.item_by_id(159637).await.unwrap().try_into().unwrap();
+            m.assert();
+            m.delete();
+
+            let mut m = mock_server.mock(|when, then| {
+                when.method(GET)
+                    .path("/photo/:/transcode")
+                    .query_param("upscale", "1")
+                    .query_param("minSize", "1")
+                    .query_param("width", "1280")
+                    .query_param("height", "1024")
+                    .query_param("url", "/library/metadata/159637/thumb/1675330665");
+                then.status(200)
+                    .header("content-type", "image/jpeg")
+                    // Doesn't make much difference what we return
+                    .body("foo");
+            });
+
+            let mut buf = Vec::<u8>::new();
+            server
+                .transcode_artwork(
+                    item.metadata().thumb.as_ref().unwrap(),
+                    1280,
+                    1024,
+                    Default::default(),
+                    &mut buf,
+                )
+                .await
+                .unwrap();
+            m.assert();
+            m.delete();
+
+            assert_eq!(std::str::from_utf8(&buf).unwrap(), "foo");
+
+            let mut m = mock_server.mock(|when, then| {
+                when.method(GET)
+                    .path("/photo/:/transcode")
+                    .query_param("upscale", "0")
+                    .query_param("minSize", "0")
+                    .query_param("width", "480")
+                    .query_param("height", "320")
+                    .query_param("url", "/library/metadata/159637/thumb/1675330665");
+                then.status(200)
+                    .header("content-type", "image/jpeg")
+                    // Doesn't make much difference what we return
+                    .body("foo");
+            });
+
+            let mut buf = Vec::<u8>::new();
+            server
+                .transcode_artwork(
+                    item.metadata().thumb.as_ref().unwrap(),
+                    480,
+                    320,
+                    ArtTranscodeOptions {
+                        upscale: false,
+                        min_size: false,
+                    },
+                    &mut buf,
+                )
+                .await
+                .unwrap();
+            m.assert();
+            m.delete();
+
+            assert_eq!(std::str::from_utf8(&buf).unwrap(), "foo");
+        }
+    }
 }
 
 mod online {
@@ -1778,6 +1863,117 @@ mod online {
                 .unwrap();
 
             assert!(matches!(error, plex_api::Error::TranscodeRefused));
+        }
+    }
+
+    mod artwork {
+        use super::super::fixtures::online::server::*;
+        use super::*;
+        use image::io::Reader as ImageReader;
+        use plex_api::{ArtTranscodeOptions, MetadataItem, Movie, Server};
+        use std::io::Cursor;
+
+        #[plex_api_test_helper::online_test]
+        async fn transcode_art(#[future] server: Server) {
+            let server = generify(server.await).await;
+
+            let movie: Movie = server.item_by_id(55).await.unwrap().try_into().unwrap();
+            assert_eq!(movie.title(), "Big Buck Bunny");
+
+            let mut buf = Vec::<u8>::new();
+            server
+                .transcode_artwork(
+                    movie.metadata().thumb.as_ref().unwrap(),
+                    10000,
+                    10000,
+                    ArtTranscodeOptions {
+                        upscale: false,
+                        min_size: true,
+                    },
+                    &mut buf,
+                )
+                .await
+                .unwrap();
+
+            let img = ImageReader::new(Cursor::new(buf))
+                .with_guessed_format()
+                .unwrap()
+                .decode()
+                .unwrap();
+            // Default size seems to be 1000x1500
+            assert_eq!(img.width(), 1000);
+            assert_eq!(img.height(), 1500);
+
+            let mut buf = Vec::<u8>::new();
+            server
+                .transcode_artwork(
+                    movie.metadata().thumb.as_ref().unwrap(),
+                    900,
+                    900,
+                    ArtTranscodeOptions {
+                        upscale: false,
+                        min_size: true,
+                    },
+                    &mut buf,
+                )
+                .await
+                .unwrap();
+
+            let img = ImageReader::new(Cursor::new(buf))
+                .with_guessed_format()
+                .unwrap()
+                .decode()
+                .unwrap();
+            // Image must be at least 900x900
+            assert_eq!(img.width(), 900);
+            assert_eq!(img.height(), 1350);
+
+            let mut buf = Vec::<u8>::new();
+            server
+                .transcode_artwork(
+                    movie.metadata().thumb.as_ref().unwrap(),
+                    900,
+                    900,
+                    ArtTranscodeOptions {
+                        upscale: false,
+                        min_size: false,
+                    },
+                    &mut buf,
+                )
+                .await
+                .unwrap();
+
+            let img = ImageReader::new(Cursor::new(buf))
+                .with_guessed_format()
+                .unwrap()
+                .decode()
+                .unwrap();
+            // Image must be at most 900x900
+            assert_eq!(img.width(), 600);
+            assert_eq!(img.height(), 900);
+
+            let mut buf = Vec::<u8>::new();
+            server
+                .transcode_artwork(
+                    movie.metadata().thumb.as_ref().unwrap(),
+                    3000,
+                    3000,
+                    ArtTranscodeOptions {
+                        upscale: true,
+                        min_size: false,
+                    },
+                    &mut buf,
+                )
+                .await
+                .unwrap();
+
+            let img = ImageReader::new(Cursor::new(buf))
+                .with_guessed_format()
+                .unwrap()
+                .decode()
+                .unwrap();
+            assert_eq!(img.width(), 2000);
+            assert_eq!(img.height(), 3000);
         }
     }
 }
