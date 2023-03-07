@@ -72,6 +72,16 @@ pub struct HttpClient {
     ///
     /// Not sure what are the valid values, but at the time of writing Plex Web sends `2` here.
     pub x_plex_sync_version: String,
+
+    /// `X-Plex-Model` header value.
+    ///
+    /// Plex Web sends `hosted`
+    pub x_plex_model: String,
+
+    /// `X-Plex-Features` header value.
+    ///
+    /// Looks like it's a replacement for X-Plex-Provides
+    pub x_plex_features: String,
 }
 
 impl HttpClient {
@@ -85,6 +95,8 @@ impl HttpClient {
             .header("X-Plex-Device", &self.x_plex_device)
             .header("X-Plex-Device-Name", &self.x_plex_device_name)
             .header("X-Plex-Sync-Version", &self.x_plex_sync_version)
+            .header("X-Plex-Model", &self.x_plex_model)
+            .header("X-Plex-Features", &self.x_plex_features)
     }
 
     fn prepare_request_min(&self) -> Builder {
@@ -394,6 +406,8 @@ impl Default for HttpClientBuilder {
             x_plex_client_identifier: random_uuid.to_string(),
             x_plex_sync_version: String::from("2"),
             x_plex_token: SecretString::new("".to_owned()),
+            x_plex_model: String::from("hosted"),
+            x_plex_features: String::from("external-media,indirect-media,hub-style-list"),
         };
 
         Self { client: Ok(client) }
@@ -521,6 +535,24 @@ impl HttpClientBuilder {
         Self {
             client: self.client.map(move |mut client| {
                 client.x_plex_device_name = device_name;
+                client
+            }),
+        }
+    }
+
+    pub fn set_x_plex_model(self, model: String) -> Self {
+        Self {
+            client: self.client.map(move |mut client| {
+                client.x_plex_model = model;
+                client
+            }),
+        }
+    }
+
+    pub fn set_x_plex_features(self, features: String) -> Self {
+        Self {
+            client: self.client.map(move |mut client| {
+                client.x_plex_features = features;
                 client
             }),
         }
