@@ -30,7 +30,7 @@ jobs:
         with:
           shared-key: cache
       - name: Run tests
-        run: cargo run --package xtask -- test --offline
+        run: cargo run --package xtask -- test --offline --github-actions
 
   test_on_real_server_anonymous:
     if: "!github.event.review"
@@ -50,7 +50,7 @@ jobs:
         with:
           shared-key: cache-anonymous
       - name: "Test against real server [anonymous]"
-        run: cargo run --package xtask -- test --online --docker-tag '${{ matrix.plex_server_version }}' --deny-unknown-fields
+        run: cargo run --package xtask -- test --online --docker-tag '${{ matrix.plex_server_version }}' --deny-unknown-fields --github-actions
 
   test_on_real_server_authenticated_free:
     if: "(github.ref == 'refs/heads/main' && !github.event.review) || github.event.review.state == 'approved' || github.repository == github.event.pull_request.head.repo.full_name"
@@ -72,7 +72,7 @@ jobs:
         with:
           shared-key: cache-authenticated
       - name: "Test against real server [authenticated]"
-        run: cargo run --package xtask -- test --online --docker-tag '${{ matrix.plex_server_version }}' --token '${{ secrets.PLEX_API_AUTH_TOKEN_FREE }}' --deny-unknown-fields
+        run: cargo run --package xtask -- test --online --docker-tag '${{ matrix.plex_server_version }}' --token '${{ secrets.PLEX_API_AUTH_TOKEN_FREE }}' --deny-unknown-fields --github-actions
 
   test_on_real_server_authenticated_plexpass:
     if: "(github.ref == 'refs/heads/main' && !github.event.review) || github.event.review.state == 'approved' || github.repository == github.event.pull_request.head.repo.full_name"
@@ -94,7 +94,7 @@ jobs:
         with:
           shared-key: cache-authenticated
       - name: "Test against real server [authenticated]"
-        run: cargo run --package xtask -- test --online --docker-tag '${{ matrix.plex_server_version }}' --token '${{ secrets.PLEX_API_AUTH_TOKEN_PLEXPASS }}' --deny-unknown-fields
+        run: cargo run --package xtask -- test --online --docker-tag '${{ matrix.plex_server_version }}' --token '${{ secrets.PLEX_API_AUTH_TOKEN_PLEXPASS }}' --deny-unknown-fields --github-actions
 
   test_on_real_server_unclaimed_authenticated:
     if: "(github.ref == 'refs/heads/main' && !github.event.review) || github.event.review.state == 'approved' || github.repository == github.event.pull_request.head.repo.full_name"
@@ -115,7 +115,7 @@ jobs:
       - uses: Swatinem/rust-cache@v2.2.1
         with:
           shared-key: cache-authenticated
-      - run: cargo run --package xtask -- test --online --docker-tag '${{ matrix.plex_server_version }}' --token '${{ secrets.PLEX_API_AUTH_TOKEN_FREE }}' --server-owner-token '' --deny-unknown-fields
+      - run: cargo run --package xtask -- test --online --docker-tag '${{ matrix.plex_server_version }}' --token '${{ secrets.PLEX_API_AUTH_TOKEN_FREE }}' --server-owner-token '' --deny-unknown-fields --github-actions
 
   test_on_real_server_shared:
     if: "(github.ref == 'refs/heads/main' && !github.event.review) || github.event.review.state == 'approved' || github.repository == github.event.pull_request.head.repo.full_name"
@@ -136,7 +136,7 @@ jobs:
       - uses: Swatinem/rust-cache@v2.2.1
         with:
           shared-key: cache-authenticated
-      - run: cargo run --package xtask -- test --online --docker-tag '${{ matrix.plex_server_version }}' --token '${{ secrets.PLEX_API_AUTH_TOKEN_FREE }}' --server-owner-token '${{ secrets.PLEX_API_AUTH_TOKEN_PLEXPASS }}' --deny-unknown-fields
+      - run: cargo run --package xtask -- test --online --docker-tag '${{ matrix.plex_server_version }}' --token '${{ secrets.PLEX_API_AUTH_TOKEN_FREE }}' --server-owner-token '${{ secrets.PLEX_API_AUTH_TOKEN_PLEXPASS }}' --deny-unknown-fields --github-actions
 
   collect_coverage:
     if: "!github.event.review"
