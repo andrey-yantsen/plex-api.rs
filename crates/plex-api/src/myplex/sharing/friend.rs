@@ -1,0 +1,101 @@
+use crate::url::MYPLEX_INVITES_FRIENDS;
+use crate::Error;
+use crate::HttpClient;
+use crate::Result;
+use http::StatusCode;
+use isahc::AsyncReadResponseExt;
+use serde::{Deserialize, Serialize};
+use serde_plain::derive_display_from_serialize;
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "snake_case")]
+pub enum InviteStatus {
+    PendingSent,
+    Accepted,
+    PendingReceived,
+    Pending,
+    #[cfg(not(feature = "tests_deny_unknown_fields"))]
+    #[serde(other)]
+    Unknown,
+}
+
+derive_display_from_serialize!(InviteStatus);
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
+#[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
+pub struct Friend {
+    /// The global Plex.tv ID of the friend
+    pub id: u64,
+    /// Plex.tv user's uuid ??
+    pub uuid: String,
+    /// How the user should be displayed in the interface.
+    /// Seems to be generated on the backed from either username or friendly_name.
+    pub title: String,
+    /// Non-managed user's username
+    pub username: Option<String>,
+    /// Non-managed user's email
+    pub email: Option<String>,
+    /// Is it a managed user?
+    pub restricted: bool,
+    /// Managed user's username
+    pub friendly_name: Option<String>,
+    /// User's avatar picture URL
+    #[serde(with = "http_serde::uri")]
+    pub thumb: http::Uri,
+    /// Does the user has access to Plex Home?
+    pub home: bool,
+    /// Status of the friendship
+    pub status: Option<InviteStatus>,
+    /// Server sharing preferences
+    pub sharing_settings: Option<super::server::Settings>,
+    /// List of the shared servers
+    #[serde(default)]
+    pub shared_servers: Vec<super::server::SharedServer>,
+    #[serde(skip)]
+    /// No idea what this is
+    pub shared_sources: Vec<String>,
+    #[serde(skip)]
+    pub(crate) client: Option<HttpClient>,
+}
+
+impl Friend {
+    pub async fn accept(&self) -> Result<Friend> {
+        if !matches!(
+            self.status,
+            Some(InviteStatus::PendingReceived) | Some(InviteStatus::Pending)
+        ) {
+            return Err(Error::InviteAcceptingNotPendingReceived);
+        }
+
+        let mut friend: Friend = self
+            .client()
+            .post(format!("{}/{}/accept", MYPLEX_INVITES_FRIENDS, self.id))
+            .json()
+            .await?;
+        friend.client = self.client.clone();
+        Ok(friend)
+    }
+
+    /// Shorthand for self.client.as_ref().unwrap(). Unwrap must be safe at this stage
+    /// since the client must be set for a valid invite.
+    fn client(&self) -> &HttpClient {
+        self.client.as_ref().unwrap()
+    }
+
+    pub async fn delete(self) -> Result<()> {
+        let mut response = self
+            .client()
+            .delete(format!("{}/{}", MYPLEX_INVITES_FRIENDS, self.id))
+            .send()
+            .await?;
+
+        match response.status() {
+            StatusCode::OK | StatusCode::NO_CONTENT => {
+                response.consume().await?;
+                Ok(())
+            }
+            _ => Err(Error::from_response(response).await),
+        }
+    }
+}

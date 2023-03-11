@@ -134,7 +134,7 @@ impl MyPlex {
     }
 
     pub fn sharing(&self) -> Sharing {
-        Sharing::new(self.client.clone())
+        Sharing::new(self)
     }
 
     pub async fn server_info(&self, machine_identifier: &str) -> Result<server::ServerInfo> {

@@ -1,10 +1,17 @@
-use crate::{
-    flags, get_last_plex_tags::DOCKER_PLEX_IMAGE_NAME,
-    get_last_plex_tags::DOCKER_PLEX_IMAGE_TAG_MIN_SUPPORTED,
+use crate::flags;
+use crate::get_last_plex_tags::{DOCKER_PLEX_IMAGE_NAME, DOCKER_PLEX_IMAGE_TAG_MIN_SUPPORTED};
+use anyhow::bail;
+use plex_api::sharing::{
+    Filters, Friend, InviteStatus, Permissions, ShareableLibrary, ShareableServer, User,
 };
-use plex_api::MyPlexBuilder;
+use plex_api::{Feature, HttpClientBuilder, MyPlex, MyPlexBuilder, Server};
 use std::io::Write;
-use testcontainers::{clients, core::WaitFor, images::generic::GenericImage, RunnableImage};
+use std::time::Duration;
+use testcontainers::core::WaitFor;
+use testcontainers::images::generic::GenericImage;
+use testcontainers::{clients, RunnableImage};
+use tokio::runtime::Runtime;
+use tokio::time::sleep;
 use xshell::{cmd, Shell};
 
 impl flags::Test {
@@ -41,30 +48,40 @@ impl flags::Test {
                 }
             };
 
-            if !self.online || self.token.is_none() || self.token.as_ref().unwrap().is_empty() {
+            if !self.online || self.token.is_none() {
                 cmd!(
                     sh,
                     "cargo xtask plex-data --replace --plex-data-path {plex_data_path}"
                 )
                 .run()?;
-                self.integration_tests(sh, &plex_data_path, "", "")?;
+
+                Runtime::new()?.block_on(self.integration_tests(
+                    sh,
+                    &plex_data_path,
+                    "",
+                    "",
+                    "",
+                ))?;
             }
 
-            match self.token.as_ref() {
-                Some(token) if !token.is_empty() => {
-                    cmd!(
-                        sh,
-                        "cargo xtask plex-data --replace --plex-data-path {plex_data_path}"
-                    )
-                    .run()?;
-                    let _plex_token = sh.push_env("PLEX_API_AUTH_TOKEN", token);
+            if let Some(token) = self.token.as_ref() {
+                cmd!(
+                    sh,
+                    "cargo xtask plex-data --replace --plex-data-path {plex_data_path}"
+                )
+                .run()?;
 
-                    print!("// Requesting claim token... ");
-                    let _ = std::io::stdout().flush();
+                print!("// Requesting claim token... ");
+                let _ = std::io::stdout().flush();
 
-                    let claim_token = tokio::runtime::Runtime::new()?.block_on(async {
+                let server_owner_token = self.server_owner_token.as_ref().unwrap_or(token);
+
+                Runtime::new()?.block_on(async {
+                    let claim_token = if server_owner_token.is_empty() {
+                        "".to_string()
+                    } else {
                         MyPlexBuilder::default()
-                            .set_token(token.to_owned())
+                            .set_token(server_owner_token.to_owned())
                             .set_test_token_auth(false)
                             .build()
                             .await
@@ -72,26 +89,141 @@ impl flags::Test {
                             .claim_token()
                             .await
                             .expect("failed to get claim token")
-                    });
+                            .to_string()
+                    };
 
                     println!("done!");
                     let _ = std::io::stdout().flush();
 
-                    self.integration_tests(sh, &plex_data_path, &claim_token.to_string(), token)?;
-                }
-                _ => (),
+                    self.integration_tests(
+                        sh,
+                        &plex_data_path,
+                        &claim_token,
+                        token,
+                        server_owner_token,
+                    )
+                    .await
+                })?;
             }
         }
 
         Ok(())
     }
 
-    fn integration_tests(
+    async fn find_friend(
+        &self,
+        myplex: &MyPlex,
+        invite_status: InviteStatus,
+        account_id: u64,
+    ) -> Option<Friend> {
+        let friends = myplex.sharing().friends(invite_status).await;
+        if let Ok(friends) = friends {
+            if let Some(friend) = friends.into_iter().find(|friend| friend.id == account_id) {
+                return Some(friend);
+            }
+        }
+
+        None
+    }
+
+    #[must_use = "Method returns an access token that must be used to access the shared server"]
+    async fn share_server(
+        &self,
+        server_url: &str,
+        owner_token: &str,
+        guest_token: &str,
+    ) -> anyhow::Result<String> {
+        let server = Server::new(
+            server_url,
+            HttpClientBuilder::default()
+                .set_x_plex_token(owner_token.to_owned())
+                .build()?,
+        )
+        .await?;
+
+        let owner = MyPlexBuilder::default()
+            .set_token(owner_token.to_owned())
+            .build()
+            .await?;
+        let owner_account_id = owner.account().unwrap().id;
+
+        let guest = MyPlexBuilder::default()
+            .set_token(guest_token.to_owned())
+            .build()
+            .await?;
+
+        let libraries = server.libraries();
+        let all_library_ids: Vec<ShareableLibrary> = libraries
+            .iter()
+            .map(|library| ShareableLibrary::LibraryId(library.id()))
+            .collect();
+
+        owner
+            .sharing()
+            .share(
+                User::Account(&guest),
+                ShareableServer::Server(&server),
+                &all_library_ids,
+                Permissions::default(),
+                Filters::default(),
+            )
+            .await?;
+
+        if self
+            .find_friend(&guest, InviteStatus::Accepted, owner_account_id)
+            .await
+            .is_none()
+        {
+            let mut done = false;
+            let mut attempt = 0;
+            while attempt < 10 {
+                if let Some(friend) = self
+                    .find_friend(&guest, InviteStatus::PendingReceived, owner_account_id)
+                    .await
+                {
+                    friend.accept().await.unwrap();
+                    done = true;
+                    break;
+                }
+
+                sleep(Duration::from_secs(1)).await;
+                attempt += 1;
+            }
+
+            if !done {
+                bail!("Unable to find the new friend request");
+            }
+        }
+
+        let mut attempt = 0;
+        let device_manager = guest.device_manager();
+        while attempt < 60 {
+            let resources = device_manager.get_resources().await?;
+            let shared_device = resources.into_iter().find(|device| {
+                device.provides(Feature::Server)
+                    && device.identifier() == server.machine_identifier()
+            });
+
+            if let Some(device) = shared_device {
+                if let Some(access_token) = device.access_token() {
+                    return Ok(access_token.to_owned());
+                }
+            }
+
+            attempt += 1;
+            sleep(Duration::from_secs(1)).await;
+        }
+
+        bail!("Unable to find the new shared server in the resources list");
+    }
+
+    async fn integration_tests(
         &self,
         sh: &Shell,
         plex_data_path: &str,
         claim_token: &str,
         auth_token: &str,
+        server_owner_token: &str,
     ) -> anyhow::Result<()> {
         let image_tag = self
             .docker_tag
@@ -142,19 +274,44 @@ impl flags::Test {
         print!("// Spawning docker container {DOCKER_PLEX_IMAGE_NAME}:{image_tag}... ");
         let _ = std::io::stdout().flush();
 
-        let _plex_node = docker.run(docker_image);
+        let plex_node = docker.run(docker_image);
 
         println!("done!");
         let _ = std::io::stdout().flush();
 
-        let server_url = format!("http://localhost:{}/", _plex_node.get_host_port_ipv4(32400));
+        let server_url = format!("http://localhost:{}/", plex_node.get_host_port_ipv4(32400));
         cmd!(
             sh,
-            "cargo run -q -p plex-cli --  --server {server_url} --token {auth_token} wait --full"
+            "cargo run -q -p plex-cli --  --server {server_url} --token {server_owner_token} wait"
         )
         .run()?;
 
-        let _plex_server = sh.push_env("PLEX_SERVER_URL", server_url);
+        let mut server_auth_token = auth_token.to_owned();
+        if !server_owner_token.is_empty() && server_owner_token != auth_token {
+            print!("/// Sharing the server with another user... ");
+            let _ = std::io::stdout().flush();
+
+            let shared_server_access_token = self
+                .share_server(&server_url, server_owner_token, auth_token)
+                .await?;
+
+            server_auth_token = shared_server_access_token.clone();
+
+            if self.github_actions {
+                println!();
+                println!("::add-mask::{}", shared_server_access_token);
+            }
+
+            println!("done!");
+
+            println!("/// Waiting for the permission propogation...");
+
+            cmd!(
+                sh,
+                "cargo run -q -p plex-cli --  --server {server_url} --token {shared_server_access_token} wait"
+            )
+            .run()?;
+        }
 
         let mut features = {
             if claim_token.is_empty() {
@@ -167,6 +324,13 @@ impl flags::Test {
         if self.deny_unknown_fields {
             features.push_str(",tests_deny_unknown_fields");
         }
+
+        if !server_auth_token.is_empty() && server_auth_token != auth_token {
+            features.push_str(",tests_shared_server_access_token");
+        }
+
+        let _plex_token = sh.push_env("PLEX_API_AUTH_TOKEN", server_auth_token);
+        let _plex_server = sh.push_env("PLEX_SERVER_URL", server_url);
 
         let test_name = self.test_name.clone().unwrap_or_default();
         // Tests against a live server can change the server state while running
@@ -181,6 +345,8 @@ impl flags::Test {
         // Not including `tests_deny_unknown_fields` feature here to avoid
         // possible unneeded failures.
         if !claim_token.is_empty() {
+            let _plex_token = sh.push_env("PLEX_API_AUTH_TOKEN", server_owner_token);
+
             let unclaim = cmd!(sh, "cargo test --workspace --no-fail-fast --features tests_only_online_claimed_server --test server online::unclaim_server -- --include-ignored --exact").run();
             test_run_result = test_run_result.and(unclaim);
             let claim = cmd!(sh, "cargo test --workspace --no-fail-fast --features tests_only_online_unclaimed_server --test server online::claim_server -- --include-ignored --exact").run();
@@ -201,9 +367,20 @@ impl flags::Test {
                 "`--offline` and `--only-authenticated` can't be specified at the same time",
             ));
         }
+
         if self.offline && self.deny_unknown_fields {
             return Err(xflags::Error::new(
                 "`--offline` and `--deny-unknown-fields` can't be specified at the same time",
+            ));
+        }
+
+        if self.token.is_some() && self.token.as_ref().unwrap().is_empty() {
+            return Err(xflags::Error::new("`--token` can't be empty"));
+        }
+
+        if self.server_owner_token.is_some() && self.token.is_none() {
+            return Err(xflags::Error::new(
+                "`--token` must be provided when you set `--server-owner-token`",
             ));
         }
         Ok(())

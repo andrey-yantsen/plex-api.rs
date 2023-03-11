@@ -7,8 +7,7 @@ use crate::{
     Error, Player, Result, Server,
 };
 use futures::{future::select_ok, FutureExt};
-use http::StatusCode;
-use isahc::AsyncReadResponseExt;
+use secrecy::ExposeSecret;
 
 pub struct DeviceManager {
     pub client: Arc<HttpClient>,
@@ -57,11 +56,28 @@ impl Device<'_> {
         self.inner.provides.contains(&feature)
     }
 
+    pub fn identifier(&self) -> &str {
+        &self.inner.client_identifier
+    }
+
+    pub fn access_token(&self) -> Option<&str> {
+        self.inner
+            .access_token
+            .as_ref()
+            .map(|v| v.expose_secret().as_str())
+    }
+
     pub async fn connect(&self) -> Result<DeviceConnection> {
         if !self.inner.provides.contains(&Feature::Server)
             && !self.inner.provides.contains(&Feature::Player)
         {
             return Err(Error::DeviceConnectionNotSupported);
+        }
+
+        if let Some(access_token) = self.inner.access_token.as_ref() {
+            if access_token.expose_secret() != self.client.x_plex_token() {
+                todo!("connection to a shared device is not implemented");
+            }
         }
 
         if !self.inner.connections.is_empty() {

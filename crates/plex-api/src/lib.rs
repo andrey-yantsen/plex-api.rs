@@ -18,6 +18,7 @@ pub use media_container::server::library::{
     AudioCodec, ContainerFormat, Decision, Protocol, SubtitleCodec, VideoCodec,
 };
 pub use media_container::server::Feature as ServerFeature;
+pub use myplex::sharing;
 pub use myplex::{device, pin::PinManager, MyPlex, MyPlexBuilder};
 pub use player::Player;
 pub use server::library::{

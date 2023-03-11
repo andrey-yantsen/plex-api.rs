@@ -12,10 +12,10 @@ pub const MYPLEX_FEATURES: &str = "/api/v2/features";
 pub const MYPLEX_COMPANIONS: &str = "/api/v2/companions";
 pub const MYPLEX_PROVIDERS: &str = "/media/providers";
 
-pub const MYPLEX_INVITES_REQUESTS: &str = "/api/invites/requests";
-pub const MYPLEX_INVITES_REQUESTED: &str = "/api/invites/requested";
-pub const MYPLEX_INVITES_PENDING: &str = "/api/v2/friends/invites/sent/pending";
-pub const MYPLEX_INVITES_SHARE: &str = "/api/servers/{machineId}/shared_servers";
+pub const MYPLEX_SERVERS: &str = "/api/v2/servers";
+
+pub const MYPLEX_INVITES: &str = "/api/invites";
+pub const MYPLEX_INVITES_SHARED_SERVERS: &str = "/api/v2/shared_servers";
 pub const MYPLEX_INVITES_INVITE: &str = "/api/v2/friends/invite";
 pub const MYPLEX_INVITES_FRIENDS: &str = "/api/v2/friends";
 

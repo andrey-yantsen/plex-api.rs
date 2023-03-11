@@ -15,8 +15,21 @@ xflags::xflags! {
             optional --docker-tag tag: String
 
             /// Use the provided authentication token to run the functional tests.
-            /// If provided the tests will run twice — once with the provided token and once without.
+            /// If provided without --online argument, the tests will run twice — once with the
+            /// provided token and once without.
             optional --token token: String
+
+            /// Use the provided authentication token to claim the server when
+            /// running the functional tests.
+            /// If not provided, the value from --token will be used.
+            /// If provided, the server will be shared with the user who owns the main token
+            /// provided via --token.
+            ///
+            /// If set, --token must be provided as well.
+            ///
+            /// You can run tests with authenticated user over an unclaimed server providing
+            /// an empty --server-owner-token, while providing a valid value for --token.
+            optional --server-owner-token server_owner_token: String
 
             /// Run only offline tests.
             optional --offline
@@ -36,6 +49,10 @@ xflags::xflags! {
 
             /// Test name to pass to cargo test
             optional --test-name testname: String
+
+            /// Marks the run as triggered from GitHub Actions.
+            /// To enable some additional secrets masking.
+            optional --github-actions
         }
 
         /// Generate the data files to be fed into the Plex instance during testing.
@@ -102,12 +119,14 @@ pub enum XtaskCmd {
 pub struct Test {
     pub docker_tag: Option<String>,
     pub token: Option<String>,
+    pub server_owner_token: Option<String>,
     pub offline: bool,
     pub online: bool,
     pub client_id: Option<String>,
     pub deny_unknown_fields: bool,
     pub plex_data_path: Option<String>,
     pub test_name: Option<String>,
+    pub github_actions: bool,
 }
 
 #[derive(Debug)]
