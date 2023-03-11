@@ -77,7 +77,7 @@ pub struct Service {
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct MyPlexAccount {
-    pub id: i64,
+    pub id: u64,
     pub uuid: String,
     pub username: String,
     pub friendly_name: String,
