@@ -5,7 +5,7 @@ use serde_with::{json::JsonString, serde_as};
 use std::collections::HashMap;
 use time::OffsetDateTime;
 
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Debug, Clone)]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct SubscriptionSummary {
@@ -28,7 +28,7 @@ pub enum SubscriptionStatus {
     Lapsed,
 }
 
-#[derive(Deserialize_repr, Debug)]
+#[derive(Deserialize_repr, Debug, Clone)]
 #[repr(u8)]
 pub enum AutoSelectSubtitleMode {
     ManuallySelected = 0,
@@ -36,7 +36,7 @@ pub enum AutoSelectSubtitleMode {
     AlwaysEnabled = 2,
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Debug, Clone)]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct Profile {
@@ -50,7 +50,7 @@ pub struct Profile {
     pub default_subtitle_language: Option<String>,
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Debug, Clone)]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct Subscription {
@@ -63,7 +63,7 @@ pub struct Subscription {
     pub transfer: Option<bool>,
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Debug, Clone)]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 pub struct Service {
     pub identifier: String,
@@ -73,7 +73,7 @@ pub struct Service {
     pub status: String,
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Debug, Clone)]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct MyPlexAccount {
@@ -139,7 +139,7 @@ pub struct MyPlexAccount {
     pub providers: Option<Vec<String>>,
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Debug, Clone)]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 pub struct CustomRestrictions {
     pub all: Option<bool>,
@@ -149,13 +149,13 @@ pub struct CustomRestrictions {
     pub television: Option<bool>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 #[serde(tag = "id", rename_all = "camelCase")]
 pub enum Settings {
     Experience(ExperienceSettingsContainer),
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct ExperienceSettingsContainer {
@@ -168,13 +168,13 @@ pub struct ExperienceSettingsContainer {
 }
 
 #[serde_as]
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 #[serde(tag = "type", content = "value", rename_all = "camelCase")]
 pub enum ExperienceSettingsFormat {
     Json(#[serde_as(as = "JsonString")] ExperienceSettings),
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct ExperienceSettings {
@@ -186,7 +186,7 @@ pub struct ExperienceSettings {
     pub reminders: Vec<String>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct ExperienceHomeSettings {
@@ -194,7 +194,7 @@ pub struct ExperienceHomeSettings {
     pub hubs: Vec<String>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct ExperienceSidebarSettings {
@@ -202,7 +202,7 @@ pub struct ExperienceSidebarSettings {
     pub pinned_sources: Vec<SidebarSource>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct SidebarSource {
@@ -220,7 +220,7 @@ pub struct SidebarSource {
     pub is_full_owned_server: bool,
 }
 
-#[derive(Deserialize, Debug, PartialEq, Eq)]
+#[derive(Deserialize, Debug, PartialEq, Eq, Clone)]
 #[serde(rename_all = "snake_case")]
 pub enum RestrictionProfile {
     LittleKid,
