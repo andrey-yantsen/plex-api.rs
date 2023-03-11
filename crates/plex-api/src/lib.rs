@@ -16,7 +16,7 @@ pub use media_container::{
     preferences::Value as SettingValue,
     server::{
         library::{AudioCodec, ContainerFormat, Decision, Protocol, SubtitleCodec, VideoCodec},
-        Feature as ServerFeature,
+        Feature as ServerFeature, MappingState as ServerMappingState,
     },
 };
 pub use myplex::{device, pin::PinManager, sharing, MyPlex, MyPlexBuilder};
