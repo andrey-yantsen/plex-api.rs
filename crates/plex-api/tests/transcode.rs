@@ -1034,6 +1034,7 @@ mod online {
 
     // Delays up to 5 seconds for the predicate to return true. Useful for
     // waiting on the server to complete some operation.
+    #[cfg_attr(feature = "tests_shared_server_access_token", allow(dead_code))]
     async fn wait_for<C, F>(mut predicate: C)
     where
         C: FnMut() -> F,
@@ -1067,6 +1068,10 @@ mod online {
         #[cfg(not(feature = "tests_shared_server_access_token"))]
         verify_no_sessions(&server).await;
 
+        #[cfg_attr(
+            feature = "tests_shared_server_access_token",
+            allow(clippy::let_and_return)
+        )]
         server
     }
 
@@ -1126,7 +1131,7 @@ mod online {
     }
 
     /// Cancels the session and verifies it is gone from the server.
-    #[cfg_attr(not(feature = "tests_shared_server_access_token"), allow(unused))]
+    #[cfg_attr(feature = "tests_shared_server_access_token", allow(unused_variables))]
     async fn cancel(server: &Server, session: TranscodeSession) {
         session.cancel().await.unwrap();
 
