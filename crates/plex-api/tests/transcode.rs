@@ -3,16 +3,9 @@ mod fixtures;
 mod offline {
     use std::collections::HashMap;
 
-    use super::fixtures::offline::server::*;
-    use super::fixtures::offline::Mocked;
-    use httpmock::prelude::HttpMockRequest;
-    use httpmock::Method::GET;
-    use plex_api::AudioCodec;
-    use plex_api::ContainerFormat;
-    use plex_api::Decision;
-    use plex_api::Protocol;
-    use plex_api::Server;
-    use plex_api::VideoCodec;
+    use super::fixtures::offline::{server::*, Mocked};
+    use httpmock::{prelude::HttpMockRequest, Method::GET};
+    use plex_api::{AudioCodec, ContainerFormat, Decision, Protocol, Server, VideoCodec};
 
     // Expands a profile query parameter into the list of settings.
     fn expand_profile(req: &HttpMockRequest) -> HashMap<String, Vec<HashMap<String, String>>> {
@@ -203,15 +196,10 @@ mod offline {
 
     mod movie {
         use super::*;
-        use plex_api::AudioCodec;
-        use plex_api::AudioSetting;
-        use plex_api::Constraint;
-        use plex_api::ContainerFormat;
-        use plex_api::Decision;
-        use plex_api::VideoCodec;
-        use plex_api::VideoSetting;
-        use plex_api::VideoTranscodeOptions;
-        use plex_api::{MediaItem, Movie, Protocol, Server};
+        use plex_api::{
+            AudioCodec, AudioSetting, Constraint, ContainerFormat, Decision, MediaItem, Movie,
+            Protocol, Server, VideoCodec, VideoSetting, VideoTranscodeOptions,
+        };
 
         #[plex_api_test_helper::offline_test]
         async fn transcode_profile_params(#[future] server_authenticated: Mocked<Server>) {
@@ -808,14 +796,10 @@ mod offline {
 
     mod music {
         use super::*;
-        use plex_api::AudioCodec;
-        use plex_api::AudioSetting;
-        use plex_api::Constraint;
-        use plex_api::ContainerFormat;
-        use plex_api::Decision;
-        use plex_api::MusicTranscodeOptions;
-        use plex_api::Track;
-        use plex_api::{MediaItem, Protocol, Server};
+        use plex_api::{
+            AudioCodec, AudioSetting, Constraint, ContainerFormat, Decision, MediaItem,
+            MusicTranscodeOptions, Protocol, Server, Track,
+        };
 
         #[plex_api_test_helper::offline_test]
         async fn transcode_profile_params(#[future] server_authenticated: Mocked<Server>) {
@@ -1156,8 +1140,7 @@ mod online {
     }
 
     mod movie {
-        use super::super::fixtures::online::server::*;
-        use super::*;
+        use super::{super::fixtures::online::server::*, *};
         use hls_m3u8::{tags::VariantStream, MasterPlaylist, MediaPlaylist};
         use isahc::AsyncReadResponseExt;
         use mp4::{AvcProfile, MediaType, Mp4Reader, TrackType};
@@ -1556,8 +1539,7 @@ mod online {
     }
 
     mod music {
-        use super::super::fixtures::online::server::*;
-        use super::*;
+        use super::{super::fixtures::online::server::*, *};
         use hls_m3u8::{tags::VariantStream, MasterPlaylist, MediaPlaylist};
         use isahc::AsyncReadResponseExt;
         use plex_api::{
@@ -1875,8 +1857,7 @@ mod online {
     }
 
     mod artwork {
-        use super::super::fixtures::online::server::*;
-        use super::*;
+        use super::{super::fixtures::online::server::*, *};
         use image::io::Reader as ImageReader;
         use plex_api::{ArtTranscodeOptions, MetadataItem, Movie, Server};
         use std::io::Cursor;

@@ -3,17 +3,12 @@ mod fixtures;
 mod offline {
     use std::sync::Arc;
 
-    use super::fixtures::offline::client::*;
-    use super::fixtures::offline::myplex::*;
-    use super::fixtures::offline::Mocked;
-    use httpmock::Method::GET;
-    use httpmock::Method::POST;
-    use httpmock::Method::PUT;
-    use plex_api::url::MYPLEX_PINS;
-    use plex_api::url::MYPLEX_PINS_LINK;
-    use plex_api::HttpClient;
-    use plex_api::MyPlex;
-    use plex_api::PinManager;
+    use super::fixtures::offline::{client::*, myplex::*, Mocked};
+    use httpmock::Method::{GET, POST, PUT};
+    use plex_api::{
+        url::{MYPLEX_PINS, MYPLEX_PINS_LINK},
+        HttpClient, MyPlex, PinManager,
+    };
 
     #[plex_api_test_helper::offline_test]
     async fn link(#[future] myplex: Mocked<MyPlex>) {

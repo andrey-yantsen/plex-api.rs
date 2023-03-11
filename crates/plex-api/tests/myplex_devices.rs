@@ -1,13 +1,11 @@
 mod fixtures;
 
 mod offline {
-    use super::fixtures::offline::myplex::*;
-    use super::fixtures::offline::Mocked;
+    use super::fixtures::offline::{myplex::*, Mocked};
     use httpmock::Method::GET;
-    use plex_api::url::SERVER_MEDIA_PROVIDERS;
     use plex_api::{
         device::DeviceConnection,
-        url::{MYPLEX_DEVICES, MYPLEX_RESOURCES},
+        url::{MYPLEX_DEVICES, MYPLEX_RESOURCES, SERVER_MEDIA_PROVIDERS},
         MyPlex,
     };
 

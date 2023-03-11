@@ -1,5 +1,4 @@
-use super::client::client_authenticated;
-use super::Mocked;
+use super::{client::client_authenticated, Mocked};
 use plex_api::{url::MYPLEX_USER_INFO_PATH, HttpClient, MyPlex, MyPlexBuilder};
 use rstest::fixture;
 

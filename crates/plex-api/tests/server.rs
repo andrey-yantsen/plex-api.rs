@@ -10,16 +10,12 @@ where
 mod offline {
     use crate::map;
 
-    use super::fixtures::offline::client::*;
-    use super::fixtures::offline::server::*;
-    use super::fixtures::offline::Mocked;
+    use super::fixtures::offline::{client::*, server::*, Mocked};
     use httpmock::Method::GET;
-    use plex_api::Item;
     use plex_api::{
         url::{MYPLEX_USER_INFO_PATH, SERVER_MEDIA_PROVIDERS},
-        HttpClient, Server,
+        HttpClient, Item, Library, MetadataItem, Server,
     };
-    use plex_api::{Library, MetadataItem};
 
     #[plex_api_test_helper::offline_test]
     #[case::free("tests/mocks/server/media/providers_free.json")]
@@ -349,23 +345,12 @@ mod offline {
 mod online {
     use crate::map;
 
-    use super::fixtures::online::client::*;
-    use super::fixtures::online::server::*;
+    use super::fixtures::online::{client::*, server::*};
     use isahc::{config::Configurable, HttpClient as IsahcHttpClient};
-    use plex_api::ContainerFormat;
-    use plex_api::Episode;
-    use plex_api::Error;
-    use plex_api::Item;
-    use plex_api::Library;
-    use plex_api::MediaItem;
-    use plex_api::MetadataItem;
-    use plex_api::Movie;
-    use plex_api::Photo;
-    use plex_api::PhotoAlbum;
-    use plex_api::PhotoAlbumItem;
-    use plex_api::Track;
-    use plex_api::Video;
-    use plex_api::{HttpClient, HttpClientBuilder, Server};
+    use plex_api::{
+        ContainerFormat, Episode, Error, HttpClient, HttpClientBuilder, Item, Library, MediaItem,
+        MetadataItem, Movie, Photo, PhotoAlbum, PhotoAlbumItem, Server, Track, Video,
+    };
 
     #[plex_api_test_helper::online_test]
     async fn load_server(#[future] server: Server) {

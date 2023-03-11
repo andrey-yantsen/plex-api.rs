@@ -1,14 +1,11 @@
 mod fixtures;
 
 mod offline {
-    use super::fixtures::offline::myplex::*;
-    use super::fixtures::offline::Mocked;
-    use httpmock::Method::GET;
-    use httpmock::Method::PUT;
-    use plex_api::Error;
+    use super::fixtures::offline::{myplex::*, Mocked};
+    use httpmock::Method::{GET, PUT};
     use plex_api::{
         url::{MYPLEX_CLAIM_TOKEN_PATH, MYPLEX_PRIVACY_PATH},
-        MyPlex,
+        Error, MyPlex,
     };
 
     #[plex_api_test_helper::offline_test]
