@@ -6,6 +6,7 @@ pub mod privacy;
 pub mod sharing;
 pub mod webhook;
 
+use self::account::MyPlexAccount;
 use self::claim_token::ClaimToken;
 use self::device::DeviceManager;
 use self::pin::PinManager;
@@ -24,7 +25,7 @@ use std::sync::Arc;
 #[derive(Debug, Clone)]
 pub struct MyPlex {
     client: Arc<HttpClient>,
-    pub available_features: Option<Vec<Feature>>,
+    account: Option<MyPlexAccount>,
 }
 
 impl MyPlex {
@@ -35,7 +36,7 @@ impl MyPlex {
 
         Ok(Self {
             client: Arc::new(client),
-            available_features: None,
+            account: None,
         })
     }
 
@@ -107,8 +108,8 @@ impl MyPlex {
             StatusCode::OK | StatusCode::CREATED => {
                 let account: account::MyPlexAccount = response.json().await?;
                 Ok(Self {
-                    client: Arc::new(client.set_x_plex_token(account.auth_token)),
-                    available_features: Some(account.subscription.features),
+                    client: Arc::new(client.set_x_plex_token(account.auth_token.clone())),
+                    account: Some(account),
                 })
             }
             _ => Err(Error::from_response(response).await),
@@ -135,8 +136,19 @@ impl MyPlex {
         Sharing::new(self.client.clone())
     }
 
+    pub fn available_features(&self) -> Option<&Vec<Feature>> {
+        return self
+            .account
+            .as_ref()
+            .map(|account| &account.subscription.features);
+    }
+
+    pub fn account(&self) -> Option<&MyPlexAccount> {
+        return self.account.as_ref();
+    }
+
     pub async fn webhook_manager(&self) -> Result<WebhookManager> {
-        if let Some(features) = self.available_features.as_ref() {
+        if let Some(features) = self.available_features() {
             if !features.contains(&Feature::Webhooks) {
                 return Err(Error::SubscriptionFeatureNotAvailable(Feature::Webhooks));
             }
