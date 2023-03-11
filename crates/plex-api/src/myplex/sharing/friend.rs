@@ -1,7 +1,4 @@
-use crate::url::MYPLEX_INVITES_FRIENDS;
-use crate::Error;
-use crate::HttpClient;
-use crate::Result;
+use crate::{url::MYPLEX_INVITES_FRIENDS, Error, HttpClient, Result};
 use http::StatusCode;
 use isahc::AsyncReadResponseExt;
 use serde::{Deserialize, Serialize};

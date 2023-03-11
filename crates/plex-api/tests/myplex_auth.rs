@@ -1,14 +1,11 @@
 mod fixtures;
 
 mod offline {
-    use super::fixtures::offline::client::*;
-    use super::fixtures::offline::myplex::*;
-    use super::fixtures::offline::Mocked;
+    use super::fixtures::offline::{client::*, myplex::*, Mocked};
     use httpmock::Method::{DELETE, GET, POST};
-    use plex_api::MyPlex;
     use plex_api::{
         url::{MYPLEX_SIGNIN_PATH, MYPLEX_SIGNOUT_PATH, MYPLEX_USER_INFO_PATH},
-        Error, HttpClient, MyPlexBuilder,
+        Error, HttpClient, MyPlex, MyPlexBuilder,
     };
 
     #[plex_api_test_helper::offline_test]

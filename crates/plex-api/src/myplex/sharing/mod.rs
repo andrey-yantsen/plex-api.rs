@@ -1,24 +1,21 @@
 mod friend;
 mod server;
 
-use crate::media_container::users::AllowTuners;
-use crate::url::MYPLEX_INVITES_FRIENDS;
-use crate::url::MYPLEX_INVITES_INVITE;
-use crate::url::MYPLEX_INVITES_SHARED_SERVERS;
-use crate::Library;
-use crate::MyPlex;
-use crate::Result;
-use crate::Server;
-use ::serde::de::Deserializer;
-use ::serde::de::Visitor;
-use ::std::fmt::Formatter;
-use ::std::fmt::Result as FmtResult;
-use ::std::result::Result as StdResult;
-use serde::Deserialize;
-use serde::Serialize;
+use crate::{
+    media_container::users::AllowTuners,
+    url::{MYPLEX_INVITES_FRIENDS, MYPLEX_INVITES_INVITE, MYPLEX_INVITES_SHARED_SERVERS},
+    Library, MyPlex, Result, Server,
+};
+use serde::{
+    de::{Deserializer, Visitor},
+    Deserialize, Serialize,
+};
+use std::{
+    fmt::{Formatter, Result as FmtResult},
+    result::Result as StdResult,
+};
 
-pub use friend::Friend;
-pub use friend::InviteStatus;
+pub use friend::{Friend, InviteStatus};
 pub use server::SharedServer;
 
 #[derive(Debug)]

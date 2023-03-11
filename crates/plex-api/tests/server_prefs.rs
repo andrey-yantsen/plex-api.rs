@@ -1,10 +1,8 @@
 mod fixtures;
 
 mod offline {
-    use super::fixtures::offline::server::*;
-    use super::fixtures::offline::Mocked;
-    use httpmock::Method::GET;
-    use httpmock::Method::PUT;
+    use super::fixtures::offline::{server::*, Mocked};
+    use httpmock::Method::{GET, PUT};
     use plex_api::{url::SERVER_PREFS, Server};
 
     #[plex_api_test_helper::offline_test]

@@ -7,17 +7,16 @@ pub mod server;
 pub mod sharing;
 pub mod webhook;
 
-use self::account::MyPlexAccount;
-use self::claim_token::ClaimToken;
-use self::device::DeviceManager;
-use self::pin::PinManager;
-use self::privacy::Privacy;
-use self::sharing::Sharing;
-use self::webhook::WebhookManager;
-use crate::http_client::{HttpClient, HttpClientBuilder};
-use crate::media_container::server::Feature;
-use crate::url::{MYPLEX_SERVERS, MYPLEX_SIGNIN_PATH, MYPLEX_SIGNOUT_PATH, MYPLEX_USER_INFO_PATH};
-use crate::{Error, Result};
+use self::{
+    account::MyPlexAccount, claim_token::ClaimToken, device::DeviceManager, pin::PinManager,
+    privacy::Privacy, sharing::Sharing, webhook::WebhookManager,
+};
+use crate::{
+    http_client::{HttpClient, HttpClientBuilder},
+    media_container::server::Feature,
+    url::{MYPLEX_SERVERS, MYPLEX_SIGNIN_PATH, MYPLEX_SIGNOUT_PATH, MYPLEX_USER_INFO_PATH},
+    Error, Result,
+};
 use http::StatusCode;
 use isahc::{AsyncBody, AsyncReadResponseExt, Response as HttpResponse};
 use secrecy::{ExposeSecret, SecretString};

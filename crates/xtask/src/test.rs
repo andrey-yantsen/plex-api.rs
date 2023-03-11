@@ -1,17 +1,17 @@
-use crate::flags;
-use crate::get_last_plex_tags::{DOCKER_PLEX_IMAGE_NAME, DOCKER_PLEX_IMAGE_TAG_MIN_SUPPORTED};
-use anyhow::bail;
-use plex_api::sharing::{
-    Filters, Friend, InviteStatus, Permissions, ShareableLibrary, ShareableServer, User,
+use crate::{
+    flags,
+    get_last_plex_tags::{DOCKER_PLEX_IMAGE_NAME, DOCKER_PLEX_IMAGE_TAG_MIN_SUPPORTED},
 };
-use plex_api::{Feature, HttpClientBuilder, MyPlex, MyPlexBuilder, Server};
-use std::io::Write;
-use std::time::Duration;
-use testcontainers::core::WaitFor;
-use testcontainers::images::generic::GenericImage;
-use testcontainers::{clients, RunnableImage};
-use tokio::runtime::Runtime;
-use tokio::time::sleep;
+use anyhow::bail;
+use plex_api::{
+    sharing::{
+        Filters, Friend, InviteStatus, Permissions, ShareableLibrary, ShareableServer, User,
+    },
+    Feature, HttpClientBuilder, MyPlex, MyPlexBuilder, Server,
+};
+use std::{io::Write, time::Duration};
+use testcontainers::{clients, core::WaitFor, images::generic::GenericImage, RunnableImage};
+use tokio::{runtime::Runtime, time::sleep};
 use xshell::{cmd, Shell};
 
 impl flags::Test {

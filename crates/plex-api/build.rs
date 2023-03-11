@@ -62,8 +62,7 @@ impl Ord for Feature {
 fn generate_features() {
     use regex::Regex;
     use serde_json::from_reader;
-    use std::fs::File;
-    use std::io::Write;
+    use std::{fs::File, io::Write};
 
     println!("cargo:rerun-if-changed={FEATURE_MOCK_FILE_PATH}");
 

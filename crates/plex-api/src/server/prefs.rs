@@ -1,8 +1,11 @@
-use crate::media_container::preferences::{
-    Preferences as MediaContainerPreferences, Setting, Value,
+use crate::{
+    media_container::{
+        preferences::{Preferences as MediaContainerPreferences, Setting, Value},
+        MediaContainerWrapper,
+    },
+    url::SERVER_PREFS,
+    HttpClient, Result,
 };
-use crate::url::SERVER_PREFS;
-use crate::{media_container::MediaContainerWrapper, HttpClient, Result};
 use std::mem::discriminant;
 
 #[derive(Debug, Clone)]
