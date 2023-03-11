@@ -2,8 +2,7 @@ use crate::{
     media_container::player::ResourcesMediaContainer, url::CLIENT_RESOURCES, HttpClient,
     HttpClientBuilder, MyPlex, Result,
 };
-use http::{StatusCode, Uri};
-use isahc::AsyncReadResponseExt;
+use http::Uri;
 use std::{convert::TryFrom, sync::Arc};
 
 #[derive(Debug, Clone)]
@@ -16,24 +15,15 @@ pub struct Player {
 
 impl Player {
     async fn build(client: Arc<HttpClient>, myplex_api_url: Uri) -> Result<Self> {
-        let mut response = client
-            .get(CLIENT_RESOURCES)
-            .header("Accept", "application/xml")
-            .send()
-            .await?;
-
-        match response.status() {
-            StatusCode::OK => {
-                let response_text = response.text().await?;
-
-                Ok(Self {
-                    media_container: quick_xml::de::from_str(&response_text)?,
-                    client,
-                    myplex_api_url,
-                })
-            }
-            _ => Err(crate::Error::from_response(response).await),
-        }
+        Ok(Self {
+            media_container: client
+                .get(CLIENT_RESOURCES)
+                .header("Accept", "application/xml")
+                .xml()
+                .await?,
+            client,
+            myplex_api_url,
+        })
     }
 
     pub async fn new<U>(url: U, client: HttpClient) -> Result<Self>

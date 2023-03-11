@@ -19,31 +19,22 @@ impl DeviceManager {
         Self { client }
     }
 
-    pub async fn get_devices_internal<'a, 'b>(&'a self, url: &'b str) -> Result<Vec<Device<'a>>> {
-        let mut response = self
+    async fn get_devices_internal<'a, 'b>(&'a self, url: &'b str) -> Result<Vec<Device<'a>>> {
+        let container: DevicesMediaContainer = self
             .client
             .get(url)
             .header("Accept", "application/xml")
-            .send()
+            .xml()
             .await?;
 
-        match response.status() {
-            StatusCode::OK => {
-                let response_text = response.text().await?;
-
-                let container: DevicesMediaContainer = quick_xml::de::from_str(&response_text)?;
-
-                Ok(container
-                    .devices
-                    .into_iter()
-                    .map(|device| Device {
-                        inner: device,
-                        client: &self.client,
-                    })
-                    .collect())
-            }
-            _ => Err(crate::Error::from_response(response).await),
-        }
+        Ok(container
+            .devices
+            .into_iter()
+            .map(|device| Device {
+                inner: device,
+                client: &self.client,
+            })
+            .collect())
     }
 
     pub async fn get_devices(&self) -> Result<Vec<Device<'_>>> {
