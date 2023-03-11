@@ -3,6 +3,7 @@ pub mod claim_token;
 pub mod device;
 pub mod pin;
 pub mod privacy;
+pub mod server;
 pub mod sharing;
 pub mod webhook;
 
@@ -15,8 +16,8 @@ use self::sharing::Sharing;
 use self::webhook::WebhookManager;
 use crate::http_client::{HttpClient, HttpClientBuilder};
 use crate::media_container::server::Feature;
-use crate::url::{MYPLEX_SIGNIN_PATH, MYPLEX_SIGNOUT_PATH, MYPLEX_USER_INFO_PATH};
-use crate::{Error, Result, Server};
+use crate::url::{MYPLEX_SERVERS, MYPLEX_SIGNIN_PATH, MYPLEX_SIGNOUT_PATH, MYPLEX_USER_INFO_PATH};
+use crate::{Error, Result};
 use http::StatusCode;
 use isahc::{AsyncBody, AsyncReadResponseExt, Response as HttpResponse};
 use secrecy::{ExposeSecret, SecretString};
@@ -134,6 +135,13 @@ impl MyPlex {
 
     pub fn sharing(&self) -> Sharing {
         Sharing::new(self.client.clone())
+    }
+
+    pub async fn server_info(&self, machine_identifier: &str) -> Result<server::ServerInfo> {
+        self.client
+            .get(format!("{}/{}", MYPLEX_SERVERS, machine_identifier))
+            .json()
+            .await
     }
 
     pub fn available_features(&self) -> Option<&Vec<Feature>> {
