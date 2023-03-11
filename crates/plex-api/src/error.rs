@@ -75,6 +75,8 @@ pub enum Error {
     TranscodeError(String),
     #[error("The server thinks the client should just play the original media.")]
     TranscodeRefused,
+    #[error("Only invites with status pending_received can be accepted.")]
+    InviteAcceptingNotPendingReceived,
 }
 
 const PLEX_API_ERROR_CODE_AUTH_OTP_REQUIRED: i32 = 1029;

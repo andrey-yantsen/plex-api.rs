@@ -225,4 +225,8 @@ impl Server {
     pub async fn preferences(&self) -> Result<Preferences<'_>> {
         Preferences::new(&self.client).await
     }
+
+    pub fn machine_identifier(&self) -> &str {
+        &self.media_container.machine_identifier
+    }
 }

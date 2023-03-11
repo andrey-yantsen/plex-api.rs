@@ -1,6 +1,12 @@
+mod friend;
+mod server;
+
 use crate::media_container::users::AllowTuners;
-use crate::HttpClient;
+use crate::url::MYPLEX_INVITES_FRIENDS;
+use crate::url::MYPLEX_INVITES_INVITE;
+use crate::url::MYPLEX_INVITES_SHARED_SERVERS;
 use crate::Library;
+use crate::MyPlex;
 use crate::Result;
 use crate::Server;
 use ::serde::de::Deserializer;
@@ -10,11 +16,14 @@ use ::std::fmt::Result as FmtResult;
 use ::std::result::Result as StdResult;
 use serde::Deserialize;
 use serde::Serialize;
-use std::sync::Arc;
+
+pub use friend::Friend;
+pub use friend::InviteStatus;
+pub use server::SharedServer;
 
 #[derive(Debug)]
-pub struct Sharing {
-    client: Arc<HttpClient>,
+pub struct Sharing<'a> {
+    myplex: &'a MyPlex,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
@@ -124,7 +133,7 @@ impl<'de> Deserialize<'de> for SharingFilter {
     }
 }
 
-impl ::serde::ser::Serialize for SharingFilter {
+impl Serialize for SharingFilter {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: ::serde::ser::Serializer,
@@ -162,57 +171,136 @@ impl ToString for SharingFilter {
 
 pub enum ShareableServer<'a> {
     MachineIdentifier(&'a str),
-    Server(Server),
+    Server(&'a Server),
 }
 
-pub enum ShareableLibrary {
-    Library(Library),
-    LibraryId(u16),
+impl<'a> ShareableServer<'a> {
+    pub fn get_id(&self) -> &str {
+        match self {
+            Self::MachineIdentifier(id) => id,
+            Self::Server(srv) => srv.machine_identifier(),
+        }
+    }
 }
 
-#[derive(Deserialize)]
-#[serde(rename_all = "snake_case")]
-pub enum InviteStatus {
-    PendingSent,
-    Accepted,
-    PendingReceived,
+pub enum ShareableLibrary<'a> {
+    Library(&'a Library),
+    LibraryId(&'a str),
 }
 
-impl Sharing {
-    pub fn new(client: Arc<HttpClient>) -> Self {
-        Sharing { client }
+impl<'a> ShareableLibrary<'a> {
+    pub fn get_id(&self) -> &str {
+        match self {
+            Self::Library(library) => library.id(),
+            Self::LibraryId(id) => id,
+        }
+    }
+}
+
+pub enum User<'a> {
+    Account(&'a MyPlex),
+    UsernameOrEmail(&'a str),
+}
+
+impl<'a> User<'a> {
+    pub fn get_identifier(&self) -> &str {
+        match self {
+            Self::Account(MyPlex {
+                account: Some(account),
+                ..
+            }) => &account.email,
+            Self::Account(_) => "",
+            Self::UsernameOrEmail(u) => u,
+        }
+    }
+}
+
+#[derive(Serialize, Debug)]
+#[serde(rename_all = "camelCase")]
+struct ShareServerRequest {
+    invited_email: String,
+    settings: server::Settings,
+    library_section_ids: Vec<u32>,
+    machine_identifier: String,
+}
+
+impl<'a> Sharing<'a> {
+    pub fn new(myplex: &'a MyPlex) -> Self {
+        Sharing { myplex }
     }
 
-    pub async fn invite(&self, username_or_email: &str) -> Result<&str> {
-        Ok("")
+    pub async fn invite<'b>(&self, user: User<'b>) -> Result<friend::Friend> {
+        self.myplex
+            .client()
+            .post(format!(
+                "{}?{}",
+                MYPLEX_INVITES_INVITE,
+                serde_urlencoded::to_string([("identifier", user.get_identifier())])?
+            ))
+            .json()
+            .await
     }
 
-    pub async fn share<'a, 'b>(
+    pub async fn share<'b, 'c, 'd>(
         &self,
-        username_or_email: &'a str,
-        server: ShareableServer<'b>,
-        sections: Vec<ShareableLibrary>,
+        user: User<'b>,
+        server: ShareableServer<'c>,
+        sections: &[ShareableLibrary<'d>],
         permissions: Permissions,
         filters: Filters,
-    ) -> Result<&str> {
-        Ok("")
+    ) -> Result<SharedServer> {
+        let server_info = self.myplex.server_info(server.get_id()).await?;
+        let sections: Vec<u32> = sections
+            .iter()
+            .filter_map(|s| s.get_id().parse().ok())
+            .collect();
+        let request = ShareServerRequest {
+            invited_email: user.get_identifier().to_owned(),
+            settings: server::Settings {
+                allow_channels: permissions.allow_channels,
+                allow_subtitle_admin: permissions.allow_subtitle_admin,
+                allow_sync: permissions.allow_sync,
+                allow_tuners: permissions.allow_tuners,
+                filter_movies: Some(filters.movies.to_string()),
+                filter_television: Some(filters.television.to_string()),
+                filter_music: Some(filters.music.to_string()),
+                filter_all: None,
+            },
+            library_section_ids: server_info
+                .library_sections
+                .iter()
+                .filter_map(|s| {
+                    if sections.contains(&s.key) {
+                        Some(s.id)
+                    } else {
+                        None
+                    }
+                })
+                .collect(),
+            machine_identifier: server.get_id().to_owned(),
+        };
+
+        self.myplex
+            .client()
+            .post(MYPLEX_INVITES_SHARED_SERVERS)
+            .body(serde_json::to_string(&request)?)?
+            .json()
+            .await
     }
 
-    pub async fn update_share(
-        &self,
-        invite_id: u16,
-        sections: Option<Vec<ShareableLibrary>>,
-        permissions: Option<Permissions>,
-        filters: Option<Filters>,
-    ) -> Result<&str> {
-        Ok("")
-    }
+    /// Returns a list of friends with the requested status, including managed users
+    pub async fn friends(&self, status: InviteStatus) -> Result<Vec<friend::Friend>> {
+        let mut friends: Vec<friend::Friend> = self
+            .myplex
+            .client()
+            .get(format!("{}?includeSharedServers=true&includeSharedSources=true&includeSharingSettings=true&status={}", MYPLEX_INVITES_FRIENDS, status))
+            .json()
+            .await?;
 
-    pub async fn delete(&self, invite_id: u16) -> Result<&str> {
-        Ok("")
-    }
+        for friend in &mut friends {
+            friend.client = Some(self.myplex.client().clone())
+        }
 
-    pub async fn pending_invites(&self) -> Result<Vec<&str>> {
-        Ok(vec![])
+        Ok(friends)
     }
 }
