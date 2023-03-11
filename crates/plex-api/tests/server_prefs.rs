@@ -52,7 +52,7 @@ mod online {
     use super::fixtures::online::server::*;
     use plex_api::Server;
 
-    #[plex_api_test_helper::online_test]
+    #[plex_api_test_helper::online_test_non_shared_server]
     async fn load_prefs(#[future] server: Server) {
         let server = server.await;
         let mut prefs = server

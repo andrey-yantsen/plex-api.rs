@@ -444,6 +444,18 @@ mod online {
             map(&movies, |e| e.title().to_owned()),
             vec!["Elephants Dream", "Big Buck Bunny", "Sintel"]
         );
+    }
+
+    #[plex_api_test_helper::online_test_non_shared_server]
+    async fn movies_playlists(#[future] server: Server) {
+        let server = server.await;
+        let libraries = server.libraries();
+
+        let library = if let Library::Movie(lib) = libraries.get(0).unwrap() {
+            lib
+        } else {
+            panic!("Unexpected library type");
+        };
 
         let playlists = library.playlists().await.unwrap();
         assert_eq!(
@@ -671,6 +683,18 @@ mod online {
 
         let shows = collections[0].children().await.unwrap();
         assert_eq!(map(&shows, |e| e.title().to_owned()), vec!["The 100"]);
+    }
+
+    #[plex_api_test_helper::online_test_non_shared_server]
+    async fn tv_playlists(#[future] server: Server) {
+        let server = server.await;
+        let libraries = server.libraries();
+
+        let library = if let Library::TV(lib) = libraries.get(1).unwrap() {
+            lib
+        } else {
+            panic!("Unexpected library type");
+        };
 
         let playlists = library.playlists().await.unwrap();
         assert_eq!(
@@ -783,6 +807,18 @@ mod online {
             map(&tracks, |e| e.title().to_owned()),
             vec!["Toxicity", "Marmalade", "Metro"]
         );
+    }
+
+    #[plex_api_test_helper::online_test_non_shared_server]
+    async fn music_playlists(#[future] server: Server) {
+        let server = server.await;
+        let libraries = server.libraries();
+
+        let library = if let Library::Music(lib) = libraries.get(2).unwrap() {
+            lib
+        } else {
+            panic!("Unexpected library type");
+        };
 
         let playlists = library.playlists().await.unwrap();
         assert_eq!(
@@ -862,6 +898,18 @@ mod online {
 
         let parent = photos[0].album().await.unwrap().unwrap();
         assert_eq!(parent.title(), "Cats not in bed");
+    }
+
+    #[plex_api_test_helper::online_test_non_shared_server]
+    async fn photos_playlists(#[future] server: Server) {
+        let server = server.await;
+        let libraries = server.libraries();
+
+        let library = if let Library::Photo(lib) = libraries.get(3).unwrap() {
+            lib
+        } else {
+            panic!("Unexpected library type");
+        };
 
         let playlists = library.playlists().await.unwrap();
         assert_eq!(map(&playlists, |e| e.title().to_owned()), vec!["Cats"]);
@@ -906,13 +954,25 @@ mod online {
         assert_eq!(item.title(), "Animation");
         assert!(<Item as TryInto<plex_api::Collection<plex_api::Movie>>>::try_into(item).is_ok());
 
-        let item = server.item_by_id(168).await.unwrap();
-        assert_eq!(item.title(), "Movies Since 2007");
-        assert!(<Item as TryInto<plex_api::Playlist<Video>>>::try_into(item).is_ok());
-
         let item = server.item_by_id(162).await.unwrap();
         assert_eq!(item.title(), "SciFi");
         assert!(<Item as TryInto<plex_api::Collection<plex_api::Show>>>::try_into(item).is_ok());
+
+        let err = server.item_by_id(73463523).await.unwrap_err();
+        assert!(matches!(err, Error::ItemNotFound));
+    }
+
+    #[plex_api_test_helper::online_test_non_shared_server]
+    async fn item_playlists(#[future] server: Server) {
+        let server = server.await;
+        let client = server.client().to_owned();
+
+        // It isn't clear why but item metadata requests seem to timeout frequently.
+        let server = get_server_with_longer_timeout(server, client).await;
+
+        let item = server.item_by_id(168).await.unwrap();
+        assert_eq!(item.title(), "Movies Since 2007");
+        assert!(<Item as TryInto<plex_api::Playlist<Video>>>::try_into(item).is_ok());
 
         let item = server.item_by_id(166).await.unwrap();
         assert_eq!(item.title(), "Mixed");
@@ -925,9 +985,6 @@ mod online {
         let item = server.item_by_id(163).await.unwrap();
         assert_eq!(item.title(), "Cats");
         assert!(<Item as TryInto<plex_api::Playlist<plex_api::Photo>>>::try_into(item).is_ok());
-
-        let err = server.item_by_id(73463523).await.unwrap_err();
-        assert!(matches!(err, Error::ItemNotFound));
     }
 
     #[plex_api_test_helper::online_test]

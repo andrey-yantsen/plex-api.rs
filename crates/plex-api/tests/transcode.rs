@@ -1080,11 +1080,13 @@ mod online {
             .await
             .unwrap();
 
+        #[cfg(not(feature = "tests_shared_server_access_token"))]
         verify_no_sessions(&server).await;
 
         server
     }
 
+    #[cfg(not(feature = "tests_shared_server_access_token"))]
     async fn verify_no_sessions(server: &Server) {
         let sessions = server.transcode_sessions().await.unwrap();
         assert_eq!(sessions.len(), 0);
@@ -1106,6 +1108,7 @@ mod online {
     }
 
     /// Checks the server lists a single session matching the one passed.
+    #[cfg(not(feature = "tests_shared_server_access_token"))]
     async fn verify_remote_sessions(server: &Server, session: &TranscodeSession) {
         // It can take a few moments for the session to appear.
         wait_for(|| async {
@@ -1139,10 +1142,12 @@ mod online {
     }
 
     /// Cancels the session and verifies it is gone from the server.
+    #[cfg_attr(not(feature = "tests_shared_server_access_token"), allow(unused))]
     async fn cancel(server: &Server, session: TranscodeSession) {
         session.cancel().await.unwrap();
 
         // It can take a few moments for the session to disappear.
+        #[cfg(not(feature = "tests_shared_server_access_token"))]
         wait_for(|| async {
             let sessions = server.transcode_sessions().await.unwrap();
             sessions.is_empty()
@@ -1408,6 +1413,7 @@ mod online {
                 Some((Decision::Transcode, VideoCodec::H264)),
             );
 
+            #[cfg(not(feature = "tests_shared_server_access_token"))]
             verify_remote_sessions(&server, &session).await;
 
             cancel(&server, session).await;
@@ -1458,6 +1464,7 @@ mod online {
                 Some((Decision::Copy, VideoCodec::H264)),
             );
 
+            #[cfg(not(feature = "tests_shared_server_access_token"))]
             verify_remote_sessions(&server, &session).await;
 
             // As this transcode is just copying the existing streams into a new
@@ -1707,8 +1714,8 @@ mod online {
             let media = &track.media()[0];
             let part = &media.parts()[0];
 
-            let sessions = server.transcode_sessions().await.unwrap();
-            assert!(sessions.is_empty());
+            #[cfg(not(feature = "tests_shared_server_access_token"))]
+            verify_no_sessions(&server).await;
 
             let session = track
                 .create_streaming_session(
@@ -1775,8 +1782,8 @@ mod online {
             let media = &track.media()[0];
             let part = &media.parts()[0];
 
-            let sessions = server.transcode_sessions().await.unwrap();
-            assert!(sessions.is_empty());
+            #[cfg(not(feature = "tests_shared_server_access_token"))]
+            verify_no_sessions(&server).await;
 
             let session = track
                 .create_download_session(
@@ -1801,6 +1808,7 @@ mod online {
                 None,
             );
 
+            #[cfg(not(feature = "tests_shared_server_access_token"))]
             verify_remote_sessions(&server, &session).await;
 
             // Audio transcoding should be reasonably fast...
