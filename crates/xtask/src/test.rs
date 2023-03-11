@@ -282,7 +282,7 @@ impl flags::Test {
         let server_url = format!("http://localhost:{}/", plex_node.get_host_port_ipv4(32400));
         cmd!(
             sh,
-            "cargo run -q -p plex-cli --  --server {server_url} --token {server_owner_token} wait"
+            "cargo run -q -p plex-cli --  --server {server_url} --token {server_owner_token} wait --full"
         )
         .run()?;
 
