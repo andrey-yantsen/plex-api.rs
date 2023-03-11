@@ -80,8 +80,10 @@ way you see fit. At the same time, I created a few macros to reduce the
 boilerplate amount:
 
 * `#[plex_api_test_helper::offline_test]`
+* `#[plex_api_test_helper::online_test_myplex]`
 * `#[plex_api_test_helper::online_test_unclaimed_server]`
 * `#[plex_api_test_helper::online_test_claimed_server]`
+* `#[plex_api_test_helper::online_test_non_shared_server]`
 * `#[plex_api_test_helper::online_test]`
 
 I hope it's clear from their names when to use any of them.
