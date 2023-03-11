@@ -88,7 +88,24 @@ impl Error {
                 return err.into();
             }
         };
-        let err = serde_json::from_str::<MyPlexApiErrorResponse>(&response_body);
+
+        let err: Result<MyPlexApiErrorResponse, Error>;
+        if let Some(content_type) = response.headers().get("Content-type") {
+            match content_type.to_str().unwrap().split("; ").next().unwrap() {
+                "application/xml" => {
+                    err = quick_xml::de::from_str::<MyPlexApiErrorResponse>(&response_body)
+                        .map_err(|e| e.into())
+                }
+                _ => {
+                    err = serde_json::from_str::<MyPlexApiErrorResponse>(&response_body)
+                        .map_err(|e| e.into())
+                }
+            }
+        } else {
+            err = serde_json::from_str::<MyPlexApiErrorResponse>(&response_body)
+                .map_err(|e| e.into());
+        }
+
         match err {
             Ok(r) => {
                 if r.errors.len() == 1 && r.errors[0].code == PLEX_API_ERROR_CODE_AUTH_OTP_REQUIRED

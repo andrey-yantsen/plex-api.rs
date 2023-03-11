@@ -1,6 +1,6 @@
 use crate::{url::MYPLEX_DEFAULT_API_URL, Result};
 use core::convert::TryFrom;
-use http::{uri::PathAndQuery, StatusCode, Uri};
+use http::{uri::PathAndQuery, HeaderValue, StatusCode, Uri};
 use isahc::{
     config::{Configurable, RedirectPolicy},
     http::request::Builder,
@@ -274,7 +274,7 @@ where
     <PathAndQuery as TryFrom<P>>::Error: Into<http::Error>,
 {
     // Sets the maximum timeout for this request or disables timeouts.
-    pub fn timeout(self, timeout: Option<Duration>) -> RequestBuilder<'a, P> {
+    pub fn timeout(self, timeout: Option<Duration>) -> Self {
         Self {
             http_client: self.http_client,
             base_url: self.base_url,
@@ -314,7 +314,7 @@ where
     }
 
     /// Adds a request header.
-    pub fn header<K, V>(self, key: K, value: V) -> RequestBuilder<'a, P>
+    pub fn header<K, V>(self, key: K, value: V) -> Self
     where
         http::header::HeaderName: TryFrom<K>,
         <http::header::HeaderName as TryFrom<K>>::Error: Into<http::Error>,
@@ -337,12 +337,12 @@ where
 
     /// Sends this request and attempts to decode the response as JSON.
     pub async fn json<T: DeserializeOwned + Unpin>(self) -> Result<T> {
-        let mut response = self.header("Accept", "application/json").send().await?;
+        self.body(())?.json().await
+    }
 
-        match response.status() {
-            StatusCode::OK => Ok(response.json().await?),
-            _ => Err(crate::Error::from_response(response).await),
-        }
+    /// Sends this request and attempts to decode the response as XML.
+    pub async fn xml<T: DeserializeOwned + Unpin>(self) -> Result<T> {
+        self.body(())?.xml().await
     }
 
     /// Sends this request, verifies success and then consumes any response.
@@ -370,6 +370,37 @@ where
 {
     pub async fn send(self) -> Result<HttpResponse<AsyncBody>> {
         Ok(self.http_client.send_async(self.request).await?)
+    }
+
+    pub async fn json<R: DeserializeOwned + Unpin>(mut self) -> Result<R> {
+        let headers = self.request.headers_mut();
+        headers.insert("Accept", HeaderValue::from_static("application/json"));
+
+        let mut response = self.send().await?;
+
+        match response.status() {
+            StatusCode::OK | StatusCode::CREATED | StatusCode::ACCEPTED => {
+                // let r = dbg!(response.text().await?);
+                // Ok(serde_json::from_str(&r)?)
+                Ok(response.json().await?)
+            }
+            _ => Err(crate::Error::from_response(response).await),
+        }
+    }
+
+    pub async fn xml<R: DeserializeOwned + Unpin>(mut self) -> Result<R> {
+        let headers = self.request.headers_mut();
+        headers.insert("Accept", HeaderValue::from_static("application/xml"));
+
+        let mut response = self.send().await?;
+
+        match response.status() {
+            StatusCode::OK | StatusCode::CREATED | StatusCode::ACCEPTED => {
+                let r = response.text().await?;
+                Ok(quick_xml::de::from_str(&r)?)
+            }
+            _ => Err(crate::Error::from_response(response).await),
+        }
     }
 }
 
