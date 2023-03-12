@@ -1,8 +1,17 @@
-use plex_api::PinManager;
+use plex_api::MyPlexBuilder;
+use rpassword::prompt_password;
 
 #[async_std::main]
 async fn main() {
-    let pin_manager = PinManager::default();
+    let token = prompt_password("Token: ").unwrap();
+
+    let plex = MyPlexBuilder::default()
+        .set_token(token)
+        .build()
+        .await
+        .unwrap();
+
+    let pin_manager = plex.pin_manager();
     let pin = pin_manager.pin().await.unwrap();
 
     println!("Code: {}", pin.code());

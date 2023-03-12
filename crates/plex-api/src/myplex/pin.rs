@@ -1,6 +1,6 @@
 use crate::{
     url::{MYPLEX_PINS, MYPLEX_PINS_LINK},
-    Error, HttpClient, HttpClientBuilder, Result,
+    Error, HttpClient, Result,
 };
 use http::StatusCode;
 use isahc::AsyncReadResponseExt;
@@ -9,14 +9,6 @@ use time::OffsetDateTime;
 
 pub struct PinManager {
     client: HttpClient,
-}
-
-impl Default for PinManager {
-    fn default() -> Self {
-        Self {
-            client: HttpClientBuilder::default().build().unwrap(),
-        }
-    }
 }
 
 impl PinManager {
