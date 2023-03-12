@@ -155,7 +155,8 @@ mod offline {
 
 mod online {
     use super::fixtures::online::client::*;
-    use plex_api::{HttpClient, MyPlexBuilder};
+    use super::fixtures::online::*;
+    use plex_api::{HttpClient, MyPlex, MyPlexBuilder};
 
     #[plex_api_test_helper::online_test_myplex]
     async fn connect(client_authenticated: HttpClient) {
@@ -164,5 +165,12 @@ mod online {
             .build()
             .await
             .unwrap();
+    }
+
+    #[plex_api_test_helper::online_test_myplex]
+    async fn privacy(#[future] myplex: MyPlex) {
+        let myplex = myplex.await;
+        // Read the privacy settings and exit in case of any errors
+        myplex.privacy().await.unwrap();
     }
 }
