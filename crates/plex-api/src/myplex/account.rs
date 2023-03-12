@@ -1,5 +1,5 @@
 use secrecy::SecretString;
-use serde::{Deserialize, Deserializer};
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_repr::Deserialize_repr;
 use serde_with::{json::JsonString, serde_as};
 use std::collections::HashMap;
@@ -220,7 +220,7 @@ pub struct SidebarSource {
     pub is_full_owned_server: bool,
 }
 
-#[derive(Deserialize, Debug, PartialEq, Eq, Clone)]
+#[derive(Serialize, Deserialize, Debug, PartialEq, Eq, Clone)]
 #[serde(rename_all = "snake_case")]
 pub enum RestrictionProfile {
     LittleKid,

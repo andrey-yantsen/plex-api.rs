@@ -1,4 +1,6 @@
-use crate::{url::MYPLEX_INVITES_FRIENDS, Error, HttpClient, Result};
+use crate::{
+    myplex::account::RestrictionProfile, url::MYPLEX_INVITES_FRIENDS, Error, HttpClient, Result,
+};
 use http::StatusCode;
 use isahc::AsyncReadResponseExt;
 use serde::{Deserialize, Serialize};
@@ -35,6 +37,8 @@ pub struct Friend {
     pub email: Option<String>,
     /// Is it a managed user?
     pub restricted: bool,
+    /// Restrictions on the managed user (if any)
+    pub restriction_profile: Option<RestrictionProfile>,
     /// Managed user's username
     pub friendly_name: Option<String>,
     /// User's avatar picture URL
