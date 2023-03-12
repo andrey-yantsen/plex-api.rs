@@ -33,9 +33,9 @@ jobs:
           sed -i 's/plex_server_version: .*/plex_server_version: ${{ steps.tags.outputs.tags }}/g' .github/workflows/test.yml
       - name: Update mergify.toml config
         run: |
-          sed -i 's/\(Test on a real server ([a-z ]*)\).* # supported-version-1/\1 (${{ steps.tags.outputs.last_tag }}) # supported-version-1/g' .github/mergify.yml
-          sed -i 's/\(Test on a real server ([a-z ]*)\).* # supported-version-2/\1 (${{ steps.tags.outputs.second_tag }}) # supported-version-2/g' .github/mergify.yml
-          sed -i 's/\(Test on a real server ([a-z ]*)\).* # supported-version-3/\1 (${{ steps.tags.outputs.first_tag }}) # supported-version-3/g' .github/mergify.yml
+          sed -i 's/\(Test on a real server ([^)]*)\).* # supported-version-1/\1 (${{ steps.tags.outputs.last_tag }}) # supported-version-1/g' .github/mergify.yml
+          sed -i 's/\(Test on a real server ([^)]*)\).* # supported-version-2/\1 (${{ steps.tags.outputs.second_tag }}) # supported-version-2/g' .github/mergify.yml
+          sed -i 's/\(Test on a real server ([^)]*)\).* # supported-version-3/\1 (${{ steps.tags.outputs.first_tag }}) # supported-version-3/g' .github/mergify.yml
       - name: Update xtask/DOCKER_PLEX_IMAGE_TAG_MIN_SUPPORTED
         run: |
           sed -i 's/DOCKER_PLEX_IMAGE_TAG_MIN_SUPPORTED: &str = "[-a-z0-9.]*/DOCKER_PLEX_IMAGE_TAG_MIN_SUPPORTED: \&str = "${{ steps.tags.outputs.last_tag }}/g' crates/xtask/src/get_last_plex_tags.rs
