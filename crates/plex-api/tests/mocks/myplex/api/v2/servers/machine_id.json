@@ -1,0 +1,27 @@
+{
+    "name": "Server",
+    "address": "127.0.0.1",
+    "port": 443,
+    "version": "1.31.1.6733-bc0674160",
+    "scheme": "http",
+    "synced": false,
+    "owned": true,
+    "localAddresses": "172.0.0.0",
+    "machineIdentifier": "machine_id",
+    "createdAt": 12312423,
+    "updatedAt": 12321342,
+    "librarySections": [
+        {
+            "id": 1001,
+            "key": 1,
+            "title": "Movies",
+            "type": "movie"
+        },
+        {
+            "id": 1002,
+            "key": 2,
+            "title": "TV Shows",
+            "type": "show"
+        }
+    ]
+}

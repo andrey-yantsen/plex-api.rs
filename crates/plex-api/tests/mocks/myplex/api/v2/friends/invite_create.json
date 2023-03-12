@@ -1,0 +1,11 @@
+{
+    "id": 1,
+    "uuid": "deadbeef",
+    "title": "username",
+    "username": "username",
+    "restricted": false,
+    "friendlyName": null,
+    "thumb": "https://plex.tv/users/deadbeef/avatar?c=23423423",
+    "home": false,
+    "status": "pending"
+}
