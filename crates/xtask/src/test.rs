@@ -299,7 +299,11 @@ impl flags::Test {
 
             if self.github_actions {
                 println!();
-                println!("::add-mask::{}", shared_server_access_token);
+                // Simply printing this line didn't worked out, trying strange magic
+                sh.cmd("echo")
+                    .arg(format!("::add-mask::{shared_server_access_token}"))
+                    .quiet()
+                    .run()?;
             }
 
             println!("done!");
