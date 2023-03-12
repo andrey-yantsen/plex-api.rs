@@ -128,6 +128,7 @@ mod offline {
                     assert!(filter_movies.label.is_empty());
                     assert!(filter_movies.exclude_label.is_empty());
                 }
+                #[cfg(not(feature = "tests_deny_unknown_fields"))]
                 _ => {
                     panic!("Unexpected friend");
                 }
