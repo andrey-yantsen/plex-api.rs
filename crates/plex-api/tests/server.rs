@@ -910,10 +910,6 @@ mod online {
     #[plex_api_test_helper::online_test]
     async fn item(#[future] server: Server) {
         let server = server.await;
-        let client = server.client().to_owned();
-
-        // It isn't clear why but item metadata requests seem to timeout frequently.
-        let server = get_server_with_longer_timeout(server, client).await;
 
         let item = server.item_by_id(108).await.unwrap();
         assert_eq!(item.title(), "Interstate 60");
@@ -950,10 +946,6 @@ mod online {
     #[plex_api_test_helper::online_test_non_shared_server]
     async fn item_playlists(#[future] server: Server) {
         let server = server.await;
-        let client = server.client().to_owned();
-
-        // It isn't clear why but item metadata requests seem to timeout frequently.
-        let server = get_server_with_longer_timeout(server, client).await;
 
         let item = server.item_by_id(168).await.unwrap();
         assert_eq!(item.title(), "Movies Since 2007");
@@ -980,10 +972,6 @@ mod online {
         let jpg_file = include_bytes!("../../../plex-stub-data/media/white_noise_720p.jpg");
 
         let server = server.await;
-        let client = server.client().to_owned();
-
-        // It isn't clear why but item metadata requests seem to timeout frequently.
-        let server = get_server_with_longer_timeout(server, client).await;
 
         // We want to check that the same works for different ways of getting the item's metadata
         async fn find_movie(server: &Server, library_id: &str, rating_key: u32) -> [Movie; 2] {
