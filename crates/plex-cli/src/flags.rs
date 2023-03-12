@@ -14,6 +14,7 @@ xflags::xflags! {
             optional -d, --delay seconds: u32
 
             /// How long to wait for the success.
+            /// Default timeout is 120s for regular mode, and 300s for when --full is passed.
             optional --timeout seconds: u32
 
             /// Wait for the full server start, not only the general availability (might take a few minutes)
