@@ -23,11 +23,14 @@ impl flags::Wait {
             if let Ok(server) = server_result {
                 if !wait_full_start
                     || (server.media_container.start_state.is_none()
-                        && matches!(
+                        && (matches!(
                             server.media_container.my_plex_mapping_state,
-                            ServerMappingState::Unknown | ServerMappingState::Mapped
-                        )
-                        && matches!(server.media_container.certificate, Some(true)))
+                            ServerMappingState::Mapped
+                        ) && matches!(server.media_container.certificate, Some(true))
+                            || matches!(
+                                server.media_container.my_plex_mapping_state,
+                                ServerMappingState::Unknown
+                            )))
                 {
                     let prefs = server.preferences().await;
                     if prefs.is_ok() {
