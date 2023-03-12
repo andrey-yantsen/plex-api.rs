@@ -88,3 +88,22 @@ mod offline {
         }
     }
 }
+
+mod online {
+    use super::fixtures::online::myplex;
+    use plex_api::MyPlex;
+
+    #[plex_api_test_helper::online_test_myplex]
+    async fn load_devices(#[future] myplex: MyPlex) {
+        let myplex = myplex.await;
+        // Test deserialization
+        _ = myplex.device_manager().get_devices().await.unwrap();
+    }
+
+    #[plex_api_test_helper::online_test_myplex]
+    async fn load_resources(#[future] myplex: MyPlex) {
+        let myplex = myplex.await;
+        // Test deserialization
+        _ = myplex.device_manager().get_resources().await.unwrap();
+    }
+}
