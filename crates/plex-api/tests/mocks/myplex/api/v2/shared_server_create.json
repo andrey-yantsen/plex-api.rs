@@ -1,0 +1,68 @@
+{
+    "id": 1,
+    "name": "Server",
+    "ownerId": 2,
+    "invitedId": 3,
+    "invitedEmail": null,
+    "serverId": 4,
+    "accepted": true,
+    "acceptedAt": "2021-01-11T01:11:31Z",
+    "deletedAt": null,
+    "leftAt": null,
+    "owned": true,
+    "inviteToken": "invite_token",
+    "machineIdentifier": "deadbeef",
+    "lastSeenAt": "2021-01-11T01:11:31Z",
+    "numLibraries": 2,
+    "invited": {
+        "id": 3,
+        "uuid": "deadbeef1",
+        "title": "username",
+        "username": "username",
+        "restricted": false,
+        "friendlyName": null,
+        "thumb": "https://plex.tv/users/deadbeef1/avatar?c=1676049502",
+        "email": "example@example.com",
+        "home": false,
+        "status": "accepted",
+        "sharingSettings": {
+            "allowChannels": true,
+            "filterMovies": "",
+            "filterMusic": "",
+            "filterPhotos": null,
+            "filterTelevision": "",
+            "filterAll": null,
+            "allowSync": true,
+            "allowCameraUpload": false,
+            "allowSubtitleAdmin": true,
+            "allowTuners": 0
+        }
+    },
+    "sharingSettings": {
+        "allowChannels": true,
+        "filterMovies": "",
+        "filterMusic": "",
+        "filterPhotos": null,
+        "filterTelevision": "",
+        "filterAll": null,
+        "allowSync": true,
+        "allowCameraUpload": false,
+        "allowSubtitleAdmin": true,
+        "allowTuners": 0
+    },
+    "libraries": [
+        {
+            "id": 1001,
+            "key": 1,
+            "title": "Movies",
+            "type": "movie"
+        },
+        {
+            "id": 1002,
+            "key": 2,
+            "title": "TV Shows",
+            "type": "show"
+        }
+    ],
+    "allLibraries": false
+}

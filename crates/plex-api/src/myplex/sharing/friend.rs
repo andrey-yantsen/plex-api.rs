@@ -5,6 +5,7 @@ use http::StatusCode;
 use isahc::AsyncReadResponseExt;
 use serde::{Deserialize, Serialize};
 use serde_plain::derive_display_from_serialize;
+use time::OffsetDateTime;
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 #[serde(rename_all = "snake_case")]
@@ -41,6 +42,8 @@ pub struct Friend {
     pub restriction_profile: Option<RestrictionProfile>,
     /// Managed user's username
     pub friendly_name: Option<String>,
+    #[serde(default, with = "time::serde::rfc3339::option")]
+    pub friendship_created_at: Option<OffsetDateTime>,
     /// User's avatar picture URL
     #[serde(with = "http_serde::uri")]
     pub thumb: http::Uri,
@@ -61,7 +64,7 @@ pub struct Friend {
 }
 
 impl Friend {
-    pub async fn accept(&self) -> Result<Friend> {
+    pub async fn accept(self) -> Result<Friend> {
         if !matches!(
             self.status,
             Some(InviteStatus::PendingReceived) | Some(InviteStatus::Pending)
