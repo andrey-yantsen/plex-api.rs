@@ -214,3 +214,24 @@ mod offline {
         delete_result.expect("failed to erase webhooks");
     }
 }
+
+mod online {
+    use super::fixtures::online::myplex;
+    use plex_api::{Error, MyPlex, ServerFeature};
+
+    #[plex_api_test_helper::online_test_myplex]
+    async fn load_webhooks(#[future] myplex: MyPlex) {
+        let myplex = myplex.await;
+
+        let webhooks_manager = myplex.webhook_manager().await;
+
+        if let Err(Error::SubscriptionFeatureNotAvailable(ServerFeature::Webhooks)) =
+            webhooks_manager
+        {
+            return;
+        }
+
+        // Test deserialization
+        _ = webhooks_manager.unwrap();
+    }
+}

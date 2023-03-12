@@ -1,14 +1,15 @@
 pub mod client;
 pub mod server;
 
-use isahc::{config::Configurable, HttpClient};
-use plex_api::HttpClientBuilder;
+use client::client_authenticated;
+use isahc::{config::Configurable, HttpClient as IsahcHttpClient};
+use plex_api::{HttpClient as PlexHttpClient, HttpClientBuilder, MyPlex, MyPlexBuilder};
 use rstest::fixture;
 
 #[fixture]
 pub fn client_builder() -> HttpClientBuilder {
     let mut builder = HttpClientBuilder::default().set_http_client(
-        HttpClient::builder()
+        IsahcHttpClient::builder()
             .timeout(std::time::Duration::from_secs(10))
             .connect_timeout(std::time::Duration::from_secs(2))
             .redirect_policy(isahc::config::RedirectPolicy::None)
@@ -24,4 +25,13 @@ pub fn client_builder() -> HttpClientBuilder {
     }
 
     builder
+}
+
+#[fixture]
+pub async fn myplex(client_authenticated: PlexHttpClient) -> MyPlex {
+    MyPlexBuilder::default()
+        .set_client(client_authenticated)
+        .build()
+        .await
+        .unwrap()
 }
