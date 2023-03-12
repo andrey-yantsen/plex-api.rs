@@ -11,6 +11,10 @@ mod offline {
         "tests/mocks/myplex/api/v2/friends_accepted_one_restricted.json",
         1
     )]
+    #[case::four_managed_users(
+        "tests/mocks/myplex/api/v2/friends_accepted_four_restricted.json",
+        4
+    )]
     #[case::single_external_user("tests/mocks/myplex/api/v2/friends_accepted_one_external.json", 1)]
     #[case::managed_and_external_user("tests/mocks/myplex/api/v2/friends_accepted_mixed.json", 2)]
     async fn list_friends(

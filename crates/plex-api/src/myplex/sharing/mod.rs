@@ -93,37 +93,39 @@ impl<'de> Deserialize<'de> for SharingFilter {
                 }
 
                 for filter in value.split('|') {
-                    let pairs: Vec<&str> = filter.split('=').collect();
-
-                    if pairs.len() != 2 {
+                    let decoded_values =
+                        serde_urlencoded::from_str::<Vec<(String, String)>>(filter);
+                    if let Ok(decoded_values) = decoded_values {
+                        for pairs in decoded_values {
+                            match pairs.0.as_str() {
+                                "contentRating" => {
+                                    ret.content_rating =
+                                        pairs.1.split(',').map(|v| v.to_owned()).collect()
+                                }
+                                "contentRating!" => {
+                                    ret.exclude_content_rating =
+                                        pairs.1.split(',').map(|v| v.to_owned()).collect()
+                                }
+                                "label" => {
+                                    ret.label = pairs.1.split(',').map(|v| v.to_owned()).collect()
+                                }
+                                "label!" => {
+                                    ret.exclude_label =
+                                        pairs.1.split(',').map(|v| v.to_owned()).collect()
+                                }
+                                _ => {
+                                    return Err(::serde::de::Error::invalid_value(
+                                        ::serde::de::Unexpected::Str(value),
+                                        &self,
+                                    ));
+                                }
+                            }
+                        }
+                    } else {
                         return Err(::serde::de::Error::invalid_value(
                             ::serde::de::Unexpected::Str(value),
                             &self,
                         ));
-                    }
-
-                    match pairs[0] {
-                        "contentRating" => {
-                            ret.content_rating =
-                                pairs[1].split("%2C").map(|v| v.to_owned()).collect()
-                        }
-                        "contentRating!" => {
-                            ret.exclude_content_rating =
-                                pairs[1].split("%2C").map(|v| v.to_owned()).collect()
-                        }
-                        "label" => {
-                            ret.label = pairs[1].split("%2C").map(|v| v.to_owned()).collect()
-                        }
-                        "label!" => {
-                            ret.exclude_label =
-                                pairs[1].split("%2C").map(|v| v.to_owned()).collect()
-                        }
-                        _ => {
-                            return Err(::serde::de::Error::invalid_value(
-                                ::serde::de::Unexpected::Str(value),
-                                &self,
-                            ));
-                        }
                     }
                 }
 
