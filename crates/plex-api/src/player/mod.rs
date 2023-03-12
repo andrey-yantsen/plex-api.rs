@@ -3,18 +3,18 @@ use crate::{
     HttpClientBuilder, MyPlex, Result,
 };
 use http::Uri;
-use std::{convert::TryFrom, sync::Arc};
+use std::convert::TryFrom;
 
 #[derive(Debug, Clone)]
 pub struct Player {
     #[allow(dead_code)]
-    client: Arc<HttpClient>,
+    client: HttpClient,
     myplex_api_url: Uri,
     pub media_container: ResourcesMediaContainer,
 }
 
 impl Player {
-    async fn build(client: Arc<HttpClient>, myplex_api_url: Uri) -> Result<Self> {
+    async fn build(client: HttpClient, myplex_api_url: Uri) -> Result<Self> {
         Ok(Self {
             media_container: client
                 .get(CLIENT_RESOURCES)
@@ -33,7 +33,7 @@ impl Player {
     {
         let myplex_api_url = client.api_url.clone();
         Self::build(
-            Arc::new(HttpClientBuilder::from(client).set_api_url(url).build()?),
+            HttpClientBuilder::from(client).set_api_url(url).build()?,
             myplex_api_url,
         )
         .await
@@ -53,7 +53,7 @@ impl Player {
         <Uri as TryFrom<U>>::Error: Into<http::Error>,
     {
         MyPlex::new(
-            HttpClientBuilder::from(self.client.as_ref().to_owned())
+            HttpClientBuilder::from(self.client.clone())
                 .set_api_url(api_url)
                 .build()?,
         )

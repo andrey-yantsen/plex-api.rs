@@ -1,5 +1,3 @@
-use std::sync::Arc;
-
 use crate::{
     url::{MYPLEX_PINS, MYPLEX_PINS_LINK},
     Error, HttpClient, HttpClientBuilder, Result,
@@ -10,19 +8,19 @@ use serde::Deserialize;
 use time::OffsetDateTime;
 
 pub struct PinManager {
-    client: Arc<HttpClient>,
+    client: HttpClient,
 }
 
 impl Default for PinManager {
     fn default() -> Self {
         Self {
-            client: Arc::new(HttpClientBuilder::default().build().unwrap()),
+            client: HttpClientBuilder::default().build().unwrap(),
         }
     }
 }
 
 impl PinManager {
-    pub fn new(client: Arc<HttpClient>) -> Self {
+    pub fn new(client: HttpClient) -> Self {
         Self { client }
     }
 

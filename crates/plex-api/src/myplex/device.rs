@@ -1,5 +1,3 @@
-use std::sync::Arc;
-
 use crate::{
     http_client::HttpClient,
     media_container::devices::{DevicesMediaContainer, Feature},
@@ -10,11 +8,11 @@ use futures::{future::select_ok, FutureExt};
 use secrecy::ExposeSecret;
 
 pub struct DeviceManager {
-    pub client: Arc<HttpClient>,
+    pub client: HttpClient,
 }
 
 impl DeviceManager {
-    pub fn new(client: Arc<HttpClient>) -> Self {
+    pub fn new(client: HttpClient) -> Self {
         Self { client }
     }
 

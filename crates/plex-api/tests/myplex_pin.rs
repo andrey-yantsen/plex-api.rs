@@ -1,8 +1,6 @@
 mod fixtures;
 
 mod offline {
-    use std::sync::Arc;
-
     use super::fixtures::offline::{client::*, myplex::*, Mocked};
     use httpmock::Method::{GET, POST, PUT};
     use plex_api::{
@@ -45,7 +43,7 @@ mod offline {
     #[plex_api_test_helper::offline_test]
     async fn pin(client_anonymous: Mocked<HttpClient>) {
         let (client, mock_server) = client_anonymous.split();
-        let pin_manager = PinManager::new(Arc::new(client));
+        let pin_manager = PinManager::new(client);
 
         let mock_body_new = include_str!("mocks/myplex/api/v2/pins_new.json");
 
