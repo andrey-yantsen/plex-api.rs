@@ -1,5 +1,5 @@
 use crate::flags;
-use plex_api::HttpClientBuilder;
+use plex_api::{HttpClientBuilder, ServerMappingState};
 use std::time::{Duration, SystemTime};
 
 impl flags::Wait {
@@ -22,7 +22,13 @@ impl flags::Wait {
             let server_result = plex_api::Server::new(host, client.clone()).await;
             if let Ok(server) = server_result {
                 // The `start_state` is None when the server has finished loading.
-                if server.media_container.start_state.is_none() || !wait_full_start {
+                if server.media_container.start_state.is_none()
+                    || matches!(
+                        &server.media_container.my_plex_mapping_state,
+                        ServerMappingState::Unknown | ServerMappingState::Mapped
+                    )
+                    || !wait_full_start
+                {
                     let prefs = server.preferences().await;
                     if prefs.is_ok() {
                         println!(
