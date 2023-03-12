@@ -12,13 +12,13 @@ use self::{
     privacy::Privacy, sharing::Sharing, webhook::WebhookManager,
 };
 use crate::{
-    http_client::{HttpClient, HttpClientBuilder},
+    http_client::{HttpClient, HttpClientBuilder, Request},
     media_container::server::Feature,
     url::{MYPLEX_SERVERS, MYPLEX_SIGNIN_PATH, MYPLEX_SIGNOUT_PATH, MYPLEX_USER_INFO_PATH},
     Error, Result,
 };
 use http::StatusCode;
-use isahc::{AsyncBody, AsyncReadResponseExt, Response as HttpResponse};
+use isahc::AsyncBody;
 use secrecy::{ExposeSecret, SecretString};
 use std::sync::Arc;
 
@@ -59,14 +59,11 @@ impl MyPlex {
             params.push((key, value));
         }
 
-        let response = client
-            .post(MYPLEX_SIGNIN_PATH)
-            .header("Accept", "application/json")
-            .form(&params)?
-            .send()
-            .await?;
-
-        Self::build_from_signin_response(client, response).await
+        Self::build_from_signin_response(
+            client.clone(),
+            client.post(MYPLEX_SIGNIN_PATH).form(&params)?,
+        )
+        .await
     }
 
     async fn login(username: &str, password: &str, client: HttpClient) -> Result<Self> {
@@ -89,31 +86,25 @@ impl MyPlex {
     }
 
     pub async fn refresh(self) -> Result<Self> {
-        let response = self
-            .client
-            .get(MYPLEX_USER_INFO_PATH)
-            .header("Accept", "application/json")
-            .body(())?
-            .send()
-            .await?;
-
-        Self::build_from_signin_response(self.client.as_ref().to_owned(), response).await
+        Self::build_from_signin_response(
+            self.client.as_ref().to_owned(),
+            self.client.get(MYPLEX_USER_INFO_PATH).body(())?,
+        )
+        .await
     }
 
-    async fn build_from_signin_response(
+    async fn build_from_signin_response<B>(
         client: HttpClient,
-        mut response: HttpResponse<AsyncBody>,
-    ) -> Result<Self> {
-        match response.status() {
-            StatusCode::OK | StatusCode::CREATED => {
-                let account: account::MyPlexAccount = response.json().await?;
-                Ok(Self {
-                    client: Arc::new(client.set_x_plex_token(account.auth_token.clone())),
-                    account: Some(account),
-                })
-            }
-            _ => Err(Error::from_response(response).await),
-        }
+        request: Request<'_, B>,
+    ) -> Result<Self>
+    where
+        B: Into<AsyncBody>,
+    {
+        let account: account::MyPlexAccount = request.json().await?;
+        Ok(Self {
+            client: Arc::new(client.set_x_plex_token(account.auth_token.clone())),
+            account: Some(account),
+        })
     }
 
     pub fn client(&self) -> &HttpClient {
