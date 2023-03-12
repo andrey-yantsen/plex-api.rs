@@ -4,7 +4,7 @@
       "sharingSettings": {
         "allowChannels": false,
         "allowSubtitleAdmin": false,
-        "filterMovies": null,
+        "filterMovies": "contentRating=12|label=BAFTA%2C1001%20Movies%20You%20Must%20See%20Before%20You%20Die&contentRating!=Approved",
         "filterMusic": null,
         "filterPhotos": null,
         "filterTelevision": null,

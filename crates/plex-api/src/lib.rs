@@ -19,7 +19,9 @@ pub use media_container::{
         Feature as ServerFeature, MappingState as ServerMappingState,
     },
 };
-pub use myplex::{device, pin::PinManager, sharing, MyPlex, MyPlexBuilder};
+pub use myplex::{
+    account::RestrictionProfile, device, pin::PinManager, sharing, MyPlex, MyPlexBuilder,
+};
 pub use player::Player;
 pub use server::{
     library::{
