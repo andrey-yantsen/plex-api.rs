@@ -45,7 +45,7 @@ impl Default for Permissions {
     }
 }
 
-#[derive(Default, Debug, Deserialize, Serialize)]
+#[derive(Default, Debug, Deserialize, Serialize, Clone)]
 pub struct Filters {
     #[serde(rename = "filterMovies")]
     pub movies: SharingFilter,
@@ -53,13 +53,14 @@ pub struct Filters {
     pub music: SharingFilter,
     #[serde(rename = "filterTelevision")]
     pub television: SharingFilter,
-    #[serde(rename = "filterPhotos", skip)]
-    _photos: Option<String>,
+    #[serde(rename = "filterPhotos")]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub photos: Option<SharingFilter>,
     #[serde(rename = "filterAll", skip)]
     _all: Option<String>,
 }
 
-#[derive(Default, Debug)]
+#[derive(Default, Debug, Clone)]
 pub struct SharingFilter {
     pub content_rating: Vec<String>,
     pub exclude_content_rating: Vec<String>,
@@ -86,6 +87,10 @@ impl<'de> Deserialize<'de> for SharingFilter {
                 E: ::serde::de::Error,
             {
                 let mut ret = SharingFilter::default();
+
+                if value.is_empty() {
+                    return Ok(ret);
+                }
 
                 for filter in value.split('|') {
                     let pairs: Vec<&str> = filter.split('=').collect();
@@ -258,10 +263,12 @@ impl<'a> Sharing<'a> {
                 allow_subtitle_admin: permissions.allow_subtitle_admin,
                 allow_sync: permissions.allow_sync,
                 allow_tuners: permissions.allow_tuners,
-                filter_movies: Some(filters.movies.to_string()),
-                filter_television: Some(filters.television.to_string()),
-                filter_music: Some(filters.music.to_string()),
-                filter_all: None,
+                allow_camera_upload: permissions.allow_camera_upload,
+                filter_movies: Some(filters.movies),
+                filter_television: Some(filters.television),
+                filter_music: Some(filters.music),
+                filter_photos: filters.photos,
+                ..Default::default()
             },
             library_section_ids: server_info
                 .library_sections
