@@ -1,22 +1,19 @@
+mod filter;
 mod friend;
 mod server;
+mod shareables;
 
 use crate::{
     media_container::users::AllowTuners,
     url::{MYPLEX_INVITES_FRIENDS, MYPLEX_INVITES_INVITE, MYPLEX_INVITES_SHARED_SERVERS},
-    Library, MyPlex, Result, Server,
+    MyPlex, Result,
 };
-use serde::{
-    de::{Deserializer, Visitor},
-    Deserialize, Serialize,
-};
-use std::{
-    fmt::{Formatter, Result as FmtResult},
-    result::Result as StdResult,
-};
+use serde::{Deserialize, Serialize};
 
+pub use filter::SharingFilter;
 pub use friend::{Friend, InviteStatus};
 pub use server::SharedServer;
+pub use shareables::*;
 
 #[derive(Debug)]
 pub struct Sharing<'a> {
@@ -58,165 +55,6 @@ pub struct Filters {
     pub photos: Option<SharingFilter>,
     #[serde(rename = "filterAll", skip)]
     _all: Option<String>,
-}
-
-#[derive(Default, Debug, Clone)]
-pub struct SharingFilter {
-    pub content_rating: Vec<String>,
-    pub exclude_content_rating: Vec<String>,
-    pub label: Vec<String>,
-    pub exclude_label: Vec<String>,
-}
-
-impl<'de> Deserialize<'de> for SharingFilter {
-    fn deserialize<D>(deserializer: D) -> StdResult<Self, D::Error>
-    where
-        D: Deserializer<'de>,
-    {
-        struct V;
-
-        impl<'de> Visitor<'de> for V {
-            type Value = SharingFilter;
-
-            fn expecting(&self, formatter: &mut Formatter) -> FmtResult {
-                formatter.write_str("valid plex filter string")
-            }
-
-            fn visit_str<E>(self, value: &str) -> StdResult<SharingFilter, E>
-            where
-                E: ::serde::de::Error,
-            {
-                let mut ret = SharingFilter::default();
-
-                if value.is_empty() {
-                    return Ok(ret);
-                }
-
-                for filter in value.split('|') {
-                    let decoded_values =
-                        serde_urlencoded::from_str::<Vec<(String, String)>>(filter);
-                    if let Ok(decoded_values) = decoded_values {
-                        for pairs in decoded_values {
-                            match pairs.0.as_str() {
-                                "contentRating" => {
-                                    ret.content_rating =
-                                        pairs.1.split(',').map(|v| v.to_owned()).collect()
-                                }
-                                "contentRating!" => {
-                                    ret.exclude_content_rating =
-                                        pairs.1.split(',').map(|v| v.to_owned()).collect()
-                                }
-                                "label" => {
-                                    ret.label = pairs.1.split(',').map(|v| v.to_owned()).collect()
-                                }
-                                "label!" => {
-                                    ret.exclude_label =
-                                        pairs.1.split(',').map(|v| v.to_owned()).collect()
-                                }
-                                _ => {
-                                    return Err(::serde::de::Error::invalid_value(
-                                        ::serde::de::Unexpected::Str(value),
-                                        &self,
-                                    ));
-                                }
-                            }
-                        }
-                    } else {
-                        return Err(::serde::de::Error::invalid_value(
-                            ::serde::de::Unexpected::Str(value),
-                            &self,
-                        ));
-                    }
-                }
-
-                Ok(ret)
-            }
-        }
-
-        deserializer.deserialize_str(V)
-    }
-}
-
-impl Serialize for SharingFilter {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where
-        S: ::serde::ser::Serializer,
-    {
-        serializer.serialize_str(&self.to_string())
-    }
-}
-
-impl ToString for SharingFilter {
-    fn to_string(&self) -> String {
-        let mut ret: Vec<String> = vec![];
-
-        if !self.content_rating.is_empty() {
-            ret.push(format!("contentRating={}", self.content_rating.join("%2C")))
-        }
-
-        if !self.exclude_content_rating.is_empty() {
-            ret.push(format!(
-                "contentRating!={}",
-                self.exclude_content_rating.join("%2C")
-            ))
-        }
-
-        if !self.label.is_empty() {
-            ret.push(format!("label={}", self.label.join("%2C")))
-        }
-
-        if !self.exclude_label.is_empty() {
-            ret.push(format!("label!={}", self.exclude_label.join("%2C")))
-        }
-
-        ret.join("|")
-    }
-}
-
-pub enum ShareableServer<'a> {
-    MachineIdentifier(&'a str),
-    Server(&'a Server),
-}
-
-impl<'a> ShareableServer<'a> {
-    pub fn get_id(&self) -> &str {
-        match self {
-            Self::MachineIdentifier(id) => id,
-            Self::Server(srv) => srv.machine_identifier(),
-        }
-    }
-}
-
-pub enum ShareableLibrary<'a> {
-    Library(&'a Library),
-    LibraryId(&'a str),
-}
-
-impl<'a> ShareableLibrary<'a> {
-    pub fn get_id(&self) -> &str {
-        match self {
-            Self::Library(library) => library.id(),
-            Self::LibraryId(id) => id,
-        }
-    }
-}
-
-pub enum User<'a> {
-    Account(&'a MyPlex),
-    UsernameOrEmail(&'a str),
-}
-
-impl<'a> User<'a> {
-    pub fn get_identifier(&self) -> &str {
-        match self {
-            Self::Account(MyPlex {
-                account: Some(account),
-                ..
-            }) => &account.email,
-            Self::Account(_) => "",
-            Self::UsernameOrEmail(u) => u,
-        }
-    }
 }
 
 #[derive(Serialize, Debug)]
