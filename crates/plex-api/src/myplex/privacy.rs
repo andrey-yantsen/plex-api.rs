@@ -1,6 +1,5 @@
 use crate::{http_client::HttpClient, url::MYPLEX_PRIVACY_PATH, Error};
 use http::StatusCode;
-use isahc::AsyncReadResponseExt;
 use serde::Deserialize;
 use std::sync::Arc;
 
@@ -35,17 +34,12 @@ struct Metric {
 impl Privacy {
     /// Returns current privacy settings, see [Privacy Preferences on plex.tv](https://www.plex.tv/about/privacy-legal/privacy-preferences/#opd).
     pub async fn new(client: Arc<HttpClient>) -> crate::Result<Self> {
-        let mut response = client.get(MYPLEX_PRIVACY_PATH).send().await?;
-        if response.status() == StatusCode::OK {
-            let p: PrivacyApiResponse = response.json().await?;
-            Ok(Self {
-                opt_out_playback: p.opt_out_playback,
-                opt_out_library_stats: p.opt_out_library_stats,
-                client,
-            })
-        } else {
-            Err(Error::from_response(response).await)
-        }
+        let p: PrivacyApiResponse = client.get(MYPLEX_PRIVACY_PATH).json().await?;
+        Ok(Self {
+            opt_out_playback: p.opt_out_playback,
+            opt_out_library_stats: p.opt_out_library_stats,
+            client,
+        })
     }
 
     /// Changes privacy settings, see [Privacy Preferences on plex.tv](https://www.plex.tv/about/privacy-legal/privacy-preferences/#opd).
