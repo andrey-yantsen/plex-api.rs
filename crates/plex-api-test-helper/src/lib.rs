@@ -106,40 +106,40 @@ fn rewrite_multirun_test(
     let mut fn_signature1 = fn_type.sig;
     let mut fn_signature2 = fn_signature1.clone();
 
-    fn_signature1.ident = syn::Ident::new(
-        &format!("{}_claimed_server", fn_signature1.ident),
-        fn_signature1.ident.span(),
-    );
+    let mod_ident = syn::Ident::new(&fn_signature1.ident.to_string(), fn_signature1.ident.span());
 
-    fn_signature2.ident = syn::Ident::new(
-        &format!("{}_unclaimed_server", fn_signature2.ident),
-        fn_signature2.ident.span(),
-    );
+    fn_signature1.ident = syn::Ident::new("claimed_server", fn_signature1.ident.span());
+
+    fn_signature2.ident = syn::Ident::new("unclaimed_server", fn_signature2.ident.span());
 
     let fn_vis = fn_type.vis;
     let fn_attrs = fn_type.attrs;
     let fn_block = fn_type.block;
 
     TokenStream::from(quote! {
-        #[::rstest::rstest(server_claimed as server)]
-        #(#fn_attrs)*
-        #[cfg_attr(
-            not(feature = "tests_only_online_claimed_server"),
-            ignore = "Feature tests_only_online_authenticated is not set, skipping authenticated online tests.",
-        )]
-        #extra_attr_claimed
-        #fn_vis #fn_signature1 {
-            #fn_block
-        }
+        pub mod #mod_ident {
+            use super::*;
 
-        #[::rstest::rstest(server_unclaimed as server)]
-        #(#fn_attrs)*
-        #[cfg_attr(
-            not(feature = "tests_only_online_unclaimed_server"),
-            ignore = "Feature tests_only_online_anonymous is not set, skipping anonymous online tests.",
-        )]
-        #fn_vis #fn_signature2 {
-            #fn_block
+            #[::rstest::rstest(server_claimed as server)]
+            #(#fn_attrs)*
+            #[cfg_attr(
+                not(feature = "tests_only_online_claimed_server"),
+                ignore = "Feature tests_only_online_authenticated is not set, skipping authenticated online tests.",
+            )]
+            #extra_attr_claimed
+            #fn_vis #fn_signature1 {
+                #fn_block
+            }
+
+            #[::rstest::rstest(server_unclaimed as server)]
+            #(#fn_attrs)*
+            #[cfg_attr(
+                not(feature = "tests_only_online_unclaimed_server"),
+                ignore = "Feature tests_only_online_anonymous is not set, skipping anonymous online tests.",
+            )]
+            #fn_vis #fn_signature2 {
+                #fn_block
+            }
         }
     })
 }
