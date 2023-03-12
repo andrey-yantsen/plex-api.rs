@@ -82,6 +82,12 @@ pub struct Device {
     pub presence: Option<bool>,
     #[serde(rename = "@owned")]
     pub owned: Option<bool>,
+    #[serde(rename = "@ownerId")]
+    pub owner_id: Option<u64>,
+    #[serde(rename = "@home")]
+    pub home: Option<bool>,
+    #[serde(rename = "@sourceTitle")]
+    pub source_title: Option<String>,
     #[serde(rename = "SyncList")]
     pub sync_list: Option<SyncList>,
     #[serde(default = "create_empty_secret_string", rename = "@authToken")]
