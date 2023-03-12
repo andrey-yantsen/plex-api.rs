@@ -1,0 +1,67 @@
+[{
+    "status": "accepted",
+    "sharingSettings": {
+        "allowChannels": false,
+        "allowSubtitleAdmin": false,
+        "filterMovies": "",
+        "filterMusic": "",
+        "filterPhotos": null,
+        "filterTelevision": "",
+        "filterAll": null,
+        "allowSync": true,
+        "allowCameraUpload": false,
+        "allowTuners": 2
+    },
+    "sharedServers": [{
+        "id": 1,
+        "name": "Server",
+        "invitedId": 2,
+        "invitedEmail": null,
+        "serverId": 3,
+        "accepted": true,
+        "acceptedAt": "2020-01-01T02:03:04Z",
+        "deletedAt": null,
+        "leftAt": null,
+        "machineIdentifier": "deadb33f",
+        "lastSeenAt": "2023-01-01T00:13:21Z",
+        "inviteToken": "invite_token",
+        "sharingSettings": {
+            "allowChannels": false,
+            "allowSubtitleAdmin": false,
+            "filterMovies": "",
+            "filterMusic": "",
+            "filterPhotos": null,
+            "filterTelevision": "",
+            "filterAll": null,
+            "allowSync": true,
+            "allowCameraUpload": false,
+            "allowTuners": 2
+        },
+        "libraries": [{
+            "id": 100,
+            "key": 1,
+            "title": "Movies",
+            "type": "movie"
+        }, {
+            "id": 103,
+            "key": 2,
+            "title": "TV Shows",
+            "type": "show"
+        }],
+        "ownerId": 4,
+        "owned": true,
+        "numLibraries": 4,
+        "allLibraries": true
+    }],
+    "sharedSources": [],
+    "id": 5,
+    "uuid": "deadbeef2",
+    "title": "Guest",
+    "username": null,
+    "restricted": true,
+    "email": null,
+    "friendlyName": "Guest",
+    "thumb": "https://plex.tv/users/deadbeef2/avatar?c=1611790001",
+    "home": true,
+    "restrictionProfile": null
+}]
