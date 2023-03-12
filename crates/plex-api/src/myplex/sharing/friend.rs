@@ -53,8 +53,8 @@ pub struct Friend {
     /// List of the shared servers
     #[serde(default)]
     pub shared_servers: Vec<super::server::SharedServer>,
-    #[serde(skip)]
     /// No idea what this is
+    #[serde(default)]
     pub shared_sources: Vec<String>,
     #[serde(skip)]
     pub(crate) client: Option<HttpClient>,

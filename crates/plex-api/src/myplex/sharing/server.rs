@@ -1,4 +1,4 @@
-use super::friend::Friend;
+use super::{friend::Friend, SharingFilter};
 use crate::media_container::users::AllowTuners;
 use serde::{Deserialize, Serialize};
 use time::OffsetDateTime;
@@ -10,11 +10,30 @@ pub struct Settings {
     pub allow_channels: bool,
     pub allow_subtitle_admin: bool,
     pub allow_sync: bool,
+    pub allow_camera_upload: bool,
     pub allow_tuners: AllowTuners,
-    pub filter_movies: Option<String>,
-    pub filter_music: Option<String>,
-    pub filter_television: Option<String>,
-    pub filter_all: Option<String>,
+    pub filter_movies: Option<SharingFilter>,
+    pub filter_music: Option<SharingFilter>,
+    pub filter_television: Option<SharingFilter>,
+    pub filter_photos: Option<SharingFilter>,
+    pub filter_all: Option<SharingFilter>,
+}
+
+impl Default for Settings {
+    fn default() -> Self {
+        Self {
+            allow_channels: Default::default(),
+            allow_subtitle_admin: Default::default(),
+            allow_sync: Default::default(),
+            allow_tuners: AllowTuners::AllowLiveTvAndDvr,
+            allow_camera_upload: Default::default(),
+            filter_movies: Default::default(),
+            filter_music: Default::default(),
+            filter_television: Default::default(),
+            filter_photos: Default::default(),
+            filter_all: Default::default(),
+        }
+    }
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
