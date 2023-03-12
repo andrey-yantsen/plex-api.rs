@@ -280,8 +280,7 @@ impl<'a> Sharing<'a> {
         self.myplex
             .client()
             .post(MYPLEX_INVITES_SHARED_SERVERS)
-            .header("Content-type", "application/json")
-            .body(serde_json::to_string(&request)?)?
+            .json_body(&request)?
             .json()
             .await
     }

@@ -8,7 +8,7 @@ use isahc::{
     Response as HttpResponse,
 };
 use secrecy::{ExposeSecret, SecretString};
-use serde::de::DeserializeOwned;
+use serde::{de::DeserializeOwned, Serialize};
 use std::time::Duration;
 use uuid::Uuid;
 
@@ -287,7 +287,7 @@ where
     /// Adds a body to the request.
     pub fn body<B>(self, body: B) -> Result<Request<'a, B>>
     where
-        B: Into<AsyncBody> + std::fmt::Debug,
+        B: Into<AsyncBody>,
     {
         let path_and_query = PathAndQuery::try_from(self.path_and_query).map_err(Into::into)?;
         let mut uri_parts = self.base_url.into_parts();
@@ -303,6 +303,16 @@ where
             http_client: self.http_client,
             request: builder.body(body)?,
         })
+    }
+
+    /// Serializes the provided struct as json and adds it as a body for the request.
+    /// Header "Content-type: application/json" will be added along the way.
+    pub fn json_body<B>(self, body: &B) -> Result<Request<'a, String>>
+    where
+        B: ?Sized + Serialize,
+    {
+        self.header("Content-type", "application/json")
+            .body(serde_json::to_string(body)?)
     }
 
     /// Adds a form encoded parameters to the request body.
@@ -368,10 +378,12 @@ impl<'a, T> Request<'a, T>
 where
     T: Into<AsyncBody>,
 {
+    /// Sends this request generating a response.
     pub async fn send(self) -> Result<HttpResponse<AsyncBody>> {
         Ok(self.http_client.send_async(self.request).await?)
     }
 
+    /// Sends this request and attempts to decode the response as JSON.
     pub async fn json<R: DeserializeOwned + Unpin>(mut self) -> Result<R> {
         let headers = self.request.headers_mut();
         headers.insert("Accept", HeaderValue::from_static("application/json"));
@@ -388,6 +400,7 @@ where
         }
     }
 
+    /// Sends this request and attempts to decode the response as XML.
     pub async fn xml<R: DeserializeOwned + Unpin>(mut self) -> Result<R> {
         let headers = self.request.headers_mut();
         headers.insert("Accept", HeaderValue::from_static("application/xml"));
