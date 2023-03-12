@@ -1,0 +1,126 @@
+[
+    {
+      "status": "accepted",
+      "sharingSettings": {
+        "allowChannels": false,
+        "allowSubtitleAdmin": false,
+        "filterMovies": null,
+        "filterMusic": null,
+        "filterPhotos": null,
+        "filterTelevision": null,
+        "filterAll": null,
+        "allowSync": false,
+        "allowCameraUpload": false,
+        "allowTuners": 1
+      },
+      "sharedServers": [
+
+      ],
+      "sharedSources": [
+
+      ],
+      "id": 1,
+      "uuid": "deadbeef",
+      "title": "Adult",
+      "username": null,
+      "restricted": true,
+      "email": null,
+      "friendlyName": "Adult",
+      "thumb": "https://plex.tv/users/deadbeef/avatar?c=123234534",
+      "home": true,
+      "restrictionProfile": null
+    },
+    {
+      "status": "accepted",
+      "sharingSettings": {
+        "allowChannels": false,
+        "allowSubtitleAdmin": false,
+        "filterMovies": "contentRating=G%2CTV-G%2CTV-Y%2Cgb%2FUc%2Cgb%2FU%2CUK%3A+Uc%2CUK%3A+U%2Cde%2F0%2CFSK+0%2CAb+0+Jahren%2Cau%2FG%2Cca%2FG%2Cfr%2FTous+publics%2Cfr%2FU%2Cbr%2FL%2Cbr%2FLivre%2Cch%2F0%2Cnl%2FAL%2Ces%2FAPTA%2Cdk%2FA%2Ckr%2FA%2Cse%2FBtl%2CCSM+3%2CCSM+4%2CCSM+5%2C0%2C0%2B%2C2%2C3%2C4%2C5%2CUS%2FG%2CUS%2FTV-G%2CUS%2FTV-Y%2CPG%2CTV-PG%2CTV-Y7%2CGP%2Cgb%2FPG%2CUK%3A+PG%2Cde%2F6%2CFSK+6%2CAb+6+Jahren%2Cau%2FPG%2Cca%2FPG%2Cfr%2F10%2Cbr%2F10%2Cch%2F6%2Cch%2F7%2Cch%2F8%2Cch%2F10+%2Cnl%2F6%2Cnl%2F9%2Ces%2F7%2Cdk%2F7%2Cdk%2F11%2Cse%2F7%2Cse%2F11%2CCSM+6%2CCSM+7%2CCSM+8%2CCSM+9%2CCSM+10%2CCSM+11%2C6%2C7%2C8%2C9%2C10%2C11%2CUS%2FPG%2CUS%2FTV-PG%2CUS%2FTV-Y7",
+        "filterMusic": null,
+        "filterPhotos": null,
+        "filterTelevision": "contentRating=G%2CTV-G%2CTV-Y%2Cgb%2FUc%2Cgb%2FU%2CUK%3A+Uc%2CUK%3A+U%2Cde%2F0%2CFSK+0%2CAb+0+Jahren%2Cau%2FG%2Cca%2FG%2Cfr%2FTous+publics%2Cfr%2FU%2Cbr%2FL%2Cbr%2FLivre%2Cch%2F0%2Cnl%2FAL%2Ces%2FAPTA%2Cdk%2FA%2Ckr%2FA%2Cse%2FBtl%2CCSM+3%2CCSM+4%2CCSM+5%2C0%2C0%2B%2C2%2C3%2C4%2C5%2CUS%2FG%2CUS%2FTV-G%2CUS%2FTV-Y%2CPG%2CTV-PG%2CTV-Y7%2CGP%2Cgb%2FPG%2CUK%3A+PG%2Cde%2F6%2CFSK+6%2CAb+6+Jahren%2Cau%2FPG%2Cca%2FPG%2Cfr%2F10%2Cbr%2F10%2Cch%2F6%2Cch%2F7%2Cch%2F8%2Cch%2F10+%2Cnl%2F6%2Cnl%2F9%2Ces%2F7%2Cdk%2F7%2Cdk%2F11%2Cse%2F7%2Cse%2F11%2CCSM+6%2CCSM+7%2CCSM+8%2CCSM+9%2CCSM+10%2CCSM+11%2C6%2C7%2C8%2C9%2C10%2C11%2CUS%2FPG%2CUS%2FTV-PG%2CUS%2FTV-Y7",
+        "filterAll": null,
+        "allowSync": false,
+        "allowCameraUpload": false,
+        "allowTuners": 0
+      },
+      "sharedServers": [
+
+      ],
+      "sharedSources": [
+
+      ],
+      "id": 2,
+      "uuid": "deadbeef2",
+      "title": "Older kid",
+      "username": null,
+      "restricted": true,
+      "email": null,
+      "friendlyName": "Older kid",
+      "thumb": "https://plex.tv/users/deadbeef2/avatar?c=1234234345",
+      "home": true,
+      "restrictionProfile": "older_kid"
+    },
+    {
+      "status": "accepted",
+      "sharingSettings": {
+        "allowChannels": false,
+        "allowSubtitleAdmin": false,
+        "filterMovies": "contentRating=G%2CTV-G%2CTV-Y%2Cgb%2FUc%2Cgb%2FU%2CUK%3A+Uc%2CUK%3A+U%2Cde%2F0%2CFSK+0%2CAb+0+Jahren%2Cau%2FG%2Cca%2FG%2Cfr%2FTous+publics%2Cfr%2FU%2Cbr%2FL%2Cbr%2FLivre%2Cch%2F0%2Cnl%2FAL%2Ces%2FAPTA%2Cdk%2FA%2Ckr%2FA%2Cse%2FBtl%2CCSM+3%2CCSM+4%2CCSM+5%2C0%2C0%2B%2C2%2C3%2C4%2C5%2CUS%2FG%2CUS%2FTV-G%2CUS%2FTV-Y%2CPG%2CTV-PG%2CTV-Y7%2CGP%2Cgb%2FPG%2CUK%3A+PG%2Cde%2F6%2CFSK+6%2CAb+6+Jahren%2Cau%2FPG%2Cca%2FPG%2Cfr%2F10%2Cbr%2F10%2Cch%2F6%2Cch%2F7%2Cch%2F8%2Cch%2F10+%2Cnl%2F6%2Cnl%2F9%2Ces%2F7%2Cdk%2F7%2Cdk%2F11%2Cse%2F7%2Cse%2F11%2CCSM+6%2CCSM+7%2CCSM+8%2CCSM+9%2CCSM+10%2CCSM+11%2C6%2C7%2C8%2C9%2C10%2C11%2CUS%2FPG%2CUS%2FTV-PG%2CUS%2FTV-Y7%2CPG-13%2CTV-14%2Cgb%2F12A%2Cgb%2F12%2CUK%3A+12a%2CUK%3A+12%2Cde%2F12%2CFSK+12%2CAb+12+Jahren%2Cca%2F14A%2Cca%2F13%2B%2Cca%2F14%2Cca%2F14%2B%2Cfr%2F12+%2Cbr%2F12%2Cbr%2F14%2Cnl%2F12%2Ces%2F12%2Ckr%2F12%2CCSM+12%2CCSM+13%2CCSM+14%2C12%2C12%2B%2C12A%2C13%2C14%2C14A%2CUS%2FPG-13%2CUS%2FTV-14",
+        "filterMusic": null,
+        "filterPhotos": null,
+        "filterTelevision": "contentRating=G%2CTV-G%2CTV-Y%2Cgb%2FUc%2Cgb%2FU%2CUK%3A+Uc%2CUK%3A+U%2Cde%2F0%2CFSK+0%2CAb+0+Jahren%2Cau%2FG%2Cca%2FG%2Cfr%2FTous+publics%2Cfr%2FU%2Cbr%2FL%2Cbr%2FLivre%2Cch%2F0%2Cnl%2FAL%2Ces%2FAPTA%2Cdk%2FA%2Ckr%2FA%2Cse%2FBtl%2CCSM+3%2CCSM+4%2CCSM+5%2C0%2C0%2B%2C2%2C3%2C4%2C5%2CUS%2FG%2CUS%2FTV-G%2CUS%2FTV-Y%2CPG%2CTV-PG%2CTV-Y7%2CGP%2Cgb%2FPG%2CUK%3A+PG%2Cde%2F6%2CFSK+6%2CAb+6+Jahren%2Cau%2FPG%2Cca%2FPG%2Cfr%2F10%2Cbr%2F10%2Cch%2F6%2Cch%2F7%2Cch%2F8%2Cch%2F10+%2Cnl%2F6%2Cnl%2F9%2Ces%2F7%2Cdk%2F7%2Cdk%2F11%2Cse%2F7%2Cse%2F11%2CCSM+6%2CCSM+7%2CCSM+8%2CCSM+9%2CCSM+10%2CCSM+11%2C6%2C7%2C8%2C9%2C10%2C11%2CUS%2FPG%2CUS%2FTV-PG%2CUS%2FTV-Y7%2CPG-13%2CTV-14%2Cgb%2F12A%2Cgb%2F12%2CUK%3A+12a%2CUK%3A+12%2Cde%2F12%2CFSK+12%2CAb+12+Jahren%2Cca%2F14A%2Cca%2F13%2B%2Cca%2F14%2Cca%2F14%2B%2Cfr%2F12+%2Cbr%2F12%2Cbr%2F14%2Cnl%2F12%2Ces%2F12%2Ckr%2F12%2CCSM+12%2CCSM+13%2CCSM+14%2C12%2C12%2B%2C12A%2C13%2C14%2C14A%2CUS%2FPG-13%2CUS%2FTV-14",
+        "filterAll": null,
+        "allowSync": false,
+        "allowCameraUpload": false,
+        "allowTuners": 0
+      },
+      "sharedServers": [
+
+      ],
+      "sharedSources": [
+
+      ],
+      "id": 3,
+      "uuid": "deadbeef3",
+      "title": "Teen",
+      "username": null,
+      "restricted": true,
+      "email": null,
+      "friendlyName": "Teen",
+      "thumb": "https://plex.tv/users/deadbeef3/avatar?c=234535234",
+      "home": true,
+      "restrictionProfile": "teen"
+    },
+    {
+      "status": "accepted",
+      "sharingSettings": {
+        "allowChannels": false,
+        "allowSubtitleAdmin": false,
+        "filterMovies": "contentRating=G%2CTV-G%2CTV-Y%2Cgb%2FUc%2Cgb%2FU%2CUK%3A+Uc%2CUK%3A+U%2Cde%2F0%2CFSK+0%2CAb+0+Jahren%2Cau%2FG%2Cca%2FG%2Cfr%2FTous+publics%2Cfr%2FU%2Cbr%2FL%2Cbr%2FLivre%2Cch%2F0%2Cnl%2FAL%2Ces%2FAPTA%2Cdk%2FA%2Ckr%2FA%2Cse%2FBtl%2CCSM+3%2CCSM+4%2CCSM+5%2C0%2C0%2B%2C2%2C3%2C4%2C5%2CUS%2FG%2CUS%2FTV-G%2CUS%2FTV-Y",
+        "filterMusic": null,
+        "filterPhotos": null,
+        "filterTelevision": "contentRating=G%2CTV-G%2CTV-Y%2Cgb%2FUc%2Cgb%2FU%2CUK%3A+Uc%2CUK%3A+U%2Cde%2F0%2CFSK+0%2CAb+0+Jahren%2Cau%2FG%2Cca%2FG%2Cfr%2FTous+publics%2Cfr%2FU%2Cbr%2FL%2Cbr%2FLivre%2Cch%2F0%2Cnl%2FAL%2Ces%2FAPTA%2Cdk%2FA%2Ckr%2FA%2Cse%2FBtl%2CCSM+3%2CCSM+4%2CCSM+5%2C0%2C0%2B%2C2%2C3%2C4%2C5%2CUS%2FG%2CUS%2FTV-G%2CUS%2FTV-Y",
+        "filterAll": null,
+        "allowSync": false,
+        "allowCameraUpload": false,
+        "allowTuners": 0
+      },
+      "sharedServers": [
+
+      ],
+      "sharedSources": [
+
+      ],
+      "id": 4,
+      "uuid": "deadbeef4",
+      "title": "Younger kid",
+      "username": null,
+      "restricted": true,
+      "email": null,
+      "friendlyName": "Younger kid",
+      "thumb": "https://plex.tv/users/deadbeef4/avatar?c=23423234",
+      "home": true,
+      "restrictionProfile": "little_kid"
+    }
+  ]
