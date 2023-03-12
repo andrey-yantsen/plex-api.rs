@@ -20,11 +20,10 @@ use crate::{
 use http::StatusCode;
 use isahc::AsyncBody;
 use secrecy::{ExposeSecret, SecretString};
-use std::sync::Arc;
 
 #[derive(Debug, Clone)]
 pub struct MyPlex {
-    client: Arc<HttpClient>,
+    client: HttpClient,
     account: Option<MyPlexAccount>,
 }
 
@@ -35,7 +34,7 @@ impl MyPlex {
         }
 
         Ok(Self {
-            client: Arc::new(client),
+            client,
             account: None,
         })
     }
@@ -59,11 +58,8 @@ impl MyPlex {
             params.push((key, value));
         }
 
-        Self::build_from_signin_response(
-            client.clone(),
-            client.post(MYPLEX_SIGNIN_PATH).form(&params)?,
-        )
-        .await
+        Self::build_from_signin_response(&client, client.post(MYPLEX_SIGNIN_PATH).form(&params)?)
+            .await
     }
 
     async fn login(username: &str, password: &str, client: HttpClient) -> Result<Self> {
@@ -87,14 +83,14 @@ impl MyPlex {
 
     pub async fn refresh(self) -> Result<Self> {
         Self::build_from_signin_response(
-            self.client.as_ref().to_owned(),
+            &self.client,
             self.client.get(MYPLEX_USER_INFO_PATH).body(())?,
         )
         .await
     }
 
     async fn build_from_signin_response<B>(
-        client: HttpClient,
+        client: &HttpClient,
         request: Request<'_, B>,
     ) -> Result<Self>
     where
@@ -102,7 +98,7 @@ impl MyPlex {
     {
         let account: account::MyPlexAccount = request.json().await?;
         Ok(Self {
-            client: Arc::new(client.set_x_plex_token(account.auth_token.clone())),
+            client: client.clone().set_x_plex_token(account.auth_token.clone()),
             account: Some(account),
         })
     }

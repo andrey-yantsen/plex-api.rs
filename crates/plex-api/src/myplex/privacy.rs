@@ -1,7 +1,6 @@
 use crate::{http_client::HttpClient, url::MYPLEX_PRIVACY_PATH, Error};
 use http::StatusCode;
 use serde::Deserialize;
-use std::sync::Arc;
 
 #[derive(Debug, Deserialize)]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
@@ -20,7 +19,7 @@ pub struct Privacy {
     pub opt_out_playback: bool,
     pub opt_out_library_stats: bool,
 
-    client: Arc<HttpClient>,
+    client: HttpClient,
 }
 
 #[derive(Debug, Deserialize)]
@@ -33,7 +32,7 @@ struct Metric {
 
 impl Privacy {
     /// Returns current privacy settings, see [Privacy Preferences on plex.tv](https://www.plex.tv/about/privacy-legal/privacy-preferences/#opd).
-    pub async fn new(client: Arc<HttpClient>) -> crate::Result<Self> {
+    pub async fn new(client: HttpClient) -> crate::Result<Self> {
         let p: PrivacyApiResponse = client.get(MYPLEX_PRIVACY_PATH).json().await?;
         Ok(Self {
             opt_out_playback: p.opt_out_playback,

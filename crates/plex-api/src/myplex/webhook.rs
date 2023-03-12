@@ -2,12 +2,10 @@ use crate::{http_client::HttpClient, url::MYPLEX_WEBHOOKS_PATH, Error, Result};
 use core::convert::TryFrom;
 use http::{StatusCode, Uri};
 use serde::Deserialize;
-use std::sync::Arc;
 
 pub struct WebhookManager {
     webhooks: Vec<Webhook>,
-
-    client: Arc<HttpClient>,
+    client: HttpClient,
 }
 
 #[derive(Clone, Debug, Deserialize)]
@@ -24,7 +22,7 @@ impl Webhook {
 }
 
 impl WebhookManager {
-    pub async fn new(client: Arc<HttpClient>) -> Result<Self> {
+    pub async fn new(client: HttpClient) -> Result<Self> {
         let mut ret = Self {
             webhooks: vec![],
             client,
