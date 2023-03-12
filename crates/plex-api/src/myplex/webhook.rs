@@ -1,7 +1,6 @@
 use crate::{http_client::HttpClient, url::MYPLEX_WEBHOOKS_PATH, Error, Result};
 use core::convert::TryFrom;
 use http::{StatusCode, Uri};
-use isahc::AsyncReadResponseExt;
 use serde::Deserialize;
 use std::sync::Arc;
 
@@ -35,15 +34,8 @@ impl WebhookManager {
     }
 
     pub async fn refresh(&mut self) -> Result {
-        let mut response = self.client.get(MYPLEX_WEBHOOKS_PATH).send().await?;
-
-        match response.status() {
-            StatusCode::OK => {
-                self.webhooks = response.json().await?;
-                Ok(())
-            }
-            _ => Err(Error::from_response(response).await),
-        }
+        self.webhooks = self.client.get(MYPLEX_WEBHOOKS_PATH).json().await?;
+        Ok(())
     }
 
     pub fn webhooks(&self) -> &[Webhook] {
