@@ -21,13 +21,13 @@ impl flags::Wait {
         while start_time.elapsed()? < time_limit {
             let server_result = plex_api::Server::new(host, client.clone()).await;
             if let Ok(server) = server_result {
-                // The `start_state` is None when the server has finished loading.
-                if server.media_container.start_state.is_none()
-                    || matches!(
-                        &server.media_container.my_plex_mapping_state,
-                        ServerMappingState::Unknown | ServerMappingState::Mapped
-                    )
-                    || !wait_full_start
+                if !wait_full_start
+                    || (server.media_container.start_state.is_none()
+                        && matches!(
+                            server.media_container.my_plex_mapping_state,
+                            ServerMappingState::Unknown | ServerMappingState::Mapped
+                        )
+                        && matches!(server.media_container.certificate, Some(true)))
                 {
                     let prefs = server.preferences().await;
                     if prefs.is_ok() {
