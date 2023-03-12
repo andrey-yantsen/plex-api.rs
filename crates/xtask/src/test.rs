@@ -71,10 +71,12 @@ impl flags::Test {
                 )
                 .run()?;
 
-                print!("// Requesting claim token... ");
-                let _ = std::io::stdout().flush();
-
                 let server_owner_token = self.server_owner_token.as_ref().unwrap_or(token);
+
+                if !server_owner_token.is_empty() {
+                    print!("// Requesting claim token... ");
+                    let _ = std::io::stdout().flush();
+                }
 
                 Runtime::new()?.block_on(async {
                     let claim_token = if server_owner_token.is_empty() {
@@ -92,8 +94,10 @@ impl flags::Test {
                             .to_string()
                     };
 
-                    println!("done!");
-                    let _ = std::io::stdout().flush();
+                    if !server_owner_token.is_empty() {
+                        println!("done!");
+                        let _ = std::io::stdout().flush();
+                    }
 
                     self.integration_tests(
                         sh,
