@@ -8,7 +8,7 @@ pull_request_rules:
       - author=dependabot[bot]
       - check-success=Test on a real server (anonymous) (1.27.2.5929-a806c5905) # supported-version-1
       - check-success=Test on a real server (anonymous) (1.29.2.6364-6d72b0cf6) # supported-version-2
-      - check-success=Test on a real server (anonymous) (1.31.1.6733-bc0674160) # supported-version-3
+      - check-success=Test on a real server (anonymous) (1.31.1.6782-77dfff442) # supported-version-3
       - check-success=MSRV
     actions:
       queue:
@@ -20,19 +20,19 @@ pull_request_rules:
       - check-success=MSRV
       - check-success=Test on a real server (anonymous) (1.27.2.5929-a806c5905) # supported-version-1
       - check-success=Test on a real server (anonymous) (1.29.2.6364-6d72b0cf6) # supported-version-2
-      - check-success=Test on a real server (anonymous) (1.31.1.6733-bc0674160) # supported-version-3
+      - check-success=Test on a real server (anonymous) (1.31.1.6782-77dfff442) # supported-version-3
       - check-success=Test on a real server (authenticated free account) (1.27.2.5929-a806c5905) # supported-version-1
       - check-success=Test on a real server (authenticated free account) (1.29.2.6364-6d72b0cf6) # supported-version-2
-      - check-success=Test on a real server (authenticated free account) (1.31.1.6733-bc0674160) # supported-version-3
+      - check-success=Test on a real server (authenticated free account) (1.31.1.6782-77dfff442) # supported-version-3
       - check-success=Test on a real server (authenticated plexpass account) (1.27.2.5929-a806c5905) # supported-version-1
       - check-success=Test on a real server (authenticated plexpass account) (1.29.2.6364-6d72b0cf6) # supported-version-2
-      - check-success=Test on a real server (authenticated plexpass account) (1.31.1.6733-bc0674160) # supported-version-3
+      - check-success=Test on a real server (authenticated plexpass account) (1.31.1.6782-77dfff442) # supported-version-3
       - check-success=Test on a real server (unclaimed, authenticated free account) (1.27.2.5929-a806c5905) # supported-version-1
       - check-success=Test on a real server (unclaimed, authenticated free account) (1.29.2.6364-6d72b0cf6) # supported-version-2
-      - check-success=Test on a real server (unclaimed, authenticated free account) (1.31.1.6733-bc0674160) # supported-version-3
+      - check-success=Test on a real server (unclaimed, authenticated free account) (1.31.1.6782-77dfff442) # supported-version-3
       - check-success=Test on a real server (authenticated free account with shared from plexpass server) (1.27.2.5929-a806c5905) # supported-version-1
       - check-success=Test on a real server (authenticated free account with shared from plexpass server) (1.29.2.6364-6d72b0cf6) # supported-version-2
-      - check-success=Test on a real server (authenticated free account with shared from plexpass server) (1.31.1.6733-bc0674160) # supported-version-3
+      - check-success=Test on a real server (authenticated free account with shared from plexpass server) (1.31.1.6782-77dfff442) # supported-version-3
     actions:
       queue:
         name: default
