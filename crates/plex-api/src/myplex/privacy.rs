@@ -32,6 +32,7 @@ struct Metric {
 
 impl Privacy {
     /// Returns current privacy settings, see [Privacy Preferences on plex.tv](https://www.plex.tv/about/privacy-legal/privacy-preferences/#opd).
+    #[tracing::instrument(level = "debug", skip_all)]
     pub async fn new(client: HttpClient) -> crate::Result<Self> {
         let p: PrivacyApiResponse = client.get(MYPLEX_PRIVACY_PATH).json().await?;
         Ok(Self {
@@ -42,6 +43,7 @@ impl Privacy {
     }
 
     /// Changes privacy settings, see [Privacy Preferences on plex.tv](https://www.plex.tv/about/privacy-legal/privacy-preferences/#opd).
+    #[tracing::instrument(level = "debug", skip(self))]
     pub async fn update(
         &mut self,
         opt_out_playback: bool,

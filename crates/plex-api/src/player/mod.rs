@@ -3,7 +3,7 @@ use crate::{
     HttpClientBuilder, MyPlex, Result,
 };
 use http::Uri;
-use std::convert::TryFrom;
+use std::{convert::TryFrom, fmt::Debug};
 
 #[derive(Debug, Clone)]
 pub struct Player {
@@ -26,8 +26,10 @@ impl Player {
         })
     }
 
+    #[tracing::instrument(level = "debug", skip(client))]
     pub async fn new<U>(url: U, client: HttpClient) -> Result<Self>
     where
+        U: Debug,
         Uri: TryFrom<U>,
         <Uri as TryFrom<U>>::Error: Into<http::Error>,
     {
@@ -39,6 +41,7 @@ impl Player {
         .await
     }
 
+    #[tracing::instrument(level = "debug", skip_all)]
     pub async fn refresh(self) -> Result<Self> {
         Self::build(self.client, self.myplex_api_url).await
     }
@@ -57,5 +60,9 @@ impl Player {
                 .set_api_url(api_url)
                 .build()?,
         )
+    }
+
+    pub fn client(&self) -> &HttpClient {
+        &self.client
     }
 }

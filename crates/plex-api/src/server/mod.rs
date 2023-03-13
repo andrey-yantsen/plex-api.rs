@@ -26,6 +26,7 @@ use core::convert::TryFrom;
 use futures::AsyncWrite;
 use http::{StatusCode, Uri};
 use isahc::AsyncReadResponseExt;
+use std::fmt::Debug;
 
 #[derive(Debug, Clone)]
 pub struct Server {
@@ -46,8 +47,10 @@ impl Server {
         })
     }
 
+    #[tracing::instrument(level = "debug", skip(client))]
     pub async fn new<U>(url: U, client: HttpClient) -> Result<Self>
     where
+        U: Debug,
         Uri: TryFrom<U>,
         <Uri as TryFrom<U>>::Error: Into<http::Error>,
     {
@@ -102,6 +105,11 @@ impl Server {
     /// example but many other types of images will work) this will request a
     /// scaled version of that image be written to the passed writer as a JPEG.
     /// The image will always maintain its aspect ratio.
+    #[tracing::instrument(
+        name = "Server::transcode_artwork",
+        level = "debug",
+        skip(self, writer)
+    )]
     pub async fn transcode_artwork<W>(
         &self,
         art: &str,
@@ -117,6 +125,7 @@ impl Server {
     }
 
     /// Retrieves a list of the current transcode sessions.
+    #[tracing::instrument(level = "debug", skip(self))]
     pub async fn transcode_sessions(&self) -> Result<Vec<TranscodeSession>> {
         let wrapper: MediaContainerWrapper<TranscodeSessionsMediaContainer> =
             self.client.get(SERVER_TRANSCODE_SESSIONS).json().await?;
@@ -130,6 +139,7 @@ impl Server {
     }
 
     /// Retrieves the transcode session with the passed ID.
+    #[tracing::instrument(level = "debug", skip(self))]
     pub async fn transcode_session(&self, session_id: &str) -> Result<TranscodeSession> {
         let wrapper: MediaContainerWrapper<TranscodeSessionsMediaContainer> = self
             .client
@@ -148,6 +158,7 @@ impl Server {
 
     /// Allows retrieving media, playlists, collections and other items using
     /// their rating key.
+    #[tracing::instrument(level = "debug", skip(self))]
     pub async fn item_by_id(&self, rating_key: u32) -> Result<Item> {
         let path = format!("/library/metadata/{rating_key}");
 
@@ -171,6 +182,7 @@ impl Server {
         }
     }
 
+    #[tracing::instrument(level = "debug", skip(self))]
     pub async fn refresh(self) -> Result<Self> {
         Self::build(self.client, self.myplex_api_url).await
     }
@@ -179,6 +191,7 @@ impl Server {
         self.myplex_with_api_url(self.myplex_api_url.clone())
     }
 
+    #[tracing::instrument(level = "debug", skip(self))]
     pub async fn claim(self, claim_token: &str) -> Result<Self> {
         let url = format!(
             "{}?{}",
@@ -195,6 +208,7 @@ impl Server {
         }
     }
 
+    #[tracing::instrument(level = "debug", skip(self))]
     pub async fn unclaim(self) -> Result<Self> {
         let mut response = self.client.delete(SERVER_MYPLEX_ACCOUNT).send().await?;
 

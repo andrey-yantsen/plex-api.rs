@@ -2,6 +2,7 @@ use crate::{http_client::HttpClient, url::MYPLEX_WEBHOOKS_PATH, Error, Result};
 use core::convert::TryFrom;
 use http::{StatusCode, Uri};
 use serde::Deserialize;
+use std::fmt::Debug;
 
 pub struct WebhookManager {
     webhooks: Vec<Webhook>,
@@ -22,6 +23,7 @@ impl Webhook {
 }
 
 impl WebhookManager {
+    #[tracing::instrument(level = "debug", skip(client))]
     pub async fn new(client: HttpClient) -> Result<Self> {
         let mut ret = Self {
             webhooks: vec![],
@@ -31,6 +33,7 @@ impl WebhookManager {
         Ok(ret)
     }
 
+    #[tracing::instrument(level = "debug", skip(self))]
     pub async fn refresh(&mut self) -> Result {
         self.webhooks = self.client.get(MYPLEX_WEBHOOKS_PATH).json().await?;
         Ok(())
@@ -40,6 +43,7 @@ impl WebhookManager {
         &self.webhooks
     }
 
+    #[tracing::instrument(level = "debug", skip(self))]
     pub async fn set(&mut self, webhooks: Vec<Webhook>) -> Result {
         let webhook_urls = webhooks
             .iter()
@@ -69,8 +73,10 @@ impl WebhookManager {
         }
     }
 
+    #[tracing::instrument(level = "debug", skip(self))]
     pub async fn add<U>(&mut self, url: U) -> Result
     where
+        U: Debug,
         Uri: TryFrom<U>,
         <Uri as TryFrom<U>>::Error: Into<http::Error>,
     {
@@ -81,8 +87,10 @@ impl WebhookManager {
         self.set(webhooks).await
     }
 
+    #[tracing::instrument(level = "debug", skip(self))]
     pub async fn delete<U>(&mut self, url: U) -> Result
     where
+        U: Debug,
         Uri: TryFrom<U>,
         <Uri as TryFrom<U>>::Error: Into<http::Error>,
     {

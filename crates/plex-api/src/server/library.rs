@@ -86,6 +86,7 @@ macro_rules! derive_metadata_item {
 }
 
 /// Retrieves a list of metadata items given the lookup key.
+#[tracing::instrument(level = "trace", skip(client))]
 pub(crate) async fn metadata_items<T>(client: &HttpClient, key: &str) -> Result<Vec<T>>
 where
     T: FromMetadata,
@@ -102,6 +103,7 @@ where
 }
 
 /// Attempts to retrieve the parent of this item.
+#[tracing::instrument(level = "trace", skip_all, fields(item.rating_key = item.rating_key()))]
 async fn parent<T, P>(item: &T, client: &HttpClient) -> Result<Option<P>>
 where
     T: MetadataItem,
@@ -115,6 +117,7 @@ where
 }
 
 /// Retrieves the metadata items from a pivot from a library.
+#[tracing::instrument(level = "trace", skip(client, directory), fields(directory.key = directory.key))]
 async fn pivot_items<M>(
     client: &HttpClient,
     directory: &ServerLibrary,
@@ -179,6 +182,7 @@ impl<'a> Part<'a> {
     /// Downloads the original media file for this part writing the data into
     /// the provided writer. S range of bytes within the file can be requested
     /// allowing for resumable transfers.
+    #[tracing::instrument(level = "debug", skip_all)]
     pub async fn download<W, R>(&self, writer: W, range: R) -> Result
     where
         W: AsyncWrite + Unpin,
@@ -285,6 +289,7 @@ impl<M> Playlist<M>
 where
     M: FromMetadata,
 {
+    #[tracing::instrument(level = "debug", skip_all)]
     pub async fn children(&self) -> Result<Vec<M>> {
         metadata_items(&self.client, &self.metadata.key).await
     }
@@ -313,6 +318,7 @@ impl<M> Collection<M>
 where
     M: FromMetadata,
 {
+    #[tracing::instrument(level = "debug", skip_all)]
     pub async fn children(&self) -> Result<Vec<M>> {
         metadata_items(&self.client, &self.metadata.key).await
     }
@@ -336,6 +342,7 @@ impl Movie {
     ///
     /// The server may refuse to transcode if the options suggest that the
     /// original media file can be played back directly.
+    #[tracing::instrument(level = "debug", skip_all, fields(self.metadata.key = self.metadata.key))]
     pub async fn create_download_session<'a>(
         &'a self,
         part: &Part<'a>,
@@ -353,6 +360,7 @@ impl Movie {
 
     /// Starts a streaming transcode using of the given media part using the
     /// streaming protocol and provided options.
+    #[tracing::instrument(level = "debug", skip_all, fields(self.metadata.key = self.metadata.key))]
     pub async fn create_streaming_session<'a>(
         &'a self,
         part: &Part<'a>,
@@ -374,11 +382,13 @@ derive_metadata_item!(Show);
 
 impl Show {
     /// Retrieves all of the seasons of this show.
+    #[tracing::instrument(level = "debug", skip_all, fields(self.metadata.key = self.metadata.key))]
     pub async fn seasons(&self) -> Result<Vec<Season>> {
         metadata_items(&self.client, &self.metadata.key).await
     }
 
     /// Retrieves all of the episodes in all seasons of this show.
+    #[tracing::instrument(level = "debug", skip_all, fields(self.metadata.rating_key = self.metadata.rating_key))]
     pub async fn episodes(&self) -> Result<Vec<Episode>> {
         let path = format!("/library/metadata/{}/allLeaves", self.metadata.rating_key);
         metadata_items(&self.client, &path).await
@@ -400,11 +410,13 @@ impl Season {
     }
 
     /// Retrieves all of the episodes in this season.
+    #[tracing::instrument(level = "debug", skip_all, fields(self.metadata.key = self.metadata.key))]
     pub async fn episodes(&self) -> Result<Vec<Episode>> {
         metadata_items(&self.client, &self.metadata.key).await
     }
 
-    // Retrieves the show that this season is from.
+    /// Retrieves the show that this season is from.
+    #[tracing::instrument(level = "debug", skip_all, fields(self.metadata.key = self.metadata.key))]
     pub async fn show(&self) -> Result<Option<Show>> {
         parent(self, &self.client).await
     }
@@ -422,17 +434,18 @@ derive_metadata_item!(Episode);
 impl MediaItem for Episode {}
 
 impl Episode {
-    // Returns the number of this season within the show.
+    /// Returns the number of this season within the show.
     pub fn season_number(&self) -> Option<u32> {
         self.metadata.parent.parent_index
     }
 
-    // Returns the number of this episode within the season.
+    /// Returns the number of this episode within the season.
     pub fn episode_number(&self) -> Option<u32> {
         self.metadata.index
     }
 
-    // Retrieves the season that this episode is from.
+    /// Retrieves the season that this episode is from.
+    #[tracing::instrument(level = "debug", skip_all, fields(self.metadata.key = self.metadata.key))]
     pub async fn season(&self) -> Result<Option<Season>> {
         parent(self, &self.client).await
     }
@@ -442,6 +455,7 @@ impl Episode {
     ///
     /// The server may refuse to transcode if the options suggest that the
     /// original media file can be played back directly.
+    #[tracing::instrument(level = "debug", skip_all, fields(self.metadata.key = self.metadata.key))]
     pub async fn create_download_session<'a>(
         &'a self,
         part: &Part<'a>,
@@ -459,6 +473,7 @@ impl Episode {
 
     /// Starts a streaming transcode using of the given media part using the
     /// streaming protocol and provided options.
+    #[tracing::instrument(level = "debug", skip_all, fields(self.metadata.key = self.metadata.key))]
     pub async fn create_streaming_session<'a>(
         &'a self,
         part: &Part<'a>,
@@ -480,6 +495,7 @@ derive_metadata_item!(Artist);
 
 impl Artist {
     /// Retrieves all of the albums by this artist.
+    #[tracing::instrument(level = "debug", skip_all, fields(self.metadata.key = self.metadata.key))]
     pub async fn albums(&self) -> Result<Vec<MusicAlbum>> {
         metadata_items(&self.client, &self.metadata.key).await
     }
@@ -496,11 +512,13 @@ derive_metadata_item!(MusicAlbum);
 
 impl MusicAlbum {
     /// Retrieves all of the tracks in this album.
+    #[tracing::instrument(level = "debug", skip_all, fields(self.metadata.key = self.metadata.key))]
     pub async fn tracks(&self) -> Result<Vec<Track>> {
         metadata_items(&self.client, &self.metadata.key).await
     }
 
     /// Retrieves the artist for this album.
+    #[tracing::instrument(level = "debug", skip_all, fields(self.metadata.key = self.metadata.key))]
     pub async fn artist(&self) -> Result<Option<Artist>> {
         parent(self, &self.client).await
     }
@@ -518,12 +536,13 @@ derive_metadata_item!(Track);
 impl MediaItem for Track {}
 
 impl Track {
-    // Returns the number of this track within the album.
+    /// Returns the number of this track within the album.
     pub fn track_number(&self) -> Option<u32> {
         self.metadata.index
     }
 
     /// Retrieves the album for this track.
+    #[tracing::instrument(level = "debug", skip_all, fields(self.metadata.key = self.metadata.key))]
     pub async fn album(&self) -> Result<Option<MusicAlbum>> {
         parent(self, &self.client).await
     }
@@ -533,6 +552,7 @@ impl Track {
     ///
     /// The server may refuse to transcode if the options suggest that the
     /// original media file can be played back directly.
+    #[tracing::instrument(level = "debug", skip_all, fields(self.metadata.key = self.metadata.key))]
     pub async fn create_download_session<'a>(
         &'a self,
         part: &Part<'a>,
@@ -550,6 +570,7 @@ impl Track {
 
     /// Starts a streaming transcode using of the given media part using the
     /// streaming protocol and provided options.
+    #[tracing::instrument(level = "debug", skip_all, fields(self.metadata.key = self.metadata.key))]
     pub async fn create_streaming_session<'a>(
         &'a self,
         part: &Part<'a>,
@@ -573,6 +594,7 @@ impl MediaItem for Photo {}
 
 impl Photo {
     /// Retrieves the album that this photo is in.
+    #[tracing::instrument(level = "debug", skip_all, fields(self.metadata.key = self.metadata.key))]
     pub async fn album(&self) -> Result<Option<PhotoAlbum>> {
         parent(self, &self.client).await
     }
@@ -589,11 +611,13 @@ derive_metadata_item!(PhotoAlbum);
 
 impl PhotoAlbum {
     /// Retrieves all of the albums and photos in this album.
+    #[tracing::instrument(level = "debug", skip_all, fields(self.metadata.key = self.metadata.key))]
     pub async fn contents(&self) -> Result<Vec<PhotoAlbumItem>> {
         metadata_items(&self.client, &self.metadata.key).await
     }
 
     /// Retrieves the album that this album is in.
+    #[tracing::instrument(level = "debug", skip_all, fields(self.metadata.key = self.metadata.key))]
     pub async fn album(&self) -> Result<Option<PhotoAlbum>> {
         parent(self, &self.client).await
     }
@@ -699,16 +723,19 @@ impl MovieLibrary {
     }
 
     /// Retrieves all of the movies in this library.
+    #[tracing::instrument(level = "debug", skip_all)]
     pub async fn movies(&self) -> Result<Vec<Movie>> {
         pivot_items(&self.client, &self.directory, "content.library").await
     }
 
     /// Retrieves all of the collections in this library.
+    #[tracing::instrument(level = "debug", skip_all)]
     pub async fn collections(&self) -> Result<Vec<Collection<Movie>>> {
         pivot_items(&self.client, &self.directory, "content.collections").await
     }
 
     /// Retrieves all of the playlists containing movies from this library.
+    #[tracing::instrument(level = "debug", skip_all)]
     pub async fn playlists(&self) -> Result<Vec<Playlist<Video>>> {
         pivot_items(&self.client, &self.directory, "content.playlists").await
     }
@@ -727,16 +754,19 @@ impl TVLibrary {
     }
 
     /// Retrieves all of the shows in this library.
+    #[tracing::instrument(level = "debug", skip_all)]
     pub async fn shows(&self) -> Result<Vec<Show>> {
         pivot_items(&self.client, &self.directory, "content.library").await
     }
 
     /// Retrieves all of the collections in this library.
+    #[tracing::instrument(level = "debug", skip_all)]
     pub async fn collections(&self) -> Result<Vec<Collection<Show>>> {
         pivot_items(&self.client, &self.directory, "content.collections").await
     }
 
     /// Retrieves all of the playlists containing episodes from this library.
+    #[tracing::instrument(level = "debug", skip_all)]
     pub async fn playlists(&self) -> Result<Vec<Playlist<Video>>> {
         pivot_items(&self.client, &self.directory, "content.playlists").await
     }
@@ -755,11 +785,13 @@ impl MusicLibrary {
     }
 
     /// Retrieves all of the artists in this library.
+    #[tracing::instrument(level = "debug", skip_all)]
     pub async fn artists(&self) -> Result<Vec<Artist>> {
         pivot_items(&self.client, &self.directory, "content.library").await
     }
 
     /// Retrieves all of the playlists containing tracks from this library.
+    #[tracing::instrument(level = "debug", skip_all)]
     pub async fn playlists(&self) -> Result<Vec<Playlist<Track>>> {
         pivot_items(&self.client, &self.directory, "content.playlists").await
     }
@@ -778,11 +810,13 @@ impl PhotoLibrary {
     }
 
     /// Retrieves all of the albums in this library.
+    #[tracing::instrument(level = "debug", skip_all)]
     pub async fn albums(&self) -> Result<Vec<PhotoAlbum>> {
         pivot_items(&self.client, &self.directory, "content.library").await
     }
 
     /// Retrieves all of the playlists containing photos from this library.
+    #[tracing::instrument(level = "debug", skip_all)]
     pub async fn playlists(&self) -> Result<Vec<Playlist<Photo>>> {
         pivot_items(&self.client, &self.directory, "content.playlists").await
     }

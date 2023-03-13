@@ -6,6 +6,7 @@ use crate::{
 };
 use futures::{future::select_ok, FutureExt};
 use secrecy::ExposeSecret;
+use tracing::{debug, error, trace};
 
 pub struct DeviceManager {
     pub client: HttpClient,
@@ -34,10 +35,12 @@ impl DeviceManager {
             .collect())
     }
 
+    #[tracing::instrument(level = "debug", skip(self))]
     pub async fn get_devices(&self) -> Result<Vec<Device<'_>>> {
         self.get_devices_internal(MYPLEX_DEVICES).await
     }
 
+    #[tracing::instrument(level = "debug", skip(self))]
     pub async fn get_resources(&self) -> Result<Vec<Device<'_>>> {
         self.get_devices_internal(MYPLEX_RESOURCES).await
     }
@@ -65,10 +68,12 @@ impl Device<'_> {
             .map(|v| v.expose_secret().as_str())
     }
 
+    #[tracing::instrument(level = "debug", skip(self), fields(device_name = self.inner.name))]
     pub async fn connect(&self) -> Result<DeviceConnection> {
         if !self.inner.provides.contains(&Feature::Server)
             && !self.inner.provides.contains(&Feature::Controller)
         {
+            error!("Device must provide Server or Controller");
             return Err(Error::DeviceConnectionNotSupported);
         }
 
@@ -77,6 +82,7 @@ impl Device<'_> {
             if let Some(access_token) = self.inner.access_token.as_ref() {
                 let access_token = access_token.expose_secret();
                 if access_token != client.x_plex_token() {
+                    debug!("Connecting using access token for the device");
                     client = client.set_x_plex_token(access_token.to_owned());
                 }
             }
@@ -86,20 +92,28 @@ impl Device<'_> {
                     .inner
                     .connections
                     .iter()
-                    .map(|connection| crate::Server::new(&connection.uri, client.clone()).boxed())
+                    .map(|connection| {
+                        trace!("Trying {address}", address = connection.uri);
+                        crate::Server::new(&connection.uri, client.clone()).boxed()
+                    })
                     .collect::<Vec<_>>();
 
                 let (server, _) = select_ok(futures).await?;
+                trace!("Connected via {address}", address = server.client().api_url);
                 Ok(DeviceConnection::Server(Box::new(server)))
             } else {
                 let futures = self
                     .inner
                     .connections
                     .iter()
-                    .map(|connection| crate::Player::new(&connection.uri, client.clone()).boxed())
+                    .map(|connection| {
+                        trace!("Trying {address}", address = connection.uri);
+                        crate::Player::new(&connection.uri, client.clone()).boxed()
+                    })
                     .collect::<Vec<_>>();
 
                 let (player, _) = select_ok(futures).await?;
+                trace!("Connected via {address}", address = player.client().api_url);
                 Ok(DeviceConnection::Player(Box::new(player)))
             }
         } else {

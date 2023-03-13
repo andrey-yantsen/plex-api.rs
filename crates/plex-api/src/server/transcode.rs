@@ -850,6 +850,7 @@ impl TranscodeSession {
     /// any reason you have to start downloading all over again. It may make
     /// more sense to wait until the transcode is complete or nearly complete
     /// before attempting download.
+    #[tracing::instrument(level = "debug", skip_all)]
     pub async fn download<W>(&self, writer: W) -> Result<()>
     where
         W: AsyncWrite + Unpin,
@@ -879,6 +880,7 @@ impl TranscodeSession {
         }
     }
 
+    #[tracing::instrument(level = "debug", skip_all)]
     pub async fn status(&self) -> Result<TranscodeStatus> {
         let stats = self.stats().await?;
 
@@ -895,6 +897,7 @@ impl TranscodeSession {
     }
 
     /// Retrieves the current transcode stats.
+    #[tracing::instrument(level = "debug", skip_all)]
     pub async fn stats(&self) -> Result<TranscodeSessionStats> {
         let wrapper: MediaContainerWrapper<TranscodeSessionsMediaContainer> = self
             .client
@@ -910,6 +913,7 @@ impl TranscodeSession {
     }
 
     /// Cancels the transcode and removes any transcoded data from the server.
+    #[tracing::instrument(level = "debug", skip_all)]
     pub async fn cancel(self) -> Result<()> {
         let mut response = self
             .client

@@ -16,6 +16,7 @@ impl PinManager {
         Self { client }
     }
 
+    #[tracing::instrument(level = "debug", skip(self))]
     pub async fn link(&self, code: &str) -> Result {
         if !self.client.is_authenticated() {
             return Err(Error::ClientNotAuthenticated);
@@ -36,6 +37,7 @@ impl PinManager {
         }
     }
 
+    #[tracing::instrument(level = "debug", skip(self))]
     pub async fn pin(&self) -> Result<Pin<'_>> {
         if self.client.is_authenticated() {
             return Err(Error::ClientAuthenticated);
@@ -78,6 +80,7 @@ impl<'a> Pin<'a> {
     }
 
     /// Check if the pin was linked by a user.
+    #[tracing::instrument(level = "debug", skip(self), fields(self.pin.id = self.pin.id))]
     pub async fn check(&self) -> Result<PinInfo> {
         if self.is_expired() {
             return Err(Error::PinExpired);

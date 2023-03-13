@@ -99,6 +99,7 @@ fn generate_features() {
 
 use serde::{Deserialize, Serialize};
 use serde_plain::derive_display_from_serialize;
+use tracing::trace_span;
 
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Eq)]
 #[allow(clippy::enum_variant_names)]
@@ -165,6 +166,9 @@ pub enum Feature {
 impl ::std::str::FromStr for Feature {
     type Err = serde_plain::Error;
     fn from_str(s: &str) -> ::std::result::Result<Feature, Self::Err> {
+        let span = trace_span!("Feature::deserialize");
+        let _span_enter = span.enter();
+
         let result = serde_plain::from_str(s);
 
         #[cfg(not(feature = "tests_deny_unknown_fields"))]

@@ -71,6 +71,7 @@ impl<'a> Sharing<'a> {
         Sharing { myplex }
     }
 
+    #[tracing::instrument(level = "debug", skip_all, fields(identifier = user.get_identifier()))]
     pub async fn invite<'b>(&self, user: User<'b>) -> Result<friend::Friend> {
         self.myplex
             .client()
@@ -83,6 +84,7 @@ impl<'a> Sharing<'a> {
             .await
     }
 
+    #[tracing::instrument(level = "debug", skip_all, fields(user_identifier = user.get_identifier(), machine_identifier = server.get_id()))]
     pub async fn share<'b, 'c, 'd>(
         &self,
         user: User<'b>,
@@ -133,6 +135,7 @@ impl<'a> Sharing<'a> {
     }
 
     /// Returns a list of friends with the requested status, including managed users
+    #[tracing::instrument(level = "debug", skip(self))]
     pub async fn friends(&self, status: InviteStatus) -> Result<Vec<friend::Friend>> {
         let mut friends: Vec<friend::Friend> = self
             .myplex

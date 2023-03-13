@@ -26,6 +26,7 @@ struct ErrorResponse {
 }
 
 impl ClaimToken {
+    #[tracing::instrument(level = "debug", skip_all)]
     pub async fn new(client: &HttpClient) -> Result<Self> {
         let mut response = client.get(MYPLEX_CLAIM_TOKEN_PATH).send().await?;
         match response.status() {

@@ -16,6 +16,7 @@ pub struct Preferences<'a> {
 }
 
 impl<'a> Preferences<'a> {
+    #[tracing::instrument(level = "debug", skip(client))]
     pub async fn new(client: &'a HttpClient) -> Result<Preferences<'a>> {
         let mc: MediaContainerWrapper<MediaContainerPreferences> =
             client.get(SERVER_PREFS).json().await?;
@@ -49,6 +50,7 @@ impl<'a> Preferences<'a> {
         }
     }
 
+    #[tracing::instrument(level = "debug")]
     pub async fn commit(self) -> Result<Preferences<'a>> {
         if self.changed.is_empty() {
             return Ok(self);

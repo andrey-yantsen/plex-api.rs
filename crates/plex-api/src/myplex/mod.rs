@@ -62,10 +62,16 @@ impl MyPlex {
             .await
     }
 
+    #[tracing::instrument(level = "debug", skip(password, client))]
     async fn login(username: &str, password: &str, client: HttpClient) -> Result<Self> {
         Self::login_internal(username, password, client, &[]).await
     }
 
+    #[tracing::instrument(
+        name = "MyPlex::login_with_otp",
+        level = "debug",
+        skip(password, client)
+    )]
     async fn login_with_otp(
         username: &str,
         password: &str,
@@ -81,6 +87,7 @@ impl MyPlex {
         .await
     }
 
+    #[tracing::instrument(level = "debug", skip(self))]
     pub async fn refresh(self) -> Result<Self> {
         Self::build_from_signin_response(
             &self.client,
@@ -123,6 +130,7 @@ impl MyPlex {
         Sharing::new(self)
     }
 
+    #[tracing::instrument(level = "debug", skip(self))]
     pub async fn server_info(&self, machine_identifier: &str) -> Result<server::ServerInfo> {
         self.client
             .get(format!("{}/{}", MYPLEX_SERVERS, machine_identifier))
@@ -141,6 +149,7 @@ impl MyPlex {
         return self.account.as_ref();
     }
 
+    #[tracing::instrument(level = "debug", skip(self))]
     pub async fn webhook_manager(&self) -> Result<WebhookManager> {
         if let Some(features) = self.available_features() {
             if !features.contains(&Feature::Webhooks) {
@@ -160,6 +169,7 @@ impl MyPlex {
 
     /// Sign out of your account. It's highly recommended to call this method when you're done using the API.
     /// At least when you obtained the MyPlex instance using [MyPlex::login](struct.MyPlex.html#method.login).
+    #[tracing::instrument(level = "debug", skip(self))]
     pub async fn signout(self) -> Result {
         let response = self
             .client
