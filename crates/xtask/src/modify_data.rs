@@ -74,7 +74,7 @@ impl flags::ModifyData {
 
         let docker = clients::Cli::default();
 
-        print!("// Spawning docker container... ");
+        print!("// Spawning docker container {DOCKER_PLEX_IMAGE_NAME}:{image_tag}... ");
         let _ = std::io::stdout().flush();
 
         let plex_node = docker.run(docker_image);
