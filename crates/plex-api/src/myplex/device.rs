@@ -72,21 +72,21 @@ impl Device<'_> {
             return Err(Error::DeviceConnectionNotSupported);
         }
 
-        if let Some(access_token) = self.inner.access_token.as_ref() {
-            if access_token.expose_secret() != self.client.x_plex_token() {
-                todo!("connection to a shared device is not implemented");
-            }
-        }
-
         if !self.inner.connections.is_empty() {
+            let mut client = self.client.clone();
+            if let Some(access_token) = self.inner.access_token.as_ref() {
+                let access_token = access_token.expose_secret();
+                if access_token != client.x_plex_token() {
+                    client = client.set_x_plex_token(access_token.to_owned());
+                }
+            }
+
             if self.inner.provides.contains(&Feature::Server) {
                 let futures = self
                     .inner
                     .connections
                     .iter()
-                    .map(|connection| {
-                        crate::Server::new(&connection.uri, self.client.to_owned()).boxed()
-                    })
+                    .map(|connection| crate::Server::new(&connection.uri, client.clone()).boxed())
                     .collect::<Vec<_>>();
 
                 let (server, _) = select_ok(futures).await?;
@@ -96,9 +96,7 @@ impl Device<'_> {
                     .inner
                     .connections
                     .iter()
-                    .map(|connection| {
-                        crate::Player::new(&connection.uri, self.client.to_owned()).boxed()
-                    })
+                    .map(|connection| crate::Player::new(&connection.uri, client.clone()).boxed())
                     .collect::<Vec<_>>();
 
                 let (player, _) = select_ok(futures).await?;
