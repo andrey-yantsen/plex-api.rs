@@ -67,7 +67,7 @@ impl Device<'_> {
 
     pub async fn connect(&self) -> Result<DeviceConnection> {
         if !self.inner.provides.contains(&Feature::Server)
-            && !self.inner.provides.contains(&Feature::Player)
+            && !self.inner.provides.contains(&Feature::Controller)
         {
             return Err(Error::DeviceConnectionNotSupported);
         }
