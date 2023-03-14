@@ -18,6 +18,7 @@ async fn main() {
 
     let friend = myplex
         .sharing()
+        .unwrap()
         .invite(User::UsernameOrEmail(&identifier))
         .await
         .unwrap();

@@ -52,7 +52,7 @@ mod offline {
     ) {
         let myplex = myplex.await;
         let (myplex, mock_server) = myplex.split();
-        let sharing = myplex.sharing();
+        let sharing = myplex.sharing().unwrap();
 
         let m = prepare_friends_mock(&mock_server, "accepted", mock_file);
 
@@ -68,7 +68,7 @@ mod offline {
     async fn filters_deserialization(#[future] myplex: Mocked<MyPlex>) {
         let myplex = myplex.await;
         let (myplex, mock_server) = myplex.split();
-        let sharing = myplex.sharing();
+        let sharing = myplex.sharing().unwrap();
 
         let mut m = prepare_friends_mock(
             &mock_server,
@@ -167,7 +167,7 @@ mod offline {
     async fn invite(#[future] myplex: Mocked<MyPlex>) {
         let myplex = myplex.await;
         let (myplex, mock_server) = myplex.split();
-        let sharing = myplex.sharing();
+        let sharing = myplex.sharing().unwrap();
 
         let m = mock_server.mock(|when, then| {
             when.method(POST)
@@ -203,7 +203,7 @@ mod offline {
     async fn share_server(#[future] myplex: Mocked<MyPlex>) {
         let myplex = myplex.await;
         let (myplex, mock_server) = myplex.split();
-        let sharing = myplex.sharing();
+        let sharing = myplex.sharing().unwrap();
 
         let server_info_mock = mock_server.mock(|when, then| {
             when.method(GET)
@@ -262,7 +262,7 @@ mod offline {
     async fn accept_not_pending_forbidden(#[future] myplex: Mocked<MyPlex>) {
         let myplex = myplex.await;
         let (myplex, mock_server) = myplex.split();
-        let sharing = myplex.sharing();
+        let sharing = myplex.sharing().unwrap();
 
         let mut m = prepare_friends_mock(
             &mock_server,
@@ -286,7 +286,7 @@ mod offline {
     async fn accept_and_reject(#[future] myplex: Mocked<MyPlex>) {
         let myplex = myplex.await;
         let (myplex, mock_server) = myplex.split();
-        let sharing = myplex.sharing();
+        let sharing = myplex.sharing().unwrap();
 
         let mut m = prepare_friends_mock(
             &mock_server,
@@ -353,6 +353,7 @@ mod online {
         let myplex = myplex.await;
         myplex
             .sharing()
+            .unwrap()
             .friends(InviteStatus::Accepted)
             .await
             .unwrap();

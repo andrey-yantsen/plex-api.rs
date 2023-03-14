@@ -120,7 +120,7 @@ impl flags::Test {
         invite_status: InviteStatus,
         account_id: u64,
     ) -> Option<Friend> {
-        let friends = myplex.sharing().friends(invite_status).await;
+        let friends = myplex.sharing().unwrap().friends(invite_status).await;
         if let Ok(friends) = friends {
             if let Some(friend) = friends.into_iter().find(|friend| friend.id == account_id) {
                 return Some(friend);
@@ -164,6 +164,7 @@ impl flags::Test {
 
         owner
             .sharing()
+            .unwrap()
             .share(
                 User::Account(&guest),
                 ShareableServer::Server(&server),
@@ -200,7 +201,7 @@ impl flags::Test {
         }
 
         let mut attempt = 0;
-        let device_manager = guest.device_manager();
+        let device_manager = guest.device_manager().unwrap();
         while attempt < 60 {
             let resources = device_manager.get_resources().await?;
             let shared_device = resources.into_iter().find(|device| {

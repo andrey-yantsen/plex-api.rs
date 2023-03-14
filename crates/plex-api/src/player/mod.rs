@@ -55,11 +55,11 @@ impl Player {
         Uri: TryFrom<U>,
         <Uri as TryFrom<U>>::Error: Into<http::Error>,
     {
-        MyPlex::new(
+        Ok(MyPlex::new(
             HttpClientBuilder::from(self.client.clone())
                 .set_api_url(api_url)
                 .build()?,
-        )
+        ))
     }
 
     pub fn client(&self) -> &HttpClient {

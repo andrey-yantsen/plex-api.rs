@@ -28,15 +28,11 @@ pub struct MyPlex {
 }
 
 impl MyPlex {
-    pub fn new(client: HttpClient) -> Result<Self> {
-        if !client.is_authenticated() {
-            return Err(Error::ClientNotAuthenticated);
-        }
-
-        Ok(Self {
+    pub fn new(client: HttpClient) -> Self {
+        Self {
             client,
             account: None,
-        })
+        }
     }
 
     async fn login_internal(
@@ -89,6 +85,10 @@ impl MyPlex {
 
     #[tracing::instrument(level = "debug", skip(self))]
     pub async fn refresh(self) -> Result<Self> {
+        if !self.client.is_authenticated() {
+            return Err(Error::ClientNotAuthenticated);
+        }
+
         Self::build_from_signin_response(
             &self.client,
             self.client.get(MYPLEX_USER_INFO_PATH).body(())?,
@@ -117,21 +117,37 @@ impl MyPlex {
     /// Get a claim token from the API, which can be used for attaching a server to your account.
     /// See <https://hub.docker.com/r/plexinc/pms-docker> for details, look for "PLEX_CLAIM".
     pub async fn claim_token(&self) -> Result<ClaimToken> {
+        if !self.client.is_authenticated() {
+            return Err(Error::ClientNotAuthenticated);
+        }
+
         ClaimToken::new(&self.client).await
     }
 
     /// Get privacy settings for your account. You can update the settings using the returned object.
     /// See [Privacy Preferences on plex.tv](https://www.plex.tv/about/privacy-legal/privacy-preferences/#opd) for details.
     pub async fn privacy(&self) -> Result<Privacy> {
+        if !self.client.is_authenticated() {
+            return Err(Error::ClientNotAuthenticated);
+        }
+
         Privacy::new(self.client.clone()).await
     }
 
-    pub fn sharing(&self) -> Sharing {
-        Sharing::new(self)
+    pub fn sharing(&self) -> Result<Sharing> {
+        if !self.client.is_authenticated() {
+            return Err(Error::ClientNotAuthenticated);
+        }
+
+        Ok(Sharing::new(self))
     }
 
     #[tracing::instrument(level = "debug", skip(self))]
     pub async fn server_info(&self, machine_identifier: &str) -> Result<server::ServerInfo> {
+        if !self.client.is_authenticated() {
+            return Err(Error::ClientNotAuthenticated);
+        }
+
         self.client
             .get(format!("{}/{}", MYPLEX_SERVERS, machine_identifier))
             .json()
@@ -151,26 +167,43 @@ impl MyPlex {
 
     #[tracing::instrument(level = "debug", skip(self))]
     pub async fn webhook_manager(&self) -> Result<WebhookManager> {
+        if !self.client.is_authenticated() {
+            return Err(Error::ClientNotAuthenticated);
+        }
+
         if let Some(features) = self.available_features() {
             if !features.contains(&Feature::Webhooks) {
                 return Err(Error::SubscriptionFeatureNotAvailable(Feature::Webhooks));
             }
         }
+
         WebhookManager::new(self.client.clone()).await
     }
 
-    pub fn device_manager(&self) -> DeviceManager {
-        DeviceManager::new(self.client.clone())
+    pub fn device_manager(&self) -> Result<DeviceManager> {
+        if !self.client.is_authenticated() {
+            return Err(Error::ClientNotAuthenticated);
+        }
+
+        Ok(DeviceManager::new(self.client.clone()))
     }
 
-    pub fn pin_manager(&self) -> PinManager {
-        PinManager::new(self.client.clone())
+    pub fn pin_manager(&self) -> Result<PinManager> {
+        if !self.client.is_authenticated() {
+            return Err(Error::ClientNotAuthenticated);
+        }
+
+        Ok(PinManager::new(self.client.clone()))
     }
 
     /// Sign out of your account. It's highly recommended to call this method when you're done using the API.
     /// At least when you obtained the MyPlex instance using [MyPlex::login](struct.MyPlex.html#method.login).
     #[tracing::instrument(level = "debug", skip(self))]
     pub async fn signout(self) -> Result {
+        if !self.client.is_authenticated() {
+            return Err(Error::ClientNotAuthenticated);
+        }
+
         let response = self
             .client
             .delete(MYPLEX_SIGNOUT_PATH)
@@ -260,15 +293,13 @@ impl MyPlexBuilder<'_> {
             client = client.set_x_plex_token(token);
         }
 
-        let mut plex_result = MyPlex::new(client);
+        let mut plex = MyPlex::new(client);
 
         if self.test_token_auth {
-            if let Ok(plex) = plex_result {
-                plex_result = plex.refresh().await;
-            }
+            plex = plex.refresh().await?;
         }
 
-        plex_result
+        Ok(plex)
     }
 }
 

@@ -21,7 +21,7 @@ mod offline {
                 .body_from_file("tests/mocks/myplex/devices.xml");
         });
 
-        let device_manager = myplex.device_manager();
+        let device_manager = myplex.device_manager().unwrap();
 
         let devices = device_manager.get_devices().await;
         devices_mock.assert();
@@ -40,7 +40,7 @@ mod offline {
                 .body_from_file("tests/mocks/myplex/api/resources.xml");
         });
 
-        let device_manager = myplex.device_manager();
+        let device_manager = myplex.device_manager().unwrap();
 
         let resources = device_manager.get_resources().await;
         resources_mock.assert();
@@ -68,7 +68,7 @@ mod offline {
                 .body_from_file("tests/mocks/server/media/providers_free.json");
         });
 
-        let device_manager = myplex.device_manager();
+        let device_manager = myplex.device_manager().unwrap();
 
         let resources = device_manager.get_resources().await.unwrap();
         resources_mock.assert();
@@ -97,13 +97,23 @@ mod online {
     async fn load_devices(#[future] myplex: MyPlex) {
         let myplex = myplex.await;
         // Test deserialization
-        _ = myplex.device_manager().get_devices().await.unwrap();
+        _ = myplex
+            .device_manager()
+            .unwrap()
+            .get_devices()
+            .await
+            .unwrap();
     }
 
     #[plex_api_test_helper::online_test_myplex]
     async fn load_resources(#[future] myplex: MyPlex) {
         let myplex = myplex.await;
         // Test deserialization
-        _ = myplex.device_manager().get_resources().await.unwrap();
+        _ = myplex
+            .device_manager()
+            .unwrap()
+            .get_resources()
+            .await
+            .unwrap();
     }
 }

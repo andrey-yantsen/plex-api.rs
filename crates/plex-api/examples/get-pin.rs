@@ -11,7 +11,7 @@ async fn main() {
         .await
         .unwrap();
 
-    let pin_manager = plex.pin_manager();
+    let pin_manager = plex.pin_manager().unwrap();
     let pin = pin_manager.pin().await.unwrap();
 
     println!("Code: {}", pin.code());

@@ -16,7 +16,12 @@ async fn main() {
         .await
         .unwrap();
 
-    let friends = myplex.sharing().friends(PendingReceived).await.unwrap();
+    let friends = myplex
+        .sharing()
+        .unwrap()
+        .friends(PendingReceived)
+        .await
+        .unwrap();
     let friend = friends.into_iter().find(|friend| friend.title == username);
 
     if let Some(friend) = friend {

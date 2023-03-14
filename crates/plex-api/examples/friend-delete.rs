@@ -18,6 +18,7 @@ async fn main() {
 
     let friends = myplex
         .sharing()
+        .unwrap()
         .friends(InviteStatus::Accepted)
         .await
         .unwrap();
@@ -26,6 +27,7 @@ async fn main() {
     if friend.is_none() {
         let friends = myplex
             .sharing()
+            .unwrap()
             .friends(InviteStatus::PendingReceived)
             .await
             .unwrap();
@@ -35,6 +37,7 @@ async fn main() {
     if friend.is_none() {
         let friends = myplex
             .sharing()
+            .unwrap()
             .friends(InviteStatus::PendingSent)
             .await
             .unwrap();

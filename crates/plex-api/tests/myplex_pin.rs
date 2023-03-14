@@ -22,7 +22,7 @@ mod offline {
                 .body(r#"{"errors":[{"code": 1020, "message": "Code not found or expired"}]}"#);
         });
 
-        let pin_manager = myplex.pin_manager();
+        let pin_manager = myplex.pin_manager().unwrap();
 
         assert!(pin_manager.link("abcd").await.is_err());
         mock.assert();

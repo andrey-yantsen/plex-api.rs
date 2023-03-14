@@ -61,6 +61,7 @@ async fn main() {
 
     let friend = myplex
         .sharing()
+        .unwrap()
         .share(
             User::UsernameOrEmail(&friend_identifier),
             ShareableServer::MachineIdentifier(&machine_identifier),

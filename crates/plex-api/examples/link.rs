@@ -12,6 +12,7 @@ async fn main() {
         .await
         .unwrap()
         .pin_manager()
+        .unwrap()
         .link(&code)
         .await
         .unwrap();
