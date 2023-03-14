@@ -203,7 +203,7 @@ impl flags::Test {
         let mut attempt = 0;
         let device_manager = guest.device_manager().unwrap();
         while attempt < 60 {
-            let resources = device_manager.get_resources().await?;
+            let resources = device_manager.resources().await?;
             let shared_device = resources.into_iter().find(|device| {
                 device.provides(Feature::Server)
                     && device.identifier() == server.machine_identifier()

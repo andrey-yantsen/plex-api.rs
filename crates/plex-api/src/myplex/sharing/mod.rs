@@ -71,20 +71,20 @@ impl<'a> Sharing<'a> {
         Sharing { myplex }
     }
 
-    #[tracing::instrument(level = "debug", skip_all, fields(identifier = user.get_identifier()))]
+    #[tracing::instrument(level = "debug", skip_all, fields(identifier = user.id()))]
     pub async fn invite<'b>(&self, user: User<'b>) -> Result<friend::Friend> {
         self.myplex
             .client()
             .post(format!(
                 "{}?{}",
                 MYPLEX_INVITES_INVITE,
-                serde_urlencoded::to_string([("identifier", user.get_identifier())])?
+                serde_urlencoded::to_string([("identifier", user.id())])?
             ))
             .json()
             .await
     }
 
-    #[tracing::instrument(level = "debug", skip_all, fields(user_identifier = user.get_identifier(), machine_identifier = server.get_id()))]
+    #[tracing::instrument(level = "debug", skip_all, fields(user_identifier = user.id(), machine_identifier = server.id()))]
     pub async fn share<'b, 'c, 'd>(
         &self,
         user: User<'b>,
@@ -93,13 +93,13 @@ impl<'a> Sharing<'a> {
         permissions: Permissions,
         filters: Filters,
     ) -> Result<SharedServer> {
-        let server_info = self.myplex.server_info(server.get_id()).await?;
+        let server_info = self.myplex.server_info(server.id()).await?;
         let sections: Vec<u32> = sections
             .iter()
-            .filter_map(|s| s.get_id().parse().ok())
+            .filter_map(|s| s.id().parse().ok())
             .collect();
         let request = ShareServerRequest {
-            invited_email: user.get_identifier().to_owned(),
+            invited_email: user.id().to_owned(),
             settings: server::Settings {
                 allow_channels: permissions.allow_channels,
                 allow_subtitle_admin: permissions.allow_subtitle_admin,
@@ -123,7 +123,7 @@ impl<'a> Sharing<'a> {
                     }
                 })
                 .collect(),
-            machine_identifier: server.get_id().to_owned(),
+            machine_identifier: server.id().to_owned(),
         };
 
         self.myplex

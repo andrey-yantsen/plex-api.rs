@@ -17,7 +17,7 @@ impl DeviceManager {
         Self { client }
     }
 
-    async fn get_devices_internal<'a, 'b>(&'a self, url: &'b str) -> Result<Vec<Device<'a>>> {
+    async fn devices_internal<'a, 'b>(&'a self, url: &'b str) -> Result<Vec<Device<'a>>> {
         let container: DevicesMediaContainer = self
             .client
             .get(url)
@@ -36,13 +36,13 @@ impl DeviceManager {
     }
 
     #[tracing::instrument(level = "debug", skip(self))]
-    pub async fn get_devices(&self) -> Result<Vec<Device<'_>>> {
-        self.get_devices_internal(MYPLEX_DEVICES).await
+    pub async fn devices(&self) -> Result<Vec<Device<'_>>> {
+        self.devices_internal(MYPLEX_DEVICES).await
     }
 
     #[tracing::instrument(level = "debug", skip(self))]
-    pub async fn get_resources(&self) -> Result<Vec<Device<'_>>> {
-        self.get_devices_internal(MYPLEX_RESOURCES).await
+    pub async fn resources(&self) -> Result<Vec<Device<'_>>> {
+        self.devices_internal(MYPLEX_RESOURCES).await
     }
 }
 
