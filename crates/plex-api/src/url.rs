@@ -12,6 +12,8 @@ pub const MYPLEX_FEATURES: &str = "/api/v2/features";
 pub const MYPLEX_COMPANIONS: &str = "/api/v2/companions";
 pub const MYPLEX_PROVIDERS: &str = "/media/providers";
 
+pub const MYPLEX_ANNOUNCEMENTS: &str = "/api/announcements";
+
 pub const MYPLEX_SERVERS: &str = "/api/v2/servers";
 
 pub const MYPLEX_INVITES: &str = "/api/invites";

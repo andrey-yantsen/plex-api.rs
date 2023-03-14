@@ -1,4 +1,5 @@
 pub mod account;
+pub mod announcements;
 pub mod claim_token;
 pub mod device;
 pub mod pin;
@@ -8,8 +9,9 @@ pub mod sharing;
 pub mod webhook;
 
 use self::{
-    account::MyPlexAccount, claim_token::ClaimToken, device::DeviceManager, pin::PinManager,
-    privacy::Privacy, sharing::Sharing, webhook::WebhookManager,
+    account::MyPlexAccount, announcements::AnnouncementsManager, claim_token::ClaimToken,
+    device::DeviceManager, pin::PinManager, privacy::Privacy, sharing::Sharing,
+    webhook::WebhookManager,
 };
 use crate::{
     http_client::{HttpClient, HttpClientBuilder, Request},
@@ -194,6 +196,10 @@ impl MyPlex {
         }
 
         Ok(PinManager::new(self.client.clone()))
+    }
+
+    pub async fn announcements(&self) -> Result<AnnouncementsManager> {
+        AnnouncementsManager::new(self.client.clone()).await
     }
 
     /// Sign out of your account. It's highly recommended to call this method when you're done using the API.
