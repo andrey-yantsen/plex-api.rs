@@ -53,6 +53,7 @@ pub struct Device<'a> {
 }
 
 impl Device<'_> {
+    /// Returns the list of features supported by the device.
     pub fn provides(&self, feature: Feature) -> bool {
         self.inner.provides.contains(&feature)
     }
@@ -61,6 +62,8 @@ impl Device<'_> {
         &self.inner.client_identifier
     }
 
+    /// Returns the authentication token that should be used when connecting to the device.
+    /// If it's a shared device, the main authentication token will no be accepted.
     pub fn access_token(&self) -> Option<&str> {
         self.inner
             .access_token
@@ -68,6 +71,7 @@ impl Device<'_> {
             .map(|v| v.expose_secret().as_str())
     }
 
+    /// Connect to the device.
     #[tracing::instrument(level = "debug", skip(self), fields(device_name = self.inner.name))]
     pub async fn connect(&self) -> Result<DeviceConnection> {
         if !self.inner.provides.contains(&Feature::Server)

@@ -26,6 +26,7 @@ struct ErrorResponse {
 }
 
 impl ClaimToken {
+    /// Loads the token from the API.
     #[tracing::instrument(level = "debug", skip_all)]
     pub async fn new(client: &HttpClient) -> Result<Self> {
         let mut response = client.get(MYPLEX_CLAIM_TOKEN_PATH).send().await?;
@@ -45,6 +46,7 @@ impl ClaimToken {
         }
     }
 
+    /// Checks if the the token has expired.
     pub fn is_expired(&self) -> bool {
         self.expires < OffsetDateTime::now_utc()
     }

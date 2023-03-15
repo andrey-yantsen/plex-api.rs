@@ -71,6 +71,7 @@ impl<'a> Sharing<'a> {
         Sharing { myplex }
     }
 
+    /// Invite a friend.
     #[tracing::instrument(level = "debug", skip_all, fields(identifier = user.id()))]
     pub async fn invite<'b>(&self, user: User<'b>) -> Result<friend::Friend> {
         self.myplex
@@ -84,6 +85,7 @@ impl<'a> Sharing<'a> {
             .await
     }
 
+    /// Share the server with somebody. The user doesn't have to be an accepted friend.
     #[tracing::instrument(level = "debug", skip_all, fields(user_identifier = user.id(), machine_identifier = server.id()))]
     pub async fn share<'b, 'c, 'd>(
         &self,
@@ -134,7 +136,7 @@ impl<'a> Sharing<'a> {
             .await
     }
 
-    /// Returns a list of friends with the requested status, including managed users
+    /// Returns a list of friends with the requested status, including managed users.
     #[tracing::instrument(level = "debug", skip(self))]
     pub async fn friends(&self, status: InviteStatus) -> Result<Vec<friend::Friend>> {
         let mut friends: Vec<friend::Friend> = self

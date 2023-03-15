@@ -64,6 +64,7 @@ pub struct Friend {
 }
 
 impl Friend {
+    /// Accept friendship.
     #[tracing::instrument(level = "debug", skip(self))]
     pub async fn accept(self) -> Result<Friend> {
         if !matches!(
@@ -88,6 +89,7 @@ impl Friend {
         self.client.as_ref().unwrap()
     }
 
+    /// Delete the friend or friendship request.
     #[tracing::instrument(level = "debug", skip(self))]
     pub async fn delete(self) -> Result<()> {
         let mut response = self

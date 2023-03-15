@@ -33,16 +33,19 @@ impl WebhookManager {
         Ok(ret)
     }
 
+    /// Reload the configured webhooks list.
     #[tracing::instrument(level = "debug", skip(self))]
     pub async fn refresh(&mut self) -> Result {
         self.webhooks = self.client.get(MYPLEX_WEBHOOKS_PATH).json().await?;
         Ok(())
     }
 
+    /// List the current webhooks list.
     pub fn webhooks(&self) -> &[Webhook] {
         &self.webhooks
     }
 
+    /// Set the list of webhook to the provided list.
     #[tracing::instrument(level = "debug", skip(self))]
     pub async fn set(&mut self, webhooks: Vec<Webhook>) -> Result {
         let webhook_urls = webhooks
@@ -73,6 +76,7 @@ impl WebhookManager {
         }
     }
 
+    /// Add a new webhook with the provided URL.
     #[tracing::instrument(level = "debug", skip(self))]
     pub async fn add<U>(&mut self, url: U) -> Result
     where
@@ -87,6 +91,7 @@ impl WebhookManager {
         self.set(webhooks).await
     }
 
+    /// Delete the webhook with the provided URL.
     #[tracing::instrument(level = "debug", skip(self))]
     pub async fn delete<U>(&mut self, url: U) -> Result
     where
