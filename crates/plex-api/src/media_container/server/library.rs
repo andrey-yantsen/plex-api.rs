@@ -819,6 +819,6 @@ pub enum ContentDirectory {
     Media(Box<ServerLibrary>),
     #[serde(rename_all = "camelCase")]
     Home(ServerHome),
-    // A fallback for any unexpected data.
+    #[cfg(not(feature = "tests_deny_unknown_fields"))]
     Unknown(Value),
 }

@@ -54,6 +54,9 @@ pub enum ProtocolCapability {
     Playqueues,
     ProviderPlayback,
     Timeline,
+    #[cfg(not(feature = "tests_deny_unknown_fields"))]
+    #[serde(other)]
+    Unknown,
 }
 
 derive_fromstr_from_deserialize!(ProtocolCapability);

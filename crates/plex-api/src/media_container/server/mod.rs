@@ -9,6 +9,7 @@ use serde_with::{formats::CommaSeparator, serde_as, StringWithSeparator};
 use time::OffsetDateTime;
 
 #[derive(Debug, Deserialize, Clone)]
+#[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 pub struct Action {
     pub id: String,
     pub key: String,
@@ -72,6 +73,7 @@ pub enum MediaProviderFeature {
     Subscribe {
         flavor: String,
     },
+    #[cfg(not(feature = "tests_deny_unknown_fields"))]
     #[serde(other)]
     Unknown,
 }
@@ -81,6 +83,7 @@ pub enum MediaProviderFeature {
 pub enum MediaProviderProtocol {
     Stream,
     Download,
+    #[cfg(not(feature = "tests_deny_unknown_fields"))]
     #[serde(other)]
     Unknown,
 }
@@ -93,6 +96,9 @@ pub enum MediaProviderType {
     Video,
     Audio,
     Photo,
+    #[cfg(not(feature = "tests_deny_unknown_fields"))]
+    #[serde(other)]
+    Unknown,
 }
 
 derive_fromstr_from_deserialize!(MediaProviderType);
