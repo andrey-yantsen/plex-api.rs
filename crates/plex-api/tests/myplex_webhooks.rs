@@ -72,8 +72,7 @@ mod offline {
         assert_eq!(current_webhooks.len(), 1, "Expected single webhook");
 
         assert_eq!(
-            current_webhooks[0].url(),
-            "https://example.com/webhook1",
+            current_webhooks[0].url, "https://example.com/webhook1",
             "Unexpected webhook url"
         );
     }
@@ -118,8 +117,7 @@ mod offline {
         assert_eq!(current_webhooks.len(), 1, "Expected single webhook");
 
         assert_eq!(
-            current_webhooks[0].url(),
-            "https://example.com/webhook1",
+            current_webhooks[0].url, "https://example.com/webhook1",
             "Unexpected webhook url"
         );
 

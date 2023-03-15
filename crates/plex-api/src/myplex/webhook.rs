@@ -12,14 +12,7 @@ pub struct WebhookManager {
 #[derive(Clone, Debug, Deserialize)]
 pub struct Webhook {
     #[serde(with = "http_serde::uri")]
-    url: Uri,
-}
-
-impl Webhook {
-    /// Get a reference to the webhook's url.
-    pub fn url(&self) -> &Uri {
-        &self.url
-    }
+    pub url: Uri,
 }
 
 impl WebhookManager {
