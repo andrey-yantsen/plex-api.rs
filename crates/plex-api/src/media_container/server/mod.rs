@@ -16,6 +16,14 @@ pub struct Action {
 }
 
 #[derive(Debug, Deserialize, Clone)]
+#[serde(tag = "type", rename_all = "camelCase")]
+pub struct GridChannelFilter {
+    pub key: String,
+    pub title: String,
+    pub genre_rating_key: String,
+}
+
+#[derive(Debug, Deserialize, Clone)]
 #[serde(tag = "type", rename_all = "lowercase")]
 pub enum MediaProviderFeature {
     Content {
@@ -73,6 +81,11 @@ pub enum MediaProviderFeature {
     Subscribe {
         flavor: String,
     },
+    Grid {
+        key: String,
+        #[serde(rename = "GridChannelFilter")]
+        grid_channel_filter: Vec<GridChannelFilter>,
+    },
     #[cfg(not(feature = "tests_deny_unknown_fields"))]
     #[serde(other)]
     Unknown,
@@ -83,6 +96,8 @@ pub enum MediaProviderFeature {
 pub enum MediaProviderProtocol {
     Stream,
     Download,
+    #[serde(rename = "livetv")]
+    LiveTv,
     #[cfg(not(feature = "tests_deny_unknown_fields"))]
     #[serde(other)]
     Unknown,

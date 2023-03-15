@@ -36,7 +36,7 @@ mod offline {
         let server_result = Server::new(mock_server.base_url(), client_authenticated).await;
 
         m.assert();
-        server_result.expect("can't recover myplex from server");
+        server_result.expect("can't load server");
     }
 
     #[plex_api_test_helper::offline_test]

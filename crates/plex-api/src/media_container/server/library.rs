@@ -759,6 +759,7 @@ pub enum LibraryType {
     Show,
     Artist,
     Photo,
+    Mixed,
     #[cfg(not(feature = "tests_deny_unknown_fields"))]
     #[serde(other)]
     Unknown,
@@ -812,6 +813,30 @@ pub struct ServerHome {
 }
 
 #[derive(Debug, Deserialize, Clone)]
+#[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
+#[serde(rename_all = "camelCase")]
+pub struct LiveTv {
+    #[serde(rename = "Pivot")]
+    pub pivots: Vec<Pivot>,
+    pub id: String,
+    pub title: String,
+    pub hub_key: String,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+#[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
+#[serde(rename_all = "camelCase")]
+pub struct OnlineLibrary {
+    #[serde(rename = "type")]
+    pub library_type: LibraryType,
+    pub key: String,
+    pub title: String,
+    pub icon: String,
+    #[serde(default, with = "time::serde::timestamp::option")]
+    pub updated_at: Option<OffsetDateTime>,
+}
+
+#[derive(Debug, Deserialize, Clone)]
 #[serde(untagged)]
 pub enum ContentDirectory {
     Playlists(ServerPlaylists),
@@ -819,6 +844,10 @@ pub enum ContentDirectory {
     Media(Box<ServerLibrary>),
     #[serde(rename_all = "camelCase")]
     Home(ServerHome),
+    #[serde(rename_all = "camelCase")]
+    LiveTv(LiveTv),
+    #[serde(rename_all = "camelCase")]
+    Online(OnlineLibrary),
     #[cfg(not(feature = "tests_deny_unknown_fields"))]
     Unknown(Value),
 }
