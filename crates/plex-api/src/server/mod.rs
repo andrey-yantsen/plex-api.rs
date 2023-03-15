@@ -31,7 +31,7 @@ use std::fmt::Debug;
 #[derive(Debug, Clone)]
 pub struct Server {
     client: HttpClient,
-    myplex_api_url: Uri,
+    pub myplex_api_url: Uri,
     pub media_container: ServerMediaContainer,
 }
 

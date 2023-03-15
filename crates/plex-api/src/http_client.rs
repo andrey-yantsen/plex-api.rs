@@ -82,6 +82,11 @@ pub struct HttpClient {
     ///
     /// Looks like it's a replacement for X-Plex-Provides
     pub x_plex_features: String,
+
+    /// `X-Plex-Target-Client-Identifier` header value.
+    ///
+    /// Used when proxying a client request via a server.
+    pub x_plex_target_client_identifier: String,
 }
 
 impl HttpClient {
@@ -102,6 +107,13 @@ impl HttpClient {
     fn prepare_request_min(&self) -> Builder {
         let mut request = HttpRequest::builder()
             .header("X-Plex-Client-Identifier", &self.x_plex_client_identifier);
+
+        if !self.x_plex_target_client_identifier.is_empty() {
+            request = request.header(
+                "X-Plex-Target-Client-Identifier",
+                &self.x_plex_target_client_identifier,
+            );
+        }
 
         if !self.x_plex_token.expose_secret().is_empty() {
             request = request.header("X-Plex-Token", self.x_plex_token.expose_secret());
@@ -273,7 +285,8 @@ where
     PathAndQuery: TryFrom<P>,
     <PathAndQuery as TryFrom<P>>::Error: Into<http::Error>,
 {
-    // Sets the maximum timeout for this request or disables timeouts.
+    /// Sets the maximum timeout for this request or disables timeouts.
+    #[must_use]
     pub fn timeout(self, timeout: Option<Duration>) -> Self {
         Self {
             http_client: self.http_client,
@@ -324,6 +337,7 @@ where
     }
 
     /// Adds a request header.
+    #[must_use]
     pub fn header<K, V>(self, key: K, value: V) -> Self
     where
         http::header::HeaderName: TryFrom<K>,
@@ -452,6 +466,7 @@ impl Default for HttpClientBuilder {
             x_plex_token: SecretString::new("".to_owned()),
             x_plex_model: String::from("hosted"),
             x_plex_features: String::from("external-media,indirect-media,hub-style-list"),
+            x_plex_target_client_identifier: String::from(""),
         };
 
         Self { client: Ok(client) }

@@ -1,16 +1,14 @@
-use super::MediaContainer;
 use serde::Deserialize;
 use serde_plain::derive_fromstr_from_deserialize;
 use serde_with::{formats::CommaSeparator, serde_as, StringWithSeparator};
 
 #[derive(Debug, Deserialize, Clone)]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
-#[serde(rename_all = "camelCase")]
 pub struct ResourcesMediaContainer {
-    #[serde(rename = "Player", default)]
-    pub players: Vec<Player>,
-    #[serde(flatten)]
-    pub media_container: MediaContainer,
+    #[serde(rename = "Player")]
+    pub player: Player,
+    #[serde(rename = "@size")]
+    pub size: Option<u32>,
 }
 
 #[serde_as]
@@ -23,6 +21,8 @@ pub struct Player {
     pub product: String,
     #[serde(rename = "@protocol")]
     pub protocol: String,
+    #[serde(rename = "@protocolVersion")]
+    pub protocol_version: u8,
     #[serde(rename = "@deviceClass")]
     pub device_class: DeviceClass,
     #[serde(rename = "@platform")]
@@ -51,7 +51,8 @@ pub enum DeviceClass {
 pub enum ProtocolCapability {
     Mirror,
     Playback,
-    Playqueues,
+    #[serde(rename = "playqueues")]
+    PlayQueues,
     ProviderPlayback,
     Timeline,
     #[cfg(not(feature = "tests_deny_unknown_fields"))]

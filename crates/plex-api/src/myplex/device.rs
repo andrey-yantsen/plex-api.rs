@@ -92,6 +92,10 @@ impl Device<'_> {
             }
 
             if self.inner.provides.contains(&Feature::Server) {
+                trace!(
+                    "Connecting to server {id}",
+                    id = self.inner.client_identifier,
+                );
                 let futures = self
                     .inner
                     .connections
@@ -106,6 +110,12 @@ impl Device<'_> {
                 trace!("Connected via {address}", address = server.client().api_url);
                 Ok(DeviceConnection::Server(Box::new(server)))
             } else {
+                trace!(
+                    "Connecting to player {id}",
+                    id = self.inner.client_identifier,
+                );
+                client.x_plex_target_client_identifier = self.inner.client_identifier.clone();
+
                 let futures = self
                     .inner
                     .connections
@@ -123,6 +133,28 @@ impl Device<'_> {
         } else {
             Err(Error::DeviceConnectionsIsEmpty)
         }
+    }
+
+    /// Establish a connection to the device using server as a proxy.
+    #[tracing::instrument(level = "debug", skip(self, server), fields(device_name = self.inner.name))]
+    pub async fn connect_via(&self, server: &Server) -> Result<DeviceConnection> {
+        if !self.inner.provides.contains(&Feature::Controller) {
+            error!("Only devices providing Controller can be connected via proxy");
+            return Err(Error::DeviceConnectionNotSupported);
+        }
+
+        let futures = self
+            .inner
+            .connections
+            .iter()
+            .map(|connection| {
+                trace!("Trying {address}", address = connection.uri);
+                crate::Player::via_proxy(&connection.uri, server).boxed()
+            })
+            .collect::<Vec<_>>();
+
+        let (player, _) = select_ok(futures).await?;
+        Ok(DeviceConnection::Player(Box::new(player)))
     }
 }
 
