@@ -305,7 +305,7 @@ impl<C, S> From<(Option<C>, S, Constraint)> for Limitation<C, S> {
     }
 }
 
-pub(super) trait TranscodeOptions {
+pub trait TranscodeOptions {
     fn transcode_parameters(
         &self,
         context: Context,

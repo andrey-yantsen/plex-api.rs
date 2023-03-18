@@ -297,8 +297,7 @@ mod offline {
                     .body_from_file("tests/mocks/transcode/video_dash_h264_mp3.json");
             });
 
-            item.create_streaming_session(
-                part,
+            part.create_streaming_session(
                 Protocol::Dash,
                 VideoTranscodeOptions {
                     bitrate: 2000,
@@ -432,8 +431,7 @@ mod offline {
                     .body_from_file("tests/mocks/transcode/video_hls_vp9_pcm.json");
             });
 
-            item.create_streaming_session(
-                part,
+            part.create_streaming_session(
                 Protocol::Hls,
                 VideoTranscodeOptions {
                     bitrate: 1000,
@@ -569,18 +567,15 @@ mod offline {
                     .body_from_file("tests/mocks/transcode/video_offline_h264_mp3.json");
             });
 
-            item.create_download_session(
-                part,
-                VideoTranscodeOptions {
-                    bitrate: 2000,
-                    width: 1280,
-                    height: 720,
-                    burn_subtitles: true,
-                    video_codecs: vec![VideoCodec::H264],
-                    audio_codecs: vec![AudioCodec::Aac],
-                    ..Default::default()
-                },
-            )
+            part.create_download_session(VideoTranscodeOptions {
+                bitrate: 2000,
+                width: 1280,
+                height: 720,
+                burn_subtitles: true,
+                video_codecs: vec![VideoCodec::H264],
+                audio_codecs: vec![AudioCodec::Aac],
+                ..Default::default()
+            })
             .await
             .unwrap();
             m.assert();
@@ -613,8 +608,8 @@ mod offline {
                     .body_from_file("tests/mocks/transcode/video_dash_h264_mp3.json");
             });
 
-            let session = item
-                .create_streaming_session(part, Protocol::Dash, Default::default())
+            let session = part
+                .create_streaming_session(Protocol::Dash, VideoTranscodeOptions::default())
                 .await
                 .unwrap();
             m.assert();
@@ -640,8 +635,8 @@ mod offline {
                     .body_from_file("tests/mocks/transcode/video_dash_h265_aac.json");
             });
 
-            let session = item
-                .create_streaming_session(part, Protocol::Dash, Default::default())
+            let session = part
+                .create_streaming_session(Protocol::Dash, VideoTranscodeOptions::default())
                 .await
                 .unwrap();
             m.assert();
@@ -667,8 +662,8 @@ mod offline {
                     .body_from_file("tests/mocks/transcode/video_hls_vp9_pcm.json");
             });
 
-            let session = item
-                .create_streaming_session(part, Protocol::Hls, Default::default())
+            let session = part
+                .create_streaming_session(Protocol::Hls, VideoTranscodeOptions::default())
                 .await
                 .unwrap();
             m.assert();
@@ -694,8 +689,8 @@ mod offline {
                     .body_from_file("tests/mocks/transcode/video_hls_vp9_pcm.json");
             });
 
-            let error = item
-                .create_streaming_session(part, Protocol::Dash, Default::default())
+            let error = part
+                .create_streaming_session(Protocol::Dash, VideoTranscodeOptions::default())
                 .await
                 .err()
                 .unwrap();
@@ -716,8 +711,8 @@ mod offline {
                     .body_from_file("tests/mocks/transcode/video_dash_h264_mp3.json");
             });
 
-            let error = item
-                .create_streaming_session(part, Protocol::Hls, Default::default())
+            let error = part
+                .create_streaming_session(Protocol::Hls, VideoTranscodeOptions::default())
                 .await
                 .err()
                 .unwrap();
@@ -738,8 +733,8 @@ mod offline {
                     .body_from_file("tests/mocks/transcode/video_offline_h264_mp3.json");
             });
 
-            let session = item
-                .create_download_session(part, Default::default())
+            let session = part
+                .create_download_session(VideoTranscodeOptions::default())
                 .await
                 .unwrap();
             m.assert();
@@ -779,8 +774,8 @@ mod offline {
                     .body_from_file("tests/mocks/transcode/video_offline_refused.json");
             });
 
-            let error = item
-                .create_download_session(part, Default::default())
+            let error = part
+                .create_download_session(VideoTranscodeOptions::default())
                 .await
                 .err()
                 .unwrap();
@@ -870,8 +865,7 @@ mod offline {
                     .body_from_file("tests/mocks/transcode/video_dash_h264_mp3.json");
             });
 
-            item.create_streaming_session(
-                part,
+            part.create_streaming_session(
                 Protocol::Dash,
                 MusicTranscodeOptions {
                     bitrate: 192,
@@ -914,8 +908,8 @@ mod offline {
                     .body_from_file("tests/mocks/transcode/music_mp3.json");
             });
 
-            let session = item
-                .create_streaming_session(part, Protocol::Dash, Default::default())
+            let session = part
+                .create_streaming_session(Protocol::Dash, MusicTranscodeOptions::default())
                 .await
                 .unwrap();
             m.assert();
@@ -1159,9 +1153,8 @@ mod online {
             let media = &movie.media()[0];
             let part = &media.parts()[0];
 
-            let session = movie
+            let session = part
                 .create_streaming_session(
-                    part,
                     Protocol::Dash,
                     // These settings will force transcoding as the original is too
                     // high a bitrate and has a different audio codec.
@@ -1204,9 +1197,8 @@ mod online {
             let media = &movie.media()[0];
             let part = &media.parts()[0];
 
-            let session = movie
+            let session = part
                 .create_streaming_session(
-                    part,
                     Protocol::Dash,
                     // These settings should allow for direct streaming of the video
                     // and audio.
@@ -1251,9 +1243,8 @@ mod online {
             let media = &movie.media()[0];
             let part = &media.parts()[0];
 
-            let session = movie
+            let session = part
                 .create_streaming_session(
-                    part,
                     Protocol::Hls,
                     // These settings will force transcoding as the original is too
                     // high a bitrate and has a different audio codec.
@@ -1312,9 +1303,8 @@ mod online {
             let media = &movie.media()[0];
             let part = &media.parts()[0];
 
-            let session = movie
+            let session = part
                 .create_streaming_session(
-                    part,
                     Protocol::Hls,
                     // These settings should allow for direct streaming of the video
                     // and audio.
@@ -1384,9 +1374,8 @@ mod online {
             let media = &movie.media()[0];
             let part = &media.parts()[0];
 
-            let session = movie
+            let session = part
                 .create_download_session(
-                    part,
                     // These settings will force transcoding as the original is too
                     // high a bitrate and has a different audio codec.
                     VideoTranscodeOptions {
@@ -1435,9 +1424,8 @@ mod online {
             let media = &movie.media()[0];
             let part = &media.parts()[0];
 
-            let session = movie
+            let session = part
                 .create_download_session(
-                    part,
                     // These settings should allow for direct streaming of the video
                     // and audio but into a different container format.
                     VideoTranscodeOptions {
@@ -1532,9 +1520,8 @@ mod online {
             let media = &movie.media()[0];
             let part = &media.parts()[0];
 
-            let error = movie
+            let error = part
                 .create_download_session(
-                    part,
                     // Here we ask to transcode into a format the movie is already
                     // in so the server denies the request.
                     VideoTranscodeOptions {
@@ -1575,9 +1562,8 @@ mod online {
             let media = &track.media()[0];
             let part = &media.parts()[0];
 
-            let session = track
+            let session = part
                 .create_streaming_session(
-                    part,
                     Protocol::Dash,
                     // These settings will force transcoding as the original is too
                     // high a bitrate and has a different audio codec.
@@ -1619,9 +1605,8 @@ mod online {
             let media = &track.media()[0];
             let part = &media.parts()[0];
 
-            let session = track
+            let session = part
                 .create_streaming_session(
-                    part,
                     Protocol::Dash,
                     // These settings should allow for direct streaming of the music.
                     MusicTranscodeOptions {
@@ -1662,9 +1647,8 @@ mod online {
             let media = &track.media()[0];
             let part = &media.parts()[0];
 
-            let session = track
+            let session = part
                 .create_streaming_session(
-                    part,
                     Protocol::Hls,
                     // These settings will force transcoding as the original is too
                     // high a bitrate and has a different audio codec.
@@ -1725,9 +1709,8 @@ mod online {
             #[cfg(not(feature = "tests_shared_server_access_token"))]
             verify_no_sessions(&server).await;
 
-            let session = track
+            let session = part
                 .create_streaming_session(
-                    part,
                     Protocol::Hls,
                     // These settings should allow for direct streaming of the music.
                     MusicTranscodeOptions {
@@ -1796,9 +1779,8 @@ mod online {
             #[cfg(not(feature = "tests_shared_server_access_token"))]
             verify_no_sessions(&server).await;
 
-            let session = track
+            let session = part
                 .create_download_session(
-                    part,
                     // These settings will force transcoding as the original is too
                     // high a bitrate and has a different audio codec.
                     MusicTranscodeOptions {
@@ -1868,9 +1850,8 @@ mod online {
             let media = &track.media()[0];
             let part = &media.parts()[0];
 
-            let error = track
+            let error = part
                 .create_download_session(
-                    part,
                     // Here we ask to transcode into a format the music is already
                     // in so the server denies the request.
                     MusicTranscodeOptions {
