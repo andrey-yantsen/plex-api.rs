@@ -670,6 +670,8 @@ pub enum Item {
     UnknownItem,
 }
 
+impl MediaItem for Item {}
+
 impl FromMetadata for Item {
     fn from_metadata(client: HttpClient, metadata: Metadata) -> Self {
         if let Some(ref item_type) = metadata.metadata_type {
