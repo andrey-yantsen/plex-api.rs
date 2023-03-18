@@ -168,8 +168,8 @@ impl<'a> Media<'a> {
 #[derive(Debug, Clone)]
 pub struct Part<'a> {
     pub(crate) client: &'a HttpClient,
-    pub(crate) media_index: usize,
-    pub(crate) part_index: usize,
+    pub media_index: usize,
+    pub part_index: usize,
     part: &'a PartMetadata,
 }
 
