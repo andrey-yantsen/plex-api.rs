@@ -1195,6 +1195,9 @@ mod online {
             assert!(dash_mpd::parse(index).is_ok());
 
             cancel(&server, session).await;
+
+            #[cfg(not(feature = "tests_shared_server_access_token"))]
+            verify_no_sessions(&server).await;
         }
 
         #[plex_api_test_helper::online_test]
@@ -1239,6 +1242,9 @@ mod online {
             assert!(dash_mpd::parse(index).is_ok());
 
             cancel(&server, session).await;
+
+            #[cfg(not(feature = "tests_shared_server_access_token"))]
+            verify_no_sessions(&server).await;
         }
 
         #[plex_api_test_helper::online_test]
@@ -1297,6 +1303,9 @@ mod online {
             }
 
             cancel(&server, session).await;
+
+            #[cfg(not(feature = "tests_shared_server_access_token"))]
+            verify_no_sessions(&server).await;
         }
 
         #[plex_api_test_helper::online_test]
@@ -1357,6 +1366,9 @@ mod online {
             }
 
             cancel(&server, session).await;
+
+            #[cfg(not(feature = "tests_shared_server_access_token"))]
+            verify_no_sessions(&server).await;
         }
 
         #[plex_api_test_helper::online_test_claimed_server]
@@ -1405,6 +1417,9 @@ mod online {
             verify_remote_sessions(&server, &session).await;
 
             cancel(&server, session).await;
+
+            #[cfg(not(feature = "tests_shared_server_access_token"))]
+            verify_no_sessions(&server).await;
         }
 
         #[plex_api_test_helper::online_test_claimed_server]
@@ -1499,6 +1514,9 @@ mod online {
             assert!(audios.next().is_none());
 
             cancel(&server, session).await;
+
+            #[cfg(not(feature = "tests_shared_server_access_token"))]
+            verify_no_sessions(&server).await;
         }
 
         #[plex_api_test_helper::online_test_claimed_server]
@@ -1592,6 +1610,9 @@ mod online {
             assert!(dash_mpd::parse(index).is_ok());
 
             cancel(&server, session).await;
+
+            #[cfg(not(feature = "tests_shared_server_access_token"))]
+            verify_no_sessions(&server).await;
         }
 
         #[plex_api_test_helper::online_test]
@@ -1632,6 +1653,9 @@ mod online {
             assert!(dash_mpd::parse(index).is_ok());
 
             cancel(&server, session).await;
+
+            #[cfg(not(feature = "tests_shared_server_access_token"))]
+            verify_no_sessions(&server).await;
         }
 
         #[plex_api_test_helper::online_test]
@@ -1689,6 +1713,9 @@ mod online {
             }
 
             cancel(&server, session).await;
+
+            #[cfg(not(feature = "tests_shared_server_access_token"))]
+            verify_no_sessions(&server).await;
         }
 
         #[plex_api_test_helper::online_test]
@@ -1748,6 +1775,9 @@ mod online {
             }
 
             cancel(&server, session).await;
+
+            #[cfg(not(feature = "tests_shared_server_access_token"))]
+            verify_no_sessions(&server).await;
         }
 
         #[plex_api_test_helper::online_test_claimed_server]
@@ -1820,6 +1850,9 @@ mod online {
             assert_eq!(frame.chan_type, mp3_metadata::ChannelType::SingleChannel);
 
             cancel(&server, session).await;
+
+            #[cfg(not(feature = "tests_shared_server_access_token"))]
+            verify_no_sessions(&server).await;
         }
 
         #[plex_api_test_helper::online_test_claimed_server]
