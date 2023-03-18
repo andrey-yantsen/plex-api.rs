@@ -1,4 +1,5 @@
 mod flags;
+mod library;
 mod preferences;
 mod wait;
 

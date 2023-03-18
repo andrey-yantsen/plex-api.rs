@@ -50,6 +50,27 @@ xflags::xflags! {
                 optional --i-know-what-i-am-doing
             }
         }
+
+        /// Various task related to a library.
+        cmd library {
+            /// Library name
+            optional -n, --name name: String
+
+            /// Library id. You need to provide either name or id when working with a library.
+            optional --id id: String
+
+            cmd download {
+                /// rating_key of the item you want to download.
+                optional --item-id item_id: u32
+
+                /// Part index to be downloaded (counting from 1).
+                repeated --required_parts required_parts: usize
+
+                /// Download app the available parts.
+                optional --all-parts
+
+            }
+        }
     }
 }
 
@@ -67,6 +88,7 @@ pub struct PlexCli {
 pub enum PlexCliCmd {
     Wait(Wait),
     Preferences(Preferences),
+    Library(Library),
 }
 
 #[derive(Debug)]
@@ -102,6 +124,25 @@ pub struct Set {
     pub i_know_what_i_am_doing: bool,
 }
 
+#[derive(Debug)]
+pub struct Library {
+    pub name: Option<String>,
+    pub id: Option<String>,
+    pub subcommand: LibraryCmd,
+}
+
+#[derive(Debug)]
+pub enum LibraryCmd {
+    Download(Download),
+}
+
+#[derive(Debug)]
+pub struct Download {
+    pub item_id: Option<u32>,
+    pub required_parts: Vec<usize>,
+    pub all_parts: bool,
+}
+
 impl PlexCli {
     #[allow(dead_code)]
     pub fn from_env_or_exit() -> Self {
@@ -132,6 +173,7 @@ impl PlexCli {
         match self.subcommand {
             PlexCliCmd::Wait(cmd) => cmd.run(&server, &auth_token).await,
             PlexCliCmd::Preferences(cmd) => cmd.run(&server, &auth_token).await,
+            PlexCliCmd::Library(cmd) => cmd.run(&server, &auth_token).await,
         }
     }
 }
