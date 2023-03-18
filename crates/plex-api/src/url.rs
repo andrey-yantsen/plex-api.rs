@@ -27,6 +27,9 @@ pub const MYPLEX_SONOS_RESOURCES: &str = "/resources";
 pub const MYPLEX_PINS: &str = "/api/v2/pins";
 pub const MYPLEX_PINS_LINK: &str = "/api/v2/pins/link.json";
 
+pub const MYPLEX_USERS: &str = "/api/home/users";
+pub const MYPLEX_USER_SWITCH: &str = "/api/v2/home/users/{uuid}/switch"; // ?includeSubscriptions=1&includeProviders=1&includeSettings=1&includeSharedSettings=1&pin=0373
+
 pub const SERVER_MEDIA_PROVIDERS: &str = "/media/providers";
 pub const SERVER_MYPLEX_ACCOUNT: &str = "/myplex/account";
 pub const SERVER_MYPLEX_CLAIM: &str = "/myplex/claim";

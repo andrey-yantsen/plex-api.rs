@@ -29,7 +29,7 @@ Rust-way — feel free to create an issue (or, better, pull-request) to correct 
   * [x] [Link Codes](https://support.plex.tv/articles/203395277-connect-app-to-your-plex-account/) support
   * [x] Sharing: accepting/rejecting friendship, inviting somebody, sharing a server
   * [x] Working with Plex announcements
-  * [ ] Switching to another Plex Home user
+  * [x] Switching to another Plex Home user
   * [ ] Watchlist
   * [ ] Creating/changing managed users
   * [ ] ???

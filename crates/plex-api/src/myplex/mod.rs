@@ -2,6 +2,7 @@ pub mod account;
 pub mod announcements;
 pub mod claim_token;
 pub mod device;
+pub mod home;
 pub mod pin;
 pub mod privacy;
 pub mod server;
@@ -10,7 +11,7 @@ pub mod webhook;
 
 use self::{
     account::MyPlexAccount, announcements::AnnouncementsManager, claim_token::ClaimToken,
-    device::DeviceManager, pin::PinManager, privacy::Privacy, sharing::Sharing,
+    device::DeviceManager, home::HomeManager, pin::PinManager, privacy::Privacy, sharing::Sharing,
     webhook::WebhookManager,
 };
 use crate::{
@@ -221,6 +222,17 @@ impl MyPlex {
             StatusCode::NO_CONTENT => Ok(()),
             _ => Err(Error::from_response(response).await),
         }
+    }
+
+    /// Various controls over Plex Home.
+    pub fn home(&self) -> Result<HomeManager> {
+        if !self.client.is_authenticated() {
+            return Err(Error::ClientNotAuthenticated);
+        }
+
+        Ok(HomeManager {
+            client: self.client.clone(),
+        })
     }
 }
 

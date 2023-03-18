@@ -1,5 +1,6 @@
 use secrecy::SecretString;
 use serde::{Deserialize, Deserializer, Serialize};
+use serde_json::Value;
 use serde_repr::Deserialize_repr;
 use serde_with::{json::JsonString, serde_as};
 use std::collections::HashMap;
@@ -61,6 +62,14 @@ pub struct Subscription {
     pub ends_at: Option<OffsetDateTime>,
     pub r#type: Option<String>,
     pub transfer: Option<bool>,
+    pub billing: Option<Value>,
+    pub canceled: Option<bool>,
+    pub grace_period: Option<bool>,
+    pub on_hold: Option<bool>,
+    pub can_upgrade: Option<bool>,
+    pub can_reactivate: Option<bool>,
+    pub can_downgrade: Option<bool>,
+    pub can_convert: Option<bool>,
 }
 
 #[derive(Deserialize, Debug, Clone)]
@@ -125,6 +134,7 @@ pub struct MyPlexAccount {
     pub joined_at: OffsetDateTime,
 
     pub restriction_profile: Option<RestrictionProfile>,
+    pub mapped_restriction_profile: Option<RestrictionProfile>,
 
     // Some managed guest users don't have subscription info
     pub subscriptions: Option<Vec<Subscription>>,
