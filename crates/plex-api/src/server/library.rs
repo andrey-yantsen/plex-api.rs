@@ -180,8 +180,10 @@ impl<'a> Part<'a> {
     }
 
     /// Downloads the original media file for this part writing the data into
-    /// the provided writer. S range of bytes within the file can be requested
+    /// the provided writer. A range of bytes within the file can be requested
     /// allowing for resumable transfers.
+    ///
+    /// Configured timeout value will be ignored during downloading.
     #[tracing::instrument(level = "debug", skip_all)]
     pub async fn download<W, R>(&self, writer: W, range: R) -> Result
     where
@@ -202,7 +204,7 @@ impl<'a> Part<'a> {
             std::ops::Bound::Unbounded => None,
         };
 
-        let mut builder = self.client.get(path);
+        let mut builder = self.client.get(path).timeout(None);
         if start != 0 || (end.is_some() && end != self.part.size) {
             // We're requesting part of the file.
             let end = end.map(|v| v.to_string()).unwrap_or_default();
