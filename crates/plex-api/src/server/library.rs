@@ -13,10 +13,10 @@ use crate::{
         },
         MediaContainerWrapper,
     },
-    HttpClient, MusicTranscodeOptions, Result, TranscodeSession, VideoTranscodeOptions,
+    HttpClient, Result, TranscodeSession,
 };
 
-use super::transcode::{create_transcode_session, Context};
+use super::transcode::{create_transcode_session, Context, TranscodeOptions};
 
 pub trait FromMetadata {
     /// Creates an item given the http configuration and item metadata. No
@@ -139,6 +139,7 @@ pub struct Media<'a> {
     client: &'a HttpClient,
     media_index: usize,
     media: &'a MediaMetadata,
+    parent_metadata: &'a Metadata,
 }
 
 impl<'a> Media<'a> {
@@ -153,6 +154,7 @@ impl<'a> Media<'a> {
                 client: self.client,
                 media_index: self.media_index,
                 part_index: index,
+                parent_metadata: self.parent_metadata,
                 part,
             })
             .collect()
@@ -171,6 +173,7 @@ pub struct Part<'a> {
     pub media_index: usize,
     pub part_index: usize,
     part: &'a PartMetadata,
+    parent_metadata: &'a Metadata,
 }
 
 impl<'a> Part<'a> {
@@ -225,6 +228,62 @@ impl<'a> Part<'a> {
     pub fn metadata(&self) -> &PartMetadata {
         self.part
     }
+
+    fn check_transcoding_supported(&self) -> Result {
+        if !matches!(
+            self.parent_metadata.metadata_type,
+            Some(MetadataType::Movie | MetadataType::Episode | MetadataType::Track)
+        ) {
+            Err(crate::Error::TranscodeNotSupported)
+        } else {
+            Ok(())
+        }
+    }
+
+    /// Starts an offline transcode using the provided options.
+    ///
+    /// The server may refuse to transcode if the options suggest that the
+    /// original media file can be played back directly.
+    ///
+    /// Can't be called on media other than Movie, Episode or Track.
+    #[tracing::instrument(level = "debug", skip_all)]
+    pub async fn create_download_session<O: TranscodeOptions>(
+        &self,
+        options: O,
+    ) -> Result<TranscodeSession> {
+        self.check_transcoding_supported()?;
+
+        create_transcode_session(
+            self.parent_metadata,
+            self,
+            Context::Static,
+            Protocol::Http,
+            options,
+        )
+        .await
+    }
+
+    /// Starts a streaming transcode using of the given media part using the
+    /// streaming protocol and provided options.
+    ///
+    /// Can't be called on media other than Movie, Episode or Track.
+    #[tracing::instrument(level = "debug", skip_all)]
+    pub async fn create_streaming_session<O: TranscodeOptions>(
+        &self,
+        protocol: Protocol,
+        options: O,
+    ) -> Result<TranscodeSession> {
+        self.check_transcoding_supported()?;
+
+        create_transcode_session(
+            self.parent_metadata,
+            self,
+            Context::Streaming,
+            protocol,
+            options,
+        )
+        .await
+    }
 }
 
 /// Represents some playable media. In Plex each playable item can be available
@@ -241,6 +300,7 @@ pub trait MediaItem: MetadataItem {
                 .map(|(index, media)| Media {
                     client: self.client(),
                     media_index: index,
+                    parent_metadata: metadata,
                     media,
                 })
                 .collect()
@@ -328,7 +388,6 @@ where
 
 #[derive(Debug, Clone)]
 pub struct Movie {
-    #[allow(dead_code)]
     client: HttpClient,
     metadata: Metadata,
 }
@@ -337,41 +396,6 @@ derive_from_metadata!(Movie);
 derive_metadata_item!(Movie);
 
 impl MediaItem for Movie {}
-
-impl Movie {
-    /// Starts an offline transcode of the given media part using the provided
-    /// options.
-    ///
-    /// The server may refuse to transcode if the options suggest that the
-    /// original media file can be played back directly.
-    #[tracing::instrument(level = "debug", skip_all, fields(self.metadata.key = self.metadata.key))]
-    pub async fn create_download_session<'a>(
-        &'a self,
-        part: &Part<'a>,
-        options: VideoTranscodeOptions,
-    ) -> Result<TranscodeSession> {
-        create_transcode_session(
-            &self.metadata,
-            part,
-            Context::Static,
-            Protocol::Http,
-            options,
-        )
-        .await
-    }
-
-    /// Starts a streaming transcode using of the given media part using the
-    /// streaming protocol and provided options.
-    #[tracing::instrument(level = "debug", skip_all, fields(self.metadata.key = self.metadata.key))]
-    pub async fn create_streaming_session<'a>(
-        &'a self,
-        part: &Part<'a>,
-        protocol: Protocol,
-        options: VideoTranscodeOptions,
-    ) -> Result<TranscodeSession> {
-        create_transcode_session(&self.metadata, part, Context::Streaming, protocol, options).await
-    }
-}
 
 #[derive(Debug, Clone)]
 pub struct Show {
@@ -451,39 +475,6 @@ impl Episode {
     pub async fn season(&self) -> Result<Option<Season>> {
         parent(self, &self.client).await
     }
-
-    /// Starts an offline transcode of the given media part using the provided
-    /// options.
-    ///
-    /// The server may refuse to transcode if the options suggest that the
-    /// original media file can be played back directly.
-    #[tracing::instrument(level = "debug", skip_all, fields(self.metadata.key = self.metadata.key))]
-    pub async fn create_download_session<'a>(
-        &'a self,
-        part: &Part<'a>,
-        options: VideoTranscodeOptions,
-    ) -> Result<TranscodeSession> {
-        create_transcode_session(
-            &self.metadata,
-            part,
-            Context::Static,
-            Protocol::Http,
-            options,
-        )
-        .await
-    }
-
-    /// Starts a streaming transcode using of the given media part using the
-    /// streaming protocol and provided options.
-    #[tracing::instrument(level = "debug", skip_all, fields(self.metadata.key = self.metadata.key))]
-    pub async fn create_streaming_session<'a>(
-        &'a self,
-        part: &Part<'a>,
-        protocol: Protocol,
-        options: VideoTranscodeOptions,
-    ) -> Result<TranscodeSession> {
-        create_transcode_session(&self.metadata, part, Context::Streaming, protocol, options).await
-    }
 }
 
 #[derive(Debug, Clone)]
@@ -547,39 +538,6 @@ impl Track {
     #[tracing::instrument(level = "debug", skip_all, fields(self.metadata.key = self.metadata.key))]
     pub async fn album(&self) -> Result<Option<MusicAlbum>> {
         parent(self, &self.client).await
-    }
-
-    /// Starts an offline transcode of the given media part using the provided
-    /// options.
-    ///
-    /// The server may refuse to transcode if the options suggest that the
-    /// original media file can be played back directly.
-    #[tracing::instrument(level = "debug", skip_all, fields(self.metadata.key = self.metadata.key))]
-    pub async fn create_download_session<'a>(
-        &'a self,
-        part: &Part<'a>,
-        options: MusicTranscodeOptions,
-    ) -> Result<TranscodeSession> {
-        create_transcode_session(
-            &self.metadata,
-            part,
-            Context::Static,
-            Protocol::Http,
-            options,
-        )
-        .await
-    }
-
-    /// Starts a streaming transcode using of the given media part using the
-    /// streaming protocol and provided options.
-    #[tracing::instrument(level = "debug", skip_all, fields(self.metadata.key = self.metadata.key))]
-    pub async fn create_streaming_session<'a>(
-        &'a self,
-        part: &Part<'a>,
-        protocol: Protocol,
-        options: MusicTranscodeOptions,
-    ) -> Result<TranscodeSession> {
-        create_transcode_session(&self.metadata, part, Context::Streaming, protocol, options).await
     }
 }
 
