@@ -92,7 +92,31 @@ I hope it's clear from their names when to use any of them.
 it's possible to use [fixtures](https://docs.rs/rstest/latest/rstest/attr.rstest.html#injecting-fixtures) and
 [tests parametrization](https://docs.rs/rstest/latest/rstest/attr.rstest.html#test-parametrized-cases).
 
-Please use those when writing integration tests.
+Please use those when writing the tests.
+
+## GitHub Actions CI
+
+For every PR the following tests suits are executed:
+
+* All offline tests.
+* Online tests using an unclaimed Plex server with supported Plex versions.
+
+After the changes are approved, multiple more online tests are executed, using
+a claimed server with supported Plex versions:
+
+* Server claimed using Free account.
+* Server claimed using PlexPass account.
+* Server claimed using PlexPass account, and then shared with a Free user, which
+  is then used to access the server.
+
+And finally, after all the tests are successfully finished, the PR will be
+merged automatically using Mergify.
+
+## Releasing
+
+The project uses [Release Please](https://github.com/google-github-actions/release-please-action) for handling releases and the changelog.
+
+Just merge the appropriate PR to publish a new release.
 
 Thanks,
 Andrey Yantsen
