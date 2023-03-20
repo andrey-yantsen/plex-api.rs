@@ -77,8 +77,6 @@ pub enum Error {
     TranscodeRefused,
     #[error("Only invites with status pending_received can be accepted.")]
     InviteAcceptingNotPendingReceived,
-    #[error("Current media does not support transcoding.")]
-    TranscodeNotSupported,
 }
 
 const PLEX_API_ERROR_CODE_AUTH_OTP_REQUIRED: i32 = 1029;

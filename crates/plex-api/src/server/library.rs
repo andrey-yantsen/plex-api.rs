@@ -13,7 +13,7 @@ use crate::{
         },
         MediaContainerWrapper,
     },
-    HttpClient, Result, TranscodeSession,
+    HttpClient, MusicTranscodeOptions, Result, TranscodeSession, VideoTranscodeOptions,
 };
 
 use super::transcode::{create_transcode_session, Context, TranscodeOptions};
@@ -135,22 +135,24 @@ where
 
 /// A single media format for a `MediaItem`.
 #[derive(Debug, Clone)]
-pub struct Media<'a> {
+pub struct Media<'a, M: MediaItem> {
+    _options: PhantomData<M>,
     client: &'a HttpClient,
     media_index: usize,
     media: &'a MediaMetadata,
     parent_metadata: &'a Metadata,
 }
 
-impl<'a> Media<'a> {
+impl<'a, M: MediaItem> Media<'a, M> {
     /// The different parts that make up this media. They should be played in
     /// order.
-    pub fn parts(&self) -> Vec<Part> {
+    pub fn parts(&self) -> Vec<Part<M>> {
         self.media
             .parts
             .iter()
             .enumerate()
             .map(|(index, part)| Part {
+                _options: self._options,
                 client: self.client,
                 media_index: self.media_index,
                 part_index: index,
@@ -168,7 +170,8 @@ impl<'a> Media<'a> {
 
 /// One part of a `Media`.
 #[derive(Debug, Clone)]
-pub struct Part<'a> {
+pub struct Part<'a, M: MediaItem> {
+    _options: PhantomData<M>,
     pub(crate) client: &'a HttpClient,
     pub media_index: usize,
     pub part_index: usize,
@@ -176,7 +179,7 @@ pub struct Part<'a> {
     parent_metadata: &'a Metadata,
 }
 
-impl<'a> Part<'a> {
+impl<'a, M: MediaItem> Part<'a, M> {
     /// The length of this file on disk in bytes.
     pub fn len(&self) -> Option<u64> {
         self.part.size
@@ -228,18 +231,9 @@ impl<'a> Part<'a> {
     pub fn metadata(&self) -> &PartMetadata {
         self.part
     }
+}
 
-    fn check_transcoding_supported(&self) -> Result {
-        if !matches!(
-            self.parent_metadata.metadata_type,
-            Some(MetadataType::Movie | MetadataType::Episode | MetadataType::Track)
-        ) {
-            Err(crate::Error::TranscodeNotSupported)
-        } else {
-            Ok(())
-        }
-    }
-
+impl<'a, M: MediaItemWithTranscoding> Part<'a, M> {
     /// Starts an offline transcode using the provided options.
     ///
     /// The server may refuse to transcode if the options suggest that the
@@ -247,12 +241,7 @@ impl<'a> Part<'a> {
     ///
     /// Can't be called on media other than Movie, Episode or Track.
     #[tracing::instrument(level = "debug", skip_all)]
-    pub async fn create_download_session<O: TranscodeOptions>(
-        &self,
-        options: O,
-    ) -> Result<TranscodeSession> {
-        self.check_transcoding_supported()?;
-
+    pub async fn create_download_session(&self, options: M::Options) -> Result<TranscodeSession> {
         create_transcode_session(
             self.parent_metadata,
             self,
@@ -268,13 +257,11 @@ impl<'a> Part<'a> {
     ///
     /// Can't be called on media other than Movie, Episode or Track.
     #[tracing::instrument(level = "debug", skip_all)]
-    pub async fn create_streaming_session<O: TranscodeOptions>(
+    pub async fn create_streaming_session(
         &self,
         protocol: Protocol,
-        options: O,
+        options: M::Options,
     ) -> Result<TranscodeSession> {
-        self.check_transcoding_supported()?;
-
         create_transcode_session(
             self.parent_metadata,
             self,
@@ -289,15 +276,16 @@ impl<'a> Part<'a> {
 /// Represents some playable media. In Plex each playable item can be available
 /// in a number of different formats which in turn can be made up of a number of
 /// different parts.
-pub trait MediaItem: MetadataItem {
+pub trait MediaItem: MetadataItem + Sized {
     /// The different media formats that this item is available in.
-    fn media(&self) -> Vec<Media> {
+    fn media(&self) -> Vec<Media<Self>> {
         let metadata = self.metadata();
         if let Some(ref media) = metadata.media {
             media
                 .iter()
                 .enumerate()
                 .map(|(index, media)| Media {
+                    _options: PhantomData::default(),
                     client: self.client(),
                     media_index: index,
                     parent_metadata: metadata,
@@ -308,6 +296,10 @@ pub trait MediaItem: MetadataItem {
             Vec::new()
         }
     }
+}
+
+pub trait MediaItemWithTranscoding: MediaItem {
+    type Options: TranscodeOptions;
 }
 
 /// A video that can be included in a video playlist.
@@ -396,6 +388,9 @@ derive_from_metadata!(Movie);
 derive_metadata_item!(Movie);
 
 impl MediaItem for Movie {}
+impl MediaItemWithTranscoding for Movie {
+    type Options = VideoTranscodeOptions;
+}
 
 #[derive(Debug, Clone)]
 pub struct Show {
@@ -458,6 +453,9 @@ derive_from_metadata!(Episode);
 derive_metadata_item!(Episode);
 
 impl MediaItem for Episode {}
+impl MediaItemWithTranscoding for Episode {
+    type Options = VideoTranscodeOptions;
+}
 
 impl Episode {
     /// Returns the number of this season within the show.
@@ -527,6 +525,9 @@ derive_from_metadata!(Track);
 derive_metadata_item!(Track);
 
 impl MediaItem for Track {}
+impl MediaItemWithTranscoding for Track {
+    type Options = MusicTranscodeOptions;
+}
 
 impl Track {
     /// Returns the number of this track within the album.
