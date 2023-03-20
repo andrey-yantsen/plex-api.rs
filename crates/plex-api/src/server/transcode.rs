@@ -31,11 +31,10 @@ use crate::{
         },
         MediaContainer, MediaContainerWrapper,
     },
+    server::library::{MediaItemWithTranscoding, Part},
     url::{SERVER_TRANSCODE_ART, SERVER_TRANSCODE_DECISION, SERVER_TRANSCODE_DOWNLOAD},
     AudioCodec, ContainerFormat, HttpClient, Result, VideoCodec,
 };
-
-use super::library::Part;
 
 #[derive(Debug, Clone, Copy, Deserialize, Serialize, PartialEq)]
 #[serde(rename_all = "lowercase")]
@@ -582,13 +581,13 @@ fn bs(val: bool) -> String {
     }
 }
 
-fn get_transcode_params<O: TranscodeOptions>(
+fn get_transcode_params<M: MediaItemWithTranscoding>(
     id: &str,
     context: Context,
     protocol: Protocol,
     item_metadata: &Metadata,
-    part: &Part,
-    options: O,
+    part: &Part<M>,
+    options: M::Options,
 ) -> Result<String> {
     let container = match (context, protocol) {
         (Context::Static, _) => None,
@@ -626,7 +625,10 @@ fn get_transcode_params<O: TranscodeOptions>(
     Ok(format!("{query}&{params}"))
 }
 
-async fn transcode_decision<'a>(part: &Part<'a>, params: &str) -> Result<MediaMetadata> {
+async fn transcode_decision<'a, M: MediaItemWithTranscoding>(
+    part: &Part<'a, M>,
+    params: &str,
+) -> Result<MediaMetadata> {
     let path = format!("{SERVER_TRANSCODE_DECISION}?{params}");
 
     let mut response = part
@@ -676,12 +678,12 @@ async fn transcode_decision<'a>(part: &Part<'a>, params: &str) -> Result<MediaMe
         })
 }
 
-pub(super) async fn create_transcode_session<'a, O: TranscodeOptions>(
+pub(super) async fn create_transcode_session<'a, M: MediaItemWithTranscoding>(
     item_metadata: &'a Metadata,
-    part: &Part<'a>,
+    part: &Part<'a, M>,
     context: Context,
     target_protocol: Protocol,
-    options: O,
+    options: M::Options,
 ) -> Result<TranscodeSession> {
     let id = session_id();
 
