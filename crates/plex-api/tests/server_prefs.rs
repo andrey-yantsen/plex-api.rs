@@ -7,7 +7,7 @@ mod offline {
 
     #[plex_api_test_helper::offline_test]
     async fn load_prefs(#[future] server_anonymous: Mocked<Server>) {
-        let (server, mock_server) = server_anonymous.await.split();
+        let (server, mock_server) = server_anonymous.split();
 
         let mut m = mock_server.mock(|when, then| {
             when.method(GET).path(SERVER_PREFS);
@@ -52,7 +52,6 @@ mod online {
 
     #[plex_api_test_helper::online_test_non_shared_server]
     async fn load_prefs(#[future] server: Server) {
-        let server = server.await;
         let mut prefs = server
             .preferences()
             .await

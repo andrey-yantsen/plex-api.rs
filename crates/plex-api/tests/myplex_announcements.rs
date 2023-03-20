@@ -92,7 +92,6 @@ mod online {
 
     #[plex_api_test_helper::online_test_myplex]
     async fn list_announcements(#[future] myplex: MyPlex) {
-        let myplex = myplex.await;
         myplex.announcements().await.unwrap();
     }
 }

@@ -28,6 +28,7 @@ fn rewrite_single_test(
         #[::rstest::rstest]
         #(#fn_attrs)*
         #extra_attr
+        #[awt]
         #fn_vis #fn_signature {
             #fn_block
         }
@@ -127,6 +128,7 @@ fn rewrite_multirun_test(
                 ignore = "Feature tests_only_online_authenticated is not set, skipping authenticated online tests.",
             )]
             #extra_attr_claimed
+            #[awt]
             #fn_vis #fn_signature1 {
                 #fn_block
             }
@@ -137,6 +139,7 @@ fn rewrite_multirun_test(
                 not(feature = "tests_only_online_unclaimed_server"),
                 ignore = "Feature tests_only_online_anonymous is not set, skipping anonymous online tests.",
             )]
+            #[awt]
             #fn_vis #fn_signature2 {
                 #fn_block
             }

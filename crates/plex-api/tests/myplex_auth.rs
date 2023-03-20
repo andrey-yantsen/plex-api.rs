@@ -169,7 +169,6 @@ mod offline {
 
     #[plex_api_test_helper::offline_test]
     async fn signout(#[future] myplex: Mocked<MyPlex>) {
-        let myplex = myplex.await;
         let (myplex, mock_server) = myplex.split();
 
         let m = mock_server.mock(|when, then| {

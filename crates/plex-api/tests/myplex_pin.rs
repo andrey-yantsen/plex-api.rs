@@ -10,7 +10,6 @@ mod offline {
 
     #[plex_api_test_helper::offline_test]
     async fn link(#[future] myplex: Mocked<MyPlex>) {
-        let myplex = myplex.await;
         let (myplex, mock_server) = myplex.split();
 
         let mut mock = mock_server.mock(|when, then| {

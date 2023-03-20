@@ -10,7 +10,6 @@ mod offline {
 
     #[plex_api_test_helper::offline_test]
     async fn privacy(#[future] myplex: Mocked<MyPlex>) {
-        let myplex = myplex.await;
         let (myplex, mock_server) = myplex.split();
 
         let m = mock_server.mock(|when, then| {
@@ -64,7 +63,6 @@ mod offline {
 
     #[plex_api_test_helper::offline_test]
     async fn privacy_errors(#[future] myplex: Mocked<MyPlex>) {
-        let myplex = myplex.await;
         let (myplex, mock_server) = myplex.split();
 
         let mut m = mock_server.mock(|when, then| {
@@ -103,7 +101,6 @@ mod offline {
 
     #[plex_api_test_helper::offline_test]
     async fn claim_token(#[future] myplex: Mocked<MyPlex>) {
-        let myplex = myplex.await;
         let (myplex, mock_server) = myplex.split();
 
         let mut mock = mock_server.mock(|when, then| {
@@ -169,7 +166,6 @@ mod online {
 
     #[plex_api_test_helper::online_test_myplex]
     async fn privacy(#[future] myplex: MyPlex) {
-        let myplex = myplex.await;
         // Read the privacy settings and exit in case of any errors
         myplex.privacy().await.unwrap();
     }

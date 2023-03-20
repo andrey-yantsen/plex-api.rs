@@ -11,7 +11,6 @@ mod offline {
 
     #[plex_api_test_helper::offline_test]
     async fn load_devices(#[future] myplex: Mocked<MyPlex>) {
-        let myplex = myplex.await;
         let (myplex, mock_server) = myplex.split();
 
         let devices_mock = mock_server.mock(|when, then| {
@@ -30,7 +29,6 @@ mod offline {
 
     #[plex_api_test_helper::offline_test]
     async fn load_resources(#[future] myplex: Mocked<MyPlex>) {
-        let myplex = myplex.await;
         let (myplex, mock_server) = myplex.split();
 
         let resources_mock = mock_server.mock(|when, then| {
@@ -49,7 +47,6 @@ mod offline {
 
     #[plex_api_test_helper::offline_test]
     async fn connection_from_device(#[future] myplex: Mocked<MyPlex>) {
-        let myplex = myplex.await;
         let (myplex, mock_server) = myplex.split();
         let body = include_str!("mocks/myplex/api/resources.xml")
             .replace("http://1.0.0.2:443", &mock_server.base_url());
@@ -95,14 +92,12 @@ mod online {
 
     #[plex_api_test_helper::online_test_myplex]
     async fn load_devices(#[future] myplex: MyPlex) {
-        let myplex = myplex.await;
         // Test deserialization
         _ = myplex.device_manager().unwrap().devices().await.unwrap();
     }
 
     #[plex_api_test_helper::online_test_myplex]
     async fn load_resources(#[future] myplex: MyPlex) {
-        let myplex = myplex.await;
         // Test deserialization
         _ = myplex.device_manager().unwrap().resources().await.unwrap();
     }

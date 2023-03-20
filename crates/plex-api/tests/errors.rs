@@ -7,7 +7,7 @@ mod offline {
 
     #[plex_api_test_helper::offline_test]
     async fn json_error_during_ok_response(#[future] myplex: Mocked<MyPlex>) {
-        let (myplex, mock_server) = myplex.await.split();
+        let (myplex, mock_server) = myplex.split();
         let _mock = mock_server.mock(|when, then| {
             when.method(GET).path(MYPLEX_USER_INFO_PATH);
             then.status(200)
@@ -23,7 +23,7 @@ mod offline {
 
     #[plex_api_test_helper::offline_test]
     async fn json_error_during_err_response(#[future] myplex: Mocked<MyPlex>) {
-        let (myplex, mock_server) = myplex.await.split();
+        let (myplex, mock_server) = myplex.split();
         let _mock = mock_server.mock(|when, then| {
             when.method(GET).path(MYPLEX_USER_INFO_PATH);
             then.status(400)
@@ -39,7 +39,7 @@ mod offline {
 
     #[plex_api_test_helper::offline_test]
     async fn correct_api_error(#[future] myplex: Mocked<MyPlex>) {
-        let (myplex, mock_server) = myplex.await.split();
+        let (myplex, mock_server) = myplex.split();
         let _mock = mock_server.mock(|when, then| {
             when.method(GET).path(MYPLEX_USER_INFO_PATH);
             then.status(400)

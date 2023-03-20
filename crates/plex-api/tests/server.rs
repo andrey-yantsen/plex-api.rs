@@ -41,8 +41,7 @@ mod offline {
 
     #[plex_api_test_helper::offline_test]
     async fn myplex_recover_from_server(#[future] server_authenticated: Mocked<Server>) {
-        let server = server_authenticated.await;
-        let (server, mock_server) = server.split();
+        let (server, mock_server) = server_authenticated.split();
 
         let m = mock_server.mock(|when, then| {
             when.method(GET)
@@ -65,7 +64,7 @@ mod offline {
 
     #[plex_api_test_helper::offline_test]
     async fn movie_library(#[future] server_anonymous: Mocked<Server>) {
-        let (server, mock_server) = server_anonymous.await.split();
+        let (server, mock_server) = server_anonymous.split();
 
         let libraries = server.libraries();
         let library = if let Library::Movie(lib) = &libraries[0] {
@@ -107,7 +106,7 @@ mod offline {
 
     #[plex_api_test_helper::offline_test]
     async fn tv_library(#[future] server_anonymous: Mocked<Server>) {
-        let (server, mock_server) = server_anonymous.await.split();
+        let (server, mock_server) = server_anonymous.split();
 
         let libraries = server.libraries();
         let library = if let Library::TV(lib) = &libraries[1] {
@@ -180,7 +179,7 @@ mod offline {
 
     #[plex_api_test_helper::offline_test]
     async fn photo_library(#[future] server_anonymous: Mocked<Server>) {
-        let (server, mock_server) = server_anonymous.await.split();
+        let (server, mock_server) = server_anonymous.split();
 
         let libraries = server.libraries();
         let library = if let Library::Photo(lib) = &libraries[3] {
@@ -226,7 +225,7 @@ mod offline {
 
     #[plex_api_test_helper::offline_test]
     async fn music_library(#[future] server_anonymous: Mocked<Server>) {
-        let (server, mock_server) = server_anonymous.await.split();
+        let (server, mock_server) = server_anonymous.split();
 
         let libraries = server.libraries();
         let library = if let Library::Music(lib) = &libraries[2] {
@@ -299,7 +298,7 @@ mod offline {
 
     #[plex_api_test_helper::offline_test]
     async fn item(#[future] server_anonymous: Mocked<Server>) {
-        let (server, mock_server) = server_anonymous.await.split();
+        let (server, mock_server) = server_anonymous.split();
 
         let mut m = mock_server.mock(|when, then| {
             when.method(GET).path("/library/metadata/108");
@@ -354,7 +353,7 @@ mod online {
 
     #[plex_api_test_helper::online_test]
     async fn load_server(#[future] server: Server) {
-        let _ = server.await;
+        let _ = server;
     }
 
     // Claim/unclaim could take long time due to unknown reasons.
@@ -381,8 +380,6 @@ mod online {
 
     #[plex_api_test_helper::online_test]
     async fn list_libraries(#[future] server: Server) {
-        let server = server.await;
-
         let libraries = server.libraries();
         assert_eq!(libraries.len(), 4);
         assert_eq!(libraries[0].title(), "Movies");
@@ -393,7 +390,6 @@ mod online {
 
     #[plex_api_test_helper::online_test]
     async fn movies(#[future] server: Server) {
-        let server = server.await;
         let libraries = server.libraries();
 
         let library = if let Library::Movie(lib) = libraries.get(0).unwrap() {
@@ -433,7 +429,6 @@ mod online {
 
     #[plex_api_test_helper::online_test_non_shared_server]
     async fn movies_playlists(#[future] server: Server) {
-        let server = server.await;
         let libraries = server.libraries();
 
         let library = if let Library::Movie(lib) = libraries.get(0).unwrap() {
@@ -484,7 +479,6 @@ mod online {
 
     #[plex_api_test_helper::online_test]
     async fn tv(#[future] server: Server) {
-        let server = server.await;
         let libraries = server.libraries();
 
         let library = if let Library::TV(lib) = libraries.get(1).unwrap() {
@@ -672,7 +666,6 @@ mod online {
 
     #[plex_api_test_helper::online_test_non_shared_server]
     async fn tv_playlists(#[future] server: Server) {
-        let server = server.await;
         let libraries = server.libraries();
 
         let library = if let Library::TV(lib) = libraries.get(1).unwrap() {
@@ -734,7 +727,6 @@ mod online {
 
     #[plex_api_test_helper::online_test]
     async fn music(#[future] server: Server) {
-        let server = server.await;
         let libraries = server.libraries();
 
         let library = if let Library::Music(lib) = libraries.get(2).unwrap() {
@@ -796,7 +788,6 @@ mod online {
 
     #[plex_api_test_helper::online_test_non_shared_server]
     async fn music_playlists(#[future] server: Server) {
-        let server = server.await;
         let libraries = server.libraries();
 
         let library = if let Library::Music(lib) = libraries.get(2).unwrap() {
@@ -819,9 +810,26 @@ mod online {
         );
     }
 
+    fn split_photo_album(contents: Vec<PhotoAlbumItem>) -> (Vec<PhotoAlbum>, Vec<Photo>) {
+        let mut albums = Vec::new();
+        let mut photos = Vec::new();
+
+        for item in contents {
+            match item {
+                PhotoAlbumItem::PhotoAlbum(a) => {
+                    albums.push(a);
+                }
+                PhotoAlbumItem::Photo(p) => {
+                    photos.push(p);
+                }
+            }
+        }
+
+        (albums, photos)
+    }
+
     #[plex_api_test_helper::online_test]
     async fn photos(#[future] server: Server) {
-        let server = server.await;
         let libraries = server.libraries();
 
         let library = if let Library::Photo(lib) = libraries.get(3).unwrap() {
@@ -834,25 +842,7 @@ mod online {
         assert_eq!(map(&albums, |e| e.title().to_owned()), vec!["Cats"]);
         assert_eq!(map(&albums, |e| e.rating_key().to_owned()), vec![43]);
 
-        fn split(contents: Vec<PhotoAlbumItem>) -> (Vec<PhotoAlbum>, Vec<Photo>) {
-            let mut albums = Vec::new();
-            let mut photos = Vec::new();
-
-            for item in contents {
-                match item {
-                    PhotoAlbumItem::PhotoAlbum(a) => {
-                        albums.push(a);
-                    }
-                    PhotoAlbumItem::Photo(p) => {
-                        photos.push(p);
-                    }
-                }
-            }
-
-            (albums, photos)
-        }
-
-        let (albums, photos) = split(albums[0].contents().await.unwrap());
+        let (albums, photos) = split_photo_album(albums[0].contents().await.unwrap());
         assert_eq!(
             map(&albums, |e| e.title().to_owned()),
             vec!["Cats in bed", "Cats not in bed"]
@@ -867,14 +857,14 @@ mod online {
             vec![59, 60, 61]
         );
 
-        let (inner_albums, photos) = split(albums[0].contents().await.unwrap());
+        let (inner_albums, photos) = split_photo_album(albums[0].contents().await.unwrap());
         assert!(inner_albums.is_empty());
         assert_eq!(
             map(&photos, |e| e.title().to_owned()),
             vec!["Picture1", "Picture2", "Picture3"]
         );
 
-        let (inner_albums, photos) = split(albums[1].contents().await.unwrap());
+        let (inner_albums, photos) = split_photo_album(albums[1].contents().await.unwrap());
         assert!(inner_albums.is_empty());
         assert_eq!(
             map(&photos, |e| e.title().to_owned()),
@@ -887,7 +877,6 @@ mod online {
 
     #[plex_api_test_helper::online_test_non_shared_server]
     async fn photos_playlists(#[future] server: Server) {
-        let server = server.await;
         let libraries = server.libraries();
 
         let library = if let Library::Photo(lib) = libraries.get(3).unwrap() {
@@ -909,8 +898,6 @@ mod online {
 
     #[plex_api_test_helper::online_test]
     async fn item(#[future] server: Server) {
-        let server = server.await;
-
         let item = server.item_by_id(108).await.unwrap();
         assert_eq!(item.title(), "Interstate 60");
         assert!(<Item as TryInto<plex_api::Movie>>::try_into(item).is_ok());
@@ -945,8 +932,6 @@ mod online {
 
     #[plex_api_test_helper::online_test_non_shared_server]
     async fn item_playlists(#[future] server: Server) {
-        let server = server.await;
-
         let item = server.item_by_id(168).await.unwrap();
         assert_eq!(item.title(), "Movies Since 2007");
         assert!(<Item as TryInto<plex_api::Playlist<Video>>>::try_into(item).is_ok());
@@ -964,39 +949,37 @@ mod online {
         assert!(<Item as TryInto<plex_api::Playlist<plex_api::Photo>>>::try_into(item).is_ok());
     }
 
+    // We want to check that the same works for different ways of getting the item's metadata
+    async fn find_movie(server: &Server, library_id: &str, rating_key: u32) -> [Movie; 2] {
+        let library = server
+            .libraries()
+            .into_iter()
+            .find(|l| l.id() == library_id)
+            .unwrap();
+        let movies = if let Library::Movie(m) = library {
+            m
+        } else {
+            panic!("Expected a movie library");
+        };
+
+        let movie_from_library = movies
+            .movies()
+            .await
+            .unwrap()
+            .into_iter()
+            .find(|m| m.rating_key() == rating_key)
+            .unwrap();
+        let item = server.item_by_id(rating_key).await.unwrap();
+        let movie_by_id: Movie = item.try_into().unwrap();
+        [movie_by_id, movie_from_library]
+    }
+
     #[plex_api_test_helper::online_test]
     async fn download(#[future] server: Server) {
         let mkv_file = include_bytes!("../../../plex-stub-data/media/white_noise_720p.mkv");
         let mp4_file = include_bytes!("../../../plex-stub-data/media/white_noise_720p_h265.mp4");
         let aac_file = include_bytes!("../../../plex-stub-data/media/white_noise.aac");
         let jpg_file = include_bytes!("../../../plex-stub-data/media/white_noise_720p.jpg");
-
-        let server = server.await;
-
-        // We want to check that the same works for different ways of getting the item's metadata
-        async fn find_movie(server: &Server, library_id: &str, rating_key: u32) -> [Movie; 2] {
-            let library = server
-                .libraries()
-                .into_iter()
-                .find(|l| l.id() == library_id)
-                .unwrap();
-            let movies = if let Library::Movie(m) = library {
-                m
-            } else {
-                panic!("Expected a movie library");
-            };
-
-            let movie_from_library = movies
-                .movies()
-                .await
-                .unwrap()
-                .into_iter()
-                .find(|m| m.rating_key() == rating_key)
-                .unwrap();
-            let item = server.item_by_id(rating_key).await.unwrap();
-            let movie_by_id: Movie = item.try_into().unwrap();
-            [movie_by_id, movie_from_library]
-        }
 
         for movie in find_movie(&server, "1", 55).await {
             assert_eq!(movie.title(), "Big Buck Bunny");
@@ -1119,8 +1102,7 @@ mod online {
     #[plex_api_test_helper::online_test_claimed_server]
     #[ignore = "Must be run manually"]
     async fn claim_server(#[future] server_unclaimed: Server, client_authenticated: HttpClient) {
-        let server =
-            get_server_with_longer_timeout(server_unclaimed.await, client_authenticated).await;
+        let server = get_server_with_longer_timeout(server_unclaimed, client_authenticated).await;
 
         let myplex = server
             .myplex()
@@ -1144,10 +1126,9 @@ mod online {
     #[plex_api_test_helper::online_test_claimed_server]
     #[ignore = "Must be run manually"]
     async fn unclaim_server(#[future] server_claimed: Server) {
-        let server = server_claimed.await;
-        let client = server.client().to_owned();
+        let client = server_claimed.client().to_owned();
 
-        let server = get_server_with_longer_timeout(server, client).await;
+        let server = get_server_with_longer_timeout(server_claimed, client).await;
 
         server.unclaim().await.expect("failed to unclaim server");
     }

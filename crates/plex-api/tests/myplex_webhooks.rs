@@ -7,7 +7,6 @@ mod offline {
 
     #[plex_api_test_helper::offline_test]
     async fn webhook_free_user(#[future] myplex: Mocked<MyPlex>) {
-        let myplex = myplex.await;
         let (myplex, mock_server) = myplex.split();
 
         let m = mock_server.mock(|when, then| {
@@ -35,8 +34,7 @@ mod offline {
 
     #[plex_api_test_helper::offline_test]
     async fn webhook_plexpass_user_no_webhooks(#[future] myplex_plexpass: Mocked<MyPlex>) {
-        let myplex = myplex_plexpass.await;
-        let (myplex, mock_server) = myplex.split();
+        let (myplex, mock_server) = myplex_plexpass.split();
 
         let m = mock_server.mock(|when, then| {
             when.method(GET).path(MYPLEX_WEBHOOKS_PATH);
@@ -79,8 +77,7 @@ mod offline {
 
     #[plex_api_test_helper::offline_test]
     async fn webhook_plexpass_user_two_webhooks(#[future] myplex_plexpass: Mocked<MyPlex>) {
-        let myplex = myplex_plexpass.await;
-        let (myplex, mock_server) = myplex.split();
+        let (myplex, mock_server) = myplex_plexpass.split();
 
         let m = mock_server.mock(|when, then| {
             when.method(GET).path(MYPLEX_WEBHOOKS_PATH);
@@ -144,8 +141,7 @@ mod offline {
 
     #[plex_api_test_helper::offline_test]
     async fn webhook_plexpass_user_refresh(#[future] myplex_plexpass: Mocked<MyPlex>) {
-        let myplex = myplex_plexpass.await;
-        let (myplex, mock_server) = myplex.split();
+        let (myplex, mock_server) = myplex_plexpass.split();
 
         let mut mock = mock_server.mock(|when, then| {
             when.method(GET).path(MYPLEX_WEBHOOKS_PATH);
@@ -180,8 +176,7 @@ mod offline {
 
     #[plex_api_test_helper::offline_test]
     async fn webhook_erase(#[future] myplex_plexpass: Mocked<MyPlex>) {
-        let myplex = myplex_plexpass.await;
-        let (myplex, mock_server) = myplex.split();
+        let (myplex, mock_server) = myplex_plexpass.split();
 
         let m = mock_server.mock(|when, then| {
             when.method(GET).path(MYPLEX_WEBHOOKS_PATH);
@@ -219,8 +214,6 @@ mod online {
 
     #[plex_api_test_helper::online_test_myplex]
     async fn load_webhooks(#[future] myplex: MyPlex) {
-        let myplex = myplex.await;
-
         let webhooks_manager = myplex.webhook_manager().await;
 
         if let Err(Error::SubscriptionFeatureNotAvailable(ServerFeature::Webhooks)) =

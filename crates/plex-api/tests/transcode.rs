@@ -96,8 +96,7 @@ mod offline {
 
     #[plex_api_test_helper::offline_test]
     async fn transcode_sessions(#[future] server_authenticated: Mocked<Server>) {
-        let server = server_authenticated.await;
-        let (server, mock_server) = server.split();
+        let (server, mock_server) = server_authenticated.split();
 
         let mut m = mock_server.mock(|when, then| {
             when.method(GET).path("/transcode/sessions");
@@ -203,8 +202,7 @@ mod offline {
 
         #[plex_api_test_helper::offline_test]
         async fn transcode_profile_params(#[future] server_authenticated: Mocked<Server>) {
-            let server = server_authenticated.await;
-            let (server, mock_server) = server.split();
+            let (server, mock_server) = server_authenticated.split();
 
             let mut m = mock_server.mock(|when, then| {
                 when.method(GET).path("/library/metadata/159637");
@@ -591,8 +589,7 @@ mod offline {
 
         #[plex_api_test_helper::offline_test]
         async fn transcode_decision(#[future] server_authenticated: Mocked<Server>) {
-            let server = server_authenticated.await;
-            let (server, mock_server) = server.split();
+            let (server, mock_server) = server_authenticated.split();
 
             let mut m = mock_server.mock(|when, then| {
                 when.method(GET).path("/library/metadata/159637");
@@ -803,8 +800,7 @@ mod offline {
 
         #[plex_api_test_helper::offline_test]
         async fn transcode_profile_params(#[future] server_authenticated: Mocked<Server>) {
-            let server = server_authenticated.await;
-            let (server, mock_server) = server.split();
+            let (server, mock_server) = server_authenticated.split();
 
             let mut m = mock_server.mock(|when, then| {
                 when.method(GET).path("/library/metadata/157786");
@@ -894,8 +890,7 @@ mod offline {
 
         #[plex_api_test_helper::offline_test]
         async fn transcode_decision(#[future] server_authenticated: Mocked<Server>) {
-            let server = server_authenticated.await;
-            let (server, mock_server) = server.split();
+            let (server, mock_server) = server_authenticated.split();
 
             let mut m = mock_server.mock(|when, then| {
                 when.method(GET).path("/library/metadata/157786");
@@ -943,8 +938,7 @@ mod offline {
 
         #[plex_api_test_helper::offline_test]
         async fn transcode_art(#[future] server_authenticated: Mocked<Server>) {
-            let server = server_authenticated.await;
-            let (server, mock_server) = server.split();
+            let (server, mock_server) = server_authenticated.split();
 
             let mut m = mock_server.mock(|when, then| {
                 when.method(GET).path("/library/metadata/159637");
@@ -1157,7 +1151,7 @@ mod online {
 
         #[plex_api_test_helper::online_test]
         async fn dash_transcode(#[future] server: Server) {
-            let server = generify(server.await).await;
+            let server = generify(server).await;
 
             let movie: Movie = server.item_by_id(55).await.unwrap().try_into().unwrap();
             assert_eq!(movie.title(), "Big Buck Bunny");
@@ -1202,7 +1196,7 @@ mod online {
 
         #[plex_api_test_helper::online_test]
         async fn dash_transcode_copy(#[future] server: Server) {
-            let server = generify(server.await).await;
+            let server = generify(server).await;
 
             let movie: Movie = server.item_by_id(57).await.unwrap().try_into().unwrap();
             assert_eq!(movie.title(), "Sintel");
@@ -1249,7 +1243,7 @@ mod online {
 
         #[plex_api_test_helper::online_test]
         async fn hls_transcode(#[future] server: Server) {
-            let server = generify(server.await).await;
+            let server = generify(server).await;
 
             let movie: Movie = server.item_by_id(55).await.unwrap().try_into().unwrap();
             assert_eq!(movie.title(), "Big Buck Bunny");
@@ -1310,7 +1304,7 @@ mod online {
 
         #[plex_api_test_helper::online_test]
         async fn hls_transcode_copy(#[future] server: Server) {
-            let server = generify(server.await).await;
+            let server = generify(server).await;
 
             let movie: Movie = server.item_by_id(55).await.unwrap().try_into().unwrap();
             assert_eq!(movie.title(), "Big Buck Bunny");
@@ -1373,7 +1367,7 @@ mod online {
 
         #[plex_api_test_helper::online_test_claimed_server]
         async fn offline_transcode(#[future] server_claimed: Server) {
-            let server = generify(server_claimed.await).await;
+            let server = generify(server_claimed).await;
 
             if !server
                 .media_container
@@ -1424,7 +1418,7 @@ mod online {
 
         #[plex_api_test_helper::online_test_claimed_server]
         async fn offline_transcode_copy(#[future] server_claimed: Server) {
-            let server = generify(server_claimed.await).await;
+            let server = generify(server_claimed).await;
 
             if !server
                 .media_container
@@ -1521,7 +1515,7 @@ mod online {
 
         #[plex_api_test_helper::online_test_claimed_server]
         async fn offline_transcode_denied(#[future] server_claimed: Server) {
-            let server = generify(server_claimed.await).await;
+            let server = generify(server_claimed).await;
 
             if !server
                 .media_container
@@ -1573,7 +1567,7 @@ mod online {
 
         #[plex_api_test_helper::online_test]
         async fn dash_transcode(#[future] server: Server) {
-            let server = generify(server.await).await;
+            let server = generify(server).await;
 
             let track: Track = server.item_by_id(158).await.unwrap().try_into().unwrap();
             assert_eq!(track.title(), "TRY IT OUT (NEON MIX)");
@@ -1617,7 +1611,7 @@ mod online {
 
         #[plex_api_test_helper::online_test]
         async fn dash_transcode_copy(#[future] server: Server) {
-            let server = generify(server.await).await;
+            let server = generify(server).await;
 
             let track: Track = server.item_by_id(158).await.unwrap().try_into().unwrap();
             assert_eq!(track.title(), "TRY IT OUT (NEON MIX)");
@@ -1660,7 +1654,7 @@ mod online {
 
         #[plex_api_test_helper::online_test]
         async fn hls_transcode(#[future] server: Server) {
-            let server = generify(server.await).await;
+            let server = generify(server).await;
 
             let track: Track = server.item_by_id(158).await.unwrap().try_into().unwrap();
             assert_eq!(track.title(), "TRY IT OUT (NEON MIX)");
@@ -1720,7 +1714,7 @@ mod online {
 
         #[plex_api_test_helper::online_test]
         async fn hls_transcode_copy(#[future] server: Server) {
-            let server = generify(server.await).await;
+            let server = generify(server).await;
 
             let track: Track = server.item_by_id(158).await.unwrap().try_into().unwrap();
             assert_eq!(track.title(), "TRY IT OUT (NEON MIX)");
@@ -1782,7 +1776,7 @@ mod online {
 
         #[plex_api_test_helper::online_test_claimed_server]
         async fn offline_transcode(#[future] server_claimed: Server) {
-            let server = generify(server_claimed.await).await;
+            let server = generify(server_claimed).await;
 
             if !server
                 .media_container
@@ -1857,7 +1851,7 @@ mod online {
 
         #[plex_api_test_helper::online_test_claimed_server]
         async fn offline_transcode_denied(#[future] server_claimed: Server) {
-            let server = generify(server_claimed.await).await;
+            let server = generify(server_claimed).await;
 
             if !server
                 .media_container
@@ -1902,7 +1896,7 @@ mod online {
 
         #[plex_api_test_helper::online_test]
         async fn transcode_art(#[future] server: Server) {
-            let server = generify(server.await).await;
+            let server = generify(server).await;
 
             let movie: Movie = server.item_by_id(55).await.unwrap().try_into().unwrap();
             assert_eq!(movie.title(), "Big Buck Bunny");

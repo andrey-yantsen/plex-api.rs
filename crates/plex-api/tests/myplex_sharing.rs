@@ -50,7 +50,6 @@ mod offline {
         #[case] mock_file: &str,
         #[case] friends_count: usize,
     ) {
-        let myplex = myplex.await;
         let (myplex, mock_server) = myplex.split();
         let sharing = myplex.sharing().unwrap();
 
@@ -66,7 +65,6 @@ mod offline {
 
     #[plex_api_test_helper::offline_test]
     async fn filters_deserialization(#[future] myplex: Mocked<MyPlex>) {
-        let myplex = myplex.await;
         let (myplex, mock_server) = myplex.split();
         let sharing = myplex.sharing().unwrap();
 
@@ -165,7 +163,6 @@ mod offline {
 
     #[plex_api_test_helper::offline_test]
     async fn invite(#[future] myplex: Mocked<MyPlex>) {
-        let myplex = myplex.await;
         let (myplex, mock_server) = myplex.split();
         let sharing = myplex.sharing().unwrap();
 
@@ -201,7 +198,6 @@ mod offline {
 
     #[plex_api_test_helper::offline_test]
     async fn share_server(#[future] myplex: Mocked<MyPlex>) {
-        let myplex = myplex.await;
         let (myplex, mock_server) = myplex.split();
         let sharing = myplex.sharing().unwrap();
 
@@ -260,7 +256,6 @@ mod offline {
 
     #[plex_api_test_helper::offline_test]
     async fn accept_not_pending_forbidden(#[future] myplex: Mocked<MyPlex>) {
-        let myplex = myplex.await;
         let (myplex, mock_server) = myplex.split();
         let sharing = myplex.sharing().unwrap();
 
@@ -284,7 +279,6 @@ mod offline {
 
     #[plex_api_test_helper::offline_test]
     async fn accept_and_reject(#[future] myplex: Mocked<MyPlex>) {
-        let myplex = myplex.await;
         let (myplex, mock_server) = myplex.split();
         let sharing = myplex.sharing().unwrap();
 
@@ -350,7 +344,6 @@ mod online {
 
     #[plex_api_test_helper::online_test_myplex]
     async fn list_friends(#[future] myplex: MyPlex) {
-        let myplex = myplex.await;
         myplex
             .sharing()
             .unwrap()
