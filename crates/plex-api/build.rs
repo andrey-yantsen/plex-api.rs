@@ -1,7 +1,10 @@
 use serde::Deserialize;
 
 fn main() {
-    generate_features();
+    // Generate the features only for non-docs.rs builds
+    if std::env::var("DOCS_RS").is_err() {
+        generate_features();
+    }
 }
 
 const FEATURE_ENUM_FILE_PATH: &str = "src/media_container/server/feature.rs";
