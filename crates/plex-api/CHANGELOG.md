@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.0.8](https://github.com/andrey-yantsen/plex-api.rs/compare/plex-api-v0.0.7...plex-api-v0.0.8) (2023-03-24)
+
+
+### ⚠ BREAKING CHANGES
+
+* add Unknown variant to few more enums
+
+### Code Refactoring
+
+* add Unknown variant to few more enums ([b16c048](https://github.com/andrey-yantsen/plex-api.rs/commit/b16c04856208af4c89dc72d865ab0d519e3de274))
+
 ## [0.0.7](https://github.com/andrey-yantsen/plex-api.rs/compare/plex-api-v0.0.6...plex-api-v0.0.7) (2023-03-20)
 
 
