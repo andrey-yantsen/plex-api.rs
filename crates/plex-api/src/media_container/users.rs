@@ -20,6 +20,8 @@ pub enum AllowTuners {
     None = 0,
     AllowLiveTv = 1,
     AllowLiveTvAndDvr = 2,
+    #[serde(other)]
+    Unknown,
 }
 
 #[derive(Debug, Deserialize, Clone)]
