@@ -24,7 +24,11 @@ mod offline {
 
         let devices = device_manager.devices().await;
         devices_mock.assert();
-        devices.unwrap();
+        devices
+            .unwrap()
+            .into_iter()
+            .find(|d| d.name() == "Box")
+            .unwrap();
     }
 
     #[plex_api_test_helper::offline_test]
