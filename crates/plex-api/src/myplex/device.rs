@@ -62,6 +62,10 @@ impl Device<'_> {
         &self.inner.client_identifier
     }
 
+    pub fn name(&self) -> &str {
+        &self.inner.name
+    }
+
     /// Returns the authentication token that should be used when connecting to the device.
     /// If it's a shared device, the main authentication token will no be accepted.
     pub fn access_token(&self) -> Option<&str> {
