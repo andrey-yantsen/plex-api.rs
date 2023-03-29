@@ -181,6 +181,7 @@ pub struct Part<'a, M: MediaItem> {
 
 impl<'a, M: MediaItem> Part<'a, M> {
     /// The length of this file on disk in bytes.
+    #[allow(clippy::len_without_is_empty)]
     pub fn len(&self) -> Option<u64> {
         self.part.size
     }

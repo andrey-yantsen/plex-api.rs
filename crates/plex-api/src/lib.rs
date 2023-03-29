@@ -13,9 +13,13 @@ pub use error::Error;
 pub use http_client::{HttpClient, HttpClientBuilder};
 pub use media_container::{
     devices::Feature,
-    preferences::Value as SettingValue,
+    preferences::{Setting, SettingEnumValue, Value as SettingValue},
     server::{
-        library::{AudioCodec, ContainerFormat, Decision, Protocol, SubtitleCodec, VideoCodec},
+        library::{
+            AudioCodec, ContainerFormat, Decision, Field, GrandParentMetadata, Guid, Location,
+            Media as MediaMetadata, Metadata, MetadataType, ParentMetadata, Part as PartMetadata,
+            PlaylistType, Protocol, Rating, Role, SubtitleCodec, Tag, VideoCodec,
+        },
         Feature as ServerFeature, MappingState as ServerMappingState,
     },
 };
@@ -25,12 +29,15 @@ pub use myplex::{
 pub use player::Player;
 pub use server::{
     library::{
-        Artist, Collection, Episode, Item, Library, MediaItem, MetadataItem, Movie, MusicAlbum,
-        Photo, PhotoAlbum, PhotoAlbumItem, Playlist, Season, Show, Track, Video,
+        Artist, Collection, Episode, Item, Library, Media, MediaItem, MediaItemWithTranscoding,
+        MetadataItem, Movie, MusicAlbum, Part, Photo, PhotoAlbum, PhotoAlbumItem, Playlist, Season,
+        Show, Track, Video,
     },
+    prefs::Preferences,
     transcode::{
         ArtTranscodeOptions, AudioSetting, Constraint, Limitation, MusicTranscodeOptions,
-        TranscodeSession, TranscodeStatus, VideoSetting, VideoTranscodeOptions,
+        TranscodeSession, TranscodeSessionStats, TranscodeStatus, VideoSetting,
+        VideoTranscodeOptions,
     },
     Server,
 };
