@@ -24,8 +24,8 @@ use crate::{
     media_container::{
         server::{
             library::{
-                AudioStream, Decision, Media as MediaMetadata, Metadata, Protocol, Stream,
-                VideoStream,
+                AudioCodec, AudioStream, ContainerFormat, Decision, Media as MediaMetadata,
+                Metadata, Protocol, Stream, VideoCodec, VideoStream,
             },
             Feature,
         },
@@ -33,7 +33,7 @@ use crate::{
     },
     server::library::{MediaItemWithTranscoding, Part},
     url::{SERVER_TRANSCODE_ART, SERVER_TRANSCODE_DECISION, SERVER_TRANSCODE_DOWNLOAD},
-    AudioCodec, ContainerFormat, HttpClient, Result, VideoCodec,
+    HttpClient, Result,
 };
 
 #[derive(Debug, Clone, Copy, Deserialize, Serialize, PartialEq)]
@@ -124,7 +124,7 @@ pub struct TranscodeSessionStats {
 #[serde(rename_all = "camelCase")]
 pub(crate) struct TranscodeSessionsMediaContainer {
     #[serde(default, rename = "TranscodeSession")]
-    pub transcode_sessions: Vec<TranscodeSessionStats>,
+    pub(crate) transcode_sessions: Vec<TranscodeSessionStats>,
 }
 
 struct Query {

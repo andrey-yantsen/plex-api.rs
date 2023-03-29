@@ -7,11 +7,11 @@ use serde::Deserialize;
 #[serde(rename_all = "camelCase")]
 #[allow(dead_code)]
 struct PrivacyApiResponse {
-    pub opt_out_playback: bool,
-    pub opt_out_library_stats: bool,
-    pub domain: String,
-    pub base_url: String,
-    pub metrics: Vec<Metric>,
+    opt_out_playback: bool,
+    opt_out_library_stats: bool,
+    domain: String,
+    base_url: String,
+    metrics: Vec<Metric>,
 }
 
 #[derive(Debug)]
@@ -26,8 +26,8 @@ pub struct Privacy {
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 #[allow(dead_code)]
 struct Metric {
-    pub event: String,
-    pub status: String,
+    event: String,
+    status: String,
 }
 
 impl Privacy {

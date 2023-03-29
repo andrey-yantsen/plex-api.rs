@@ -3,7 +3,10 @@ use std::{io::SeekFrom, path::Path};
 use crate::flags;
 use anyhow::bail;
 use indicatif::{ProgressBar, ProgressStyle};
-use plex_api::{Item, Library, MediaItem, Server};
+use plex_api::{
+    library::{Item, Library, MediaItem},
+    Server,
+};
 use tokio::{fs::OpenOptions, io::AsyncSeekExt};
 use tokio_util::compat::TokioAsyncWriteCompatExt;
 

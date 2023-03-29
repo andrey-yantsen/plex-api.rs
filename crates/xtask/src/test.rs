@@ -4,10 +4,11 @@ use crate::{
 };
 use anyhow::bail;
 use plex_api::{
+    media_container::devices::Feature,
     sharing::{
         Filters, Friend, InviteStatus, Permissions, ShareableLibrary, ShareableServer, User,
     },
-    Feature, HttpClientBuilder, MyPlex, MyPlexBuilder, Server,
+    HttpClientBuilder, MyPlex, MyPlexBuilder, Server,
 };
 use std::{io::Write, time::Duration};
 use testcontainers::{clients, core::WaitFor, images::generic::GenericImage, RunnableImage};

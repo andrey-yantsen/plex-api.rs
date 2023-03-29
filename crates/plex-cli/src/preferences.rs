@@ -1,5 +1,5 @@
 use crate::flags;
-use plex_api::{HttpClientBuilder, SettingValue};
+use plex_api::{media_container::preferences::Value, HttpClientBuilder};
 
 impl flags::Preferences {
     pub(crate) async fn run(&self, server: &str, auth_token: &str) -> anyhow::Result<()> {
@@ -60,10 +60,10 @@ impl flags::Preferences {
                     }
 
                     let value = match &setting.value {
-                        SettingValue::Int(_) => SettingValue::Int(cmd.value.parse()?),
-                        SettingValue::Text(_) => SettingValue::Text(cmd.value.clone()),
-                        SettingValue::Bool(_) => SettingValue::Bool(cmd.value.parse()?),
-                        SettingValue::Double(_) => SettingValue::Double(cmd.value.parse()?),
+                        Value::Int(_) => Value::Int(cmd.value.parse()?),
+                        Value::Text(_) => Value::Text(cmd.value.clone()),
+                        Value::Bool(_) => Value::Bool(cmd.value.parse()?),
+                        Value::Double(_) => Value::Double(cmd.value.parse()?),
                     };
 
                     let mut preferences = preferences;

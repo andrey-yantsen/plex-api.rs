@@ -48,26 +48,26 @@ pub struct Announcement {
 
 #[derive(Deserialize, Debug)]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
-pub struct AnnouncementsContainer {
+struct AnnouncementsContainer {
     #[serde(rename = "@friendlyName")]
-    pub friendly_name: String,
+    _friendly_name: String,
     #[serde(rename = "@identifier")]
-    pub identifier: String,
+    _identifier: String,
     #[serde(rename = "@machineIdentifier")]
-    pub machine_identifier: String,
+    _machine_identifier: String,
     #[serde(rename = "@totalSize")]
-    pub total_size: u8,
+    _total_size: u8,
     #[serde(rename = "@size")]
-    pub size: u8,
+    _size: u8,
     #[serde(rename = "@title1")]
-    pub title1: String,
+    _title1: String,
     #[serde(rename = "@viewGroup")]
-    pub view_group: String,
+    _view_group: String,
     #[serde(rename = "@content")]
-    pub content: String,
+    _content: String,
 
     #[serde(rename = "Announcement", default)]
-    pub announcements: Vec<Announcement>,
+    announcements: Vec<Announcement>,
 }
 
 impl AnnouncementsManager {

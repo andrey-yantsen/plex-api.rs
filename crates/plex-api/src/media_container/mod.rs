@@ -1,9 +1,9 @@
-pub(crate) mod devices;
-pub(crate) mod home;
-pub(crate) mod player;
-pub(crate) mod preferences;
-pub(crate) mod server;
-pub(crate) mod users;
+pub mod devices;
+pub mod home;
+pub mod player;
+pub mod preferences;
+pub mod server;
+pub mod users;
 
 use serde::Deserialize;
 
@@ -21,7 +21,7 @@ pub struct MediaContainer {
 #[derive(Debug, Deserialize, Clone)]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
-pub struct MediaContainerWrapper<T> {
+pub(crate) struct MediaContainerWrapper<T> {
     #[serde(rename = "MediaContainer")]
-    pub media_container: T,
+    pub(crate) media_container: T,
 }

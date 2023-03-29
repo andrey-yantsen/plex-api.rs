@@ -5,7 +5,12 @@ mod offline {
 
     use super::fixtures::offline::{server::*, Mocked};
     use httpmock::{prelude::HttpMockRequest, Method::GET};
-    use plex_api::{AudioCodec, ContainerFormat, Decision, Protocol, Server, VideoCodec};
+    use plex_api::{
+        media_container::server::library::{
+            AudioCodec, ContainerFormat, Decision, Protocol, VideoCodec,
+        },
+        Server,
+    };
 
     // Expands a profile query parameter into the list of settings.
     fn expand_profile(req: &HttpMockRequest) -> HashMap<String, Vec<HashMap<String, String>>> {
@@ -196,8 +201,9 @@ mod offline {
     mod movie {
         use super::*;
         use plex_api::{
-            AudioCodec, AudioSetting, Constraint, ContainerFormat, Decision, MediaItem, Movie,
-            Protocol, Server, VideoCodec, VideoSetting, VideoTranscodeOptions,
+            library::{MediaItem, Movie},
+            transcode::{AudioSetting, Constraint, VideoSetting, VideoTranscodeOptions},
+            Server,
         };
 
         #[plex_api_test_helper::offline_test]
@@ -789,8 +795,9 @@ mod offline {
     mod music {
         use super::*;
         use plex_api::{
-            AudioCodec, AudioSetting, Constraint, ContainerFormat, Decision, MediaItem,
-            MusicTranscodeOptions, Protocol, Server, Track,
+            library::{MediaItem, Track},
+            transcode::{AudioSetting, Constraint, MusicTranscodeOptions},
+            Server,
         };
 
         #[plex_api_test_helper::offline_test]
@@ -928,7 +935,10 @@ mod offline {
 
     mod artwork {
         use super::*;
-        use plex_api::{ArtTranscodeOptions, MetadataItem, Movie};
+        use plex_api::{
+            library::{MetadataItem, Movie},
+            transcode::ArtTranscodeOptions,
+        };
 
         #[plex_api_test_helper::offline_test]
         async fn transcode_art(#[future] server_authenticated: Mocked<Server>) {
@@ -1016,8 +1026,11 @@ mod online {
 
     use futures::Future;
     use plex_api::{
-        AudioCodec, ContainerFormat, Decision, HttpClientBuilder, Protocol, Server,
-        TranscodeSession, VideoCodec,
+        media_container::server::library::{
+            AudioCodec, ContainerFormat, Decision, Protocol, VideoCodec,
+        },
+        transcode::TranscodeSession,
+        HttpClientBuilder, Server,
     };
 
     // Delays up to 5 seconds for the predicate to return true. Useful for
@@ -1138,8 +1151,8 @@ mod online {
         use isahc::AsyncReadResponseExt;
         use mp4::{AvcProfile, MediaType, Mp4Reader, TrackType};
         use plex_api::{
-            AudioCodec, ContainerFormat, Decision, MediaItem, MetadataItem, Movie, Protocol,
-            Server, ServerFeature, VideoCodec, VideoTranscodeOptions,
+            library::MediaItem, library::MetadataItem, library::Movie,
+            media_container::server::Feature, transcode::VideoTranscodeOptions, Server,
         };
         use std::{io::Cursor, thread::sleep, time::Duration};
 
@@ -1362,7 +1375,7 @@ mod online {
             if !server
                 .media_container
                 .owner_features
-                .contains(&ServerFeature::SyncV3)
+                .contains(&Feature::SyncV3)
             {
                 // Offline transcoding is only supported with a subscription.
                 return;
@@ -1412,7 +1425,7 @@ mod online {
             if !server
                 .media_container
                 .owner_features
-                .contains(&ServerFeature::SyncV3)
+                .contains(&Feature::SyncV3)
             {
                 // Offline transcoding is only supported with a subscription.
                 return;
@@ -1508,7 +1521,7 @@ mod online {
             if !server
                 .media_container
                 .owner_features
-                .contains(&ServerFeature::SyncV3)
+                .contains(&Feature::SyncV3)
             {
                 // Offline transcoding is only supported with a subscription.
                 return;
@@ -1547,8 +1560,8 @@ mod online {
         use hls_m3u8::{tags::VariantStream, MasterPlaylist, MediaPlaylist};
         use isahc::AsyncReadResponseExt;
         use plex_api::{
-            AudioCodec, ContainerFormat, Decision, MediaItem, MetadataItem, MusicTranscodeOptions,
-            Protocol, Server, ServerFeature, Track,
+            library::MediaItem, library::MetadataItem, library::Track,
+            media_container::server::Feature, transcode::MusicTranscodeOptions, Server,
         };
         use std::{thread::sleep, time::Duration};
 
@@ -1764,7 +1777,7 @@ mod online {
             if !server
                 .media_container
                 .owner_features
-                .contains(&ServerFeature::SyncV3)
+                .contains(&Feature::SyncV3)
             {
                 // Offline transcoding is only supported with a subscription.
                 return;
@@ -1838,7 +1851,7 @@ mod online {
             if !server
                 .media_container
                 .owner_features
-                .contains(&ServerFeature::SyncV3)
+                .contains(&Feature::SyncV3)
             {
                 // Offline transcoding is only supported with a subscription.
                 return;
@@ -1872,7 +1885,9 @@ mod online {
     mod artwork {
         use super::{super::fixtures::online::server::*, *};
         use image::io::Reader as ImageReader;
-        use plex_api::{ArtTranscodeOptions, MetadataItem, Movie, Server};
+        use plex_api::{
+            library::MetadataItem, library::Movie, transcode::ArtTranscodeOptions, Server,
+        };
         use std::io::Cursor;
 
         #[plex_api_test_helper::online_test]

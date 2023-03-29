@@ -13,8 +13,9 @@ mod offline {
     use super::fixtures::offline::{client::*, server::*, Mocked};
     use httpmock::Method::GET;
     use plex_api::{
+        library::{Collection, Item, Library, MetadataItem, Movie, Playlist, Video},
         url::{MYPLEX_USER_INFO_PATH, SERVER_MEDIA_PROVIDERS},
-        HttpClient, Item, Library, MetadataItem, Server,
+        HttpClient, Server,
     };
 
     #[plex_api_test_helper::offline_test]
@@ -309,7 +310,7 @@ mod offline {
 
         let item = server.item_by_id(108).await.unwrap();
         assert_eq!(item.title(), "Interstate 60");
-        assert!(<Item as TryInto<plex_api::Movie>>::try_into(item).is_ok());
+        assert!(<Item as TryInto<Movie>>::try_into(item).is_ok());
         m.assert();
         m.delete();
 
@@ -322,7 +323,7 @@ mod offline {
 
         let item = server.item_by_id(168).await.unwrap();
         assert_eq!(item.title(), "Movies Since 2007");
-        assert!(<Item as TryInto<plex_api::Playlist<plex_api::Video>>>::try_into(item).is_ok());
+        assert!(<Item as TryInto<Playlist<Video>>>::try_into(item).is_ok());
         m.assert();
         m.delete();
 
@@ -335,7 +336,7 @@ mod offline {
 
         let item = server.item_by_id(161).await.unwrap();
         assert_eq!(item.title(), "Animation");
-        assert!(<Item as TryInto<plex_api::Collection<plex_api::Movie>>>::try_into(item).is_ok());
+        assert!(<Item as TryInto<Collection<Movie>>>::try_into(item).is_ok());
         m.assert();
         m.delete();
     }
@@ -347,8 +348,11 @@ mod online {
     use super::fixtures::online::{client::*, server::*};
     use isahc::{config::Configurable, HttpClient as IsahcHttpClient};
     use plex_api::{
-        ContainerFormat, Episode, Error, HttpClient, HttpClientBuilder, Item, Library, MediaItem,
-        MetadataItem, Movie, Photo, PhotoAlbum, PhotoAlbumItem, Server, Track, Video,
+        library::Collection, library::Episode, library::Item, library::Library, library::MediaItem,
+        library::MetadataItem, library::Movie, library::Photo, library::PhotoAlbum,
+        library::PhotoAlbumItem, library::Playlist, library::Season, library::Show, library::Track,
+        library::Video, media_container::server::library::ContainerFormat, Error, HttpClient,
+        HttpClientBuilder, Server,
     };
 
     #[plex_api_test_helper::online_test]
@@ -900,31 +904,31 @@ mod online {
     async fn item(#[future] server: Server) {
         let item = server.item_by_id(108).await.unwrap();
         assert_eq!(item.title(), "Interstate 60");
-        assert!(<Item as TryInto<plex_api::Movie>>::try_into(item).is_ok());
+        assert!(<Item as TryInto<Movie>>::try_into(item).is_ok());
 
         let item = server.item_by_id(90).await.unwrap();
         assert_eq!(item.title(), "Pilot");
-        assert!(<Item as TryInto<plex_api::Episode>>::try_into(item).is_ok());
+        assert!(<Item as TryInto<Episode>>::try_into(item).is_ok());
 
         let item = server.item_by_id(33).await.unwrap();
         assert_eq!(item.title(), "Season 2");
-        assert!(<Item as TryInto<plex_api::Season>>::try_into(item).is_ok());
+        assert!(<Item as TryInto<Season>>::try_into(item).is_ok());
 
         let item = server.item_by_id(60).await.unwrap();
         assert_eq!(item.title(), "Picture2");
-        assert!(<Item as TryInto<plex_api::Photo>>::try_into(item).is_ok());
+        assert!(<Item as TryInto<Photo>>::try_into(item).is_ok());
 
         let item = server.item_by_id(22).await.unwrap();
         assert_eq!(item.title(), "The 100");
-        assert!(<Item as TryInto<plex_api::Show>>::try_into(item).is_ok());
+        assert!(<Item as TryInto<Show>>::try_into(item).is_ok());
 
         let item = server.item_by_id(161).await.unwrap();
         assert_eq!(item.title(), "Animation");
-        assert!(<Item as TryInto<plex_api::Collection<plex_api::Movie>>>::try_into(item).is_ok());
+        assert!(<Item as TryInto<Collection<Movie>>>::try_into(item).is_ok());
 
         let item = server.item_by_id(162).await.unwrap();
         assert_eq!(item.title(), "SciFi");
-        assert!(<Item as TryInto<plex_api::Collection<plex_api::Show>>>::try_into(item).is_ok());
+        assert!(<Item as TryInto<Collection<Show>>>::try_into(item).is_ok());
 
         let err = server.item_by_id(73463523).await.unwrap_err();
         assert!(matches!(err, Error::ItemNotFound));
@@ -934,19 +938,19 @@ mod online {
     async fn item_playlists(#[future] server: Server) {
         let item = server.item_by_id(168).await.unwrap();
         assert_eq!(item.title(), "Movies Since 2007");
-        assert!(<Item as TryInto<plex_api::Playlist<Video>>>::try_into(item).is_ok());
+        assert!(<Item as TryInto<Playlist<Video>>>::try_into(item).is_ok());
 
         let item = server.item_by_id(166).await.unwrap();
         assert_eq!(item.title(), "Mixed");
-        assert!(<Item as TryInto<plex_api::Playlist<Video>>>::try_into(item).is_ok());
+        assert!(<Item as TryInto<Playlist<Video>>>::try_into(item).is_ok());
 
         let item = server.item_by_id(167).await.unwrap();
         assert_eq!(item.title(), "Best Music");
-        assert!(<Item as TryInto<plex_api::Playlist<plex_api::Track>>>::try_into(item).is_ok());
+        assert!(<Item as TryInto<Playlist<Track>>>::try_into(item).is_ok());
 
         let item = server.item_by_id(163).await.unwrap();
         assert_eq!(item.title(), "Cats");
-        assert!(<Item as TryInto<plex_api::Playlist<plex_api::Photo>>>::try_into(item).is_ok());
+        assert!(<Item as TryInto<Playlist<Photo>>>::try_into(item).is_ok());
     }
 
     // We want to check that the same works for different ways of getting the item's metadata

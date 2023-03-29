@@ -13,7 +13,8 @@ use crate::{
         },
         MediaContainerWrapper,
     },
-    HttpClient, MusicTranscodeOptions, Result, TranscodeSession, VideoTranscodeOptions,
+    transcode::{MusicTranscodeOptions, TranscodeSession, VideoTranscodeOptions},
+    HttpClient, Result,
 };
 
 use super::transcode::{create_transcode_session, Context, TranscodeOptions};

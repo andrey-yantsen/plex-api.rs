@@ -1,5 +1,5 @@
 use crate::flags;
-use plex_api::{HttpClientBuilder, ServerMappingState};
+use plex_api::{media_container::server::MappingState, HttpClientBuilder};
 use std::time::{Duration, SystemTime};
 
 impl flags::Wait {
@@ -25,11 +25,11 @@ impl flags::Wait {
                     || (server.media_container.start_state.is_none()
                         && (matches!(
                             server.media_container.my_plex_mapping_state,
-                            ServerMappingState::Mapped
+                            MappingState::Mapped
                         ) && matches!(server.media_container.certificate, Some(true))
                             || matches!(
                                 server.media_container.my_plex_mapping_state,
-                                ServerMappingState::Unknown
+                                MappingState::Unknown
                             )))
                 {
                     let prefs = server.preferences().await;

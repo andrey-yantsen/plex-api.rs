@@ -1,11 +1,13 @@
 pub mod library;
-pub mod prefs;
+pub(crate) mod prefs;
 pub mod transcode;
 
 use self::{
-    library::{metadata_items, Library},
+    library::{metadata_items, Item, Library},
     prefs::Preferences,
-    transcode::{transcode_artwork, ArtTranscodeOptions, TranscodeSessionsMediaContainer},
+    transcode::{
+        transcode_artwork, ArtTranscodeOptions, TranscodeSession, TranscodeSessionsMediaContainer,
+    },
 };
 #[cfg(not(feature = "tests_deny_unknown_fields"))]
 use crate::media_container::server::library::LibraryType;
@@ -20,7 +22,7 @@ use crate::{
         SERVER_MEDIA_PROVIDERS, SERVER_MYPLEX_ACCOUNT, SERVER_MYPLEX_CLAIM,
         SERVER_TRANSCODE_SESSIONS,
     },
-    Error, HttpClientBuilder, Item, Result, TranscodeSession,
+    Error, HttpClientBuilder, Result,
 };
 use core::convert::TryFrom;
 use futures::AsyncWrite;

@@ -1,4 +1,4 @@
-use crate::{Library, MyPlex, Server};
+use crate::{library::Library, MyPlex, Server};
 
 pub enum ShareableServer<'a> {
     MachineIdentifier(&'a str),

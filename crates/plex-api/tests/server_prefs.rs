@@ -25,7 +25,10 @@ mod offline {
         m.delete();
 
         prefs
-            .set("CinemaTrailersType", plex_api::SettingValue::Int(0))
+            .set(
+                "CinemaTrailersType",
+                plex_api::media_container::preferences::Value::Int(0),
+            )
             .expect("failed to update value");
 
         let m = mock_server.mock(|when, then| {
@@ -63,7 +66,7 @@ mod online {
                 .expect("failed to get value");
 
             match s.value {
-                plex_api::SettingValue::Bool(b) => b,
+                plex_api::media_container::preferences::Value::Bool(b) => b,
                 _ => panic!("expected bool value"),
             }
         };
@@ -71,7 +74,7 @@ mod online {
         prefs
             .set(
                 "ButlerTaskDeepMediaAnalysis",
-                plex_api::SettingValue::Bool(!current),
+                plex_api::media_container::preferences::Value::Bool(!current),
             )
             .expect("failed to update value");
 
@@ -102,7 +105,7 @@ mod online {
                 .expect("failed to get value");
 
             match s.value {
-                plex_api::SettingValue::Bool(b) => b,
+                plex_api::media_container::preferences::Value::Bool(b) => b,
                 _ => panic!("expected bool value"),
             }
         };

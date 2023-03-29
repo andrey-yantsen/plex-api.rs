@@ -210,15 +210,13 @@ mod offline {
 
 mod online {
     use super::fixtures::online::myplex;
-    use plex_api::{Error, MyPlex, ServerFeature};
+    use plex_api::{media_container::server::Feature, Error, MyPlex};
 
     #[plex_api_test_helper::online_test_myplex]
     async fn load_webhooks(#[future] myplex: MyPlex) {
         let webhooks_manager = myplex.webhook_manager().await;
 
-        if let Err(Error::SubscriptionFeatureNotAvailable(ServerFeature::Webhooks)) =
-            webhooks_manager
-        {
+        if let Err(Error::SubscriptionFeatureNotAvailable(Feature::Webhooks)) = webhooks_manager {
             return;
         }
 

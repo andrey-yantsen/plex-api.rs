@@ -1,13 +1,13 @@
-pub mod account;
-pub mod announcements;
-pub mod claim_token;
+pub(crate) mod account;
+pub(crate) mod announcements;
+pub(crate) mod claim_token;
 pub mod device;
-pub mod home;
-pub mod pin;
-pub mod privacy;
-pub mod server;
+pub(crate) mod home;
+pub(crate) mod pin;
+pub(crate) mod privacy;
+pub(crate) mod server;
 pub mod sharing;
-pub mod webhook;
+pub(crate) mod webhook;
 
 use self::{
     account::MyPlexAccount, announcements::AnnouncementsManager, claim_token::ClaimToken,
