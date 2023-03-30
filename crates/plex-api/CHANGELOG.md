@@ -1,5 +1,26 @@
 # Changelog
 
+## [0.0.9](https://github.com/andrey-yantsen/plex-api.rs/compare/plex-api-v0.0.8...plex-api-v0.0.9) (2023-03-29)
+
+
+### ⚠ BREAKING CHANGES
+
+* deny unreachable_pub and rename some exports
+
+### Features
+
+* expose MyPlex device names ([38cfaf5](https://github.com/andrey-yantsen/plex-api.rs/commit/38cfaf5320d655aaf3c5d64bca19f2f61dd10448))
+
+
+### Bug Fixes
+
+* Make a number of already exposed types publicly usable. ([97810dc](https://github.com/andrey-yantsen/plex-api.rs/commit/97810dc168daade7130674751371b29eee381514))
+
+
+### Code Refactoring
+
+* deny unreachable_pub and rename some exports ([04ecbc0](https://github.com/andrey-yantsen/plex-api.rs/commit/04ecbc08d1c0cb9e9f2e4be26d65900665855f16)), closes [#509](https://github.com/andrey-yantsen/plex-api.rs/issues/509)
+
 ## [0.0.8](https://github.com/andrey-yantsen/plex-api.rs/compare/plex-api-v0.0.7...plex-api-v0.0.8) (2023-03-24)
 
 
