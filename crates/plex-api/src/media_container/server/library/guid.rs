@@ -41,8 +41,9 @@ impl<'de> Deserialize<'de> for Guid {
             {
                 let parts = value.split("://").collect::<Vec<&str>>();
                 if parts.len() != 2 {
-                    return Err(serde::de::Error::custom(
-                        "guid value must be formatted as protocol://path",
+                    return Err(serde::de::Error::invalid_value(
+                        serde::de::Unexpected::Str(value),
+                        &"guid value formatted as protocol://path",
                     ));
                 }
 
@@ -59,8 +60,9 @@ impl<'de> Deserialize<'de> for Guid {
                     ["plex", id] => {
                         let plex_guid_parts = id.split('/').collect::<Vec<&str>>();
                         if plex_guid_parts.len() != 2 {
-                            return Err(serde::de::Error::custom(
-                                "guid value must be formatted as protocol://path",
+                            return Err(serde::de::Error::invalid_value(
+                                serde::de::Unexpected::Str(value),
+                                &"guid value formatted as plex://media_type/id",
                             ));
                         }
 
@@ -73,7 +75,10 @@ impl<'de> Deserialize<'de> for Guid {
                         }
                         #[cfg(feature = "tests_deny_unknown_fields")]
                         {
-                            return Err(serde::de::Error::custom("unknown guid format"));
+                            return Err(serde::de::Error::invalid_value(
+                                serde::de::Unexpected::Str(value),
+                                &"see source code for supported values",
+                            ));
                         }
                     }
                 })
