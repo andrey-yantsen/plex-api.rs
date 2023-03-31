@@ -1,4 +1,7 @@
+mod guid;
+
 use crate::media_container::MediaContainer;
+pub use guid::Guid;
 use monostate::MustBe;
 use serde::{Deserialize, Deserializer, Serialize};
 use serde_aux::prelude::{
@@ -436,12 +439,6 @@ pub struct Location {
 
 #[derive(Debug, Deserialize, Clone)]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
-pub struct Guid {
-    pub id: String,
-}
-
-#[derive(Debug, Deserialize, Clone)]
-#[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 pub struct Tag {
     #[serde(default, deserialize_with = "deserialize_option_number_from_string")]
     pub id: Option<u32>,
@@ -486,7 +483,7 @@ pub struct ParentMetadata {
     pub parent_key: Option<String>,
     #[serde(default, deserialize_with = "deserialize_option_number_from_string")]
     pub parent_rating_key: Option<u32>,
-    pub parent_guid: Option<String>,
+    pub parent_guid: Option<Guid>,
 
     pub parent_title: Option<String>,
     pub parent_studio: Option<String>,
@@ -506,7 +503,7 @@ pub struct GrandParentMetadata {
     pub grandparent_key: Option<String>,
     #[serde(default, deserialize_with = "deserialize_option_number_from_string")]
     pub grandparent_rating_key: Option<u32>,
-    pub grandparent_guid: Option<String>,
+    pub grandparent_guid: Option<Guid>,
 
     pub grandparent_title: Option<String>,
     pub grandparent_studio: Option<String>,
@@ -558,7 +555,7 @@ pub struct Metadata {
     pub key: String,
     #[serde(deserialize_with = "deserialize_number_from_string")]
     pub rating_key: u32,
-    pub guid: String,
+    pub guid: Guid,
 
     #[serde(rename = "type")]
     pub metadata_type: Option<MetadataType>,

@@ -4,6 +4,7 @@
 //! The structs are implemented according to the [documentation](https://support.plex.tv/articles/115002267687-webhooks/),
 //! please read it for further information.
 
+use crate::media_container::server::library::Guid;
 use serde::{Deserialize, Serialize};
 use serde_aux::prelude::deserialize_option_number_from_string;
 use time::OffsetDateTime;
@@ -66,7 +67,7 @@ pub struct Metadata {
     pub rating_key: Option<String>,
     pub parent_rating_key: Option<String>,
     pub grandparent_rating_key: Option<String>,
-    pub guid: Option<String>,
+    pub guid: Option<Guid>,
     #[serde(rename = "librarySectionID")]
     #[serde(deserialize_with = "deserialize_option_number_from_string")]
     pub library_section_id: Option<u32>,
@@ -145,7 +146,7 @@ mod test {
         serde_json::from_str::<super::Webhook>(WEBHOOK_JSON).expect("failed to parse webhook");
     }
 
-    const WEBHOOK_JSON: &str = r#"{  
+    const WEBHOOK_JSON: &str = r#"{
         "event": "media.play",
         "user": true,
         "owner": true,
