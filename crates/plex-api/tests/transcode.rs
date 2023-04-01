@@ -1570,7 +1570,7 @@ mod online {
             let server = generify(server).await;
 
             let track: Track = server.item_by_id(158).await.unwrap().try_into().unwrap();
-            assert_eq!(track.title(), "TRY IT OUT (NEON MIX)");
+            assert_eq!(track.title(), "Try It Out (Neon mix)");
 
             let media = &track.media()[0];
             let part = &media.parts()[0];
@@ -1613,7 +1613,7 @@ mod online {
             let server = generify(server).await;
 
             let track: Track = server.item_by_id(158).await.unwrap().try_into().unwrap();
-            assert_eq!(track.title(), "TRY IT OUT (NEON MIX)");
+            assert_eq!(track.title(), "Try It Out (Neon mix)");
 
             let media = &track.media()[0];
             let part = &media.parts()[0];
@@ -1655,7 +1655,7 @@ mod online {
             let server = generify(server).await;
 
             let track: Track = server.item_by_id(158).await.unwrap().try_into().unwrap();
-            assert_eq!(track.title(), "TRY IT OUT (NEON MIX)");
+            assert_eq!(track.title(), "Try It Out (Neon mix)");
 
             let media = &track.media()[0];
             let part = &media.parts()[0];
@@ -1714,7 +1714,7 @@ mod online {
             let server = generify(server).await;
 
             let track: Track = server.item_by_id(158).await.unwrap().try_into().unwrap();
-            assert_eq!(track.title(), "TRY IT OUT (NEON MIX)");
+            assert_eq!(track.title(), "Try It Out (Neon mix)");
 
             let media = &track.media()[0];
             let part = &media.parts()[0];
@@ -1784,7 +1784,7 @@ mod online {
             }
 
             let track: Track = server.item_by_id(158).await.unwrap().try_into().unwrap();
-            assert_eq!(track.title(), "TRY IT OUT (NEON MIX)");
+            assert_eq!(track.title(), "Try It Out (Neon mix)");
 
             let media = &track.media()[0];
             let part = &media.parts()[0];
@@ -1858,7 +1858,7 @@ mod online {
             }
 
             let track: Track = server.item_by_id(158).await.unwrap().try_into().unwrap();
-            assert_eq!(track.title(), "TRY IT OUT (NEON MIX)");
+            assert_eq!(track.title(), "Try It Out (Neon mix)");
 
             let media = &track.media()[0];
             let part = &media.parts()[0];

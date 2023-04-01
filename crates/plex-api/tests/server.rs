@@ -285,9 +285,9 @@ mod offline {
         assert_eq!(
             map(&tracks, |e| e.title().to_owned()),
             vec![
-                "TRY IT OUT (NEON MIX)",
-                "Try It Out (Try Harder Mix)",
-                "Try It Out (Put Em Up Mix)"
+                "Try It Out (Neon mix)",
+                "Try It Out (Try Harder mix)",
+                "Try It Out (Put Em Up mix)"
             ]
         );
 
@@ -408,7 +408,7 @@ mod online {
             vec![
                 "Big Buck Bunny",
                 "Elephants Dream",
-                "Interstate 60",
+                "Interstate 60: Episodes of the Road",
                 "Sintel"
             ]
         );
@@ -475,7 +475,7 @@ mod online {
         let videos = playlists[2].children().await.unwrap();
         assert_eq!(
             map(&videos, |e| e.title().to_owned()),
-            vec!["Interstate 60", "Sintel"]
+            vec!["Interstate 60: Episodes of the Road", "Sintel"]
         );
         assert!(matches!(videos[0], Video::Movie(_)));
         assert!(matches!(videos[1], Video::Movie(_)));
@@ -755,9 +755,9 @@ mod online {
         assert_eq!(
             map(&tracks, |e| e.title().to_owned()),
             vec![
-                "TRY IT OUT (NEON MIX)",
-                "Try It Out (Try Harder Mix)",
-                "Try It Out (Put Em Up Mix)"
+                "Try It Out (Neon mix)",
+                "Try It Out (Try Harder mix)",
+                "Try It Out (Put Em Up mix)"
             ]
         );
 
@@ -774,13 +774,13 @@ mod online {
         let albums = artists[1].albums().await.unwrap();
         assert_eq!(
             map(&albums, |e| e.title().to_owned()),
-            vec!["Aerials [MCD]", "Toxicity"]
+            vec!["Aerials", "Toxicity"]
         );
 
         let tracks = albums[0].tracks().await.unwrap();
         assert_eq!(
             map(&tracks, |e| e.title().to_owned()),
-            vec!["Aerials", "Streamline (album version)", "Sugar (live)"]
+            vec!["Aerials", "Streamline", "Sugar (live)"]
         );
 
         let tracks = albums[1].tracks().await.unwrap();
@@ -810,7 +810,7 @@ mod online {
         let tracks = playlists[0].children().await.unwrap();
         assert_eq!(
             map(&tracks, |e| e.title().to_owned()),
-            vec!["Streamline (album version)", "Metro"]
+            vec!["Streamline", "Metro"]
         );
     }
 
@@ -903,7 +903,7 @@ mod online {
     #[plex_api_test_helper::online_test]
     async fn item(#[future] server: Server) {
         let item = server.item_by_id(108).await.unwrap();
-        assert_eq!(item.title(), "Interstate 60");
+        assert_eq!(item.title(), "Interstate 60: Episodes of the Road");
         assert!(<Item as TryInto<Movie>>::try_into(item).is_ok());
 
         let item = server.item_by_id(90).await.unwrap();
