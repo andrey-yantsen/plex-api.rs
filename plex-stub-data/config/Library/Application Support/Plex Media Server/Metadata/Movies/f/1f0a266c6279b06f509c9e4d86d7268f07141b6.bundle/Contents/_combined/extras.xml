@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<MediaContainer size="1">
+  <Video url="iva://api.internetvideoarchive.com/2.0/DataService/VideoAssets(481939)?lang=en&amp;bitrates=80,212,450,750,1500,2500,5000,8000&amp;duration=32&amp;adaptive=1&amp;dts=0" key="/system/services/url/lookup?url=iva%3A%2F%2Fapi.internetvideoarchive.com%2F2.0%2FDataService%2FVideoAssets%28481939%29%3Flang%3Den%26bitrates%3D80%2C212%2C450%2C750%2C1500%2C2500%2C5000%2C8000%26duration%3D32%26adaptive%3D1%26dts%3D0" type="clip" relationType="trailer" year="2011" title="Big Buck Bunny" originallyAvailableAt="2011-01-03" thumb="https://metadata-static.plex.tv/extras/iva/481939/cba4056f139b6ca469379cccbc048ad3.jpg" ratingKey="iva://api.internetvideoarchive.com/2.0/DataService/VideoAssets(481939)?lang=en&amp;bitrates=80,212,450,750,1500,2500,5000,8000&amp;duration=32&amp;adaptive=1&amp;dts=0">
+    <Media container="mp4" height="1080" width="1920" audioCodec="aac" duration="32000" videoCodec="h264" bitrate="2500">
+      <Part duration="32000" key="/services/iva/assets/481939/video.mp4?bitrate=2500" container="mp4" optimizedForStreaming="1" file="">
+        <Stream index="0" selected="1" streamType="1" height="1080" width="1920" codec="h264" bitrate="2500" id="1"/>
+        <Stream index="1" selected="1" streamType="2" channels="2" codec="aac" languageCode="en" id="2"/>
+      </Part>
+    </Media>
+    <Media container="mp4" height="720" width="1280" audioCodec="aac" duration="32000" videoCodec="h264" bitrate="1500">
+      <Part duration="32000" key="/services/iva/assets/481939/video.mp4?bitrate=1500" container="mp4" optimizedForStreaming="1" file="">
+        <Stream index="0" selected="1" streamType="1" height="720" width="1280" codec="h264" bitrate="1500" id="1"/>
+        <Stream index="1" selected="1" streamType="2" channels="2" codec="aac" languageCode="en" id="2"/>
+      </Part>
+    </Media>
+    <Media container="mp4" height="480" width="640" audioCodec="aac" duration="32000" videoCodec="h264" bitrate="450">
+      <Part duration="32000" key="/services/iva/assets/481939/video.mp4?bitrate=450" container="mp4" optimizedForStreaming="1" file="">
+        <Stream index="0" selected="1" streamType="1" height="480" width="640" codec="h264" bitrate="450" id="1"/>
+        <Stream index="1" selected="1" streamType="2" channels="2" codec="aac" languageCode="en" id="2"/>
+      </Part>
+    </Media>
+  </Video>
+</MediaContainer>
