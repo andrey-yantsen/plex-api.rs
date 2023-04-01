@@ -406,9 +406,17 @@ where
 
         match response.status() {
             StatusCode::OK | StatusCode::CREATED | StatusCode::ACCEPTED => {
-                // let r = dbg!(response.text().await?);
-                // Ok(serde_json::from_str(&r)?)
-                Ok(response.json().await?)
+                let body = response.text().await?;
+                match serde_json::from_str(&body) {
+                    Ok(response) => Ok(response),
+                    Err(error) => {
+                        #[cfg(feature = "tests_deny_unknown_fields")]
+                        {
+                            println!("Received body: {body}");
+                        }
+                        Err(error.into())
+                    }
+                }
             }
             _ => Err(crate::Error::from_response(response).await),
         }
@@ -423,8 +431,17 @@ where
 
         match response.status() {
             StatusCode::OK | StatusCode::CREATED | StatusCode::ACCEPTED => {
-                let r = response.text().await?;
-                Ok(quick_xml::de::from_str(&r)?)
+                let body = response.text().await?;
+                match quick_xml::de::from_str(&body) {
+                    Ok(response) => Ok(response),
+                    Err(error) => {
+                        #[cfg(feature = "tests_deny_unknown_fields")]
+                        {
+                            println!("Received body: {body}");
+                        }
+                        Err(error.into())
+                    }
+                }
             }
             _ => Err(crate::Error::from_response(response).await),
         }
