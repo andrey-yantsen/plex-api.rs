@@ -286,6 +286,7 @@ impl flags::Test {
         let _ = std::io::stdout().flush();
 
         let server_url = format!("http://localhost:{}/", plex_node.get_host_port_ipv4(32400));
+        println!("Waiting for the plex server to boot...");
         cmd!(
             sh,
             "cargo run -q -p plex-cli --  --server {server_url} --token {server_owner_token} wait --full"
@@ -294,7 +295,7 @@ impl flags::Test {
 
         let mut server_auth_token = auth_token.to_owned();
         if !server_owner_token.is_empty() && server_owner_token != auth_token {
-            print!("/// Sharing the server with another user... ");
+            print!("// Sharing the server with another user... ");
             let _ = std::io::stdout().flush();
 
             let shared_server_access_token = self
@@ -314,7 +315,7 @@ impl flags::Test {
 
             println!("done!");
 
-            println!("/// Waiting for the permission propogation...");
+            println!("// Waiting for the permission propogation...");
 
             cmd!(
                 sh,
