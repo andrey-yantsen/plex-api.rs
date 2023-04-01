@@ -664,6 +664,12 @@ pub struct Metadata {
     pub fields: Vec<Field>,
     #[serde(default, rename = "Mood")]
     pub moods: Vec<Tag>,
+    #[serde(default, rename = "Format")]
+    pub formats: Vec<Tag>,
+    #[serde(default, rename = "Subformat")]
+    pub sub_formats: Vec<Tag>,
+    #[serde(default, rename = "Style")]
+    pub styles: Vec<Tag>,
 
     #[serde(rename = "Media")]
     pub media: Option<Vec<Media>>,
