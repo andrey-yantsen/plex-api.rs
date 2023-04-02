@@ -355,7 +355,7 @@ impl flags::Test {
         // Claim/Unclaim must be executed after all the other tests.
         // Not including `tests_deny_unknown_fields` feature here to avoid
         // possible unneeded failures.
-        if !claim_token.is_empty() {
+        if !claim_token.is_empty() && option_env!("TESTCONTAINERS") != Some("keep") {
             let _plex_token = sh.push_env("PLEX_API_AUTH_TOKEN", server_owner_token);
 
             let unclaim = cmd!(sh, "cargo test --workspace --no-fail-fast --features tests_only_online_claimed_server --test server online::unclaim_server -- --include-ignored --exact").run();
