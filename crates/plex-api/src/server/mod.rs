@@ -162,7 +162,7 @@ impl Server {
     /// their rating key.
     #[tracing::instrument(level = "debug", skip(self))]
     pub async fn item_by_id(&self, rating_key: u32) -> Result<Item> {
-        let path = format!("/library/metadata/{rating_key}");
+        let path = format!("/library/metadata/{rating_key}?includeConcerts=1&includeExtras=1&includePopularLeaves=1&includePreferences=1&includeReviews=1&includeOnDeck=1&includeChapters=1&includeStations=1&includeExternalMedia=1&asyncAugmentMetadata=1&asyncCheckFiles=1&asyncRefreshAnalysis=1&asyncRefreshLocalMediaAgent=1");
 
         match metadata_items(&self.client, &path).await {
             Ok(items) => items.into_iter().next().ok_or(Error::ItemNotFound),

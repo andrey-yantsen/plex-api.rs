@@ -1,6 +1,6 @@
 mod guid;
 
-use crate::media_container::MediaContainer;
+use crate::media_container::{preferences::Preferences, MediaContainer};
 pub use guid::Guid;
 use monostate::MustBe;
 use serde::{Deserialize, Deserializer, Serialize};
@@ -44,6 +44,8 @@ pub enum Protocol {
     Hls,
     // Dynamic Adaptive Streaming over HTTP
     Dash,
+    // ??? Used in extras
+    Mp4,
     #[cfg(not(feature = "tests_deny_unknown_fields"))]
     #[serde(other)]
     Unknown,
@@ -192,7 +194,7 @@ pub struct VideoStream {
     pub color_range: Option<String>,
     pub color_space: Option<String>,
     pub color_trc: Option<String>,
-    pub frame_rate: f32,
+    pub frame_rate: Option<f32>,
     pub has_scaling_matrix: Option<bool>,
     pub level: Option<u32>,
     pub profile: Option<String>,
@@ -422,6 +424,7 @@ pub struct Media {
     #[serde(default, deserialize_with = "optional_boolish")]
     pub optimized_for_streaming: Option<bool>,
     pub display_offset: Option<u64>,
+    pub premium: Option<bool>,
 }
 
 #[derive(Debug, Deserialize, Clone)]
@@ -446,6 +449,19 @@ pub struct Tag {
     pub filter: Option<String>,
     #[serde(default, deserialize_with = "deserialize_option_number_from_string")]
     pub count: Option<u32>,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+#[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
+pub struct Review {
+    #[serde(default, deserialize_with = "deserialize_number_from_string")]
+    pub id: u32,
+    pub tag: String,
+    pub filter: String,
+    pub text: String,
+    pub image: String,
+    pub link: String,
+    pub source: String,
 }
 
 #[derive(Debug, Deserialize, Clone)]
@@ -530,6 +546,7 @@ pub enum MetadataType {
     Season,
     Track,
     Playlist,
+    Clip,
     #[cfg(not(feature = "tests_deny_unknown_fields"))]
     #[serde(other)]
     Unknown,
@@ -551,15 +568,55 @@ pub enum PlaylistType {
 #[derive(Debug, Deserialize, Clone)]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
+pub struct Extras {
+    pub size: u32,
+    #[serde(default, rename = "Metadata")]
+    pub metadata: Vec<Box<Metadata>>,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+#[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
+#[serde(rename_all = "camelCase")]
+pub struct OnDeck {
+    #[serde(rename = "Metadata")]
+    pub metadata: Metadata,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+#[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
+#[serde(rename_all = "camelCase")]
+pub struct Chapter {
+    pub id: u32,
+    pub filter: String,
+    pub index: u32,
+    pub start_time_offset: u64,
+    pub end_time_offset: u64,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+#[serde(rename_all = "lowercase")]
+pub enum MetadataSubtype {
+    Trailer,
+    Show,
+    Movie,
+    #[cfg(not(feature = "tests_deny_unknown_fields"))]
+    #[serde(other)]
+    Unknown,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+#[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
+#[serde(rename_all = "camelCase")]
 pub struct Metadata {
     pub key: String,
     #[serde(deserialize_with = "deserialize_number_from_string")]
     pub rating_key: u32,
     pub guid: Guid,
+    pub primary_guid: Option<Guid>,
 
     #[serde(rename = "type")]
     pub metadata_type: Option<MetadataType>,
-    pub subtype: Option<MetadataType>,
+    pub subtype: Option<MetadataSubtype>,
     pub playlist_type: Option<PlaylistType>,
     pub smart: Option<bool>,
     #[serde(default, deserialize_with = "optional_boolish")]
@@ -582,6 +639,9 @@ pub struct Metadata {
     pub rating_image: Option<String>,
     pub audience_rating: Option<f32>,
     pub audience_rating_image: Option<String>,
+    pub user_rating: Option<f32>,
+    #[serde(default, with = "time::serde::timestamp::option")]
+    pub last_rated_at: Option<OffsetDateTime>,
     pub tagline: Option<String>,
     pub duration: Option<u64>,
     pub originally_available_at: Option<Date>,
@@ -634,9 +694,9 @@ pub struct Metadata {
     pub library_section_key: Option<String>,
 
     #[serde(flatten)]
-    pub parent: ParentMetadata,
+    pub parent: Box<ParentMetadata>,
     #[serde(flatten)]
-    pub grand_parent: GrandParentMetadata,
+    pub grand_parent: Box<GrandParentMetadata>,
 
     #[serde(default, rename = "Guid")]
     pub guids: Vec<Guid>,
@@ -670,6 +730,20 @@ pub struct Metadata {
     pub sub_formats: Vec<Tag>,
     #[serde(default, rename = "Style")]
     pub styles: Vec<Tag>,
+    #[serde(default, rename = "Review")]
+    pub reviews: Vec<Review>,
+    #[serde(default, rename = "Chapter")]
+    pub chapters: Vec<Chapter>,
+
+    #[serde(rename = "Preferences")]
+    pub preferences: Option<Box<Preferences>>,
+
+    #[serde(rename = "Extras")]
+    pub extras: Option<Extras>,
+    pub extra_type: Option<u8>,
+
+    #[serde(rename = "OnDeck")]
+    pub on_deck: Option<Box<OnDeck>>,
 
     #[serde(rename = "Media")]
     pub media: Option<Vec<Media>>,
@@ -682,6 +756,7 @@ pub struct MetadataMediaContainer {
     pub key: Option<String>,
     #[serde(default, deserialize_with = "deserialize_option_number_from_string")]
     pub rating_key: Option<u32>,
+    pub augmentation_key: Option<String>,
 
     pub title: Option<String>,
     pub title1: Option<String>,

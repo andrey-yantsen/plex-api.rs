@@ -8,8 +8,8 @@ use isahc::AsyncReadResponseExt;
 use crate::{
     media_container::{
         server::library::{
-            LibraryType, Media as MediaMetadata, Metadata, MetadataMediaContainer, MetadataType,
-            Part as PartMetadata, PlaylistType, Protocol, ServerLibrary,
+            LibraryType, Media as MediaMetadata, Metadata, MetadataMediaContainer, MetadataSubtype,
+            MetadataType, Part as PartMetadata, PlaylistType, Protocol, ServerLibrary,
         },
         MediaContainerWrapper,
     },
@@ -88,11 +88,11 @@ macro_rules! derive_metadata_item {
 
 /// Retrieves a list of metadata items given the lookup key.
 #[tracing::instrument(level = "trace", skip(client))]
-pub(crate) async fn metadata_items<T>(client: &HttpClient, key: &str) -> Result<Vec<T>>
+pub(crate) async fn metadata_items<T>(client: &HttpClient, path: &str) -> Result<Vec<T>>
 where
     T: FromMetadata,
 {
-    let wrapper: MediaContainerWrapper<MetadataMediaContainer> = client.get(key).json().await?;
+    let wrapper: MediaContainerWrapper<MetadataMediaContainer> = client.get(path).json().await?;
 
     let media = wrapper
         .media_container
@@ -604,6 +604,17 @@ impl FromMetadata for PhotoAlbumItem {
 }
 
 #[derive(Debug, Clone)]
+pub struct Clip {
+    client: HttpClient,
+    metadata: Metadata,
+}
+
+derive_from_metadata!(Clip);
+derive_metadata_item!(Clip);
+
+impl MediaItem for Clip {}
+
+#[derive(Debug, Clone)]
 pub struct UnknownItem {
     client: HttpClient,
     metadata: Metadata,
@@ -623,6 +634,7 @@ pub enum Item {
     MusicAlbum,
     Season,
     Track,
+    Clip,
     MovieCollection(Collection<Movie>),
     ShowCollection(Collection<Show>),
     VideoPlaylist(Playlist<Video>),
@@ -645,11 +657,12 @@ impl FromMetadata for Item {
                 MetadataType::MusicAlbum => MusicAlbum::from_metadata(client, metadata).into(),
                 MetadataType::Season => Season::from_metadata(client, metadata).into(),
                 MetadataType::Track => Track::from_metadata(client, metadata).into(),
+                MetadataType::Clip => Clip::from_metadata(client, metadata).into(),
                 MetadataType::Collection => match metadata.subtype {
-                    Some(MetadataType::Movie) => {
+                    Some(MetadataSubtype::Movie) => {
                         Collection::<Movie>::from_metadata(client, metadata).into()
                     }
-                    Some(MetadataType::Show) => {
+                    Some(MetadataSubtype::Show) => {
                         Collection::<Show>::from_metadata(client, metadata).into()
                     }
                     _ => UnknownItem::from_metadata(client, metadata).into(),
