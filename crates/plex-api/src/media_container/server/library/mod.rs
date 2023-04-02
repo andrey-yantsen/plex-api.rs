@@ -691,6 +691,8 @@ pub struct Metadata {
     pub reviews: Vec<Review>,
     #[serde(default, rename = "Chapter")]
     pub chapters: Vec<Chapter>,
+    #[serde(default, rename = "Label")]
+    pub labels: Vec<Tag>,
 
     #[serde(rename = "Preferences")]
     pub preferences: Option<Box<Preferences>>,
