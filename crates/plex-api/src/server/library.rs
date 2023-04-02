@@ -98,7 +98,20 @@ where
         .media_container
         .metadata
         .into_iter()
-        .map(|metadata| T::from_metadata(client.clone(), metadata))
+        .map(|metadata| {
+            T::from_metadata(
+                client.clone(),
+                Metadata {
+                    library_section_id: metadata
+                        .library_section_id
+                        .or(wrapper.media_container.library_section_id),
+                    library_section_title: metadata
+                        .library_section_title
+                        .or(wrapper.media_container.library_section_title.clone()),
+                    ..metadata
+                },
+            )
+        })
         .collect();
     Ok(media)
 }
