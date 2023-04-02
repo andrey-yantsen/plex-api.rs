@@ -1,7 +1,9 @@
 mod guid;
+mod metadata_type;
 
 use crate::media_container::{preferences::Preferences, MediaContainer};
 pub use guid::Guid;
+pub use metadata_type::*;
 use monostate::MustBe;
 use serde::{Deserialize, Deserializer, Serialize};
 use serde_aux::prelude::{
@@ -534,39 +536,6 @@ pub struct GrandParentMetadata {
 }
 
 #[derive(Debug, Deserialize, Clone)]
-#[serde(rename_all = "lowercase")]
-pub enum MetadataType {
-    Movie,
-    Episode,
-    Photo,
-    Show,
-    Artist,
-    #[serde(rename = "album")]
-    MusicAlbum,
-    Collection,
-    Season,
-    Track,
-    Playlist,
-    Clip,
-    #[cfg(not(feature = "tests_deny_unknown_fields"))]
-    #[serde(other)]
-    Unknown,
-}
-
-derive_fromstr_from_deserialize!(MetadataType);
-
-#[derive(Debug, Deserialize, Clone)]
-#[serde(rename_all = "lowercase")]
-pub enum PlaylistType {
-    Video,
-    Audio,
-    Photo,
-    #[cfg(not(feature = "tests_deny_unknown_fields"))]
-    #[serde(other)]
-    Unknown,
-}
-
-#[derive(Debug, Deserialize, Clone)]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct Extras {
@@ -595,17 +564,6 @@ pub struct Chapter {
 }
 
 #[derive(Debug, Deserialize, Clone)]
-#[serde(rename_all = "lowercase")]
-pub enum MetadataSubtype {
-    Trailer,
-    Show,
-    Movie,
-    #[cfg(not(feature = "tests_deny_unknown_fields"))]
-    #[serde(other)]
-    Unknown,
-}
-
-#[derive(Debug, Deserialize, Clone)]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct Metadata {
@@ -615,10 +573,8 @@ pub struct Metadata {
     pub guid: Guid,
     pub primary_guid: Option<Guid>,
 
-    #[serde(rename = "type")]
+    #[serde(flatten, deserialize_with = "deserialize_option_metadata_type")]
     pub metadata_type: Option<MetadataType>,
-    pub subtype: Option<MetadataSubtype>,
-    pub playlist_type: Option<PlaylistType>,
     pub smart: Option<bool>,
     #[serde(default, deserialize_with = "optional_boolish")]
     pub allow_sync: Option<bool>,
@@ -797,7 +753,7 @@ pub struct MetadataMediaContainer {
     pub view_group: Option<String>,
     pub view_mode: Option<u32>,
     pub leaf_count: Option<u32>,
-    pub playlist_type: Option<PlaylistType>,
+    pub playlist_type: Option<PlaylistMetadataType>,
 
     #[serde(default, rename = "Directory")]
     pub directories: Vec<Value>,

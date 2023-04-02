@@ -8,8 +8,9 @@ use isahc::AsyncReadResponseExt;
 use crate::{
     media_container::{
         server::library::{
-            LibraryType, Media as MediaMetadata, Metadata, MetadataMediaContainer, MetadataSubtype,
-            MetadataType, Part as PartMetadata, PlaylistType, Protocol, SearchType, ServerLibrary,
+            CollectionMetadataSubtype, LibraryType, Media as MediaMetadata, Metadata,
+            MetadataMediaContainer, MetadataType, Part as PartMetadata, PlaylistMetadataType,
+            Protocol, SearchType, ServerLibrary,
         },
         MediaContainerWrapper,
     },
@@ -687,28 +688,22 @@ impl FromMetadata for Item {
                 MetadataType::MusicAlbum => MusicAlbum::from_metadata(client, metadata).into(),
                 MetadataType::Season => Season::from_metadata(client, metadata).into(),
                 MetadataType::Track => Track::from_metadata(client, metadata).into(),
-                MetadataType::Clip => Clip::from_metadata(client, metadata).into(),
-                MetadataType::Collection => match metadata.subtype {
-                    Some(MetadataSubtype::Movie) => {
-                        Collection::<Movie>::from_metadata(client, metadata).into()
-                    }
-                    Some(MetadataSubtype::Show) => {
-                        Collection::<Show>::from_metadata(client, metadata).into()
-                    }
-                    _ => UnknownItem::from_metadata(client, metadata).into(),
-                },
-                MetadataType::Playlist => match metadata.playlist_type {
-                    Some(PlaylistType::Video) => {
-                        Playlist::<Video>::from_metadata(client, metadata).into()
-                    }
-                    Some(PlaylistType::Audio) => {
-                        Playlist::<Track>::from_metadata(client, metadata).into()
-                    }
-                    Some(PlaylistType::Photo) => {
-                        Playlist::<Photo>::from_metadata(client, metadata).into()
-                    }
-                    _ => UnknownItem::from_metadata(client, metadata).into(),
-                },
+                MetadataType::Clip(_) => Clip::from_metadata(client, metadata).into(),
+                MetadataType::Collection(CollectionMetadataSubtype::Movie) => {
+                    Collection::<Movie>::from_metadata(client, metadata).into()
+                }
+                MetadataType::Collection(CollectionMetadataSubtype::Show) => {
+                    Collection::<Show>::from_metadata(client, metadata).into()
+                }
+                MetadataType::Playlist(PlaylistMetadataType::Video) => {
+                    Playlist::<Video>::from_metadata(client, metadata).into()
+                }
+                MetadataType::Playlist(PlaylistMetadataType::Audio) => {
+                    Playlist::<Track>::from_metadata(client, metadata).into()
+                }
+                MetadataType::Playlist(PlaylistMetadataType::Photo) => {
+                    Playlist::<Photo>::from_metadata(client, metadata).into()
+                }
                 #[cfg(not(feature = "tests_deny_unknown_fields"))]
                 _ => UnknownItem::from_metadata(client, metadata).into(),
             }
