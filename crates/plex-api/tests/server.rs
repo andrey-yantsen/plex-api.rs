@@ -14,6 +14,7 @@ mod offline {
     use httpmock::Method::GET;
     use plex_api::{
         library::{Collection, Item, Library, MetadataItem, Movie, Playlist, Video},
+        media_container::server::library::SearchType,
         url::{MYPLEX_USER_INFO_PATH, SERVER_MEDIA_PROVIDERS},
         HttpClient, Server,
     };
@@ -262,6 +263,23 @@ mod offline {
             then.status(200)
                 .header("content-type", "text/json")
                 .body_from_file("tests/mocks/server/media/music_albums.json");
+        });
+
+        let albums = artists[0].full_studio_albums().await.unwrap();
+        m.assert();
+        m.delete();
+
+        assert_eq!(map(&albums, |e| e.title().to_owned()), vec!["Try It Out"]);
+        assert_eq!(map(&albums, |e| e.rating_key().to_owned()), vec![157]);
+
+        let mut m = mock_server.mock(|when, then| {
+            when.method(GET)
+                .path("/library/sections/5/all")
+                .query_param("type", (SearchType::Album as u32).to_string())
+                .query_param("artist.id", artists[0].metadata().rating_key.to_string());
+            then.status(200)
+                .header("content-type", "text/json")
+                .body_from_file("tests/mocks/server/media/music_search_skrillex_albums.json");
         });
 
         let albums = artists[0].albums().await.unwrap();

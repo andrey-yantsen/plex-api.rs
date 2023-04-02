@@ -9,12 +9,12 @@ use crate::{
     media_container::{
         server::library::{
             LibraryType, Media as MediaMetadata, Metadata, MetadataMediaContainer, MetadataSubtype,
-            MetadataType, Part as PartMetadata, PlaylistType, Protocol, ServerLibrary,
+            MetadataType, Part as PartMetadata, PlaylistType, Protocol, SearchType, ServerLibrary,
         },
         MediaContainerWrapper,
     },
     transcode::{MusicTranscodeOptions, TranscodeSession, VideoTranscodeOptions},
-    HttpClient, Result,
+    Error, HttpClient, Result,
 };
 
 use super::transcode::{create_transcode_session, Context, TranscodeOptions};
@@ -500,10 +500,27 @@ derive_from_metadata!(Artist);
 derive_metadata_item!(Artist);
 
 impl Artist {
+    /// Retrieves all of the fully-featured studio albums (skipping Lives, EPs, etc.) by this artist.
+    #[tracing::instrument(level = "debug", skip_all, fields(self.metadata.key = self.metadata.key))]
+    pub async fn full_studio_albums(&self) -> Result<Vec<MusicAlbum>> {
+        metadata_items(&self.client, &self.metadata.key).await
+    }
+
     /// Retrieves all of the albums by this artist.
     #[tracing::instrument(level = "debug", skip_all, fields(self.metadata.key = self.metadata.key))]
     pub async fn albums(&self) -> Result<Vec<MusicAlbum>> {
-        metadata_items(&self.client, &self.metadata.key).await
+        let section_id = match &self.metadata.library_section_id {
+            Some(id) => id,
+            None => return Err(Error::UnexpectedError),
+        };
+
+        let albums_search_path = format!(
+            "/library/sections/{}/all?type={}&artist.id={}",
+            section_id,
+            SearchType::Album,
+            self.metadata.rating_key
+        );
+        metadata_items(&self.client, &albums_search_path).await
     }
 }
 

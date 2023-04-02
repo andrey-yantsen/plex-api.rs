@@ -10,6 +10,7 @@ use serde_aux::prelude::{
 };
 use serde_json::Value;
 use serde_plain::{derive_display_from_serialize, derive_fromstr_from_deserialize};
+use serde_repr::{Deserialize_repr, Serialize_repr};
 use serde_with::{formats::CommaSeparator, serde_as, StringWithSeparator};
 use time::{Date, OffsetDateTime};
 
@@ -929,3 +930,31 @@ pub enum ContentDirectory {
     #[cfg(not(feature = "tests_deny_unknown_fields"))]
     Unknown(Value),
 }
+
+#[derive(Debug, Deserialize_repr, Clone, Serialize_repr)]
+#[repr(u16)]
+pub enum SearchType {
+    Movie = 1,
+    Show = 2,
+    Season = 3,
+    Episode = 4,
+    Trailer = 5,
+    Comic = 6,
+    Person = 7,
+    Artist = 8,
+    Album = 9,
+    Track = 10,
+    Picture = 11,
+    Clip = 12,
+    Photo = 13,
+    PhotoAlbum = 14,
+    Playlist = 15,
+    PlaylistFolder = 16,
+    Collection = 18,
+    OptimizedVersion = 42,
+    UserPlaylistItem = 1001,
+    #[serde(other)]
+    Unknown,
+}
+
+derive_display_from_serialize!(SearchType);
