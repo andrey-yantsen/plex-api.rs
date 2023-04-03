@@ -411,6 +411,8 @@ where
                     Ok(response) => Ok(response),
                     Err(error) => {
                         #[cfg(feature = "tests_deny_unknown_fields")]
+                        // We're in tests, so it's fine to print
+                        #[allow(clippy::print_stdout)]
                         {
                             println!("Received body: {body}");
                         }
@@ -436,6 +438,8 @@ where
                     Ok(response) => Ok(response),
                     Err(error) => {
                         #[cfg(feature = "tests_deny_unknown_fields")]
+                        // We're in tests, so it's fine to print
+                        #[allow(clippy::print_stdout)]
                         {
                             println!("Received body: {body}");
                         }
