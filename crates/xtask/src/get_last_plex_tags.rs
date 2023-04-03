@@ -19,15 +19,15 @@ impl flags::GetLastPlexTags {
             if self.skip_tag.is_empty() {
                 vec!["beta".to_owned(), "plexpass".to_owned()]
             } else {
-                self.skip_tag.clone()
+                self.skip_tag
             }
         };
 
         let mut tags: Vec<String> = vec![];
 
         let tag_latest = DOCKER_PLEX_IMAGE_TAG_LATEST.to_owned();
-        if !self.skip_tag.contains(&tag_latest) {
-            tags.push("latest".to_owned());
+        if !skip_tags.contains(&tag_latest) {
+            tags.push(tag_latest);
         }
 
         let url = format!(
