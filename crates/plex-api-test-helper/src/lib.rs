@@ -105,6 +105,8 @@ fn rewrite_multirun_test(
     let fn_type = parse_macro_input!(input as ItemFn);
 
     let mut fn_signature1 = fn_type.sig;
+    #[allow(clippy::redundant_clone)]
+    // false-positive, see https://github.com/rust-lang/rust-clippy/issues/10577
     let mut fn_signature2 = fn_signature1.clone();
 
     let mod_ident = syn::Ident::new(&fn_signature1.ident.to_string(), fn_signature1.ident.span());
