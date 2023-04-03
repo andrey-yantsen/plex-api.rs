@@ -629,10 +629,10 @@ impl HttpClientBuilder {
         }
     }
 
-    pub fn set_x_plex_features<S: Into<String>>(self, features: S) -> Self {
+    pub fn set_x_plex_features(self, features: &[&str]) -> Self {
         Self {
             client: self.client.map(move |mut client| {
-                client.x_plex_features = features.into();
+                client.x_plex_features = features.join(",");
                 client
             }),
         }
