@@ -78,7 +78,7 @@ where
                     })
                 }
                 #[cfg(not(feature = "tests_deny_unknown_fields"))]
-                _ => MetadataType::Unknown,
+                _ => MetadataType::Collection(CollectionMetadataSubtype::Unknown),
                 #[cfg(feature = "tests_deny_unknown_fields")]
                 _ => return Err(serde::de::Error::missing_field(
                     "metadata with `collection` type expects a subtype field present, which is missing",
@@ -117,7 +117,7 @@ where
                     _ => return Err(serde::de::Error::unknown_variant("empty extra_type", &["trailer"])),
                 }),
                 #[cfg(not(feature = "tests_deny_unknown_fields"))]
-                _ => MetadataType::Unknown,
+                _ => MetadataType::Clip(ClipMetadataSubtype::Unknown),
                 #[cfg(feature = "tests_deny_unknown_fields")]
                 _ => return Err(serde::de::Error::missing_field(
                     "metadata with `clip` type expects a subtype field present, which is missing",
@@ -134,7 +134,7 @@ where
                     })
                 }
                 #[cfg(not(feature = "tests_deny_unknown_fields"))]
-                _ => MetadataType::Unknown,
+                _ => MetadataType::Playlist(PlaylistMetadataType::Unknown),
                 #[cfg(feature = "tests_deny_unknown_fields")]
                 _ => return Err(serde::de::Error::missing_field(
                     "metadata with `playlist` type expects a playlist_type field present, which is missing",
