@@ -57,7 +57,7 @@ impl Player {
 
         let media_container: ResourcesMediaContainer = client
             .get(SERVER_SYSTEM_PROXY)
-            .header("X-Plex-Url", dbg!(format!("{uri}")))
+            .header("X-Plex-Url", format!("{uri}"))
             .xml()
             .await?;
         client.x_plex_target_client_identifier = media_container.player.machine_identifier.clone();

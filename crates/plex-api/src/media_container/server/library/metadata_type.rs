@@ -55,7 +55,7 @@ where
         Unknown,
     }
 
-    let m = dbg!(Helper::deserialize(deserializer)?);
+    let m = Helper::deserialize(deserializer)?;
 
     match m.r#type {
         Some(metadata_type) => Ok(Some(match metadata_type.as_str() {
