@@ -163,6 +163,11 @@ pub enum Feature {
     )]
     CreateAnonymousUsers,
     #[serde(
+        rename = "credits-markers",
+        alias = "926bc176-58ca-47da-b8e3-080ed14ea6ba"
+    )]
+    CreditsMarkers,
+    #[serde(
         rename = "CU Sunset",
         alias = "567033ef-ffee-44fb-8f90-f678077445f9"
     )]
@@ -172,6 +177,26 @@ pub enum Feature {
         alias = "849433b0-ef60-4a71-9dd9-939bc01f5362"
     )]
     CustomHomeRemoval,
+    #[serde(
+        rename = "discover",
+        alias = "4a933f24-464d-4a6b-b372-9e4497abd361"
+    )]
+    Discover,
+    #[serde(
+        rename = "discover-managed-related-vod",
+        alias = "cb0e4c75-b1cb-43e9-97ea-6b9bc66c717b"
+    )]
+    DiscoverManagedRelatedVod,
+    #[serde(
+        rename = "discover-managed-user-test",
+        alias = "807d9881-a846-40c3-8d54-84fc490b7ba9"
+    )]
+    DiscoverManagedUserTest,
+    #[serde(
+        rename = "discover-services-hub",
+        alias = "ba7c4a4f-a13b-4ec0-8eb2-cd0ba2fe77f8"
+    )]
+    DiscoverServicesHub,
     #[serde(rename = "download_certificates")]
     DownloadCertificates,
     #[serde(
@@ -244,6 +269,11 @@ pub enum Feature {
         alias = "84a754b0-d1ca-4433-af2d-c949bf4b4936"
     )]
     Hwtranscode,
+    #[serde(
+        rename = "hybrid-guide",
+        alias = "c6ce2260-a19d-4fea-9f74-a52231f03924"
+    )]
+    HybridGuide,
     #[serde(
         rename = "imagga-v2",
         alias = "55b9f6ed-5d26-4d2d-a436-68882a9901b5"
@@ -392,6 +422,16 @@ pub enum Feature {
         alias = "82999dd3-a2be-482e-9f44-357879b4f603"
     )]
     Pass,
+    #[serde(
+        rename = "people-pages",
+        alias = "f4fe27db-7292-4e13-98b6-f3ff9b5ed5fe"
+    )]
+    PeoplePages,
+    #[serde(
+        rename = "people-pages-pms",
+        alias = "652968f4-d474-4e04-a1cf-2dd1eaeb488a"
+    )]
+    PeoplePagesPms,
     #[serde(rename = "photo_autotags")]
     PhotoAutotags,
     #[serde(
@@ -435,6 +475,11 @@ pub enum Feature {
     )]
     PremiumMusicMetadata,
     #[serde(
+        rename = "promoted-grid-channel-filters",
+        alias = "a0a78867-6b26-446f-9c3f-df4edf831259"
+    )]
+    PromotedGridChannelFilters,
+    #[serde(
         rename = "radio",
         alias = "300231e0-69aa-4dce-97f4-52d8c00e3e8c"
     )]
@@ -456,6 +501,11 @@ pub enum Feature {
         alias = "644c4466-05fa-45e0-a478-c594cf81778f"
     )]
     SaveToLibrary,
+    #[serde(
+        rename = "scrobbling-service",
+        alias = "ccef9d3a-537a-43d9-8161-4c7113c6e2bb"
+    )]
+    ScrobblingService,
     #[serde(
         rename = "scrobbling-service-plex-tv",
         alias = "7b392594-6949-4736-9894-e57a9dfe4037"
@@ -591,6 +641,16 @@ pub enum Feature {
     )]
     UniversalSearch,
     #[serde(
+        rename = "universal-search-live-tv",
+        alias = "cce9af5d-7b44-4119-a6b1-108fd0db725c"
+    )]
+    UniversalSearchLiveTv,
+    #[serde(
+        rename = "universal-watchlist",
+        alias = "d9528436-ee7c-42e3-ab7b-814f85ef74b4"
+    )]
+    UniversalWatchlist,
+    #[serde(
         rename = "unsupportedtuners",
         alias = "b46d16ae-cbd6-4226-8ee9-ab2b27e5dd42"
     )]
@@ -662,6 +722,11 @@ pub enum Feature {
     )]
     WatchlistRss,
     #[serde(
+        rename = "watchlist-source",
+        alias = "edd6039a-137c-4ace-b5d5-4e111ce9690b"
+    )]
+    WatchlistSource,
+    #[serde(
         rename = "web-desktop-gracenote-banner",
         alias = "13056a62-9bd2-47cf-aba9-bab00095fd08"
     )]
@@ -711,6 +776,11 @@ pub enum Feature {
         alias = "55e1398c-930f-41c1-bead-f5c2e471bb25"
     )]
     Webshows,
+    #[serde(
+        rename = "where-to-watch-clients",
+        alias = "e4f02866-841f-4ceb-a30c-0a0e68fb874d"
+    )]
+    WhereToWatchClients,
     UnknownUuid(String),
     #[cfg(not(feature = "tests_deny_unknown_fields"))]
     #[serde(other)]
