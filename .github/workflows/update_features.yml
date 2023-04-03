@@ -20,7 +20,7 @@ jobs:
         run: |
           curl -o 'crates/plex-api/tests/mocks/myplex/api/v2/features.json' \
             -H 'Accept: application/json' \
-            https://plex.tv/api/v2/features\?X-Plex-Product\=Plex%20Web\&X-Plex-Version\=4.77.3\&X-Plex-Client-Identifier\=${{ secrets.X_PLEX_CLIENT_IDENTIFIER_FREE }}\&X-Plex-Platform\=Safari\&X-Plex-Platform-Version\=15.4\&X-Plex-Sync-Version\=2\&X-Plex-Features\=external-media%2Cindirect-media\&X-Plex-Model\=hosted\&X-Plex-Device\=OSX\&X-Plex-Device-Name\=Safari\&X-Plex-Device-Screen-Resolution\=1440x772%2C1440x900\&X-Plex-Token\=${{ secrets.PLEX_API_AUTH_TOKEN_PLEXPASS }}\&X-Plex-Language\=en
+            https://plex.tv/api/v2/features\?X-Plex-Product\=Plex%20Web\&X-Plex-Version\=4.103.2\&X-Plex-Client-Identifier\=${{ secrets.X_PLEX_CLIENT_IDENTIFIER_FREE }}\&X-Plex-Platform\=Safari\&X-Plex-Platform-Version\=15.4\&X-Plex-Sync-Version\=2\&X-Plex-Features\=external-media%2Cindirect-media\&X-Plex-Model\=hosted\&X-Plex-Device\=OSX\&X-Plex-Device-Name\=Safari\&X-Plex-Device-Screen-Resolution\=1440x772%2C1440x900\&X-Plex-Token\=${{ secrets.PLEX_API_AUTH_TOKEN_PLEXPASS }}\&X-Plex-Language\=en
       - name: Build plex-api
         run: cargo build --package plex-api
       - name: Check if the enum was updated
