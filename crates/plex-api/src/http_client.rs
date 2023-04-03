@@ -498,7 +498,7 @@ impl HttpClientBuilder {
     /// Creates a client that maps to Plex's Generic profile which has no
     /// particular settings defined for transcoding.
     pub fn generic() -> Self {
-        Self::default().set_x_plex_platform("Generic".to_string())
+        Self::default().set_x_plex_platform("Generic")
     }
 
     pub fn build(self) -> Result<HttpClient> {
@@ -539,7 +539,7 @@ impl HttpClientBuilder {
         }
     }
 
-    pub fn set_x_plex_token(self, token: String) -> Self {
+    pub fn set_x_plex_token<S: Into<SecretString>>(self, token: S) -> Self {
         Self {
             client: self.client.map(move |mut client| {
                 client.x_plex_token = token.into();
@@ -548,16 +548,16 @@ impl HttpClientBuilder {
         }
     }
 
-    pub fn set_x_plex_client_identifier(self, client_identifier: String) -> Self {
+    pub fn set_x_plex_client_identifier<S: Into<String>>(self, client_identifier: S) -> Self {
         Self {
             client: self.client.map(move |mut client| {
-                client.x_plex_client_identifier = client_identifier;
+                client.x_plex_client_identifier = client_identifier.into();
                 client
             }),
         }
     }
 
-    pub fn set_x_plex_provides(self, x_plex_provides: Vec<String>) -> Self {
+    pub fn set_x_plex_provides(self, x_plex_provides: &[&str]) -> Self {
         Self {
             client: self.client.map(move |mut client| {
                 client.x_plex_provides = x_plex_provides.join(",");
@@ -566,73 +566,73 @@ impl HttpClientBuilder {
         }
     }
 
-    pub fn set_x_plex_platform(self, platform: String) -> Self {
+    pub fn set_x_plex_platform<S: Into<String>>(self, platform: S) -> Self {
         Self {
             client: self.client.map(move |mut client| {
-                client.x_plex_platform = platform;
+                client.x_plex_platform = platform.into();
                 client
             }),
         }
     }
 
-    pub fn set_x_plex_platform_version(self, platform_version: String) -> Self {
+    pub fn set_x_plex_platform_version<S: Into<String>>(self, platform_version: S) -> Self {
         Self {
             client: self.client.map(move |mut client| {
-                client.x_plex_platform_version = platform_version;
+                client.x_plex_platform_version = platform_version.into();
                 client
             }),
         }
     }
 
-    pub fn set_x_plex_product(self, product: String) -> Self {
+    pub fn set_x_plex_product<S: Into<String>>(self, product: S) -> Self {
         Self {
             client: self.client.map(move |mut client| {
-                client.x_plex_product = product;
+                client.x_plex_product = product.into();
                 client
             }),
         }
     }
 
-    pub fn set_x_plex_version(self, version: String) -> Self {
+    pub fn set_x_plex_version<S: Into<String>>(self, version: S) -> Self {
         Self {
             client: self.client.map(move |mut client| {
-                client.x_plex_version = version;
+                client.x_plex_version = version.into();
                 client
             }),
         }
     }
 
-    pub fn set_x_plex_device(self, device: String) -> Self {
+    pub fn set_x_plex_device<S: Into<String>>(self, device: S) -> Self {
         Self {
             client: self.client.map(move |mut client| {
-                client.x_plex_device = device;
+                client.x_plex_device = device.into();
                 client
             }),
         }
     }
 
-    pub fn set_x_plex_device_name(self, device_name: String) -> Self {
+    pub fn set_x_plex_device_name<S: Into<String>>(self, device_name: S) -> Self {
         Self {
             client: self.client.map(move |mut client| {
-                client.x_plex_device_name = device_name;
+                client.x_plex_device_name = device_name.into();
                 client
             }),
         }
     }
 
-    pub fn set_x_plex_model(self, model: String) -> Self {
+    pub fn set_x_plex_model<S: Into<String>>(self, model: S) -> Self {
         Self {
             client: self.client.map(move |mut client| {
-                client.x_plex_model = model;
+                client.x_plex_model = model.into();
                 client
             }),
         }
     }
 
-    pub fn set_x_plex_features(self, features: String) -> Self {
+    pub fn set_x_plex_features<S: Into<String>>(self, features: S) -> Self {
         Self {
             client: self.client.map(move |mut client| {
-                client.x_plex_features = features;
+                client.x_plex_features = features.into();
                 client
             }),
         }
