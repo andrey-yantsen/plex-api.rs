@@ -1,4 +1,10 @@
-#![deny(unreachable_pub)]
+#![deny(
+    unreachable_pub,
+    clippy::dbg_macro,
+    clippy::print_stdout,
+    clippy::print_stderr
+)]
+
 //! TODO
 //!
 mod error;
