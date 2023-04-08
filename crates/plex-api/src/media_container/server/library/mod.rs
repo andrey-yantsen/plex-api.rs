@@ -456,6 +456,19 @@ pub struct Tag {
 
 #[derive(Debug, Deserialize, Clone)]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
+pub struct Collection {
+    #[serde(default, deserialize_with = "deserialize_option_number_from_string")]
+    pub id: Option<u32>,
+    pub tag: String,
+    pub filter: Option<String>,
+    #[serde(default, deserialize_with = "deserialize_option_number_from_string")]
+    pub count: Option<u32>,
+    pub guid: Option<Guid>,
+    pub summary: Option<String>,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+#[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 pub struct Review {
     #[serde(default, deserialize_with = "deserialize_number_from_string")]
     pub id: u32,
@@ -563,6 +576,64 @@ pub struct Chapter {
     pub end_time_offset: u64,
 }
 
+pub(crate) fn deserialize_marker_type<'de, D>(deserializer: D) -> Result<MarkerType, D::Error>
+where
+    D: Deserializer<'de>,
+{
+    #[derive(Debug, Deserialize)]
+    #[serde(rename_all = "camelCase")]
+    struct Helper {
+        r#type: String,
+        r#final: Option<bool>,
+    }
+
+    let m = Helper::deserialize(deserializer)?;
+
+    match m.r#type.as_str() {
+        "intro" => Ok(MarkerType::Intro),
+        "credits" => Ok(MarkerType::Credits(m.r#final.unwrap_or_default())),
+        #[cfg(not(feature = "tests_deny_unknown_fields"))]
+        _ => Ok(MarkerType::Unknown(m.r#type)),
+        #[cfg(feature = "tests_deny_unknown_fields")]
+        _ => {
+            return Err(serde::de::Error::unknown_variant(
+                m.r#type.as_str(),
+                &["credits", "intro"],
+            ))
+        }
+    }
+}
+
+#[derive(Debug, Clone)]
+pub enum MarkerType {
+    /// Credits marker. If the inner value is `true` then it's the latest credits sequence in the media.
+    Credits(bool),
+    Intro,
+    #[cfg(not(feature = "tests_deny_unknown_fields"))]
+    Unknown(String),
+}
+
+#[derive(Debug, Deserialize, Clone)]
+#[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
+#[serde(rename_all = "camelCase")]
+pub struct MarkerAttributes {
+    pub id: u32,
+    pub version: Option<u32>,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+#[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
+#[serde(rename_all = "camelCase")]
+pub struct Marker {
+    pub id: u32,
+    pub start_time_offset: u32,
+    pub end_time_offset: u32,
+    #[serde(flatten, deserialize_with = "deserialize_marker_type")]
+    pub marker_type: MarkerType,
+    #[serde(rename = "Attributes")]
+    pub attributes: MarkerAttributes,
+}
+
 #[derive(Debug, Deserialize, Clone)]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
@@ -658,7 +729,7 @@ pub struct Metadata {
     #[serde(default, rename = "Guid")]
     pub guids: Vec<Guid>,
     #[serde(default, rename = "Collection")]
-    pub collections: Vec<Tag>,
+    pub collections: Vec<Collection>,
     #[serde(default, rename = "Similar")]
     pub similar: Vec<Tag>,
     #[serde(default, rename = "Genre")]
@@ -703,6 +774,9 @@ pub struct Metadata {
 
     #[serde(rename = "OnDeck")]
     pub on_deck: Option<Box<OnDeck>>,
+
+    #[serde(default, rename = "Marker")]
+    pub markers: Vec<Marker>,
 
     #[serde(rename = "Media")]
     pub media: Option<Vec<Media>>,
