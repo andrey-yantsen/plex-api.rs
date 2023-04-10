@@ -336,6 +336,11 @@ impl FromMetadata for Video {
     }
 }
 
+impl MediaItem for Video {}
+impl MediaItemWithTranscoding for Video {
+    type Options = VideoTranscodeOptions;
+}
+
 #[derive(Debug, Clone)]
 pub struct Playlist<M> {
     _items: PhantomData<M>,
