@@ -46,7 +46,7 @@ jobs:
           perl -0pi -e "s/!PMS_TAGS_LIST!/$plex_tags/sm" README.md
       - name: Create Pull Request
         id: cpr
-        uses: peter-evans/create-pull-request@v4
+        uses: peter-evans/create-pull-request@v5
         with:
           token: "${{ secrets.PAT_GITHUB_PR }}"
           commit-message: "ci: update PMS versions"
