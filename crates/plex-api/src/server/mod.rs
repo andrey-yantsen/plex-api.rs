@@ -143,11 +143,21 @@ impl Server {
     /// Retrieves the transcode session with the passed ID.
     #[tracing::instrument(level = "debug", skip(self))]
     pub async fn transcode_session(&self, session_id: &str) -> Result<TranscodeSession> {
-        let wrapper: MediaContainerWrapper<TranscodeSessionsMediaContainer> = self
+        let wrapper: MediaContainerWrapper<TranscodeSessionsMediaContainer> = match self
             .client
             .get(format!("{SERVER_TRANSCODE_SESSIONS}/{session_id}"))
             .json()
-            .await?;
+            .await
+        {
+            Ok(w) => w,
+            Err(Error::UnexpectedApiResponse {
+                status_code: 404,
+                content: _,
+            }) => {
+                return Err(crate::Error::ItemNotFound);
+            }
+            Err(e) => return Err(e),
+        };
         let stats = wrapper
             .media_container
             .transcode_sessions

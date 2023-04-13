@@ -196,6 +196,21 @@ mod offline {
         m.delete();
 
         assert!(matches!(error, plex_api::Error::ItemNotFound));
+
+        let mut m = mock_server.mock(|when, then| {
+            when.method(GET).path("/transcode/sessions/gfbrgbrbrfber");
+            then.status(404);
+        });
+
+        let error = server
+            .transcode_session("gfbrgbrbrfber")
+            .await
+            .err()
+            .unwrap();
+        m.assert();
+        m.delete();
+
+        assert!(matches!(error, plex_api::Error::ItemNotFound));
     }
 
     mod movie {
@@ -1380,6 +1395,14 @@ mod online {
                 // Offline transcoding is only supported with a subscription.
                 return;
             }
+
+            let error = server
+                .transcode_session("gfbrgbrbrfber")
+                .await
+                .err()
+                .unwrap();
+
+            assert!(matches!(error, plex_api::Error::ItemNotFound));
 
             let movie: Movie = server.item_by_id(57).await.unwrap().try_into().unwrap();
             assert_eq!(movie.title(), "Sintel");
