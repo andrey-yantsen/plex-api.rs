@@ -1048,6 +1048,16 @@ mod online {
         HttpClientBuilder, Server,
     };
 
+    macro_rules! verify_no_sessions {
+        ($srv:ident) => {
+            #[cfg(not(feature = "tests_shared_server_access_token"))]
+            {
+                let sessions = $srv.transcode_sessions().await.unwrap();
+                assert_eq!(sessions.len(), 0);
+            }
+        };
+    }
+
     // Delays up to 5 seconds for the predicate to return true. Useful for
     // waiting on the server to complete some operation.
     #[cfg_attr(feature = "tests_shared_server_access_token", allow(dead_code))]
@@ -1081,20 +1091,13 @@ mod online {
             .await
             .unwrap();
 
-        #[cfg(not(feature = "tests_shared_server_access_token"))]
-        verify_no_sessions(&server).await;
+        verify_no_sessions!(server);
 
         #[cfg_attr(
             feature = "tests_shared_server_access_token",
             allow(clippy::let_and_return)
         )]
         server
-    }
-
-    #[cfg(not(feature = "tests_shared_server_access_token"))]
-    async fn verify_no_sessions(server: &Server) {
-        let sessions = server.transcode_sessions().await.unwrap();
-        assert_eq!(sessions.len(), 0);
     }
 
     /// Checks the session was correct.
@@ -1184,10 +1187,10 @@ mod online {
             let session = part
                 .create_streaming_session(
                     Protocol::Dash,
-                    // These settings will force transcoding as the original is too
-                    // high a bitrate and has a different audio codec.
+                    // These settings will force transcoding as the original has
+                    // higher bitrate and has a different audio codec.
                     VideoTranscodeOptions {
-                        bitrate: 2000,
+                        bitrate: 110,
                         video_codecs: vec![VideoCodec::H264],
                         audio_codecs: vec![AudioCodec::Mp3],
                         ..Default::default()
@@ -1211,8 +1214,7 @@ mod online {
 
             cancel(&server, session).await;
 
-            #[cfg(not(feature = "tests_shared_server_access_token"))]
-            verify_no_sessions(&server).await;
+            verify_no_sessions!(server);
         }
 
         #[plex_api_test_helper::online_test]
@@ -1257,8 +1259,7 @@ mod online {
 
             cancel(&server, session).await;
 
-            #[cfg(not(feature = "tests_shared_server_access_token"))]
-            verify_no_sessions(&server).await;
+            verify_no_sessions!(server);
         }
 
         #[plex_api_test_helper::online_test]
@@ -1274,10 +1275,10 @@ mod online {
             let session = part
                 .create_streaming_session(
                     Protocol::Hls,
-                    // These settings will force transcoding as the original is too
-                    // high a bitrate and has a different audio codec.
+                    // These settings will force transcoding as the original has
+                    // higher bitrate and has a different audio codec.
                     VideoTranscodeOptions {
-                        bitrate: 2000,
+                        bitrate: 110,
                         video_codecs: vec![VideoCodec::H264],
                         audio_codecs: vec![AudioCodec::Mp3],
                         ..Default::default()
@@ -1317,8 +1318,7 @@ mod online {
 
             cancel(&server, session).await;
 
-            #[cfg(not(feature = "tests_shared_server_access_token"))]
-            verify_no_sessions(&server).await;
+            verify_no_sessions!(server);
         }
 
         #[plex_api_test_helper::online_test]
@@ -1379,13 +1379,11 @@ mod online {
 
             cancel(&server, session).await;
 
-            #[cfg(not(feature = "tests_shared_server_access_token"))]
-            verify_no_sessions(&server).await;
+            verify_no_sessions!(server);
         }
 
         #[plex_api_test_helper::online_test_non_shared_server]
-        async fn check_unknown_transcoding_session_response(#[future] server_claimed: Server) {
-            let server = generify(server_claimed).await;
+        async fn check_unknown_transcoding_session_response(#[future] server: Server) {
             let error = server
                 .transcode_session("gfbrgbrbrfber")
                 .await
@@ -1416,10 +1414,10 @@ mod online {
 
             let session = part
                 .create_download_session(
-                    // These settings will force transcoding as the original is too
-                    // high a bitrate and has a different audio codec.
+                    // These settings will force transcoding as the original has
+                    // higher bitrate and has a different audio codec.
                     VideoTranscodeOptions {
-                        bitrate: 2000,
+                        bitrate: 110,
                         video_codecs: vec![VideoCodec::H264],
                         audio_codecs: vec![AudioCodec::Mp3],
                         ..Default::default()
@@ -1441,8 +1439,7 @@ mod online {
 
             cancel(&server, session).await;
 
-            #[cfg(not(feature = "tests_shared_server_access_token"))]
-            verify_no_sessions(&server).await;
+            verify_no_sessions!(server);
         }
 
         #[plex_api_test_helper::online_test_claimed_server]
@@ -1507,6 +1504,7 @@ mod online {
 
             let mut buf = Vec::<u8>::new();
             session.download(&mut buf).await.unwrap();
+            cancel(&server, session).await;
 
             // Verify that the file is a valid MP4 container and the tracks are
             // expected.
@@ -1523,7 +1521,7 @@ mod online {
             assert!(matches!(video.media_type(), Ok(MediaType::H264)));
             assert_eq!(video.width(), 1280);
             assert_eq!(video.height(), 720);
-            assert!(matches!(video.video_profile(), Ok(AvcProfile::AvcMain)));
+            assert!(matches!(video.video_profile(), Ok(AvcProfile::AvcHigh)));
             assert!(videos.next().is_none());
 
             let mut audios = mp4
@@ -1535,10 +1533,7 @@ mod online {
             assert!(matches!(audio.media_type(), Ok(MediaType::AAC)));
             assert!(audios.next().is_none());
 
-            cancel(&server, session).await;
-
-            #[cfg(not(feature = "tests_shared_server_access_token"))]
-            verify_no_sessions(&server).await;
+            verify_no_sessions!(server);
         }
 
         #[plex_api_test_helper::online_test_claimed_server]
@@ -1631,8 +1626,7 @@ mod online {
 
             cancel(&server, session).await;
 
-            #[cfg(not(feature = "tests_shared_server_access_token"))]
-            verify_no_sessions(&server).await;
+            verify_no_sessions!(server);
         }
 
         #[plex_api_test_helper::online_test]
@@ -1673,8 +1667,7 @@ mod online {
 
             cancel(&server, session).await;
 
-            #[cfg(not(feature = "tests_shared_server_access_token"))]
-            verify_no_sessions(&server).await;
+            verify_no_sessions!(server);
         }
 
         #[plex_api_test_helper::online_test]
@@ -1732,8 +1725,7 @@ mod online {
 
             cancel(&server, session).await;
 
-            #[cfg(not(feature = "tests_shared_server_access_token"))]
-            verify_no_sessions(&server).await;
+            verify_no_sessions!(server);
         }
 
         #[plex_api_test_helper::online_test]
@@ -1746,8 +1738,7 @@ mod online {
             let media = &track.media()[0];
             let part = &media.parts()[0];
 
-            #[cfg(not(feature = "tests_shared_server_access_token"))]
-            verify_no_sessions(&server).await;
+            verify_no_sessions!(server);
 
             let session = part
                 .create_streaming_session(
@@ -1793,8 +1784,7 @@ mod online {
 
             cancel(&server, session).await;
 
-            #[cfg(not(feature = "tests_shared_server_access_token"))]
-            verify_no_sessions(&server).await;
+            verify_no_sessions!(server);
         }
 
         #[plex_api_test_helper::online_test_claimed_server]
@@ -1816,8 +1806,7 @@ mod online {
             let media = &track.media()[0];
             let part = &media.parts()[0];
 
-            #[cfg(not(feature = "tests_shared_server_access_token"))]
-            verify_no_sessions(&server).await;
+            verify_no_sessions!(server);
 
             let session = part
                 .create_download_session(
@@ -1867,8 +1856,7 @@ mod online {
 
             cancel(&server, session).await;
 
-            #[cfg(not(feature = "tests_shared_server_access_token"))]
-            verify_no_sessions(&server).await;
+            verify_no_sessions!(server);
         }
 
         #[plex_api_test_helper::online_test_claimed_server]

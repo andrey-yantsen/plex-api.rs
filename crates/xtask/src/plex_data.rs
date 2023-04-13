@@ -9,55 +9,67 @@ use std::{
 use xshell::Shell;
 
 const STUB_PICTURE: &str = "white_noise_720p.jpg";
-const STUB_VIDEO: &str = "white_noise_720p.mkv";
-const STUB_VIDEO_2: &str = "white_noise_720p_h265.mp4";
+const STUB_VIDEO_1: &str = "testsrc_720p_h264_v1.mkv";
+const STUB_VIDEO_2: &str = "testsrc_720p_h264_v2.mkv";
+const STUB_VIDEO_3: &str = "white_noise_720p_h265.mp4";
 const STUB_AUDIO: &str = "white_noise.aac";
 
-const LIBRARY_VIDEOS: [(&str, &str); 41] = [
+const LIBRARY_VIDEOS_1: [(&str, &str); 6] = [
     ("Movies", "Big Buck Bunny (2008) - part1.mkv"),
     ("Movies", "Big Buck Bunny (2008) - part2.mkv"),
     ("Movies", "Elephants Dream (2006).mkv"),
     ("Movies", "Sintel (2010).mkv"),
     ("Movies", "Interstate 60 (2002).mkv"),
-    ("TV-Shows/Game of Thrones", "Game.of.Thrones.S01E01.mkv"),
-    ("TV-Shows/Game of Thrones", "Game.of.Thrones.S01E02.mkv"),
-    ("TV-Shows/Game of Thrones", "Game.of.Thrones.S01E03.mkv"),
-    ("TV-Shows/Game of Thrones", "Game.of.Thrones.S01E04.mkv"),
-    ("TV-Shows/Game of Thrones", "Game.of.Thrones.S01E05.mkv"),
-    ("TV-Shows/Game of Thrones", "Game.of.Thrones.S01E06.mkv"),
-    ("TV-Shows/Game of Thrones", "Game.of.Thrones.S01E07.mkv"),
-    ("TV-Shows/Game of Thrones", "Game.of.Thrones.S01E08.mkv"),
-    ("TV-Shows/Game of Thrones", "Game.of.Thrones.S01E09.mkv"),
-    ("TV-Shows/Game of Thrones", "Game.of.Thrones.S02E01.mkv"),
-    ("TV-Shows/Game of Thrones", "Game.of.Thrones.S02E02.mkv"),
-    ("TV-Shows/Game of Thrones", "Game.of.Thrones.S02E03.mkv"),
-    ("TV-Shows/Game of Thrones", "Game.of.Thrones.S02E04.mkv"),
-    ("TV-Shows/Game of Thrones", "Game.of.Thrones.S02E05.mkv"),
-    ("TV-Shows/Game of Thrones", "Game.of.Thrones.S02E06.mkv"),
-    ("TV-Shows/Game of Thrones", "Game.of.Thrones.S02E07.mkv"),
-    ("TV-Shows/Game of Thrones", "Game.of.Thrones.S02E08.mkv"),
-    ("TV-Shows/Game of Thrones", "Game.of.Thrones.S02E09.mkv"),
-    ("TV-Shows/The 100", "The.100.S01E01.mkv"),
-    ("TV-Shows/The 100", "The.100.S01E02.mkv"),
-    ("TV-Shows/The 100", "The.100.S01E03.mkv"),
-    ("TV-Shows/The 100", "The.100.S01E04.mkv"),
-    ("TV-Shows/The 100", "The.100.S01E05.mkv"),
-    ("TV-Shows/The 100", "The.100.S01E06.mkv"),
-    ("TV-Shows/The 100", "The.100.S01E07.mkv"),
-    ("TV-Shows/The 100", "The.100.S01E08.mkv"),
-    ("TV-Shows/The 100", "The.100.S01E09.mkv"),
-    ("TV-Shows/The 100", "The.100.S02E01.mkv"),
-    ("TV-Shows/The 100", "The.100.S02E02.mkv"),
-    ("TV-Shows/The 100", "The.100.S02E03.mkv"),
-    ("TV-Shows/The 100", "The.100.S02E04.mkv"),
-    ("TV-Shows/The 100", "The.100.S02E05.mkv"),
-    ("TV-Shows/The 100", "The.100.S02E06.mkv"),
-    ("TV-Shows/The 100", "The.100.S02E07.mkv"),
-    ("TV-Shows/The 100", "The.100.S02E08.mkv"),
-    ("TV-Shows/The 100", "The.100.S02E09.mkv"),
+    (
+        "TV-Shows/The Big Bang Theory",
+        "The.Big.Bang.Theory.S01E01.mkv",
+    ),
 ];
 
-const LIBRARY_VIDEOS_2: [(&str, &str); 1] = [("Movies", "Elephants Dream (2006).mp4")];
+const LIBRARY_VIDEOS_2: [(&str, &str); 1] = [(
+    "TV-Shows/The Big Bang Theory",
+    "The.Big.Bang.Theory.S01E02.mkv",
+)];
+
+const LIBRARY_VIDEOS_3: [(&str, &str); 37] = [
+    ("Movies", "Elephants Dream (2006).mp4"),
+    ("TV-Shows/Game of Thrones", "Game.of.Thrones.S01E01.mkv"),
+    ("TV-Shows/Game of Thrones", "Game.of.Thrones.S01E02.mp4"),
+    ("TV-Shows/Game of Thrones", "Game.of.Thrones.S01E03.mp4"),
+    ("TV-Shows/Game of Thrones", "Game.of.Thrones.S01E04.mp4"),
+    ("TV-Shows/Game of Thrones", "Game.of.Thrones.S01E05.mp4"),
+    ("TV-Shows/Game of Thrones", "Game.of.Thrones.S01E06.mp4"),
+    ("TV-Shows/Game of Thrones", "Game.of.Thrones.S01E07.mp4"),
+    ("TV-Shows/Game of Thrones", "Game.of.Thrones.S01E08.mp4"),
+    ("TV-Shows/Game of Thrones", "Game.of.Thrones.S01E09.mp4"),
+    ("TV-Shows/Game of Thrones", "Game.of.Thrones.S02E01.mp4"),
+    ("TV-Shows/Game of Thrones", "Game.of.Thrones.S02E02.mp4"),
+    ("TV-Shows/Game of Thrones", "Game.of.Thrones.S02E03.mp4"),
+    ("TV-Shows/Game of Thrones", "Game.of.Thrones.S02E04.mp4"),
+    ("TV-Shows/Game of Thrones", "Game.of.Thrones.S02E05.mp4"),
+    ("TV-Shows/Game of Thrones", "Game.of.Thrones.S02E06.mp4"),
+    ("TV-Shows/Game of Thrones", "Game.of.Thrones.S02E07.mp4"),
+    ("TV-Shows/Game of Thrones", "Game.of.Thrones.S02E08.mp4"),
+    ("TV-Shows/Game of Thrones", "Game.of.Thrones.S02E09.mp4"),
+    ("TV-Shows/The 100", "The.100.S01E01.mp4"),
+    ("TV-Shows/The 100", "The.100.S01E02.mp4"),
+    ("TV-Shows/The 100", "The.100.S01E03.mp4"),
+    ("TV-Shows/The 100", "The.100.S01E04.mp4"),
+    ("TV-Shows/The 100", "The.100.S01E05.mp4"),
+    ("TV-Shows/The 100", "The.100.S01E06.mp4"),
+    ("TV-Shows/The 100", "The.100.S01E07.mp4"),
+    ("TV-Shows/The 100", "The.100.S01E08.mp4"),
+    ("TV-Shows/The 100", "The.100.S01E09.mp4"),
+    ("TV-Shows/The 100", "The.100.S02E01.mp4"),
+    ("TV-Shows/The 100", "The.100.S02E02.mp4"),
+    ("TV-Shows/The 100", "The.100.S02E03.mp4"),
+    ("TV-Shows/The 100", "The.100.S02E04.mp4"),
+    ("TV-Shows/The 100", "The.100.S02E05.mp4"),
+    ("TV-Shows/The 100", "The.100.S02E06.mp4"),
+    ("TV-Shows/The 100", "The.100.S02E07.mp4"),
+    ("TV-Shows/The 100", "The.100.S02E08.mp4"),
+    ("TV-Shows/The 100", "The.100.S02E09.mp4"),
+];
 
 const LIBRARY_PICTURES: [(&str, &str); 9] = [
     ("Photos/Cats", "Picture1.jpg"),
@@ -140,15 +152,21 @@ impl flags::PlexData {
         let media_path = plex_data_path.join("media");
         self.populate(
             is_hardlink_supported,
-            &plex_stub_data_media_path.join(STUB_VIDEO),
+            &plex_stub_data_media_path.join(STUB_VIDEO_1),
             &media_path,
-            &LIBRARY_VIDEOS,
+            &LIBRARY_VIDEOS_1,
         )?;
         self.populate(
             is_hardlink_supported,
             &plex_stub_data_media_path.join(STUB_VIDEO_2),
             &media_path,
             &LIBRARY_VIDEOS_2,
+        )?;
+        self.populate(
+            is_hardlink_supported,
+            &plex_stub_data_media_path.join(STUB_VIDEO_3),
+            &media_path,
+            &LIBRARY_VIDEOS_3,
         )?;
         self.populate(
             is_hardlink_supported,

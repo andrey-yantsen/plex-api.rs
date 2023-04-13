@@ -574,6 +574,7 @@ pub struct Chapter {
     pub index: u32,
     pub start_time_offset: u64,
     pub end_time_offset: u64,
+    pub tag: Option<String>,
     pub thumb: Option<String>,
 }
 

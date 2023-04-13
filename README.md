@@ -43,6 +43,8 @@ Rust-way — feel free to create an issue (or, better, pull-request) to correct 
   * [x] Managing the server preferences
 * [ ] Advanced server access
   * [ ] Managing the libraries
+  * [ ] Changing items' metadata
+  * [ ] Changing items' preferences (e.g. metadata language)
   * [ ] Listening for the server's events/alers
   * [ ] Server stats reading
   * [ ] Managing optimized versions of media

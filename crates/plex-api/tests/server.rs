@@ -512,10 +512,13 @@ mod online {
         let shows = library.shows().await.unwrap();
         assert_eq!(
             map(&shows, |e| e.title().to_owned()),
-            vec!["The 100", "Game of Thrones"]
+            vec!["The 100", "The Big Bang Theory", "Game of Thrones"]
         );
 
-        assert_eq!(map(&shows, |e| e.rating_key().to_owned()), vec![22, 68,]);
+        assert_eq!(
+            map(&shows, |e| e.rating_key().to_owned()),
+            vec![22, 176, 68,]
+        );
 
         let seasons = shows[0].seasons().await.unwrap();
         assert_eq!(
@@ -610,7 +613,8 @@ mod online {
             ]
         );
 
-        let seasons = shows[1].seasons().await.unwrap();
+        // Show with idx=3 is is 'Game of Thrones'
+        let seasons = shows[2].seasons().await.unwrap();
         assert_eq!(
             map(&seasons, |e| e.title().to_owned()),
             vec!["Season 1", "Season 2"]
@@ -710,6 +714,7 @@ mod online {
         assert_eq!(
             map(&videos, |e| e.title().to_owned()),
             vec![
+                "The Big Bran Hypothesis",
                 "The Ghost of Harrenhal",
                 "His Sister's Keeper",
                 "Human Trials",
@@ -721,7 +726,6 @@ mod online {
         assert!(matches!(videos[1], Video::Episode(_)));
         assert!(matches!(videos[2], Video::Episode(_)));
         assert!(matches!(videos[3], Video::Episode(_)));
-        assert!(matches!(videos[4], Video::Episode(_)));
 
         let videos = playlists[1].children().await.unwrap();
         assert_eq!(
@@ -998,7 +1002,7 @@ mod online {
 
     #[plex_api_test_helper::online_test]
     async fn download(#[future] server: Server) {
-        let mkv_file = include_bytes!("../../../plex-stub-data/media/white_noise_720p.mkv");
+        let mkv_file = include_bytes!("../../../plex-stub-data/media/testsrc_720p_h264_v1.mkv");
         let mp4_file = include_bytes!("../../../plex-stub-data/media/white_noise_720p_h265.mp4");
         let aac_file = include_bytes!("../../../plex-stub-data/media/white_noise.aac");
         let jpg_file = include_bytes!("../../../plex-stub-data/media/white_noise_720p.jpg");
@@ -1095,7 +1099,7 @@ mod online {
         let mut buf = Vec::new();
         parts[0].download(&mut buf, 4..5).await.unwrap();
         assert_eq!(buf.len(), 1);
-        assert_eq!(&buf[..], &mkv_file[4..5]);
+        assert_eq!(&buf[..], &mp4_file[4..5]);
 
         let track: Track = server.item_by_id(158).await.unwrap().try_into().unwrap();
         let media = track.media();
