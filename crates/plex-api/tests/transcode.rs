@@ -1383,6 +1383,18 @@ mod online {
             verify_no_sessions(&server).await;
         }
 
+        #[plex_api_test_helper::online_test_non_shared_server]
+        async fn check_unknown_transcoding_session_response(#[future] server_claimed: Server) {
+            let server = generify(server_claimed).await;
+            let error = server
+                .transcode_session("gfbrgbrbrfber")
+                .await
+                .err()
+                .unwrap();
+
+            assert!(matches!(error, plex_api::Error::ItemNotFound));
+        }
+
         #[plex_api_test_helper::online_test_claimed_server]
         async fn offline_transcode(#[future] server_claimed: Server) {
             let server = generify(server_claimed).await;
@@ -1395,14 +1407,6 @@ mod online {
                 // Offline transcoding is only supported with a subscription.
                 return;
             }
-
-            let error = server
-                .transcode_session("gfbrgbrbrfber")
-                .await
-                .err()
-                .unwrap();
-
-            assert!(matches!(error, plex_api::Error::ItemNotFound));
 
             let movie: Movie = server.item_by_id(57).await.unwrap().try_into().unwrap();
             assert_eq!(movie.title(), "Sintel");
