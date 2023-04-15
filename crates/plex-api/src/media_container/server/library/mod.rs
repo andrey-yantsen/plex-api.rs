@@ -709,6 +709,8 @@ pub struct Metadata {
     #[serde(default, deserialize_with = "deserialize_option_number_from_string")]
     pub loudness_analysis_version: Option<u32>,
     #[serde(default, deserialize_with = "optional_boolish")]
+    pub has_premium_extras: Option<bool>,
+    #[serde(default, deserialize_with = "optional_boolish")]
     pub has_premium_primary_extra: Option<bool>,
     pub view_offset: Option<u64>,
     pub chapter_source: Option<ChapterSource>,
