@@ -50,8 +50,8 @@ pub trait MetadataItem {
     ///
     /// This can be used to re-retrieve the item at a later time through the
     /// Server::item_by_id function.
-    fn rating_key(&self) -> u32 {
-        self.metadata().rating_key
+    fn rating_key(&self) -> &str {
+        self.metadata().rating_key.as_str()
     }
 
     /// Returns the title of this item.

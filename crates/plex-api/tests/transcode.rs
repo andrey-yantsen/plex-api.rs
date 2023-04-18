@@ -232,7 +232,12 @@ mod offline {
                     .body_from_file("tests/mocks/transcode/metadata_159637.json");
             });
 
-            let item: Movie = server.item_by_id(159637).await.unwrap().try_into().unwrap();
+            let item: Movie = server
+                .item_by_id("159637")
+                .await
+                .unwrap()
+                .try_into()
+                .unwrap();
             m.assert();
             m.delete();
 
@@ -614,7 +619,12 @@ mod offline {
                     .body_from_file("tests/mocks/transcode/metadata_159637.json");
             });
 
-            let item: Movie = server.item_by_id(159637).await.unwrap().try_into().unwrap();
+            let item: Movie = server
+                .item_by_id("159637")
+                .await
+                .unwrap()
+                .try_into()
+                .unwrap();
             m.assert();
             m.delete();
 
@@ -780,7 +790,7 @@ mod offline {
                     .body_from_file("tests/mocks/transcode/metadata_1036.json");
             });
 
-            let item: Movie = server.item_by_id(1036).await.unwrap().try_into().unwrap();
+            let item: Movie = server.item_by_id("1036").await.unwrap().try_into().unwrap();
             m.assert();
             m.delete();
 
@@ -826,7 +836,12 @@ mod offline {
                     .body_from_file("tests/mocks/transcode/metadata_157786.json");
             });
 
-            let item: Track = server.item_by_id(157786).await.unwrap().try_into().unwrap();
+            let item: Track = server
+                .item_by_id("157786")
+                .await
+                .unwrap()
+                .try_into()
+                .unwrap();
             m.assert();
             m.delete();
 
@@ -915,7 +930,12 @@ mod offline {
                     .body_from_file("tests/mocks/transcode/metadata_157786.json");
             });
 
-            let item: Track = server.item_by_id(157786).await.unwrap().try_into().unwrap();
+            let item: Track = server
+                .item_by_id("157786")
+                .await
+                .unwrap()
+                .try_into()
+                .unwrap();
             m.assert();
             m.delete();
 
@@ -966,7 +986,12 @@ mod offline {
                     .body_from_file("tests/mocks/transcode/metadata_159637.json");
             });
 
-            let item: Movie = server.item_by_id(159637).await.unwrap().try_into().unwrap();
+            let item: Movie = server
+                .item_by_id("159637")
+                .await
+                .unwrap()
+                .try_into()
+                .unwrap();
             m.assert();
             m.delete();
 
@@ -1178,7 +1203,7 @@ mod online {
         async fn dash_transcode(#[future] server: Server) {
             let server = generify(server).await;
 
-            let movie: Movie = server.item_by_id(55).await.unwrap().try_into().unwrap();
+            let movie: Movie = server.item_by_id("55").await.unwrap().try_into().unwrap();
             assert_eq!(movie.title(), "Big Buck Bunny");
 
             let media = &movie.media()[0];
@@ -1221,7 +1246,7 @@ mod online {
         async fn dash_transcode_copy(#[future] server: Server) {
             let server = generify(server).await;
 
-            let movie: Movie = server.item_by_id(57).await.unwrap().try_into().unwrap();
+            let movie: Movie = server.item_by_id("57").await.unwrap().try_into().unwrap();
             assert_eq!(movie.title(), "Sintel");
 
             let media = &movie.media()[0];
@@ -1266,7 +1291,7 @@ mod online {
         async fn hls_transcode(#[future] server: Server) {
             let server = generify(server).await;
 
-            let movie: Movie = server.item_by_id(55).await.unwrap().try_into().unwrap();
+            let movie: Movie = server.item_by_id("55").await.unwrap().try_into().unwrap();
             assert_eq!(movie.title(), "Big Buck Bunny");
 
             let media = &movie.media()[0];
@@ -1325,7 +1350,7 @@ mod online {
         async fn hls_transcode_copy(#[future] server: Server) {
             let server = generify(server).await;
 
-            let movie: Movie = server.item_by_id(55).await.unwrap().try_into().unwrap();
+            let movie: Movie = server.item_by_id("55").await.unwrap().try_into().unwrap();
             assert_eq!(movie.title(), "Big Buck Bunny");
 
             let media = &movie.media()[0];
@@ -1406,7 +1431,7 @@ mod online {
                 return;
             }
 
-            let movie: Movie = server.item_by_id(57).await.unwrap().try_into().unwrap();
+            let movie: Movie = server.item_by_id("57").await.unwrap().try_into().unwrap();
             assert_eq!(movie.title(), "Sintel");
 
             let media = &movie.media()[0];
@@ -1455,7 +1480,7 @@ mod online {
                 return;
             }
 
-            let movie: Movie = server.item_by_id(57).await.unwrap().try_into().unwrap();
+            let movie: Movie = server.item_by_id("57").await.unwrap().try_into().unwrap();
             assert_eq!(movie.title(), "Sintel");
 
             let media = &movie.media()[0];
@@ -1549,7 +1574,7 @@ mod online {
                 return;
             }
 
-            let movie: Movie = server.item_by_id(57).await.unwrap().try_into().unwrap();
+            let movie: Movie = server.item_by_id("57").await.unwrap().try_into().unwrap();
             assert_eq!(movie.title(), "Sintel");
 
             let media = &movie.media()[0];
@@ -1591,7 +1616,7 @@ mod online {
         async fn dash_transcode(#[future] server: Server) {
             let server = generify(server).await;
 
-            let track: Track = server.item_by_id(158).await.unwrap().try_into().unwrap();
+            let track: Track = server.item_by_id("158").await.unwrap().try_into().unwrap();
             assert_eq!(track.title(), "Try It Out (Neon mix)");
 
             let media = &track.media()[0];
@@ -1633,7 +1658,7 @@ mod online {
         async fn dash_transcode_copy(#[future] server: Server) {
             let server = generify(server).await;
 
-            let track: Track = server.item_by_id(158).await.unwrap().try_into().unwrap();
+            let track: Track = server.item_by_id("158").await.unwrap().try_into().unwrap();
             assert_eq!(track.title(), "Try It Out (Neon mix)");
 
             let media = &track.media()[0];
@@ -1674,7 +1699,7 @@ mod online {
         async fn hls_transcode(#[future] server: Server) {
             let server = generify(server).await;
 
-            let track: Track = server.item_by_id(158).await.unwrap().try_into().unwrap();
+            let track: Track = server.item_by_id("158").await.unwrap().try_into().unwrap();
             assert_eq!(track.title(), "Try It Out (Neon mix)");
 
             let media = &track.media()[0];
@@ -1732,7 +1757,7 @@ mod online {
         async fn hls_transcode_copy(#[future] server: Server) {
             let server = generify(server).await;
 
-            let track: Track = server.item_by_id(158).await.unwrap().try_into().unwrap();
+            let track: Track = server.item_by_id("158").await.unwrap().try_into().unwrap();
             assert_eq!(track.title(), "Try It Out (Neon mix)");
 
             let media = &track.media()[0];
@@ -1800,7 +1825,7 @@ mod online {
                 return;
             }
 
-            let track: Track = server.item_by_id(158).await.unwrap().try_into().unwrap();
+            let track: Track = server.item_by_id("158").await.unwrap().try_into().unwrap();
             assert_eq!(track.title(), "Try It Out (Neon mix)");
 
             let media = &track.media()[0];
@@ -1872,7 +1897,7 @@ mod online {
                 return;
             }
 
-            let track: Track = server.item_by_id(158).await.unwrap().try_into().unwrap();
+            let track: Track = server.item_by_id("158").await.unwrap().try_into().unwrap();
             assert_eq!(track.title(), "Try It Out (Neon mix)");
 
             let media = &track.media()[0];
@@ -1909,7 +1934,7 @@ mod online {
         async fn transcode_art(#[future] server: Server) {
             let server = generify(server).await;
 
-            let movie: Movie = server.item_by_id(55).await.unwrap().try_into().unwrap();
+            let movie: Movie = server.item_by_id("55").await.unwrap().try_into().unwrap();
             assert_eq!(movie.title(), "Big Buck Bunny");
 
             let mut buf = Vec::<u8>::new();

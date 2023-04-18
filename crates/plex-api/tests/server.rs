@@ -102,7 +102,7 @@ mod offline {
 
         assert_eq!(
             map(&movies, |e| e.rating_key().to_owned()),
-            vec![55, 56, 108, 57]
+            vec!["55", "56", "108", "57"]
         );
     }
 
@@ -137,7 +137,7 @@ mod offline {
             vec!["The 100", "Game of Thrones",]
         );
 
-        assert_eq!(map(&shows, |e| e.rating_key().to_owned()), vec![22, 68,]);
+        assert_eq!(map(&shows, |e| e.rating_key().to_owned()), vec!["22", "68"]);
 
         let mut m = mock_server.mock(|when, then| {
             when.method(GET).path("/library/metadata/22/children");
@@ -155,7 +155,10 @@ mod offline {
             vec!["Season 1", "Season 2",]
         );
 
-        assert_eq!(map(&seasons, |e| e.rating_key().to_owned()), vec![89, 33,]);
+        assert_eq!(
+            map(&seasons, |e| e.rating_key().to_owned()),
+            vec!["89", "33"]
+        );
 
         let mut m = mock_server.mock(|when, then| {
             when.method(GET).path("/library/metadata/89/children");
@@ -175,7 +178,7 @@ mod offline {
 
         assert_eq!(
             map(&episodes, |e| e.rating_key().to_owned()),
-            vec![90, 91, 92]
+            vec!["90", "91", "92"]
         );
     }
 
@@ -204,7 +207,7 @@ mod offline {
         m.delete();
 
         assert_eq!(map(&albums, |e| e.title().to_owned()), vec!["Cats"]);
-        assert_eq!(map(&albums, |e| e.rating_key().to_owned()), vec![43]);
+        assert_eq!(map(&albums, |e| e.rating_key().to_owned()), vec!["43"]);
 
         let mut m = mock_server.mock(|when, then| {
             when.method(GET).path("/library/metadata/43/children");
@@ -222,7 +225,7 @@ mod offline {
             vec!["Cats in bed", "Picture1"]
         );
 
-        assert_eq!(map(&items, |e| e.rating_key().to_owned()), vec![64, 59]);
+        assert_eq!(map(&items, |e| e.rating_key().to_owned()), vec!["64", "59"]);
     }
 
     #[plex_api_test_helper::offline_test]
@@ -256,7 +259,10 @@ mod offline {
             vec!["Skrillex", "System of a Down"]
         );
 
-        assert_eq!(map(&artists, |e| e.rating_key().to_owned()), vec![156, 142]);
+        assert_eq!(
+            map(&artists, |e| e.rating_key().to_owned()),
+            vec!["156", "142"]
+        );
 
         let mut m = mock_server.mock(|when, then| {
             when.method(GET).path("/library/metadata/156/children");
@@ -270,7 +276,7 @@ mod offline {
         m.delete();
 
         assert_eq!(map(&albums, |e| e.title().to_owned()), vec!["Try It Out"]);
-        assert_eq!(map(&albums, |e| e.rating_key().to_owned()), vec![157]);
+        assert_eq!(map(&albums, |e| e.rating_key().to_owned()), vec!["157"]);
 
         let mut m = mock_server.mock(|when, then| {
             when.method(GET)
@@ -287,7 +293,7 @@ mod offline {
         m.delete();
 
         assert_eq!(map(&albums, |e| e.title().to_owned()), vec!["Try It Out"]);
-        assert_eq!(map(&albums, |e| e.rating_key().to_owned()), vec![157]);
+        assert_eq!(map(&albums, |e| e.rating_key().to_owned()), vec!["157"]);
 
         let mut m = mock_server.mock(|when, then| {
             when.method(GET).path("/library/metadata/157/children");
@@ -311,7 +317,7 @@ mod offline {
 
         assert_eq!(
             map(&tracks, |e| e.rating_key().to_owned()),
-            vec![158, 159, 160]
+            vec!["158", "159", "160"]
         );
     }
 
@@ -326,7 +332,7 @@ mod offline {
                 .body_from_file("tests/mocks/server/media/metadata_108.json");
         });
 
-        let item = server.item_by_id(108).await.unwrap();
+        let item = server.item_by_id("108").await.unwrap();
         assert_eq!(item.title(), "Interstate 60");
         assert!(<Item as TryInto<Movie>>::try_into(item).is_ok());
         m.assert();
@@ -339,7 +345,7 @@ mod offline {
                 .body_from_file("tests/mocks/server/media/metadata_168.json");
         });
 
-        let item = server.item_by_id(168).await.unwrap();
+        let item = server.item_by_id("168").await.unwrap();
         assert_eq!(item.title(), "Movies Since 2007");
         assert!(<Item as TryInto<Playlist<Video>>>::try_into(item).is_ok());
         m.assert();
@@ -352,7 +358,7 @@ mod offline {
                 .body_from_file("tests/mocks/server/media/metadata_161.json");
         });
 
-        let item = server.item_by_id(161).await.unwrap();
+        let item = server.item_by_id("161").await.unwrap();
         assert_eq!(item.title(), "Animation");
         assert!(<Item as TryInto<Collection<Movie>>>::try_into(item).is_ok());
         m.assert();
@@ -432,7 +438,7 @@ mod online {
         );
         assert_eq!(
             map(&movies, |e| e.rating_key().to_owned()),
-            vec![55, 56, 108, 57]
+            vec!["55", "56", "108", "57"]
         );
 
         let collections = library.collections().await.unwrap();
@@ -440,7 +446,10 @@ mod online {
             map(&collections, |e| e.title().to_owned()),
             vec!["Animation"]
         );
-        assert_eq!(map(&collections, |e| e.rating_key().to_owned()), vec![161]);
+        assert_eq!(
+            map(&collections, |e| e.rating_key().to_owned()),
+            vec!["161"]
+        );
 
         let movies = collections[0].children().await.unwrap();
         assert_eq!(
@@ -466,7 +475,7 @@ mod online {
         );
         assert_eq!(
             map(&playlists, |e| e.rating_key().to_owned()),
-            vec![168, 166, 164]
+            vec!["168", "166", "164"]
         );
 
         let videos = playlists[0].children().await.unwrap();
@@ -517,7 +526,7 @@ mod online {
 
         assert_eq!(
             map(&shows, |e| e.rating_key().to_owned()),
-            vec![22, 176, 68,]
+            vec!["22", "176", "68"]
         );
 
         let seasons = shows[0].seasons().await.unwrap();
@@ -525,7 +534,10 @@ mod online {
             map(&seasons, |e| e.title().to_owned()),
             vec!["Season 1", "Season 2"]
         );
-        assert_eq!(map(&seasons, |e| e.rating_key().to_owned()), vec![89, 33,]);
+        assert_eq!(
+            map(&seasons, |e| e.rating_key().to_owned()),
+            vec!["89", "33"]
+        );
         assert_eq!(seasons[0].season_number(), Some(1));
         assert_eq!(seasons[1].season_number(), Some(2));
 
@@ -548,7 +560,7 @@ mod online {
         );
         assert_eq!(
             map(&episodes, |e| e.rating_key().to_owned()),
-            vec![90, 91, 92, 93, 94, 95, 96, 97, 98]
+            vec!["90", "91", "92", "93", "94", "95", "96", "97", "98"]
         );
         assert_eq!(
             map(&episodes, |e| e.episode_number()),
@@ -684,7 +696,10 @@ mod online {
 
         let collections = library.collections().await.unwrap();
         assert_eq!(map(&collections, |e| e.title().to_owned()), vec!["SciFi"]);
-        assert_eq!(map(&collections, |e| e.rating_key().to_owned()), vec![162]);
+        assert_eq!(
+            map(&collections, |e| e.rating_key().to_owned()),
+            vec!["162"]
+        );
 
         let shows = collections[0].children().await.unwrap();
         assert_eq!(map(&shows, |e| e.title().to_owned()), vec!["The 100"]);
@@ -707,7 +722,7 @@ mod online {
         );
         assert_eq!(
             map(&playlists, |e| e.rating_key().to_owned()),
-            vec![169, 166, 165]
+            vec!["169", "166", "165"]
         );
 
         let videos = playlists[0].children().await.unwrap();
@@ -767,11 +782,14 @@ mod online {
             vec!["Skrillex", "System of a Down"]
         );
 
-        assert_eq!(map(&artists, |e| e.rating_key().to_owned()), vec![156, 142]);
+        assert_eq!(
+            map(&artists, |e| e.rating_key().to_owned()),
+            vec!["156", "142"]
+        );
 
         let albums = artists[0].albums().await.unwrap();
         assert_eq!(map(&albums, |e| e.title().to_owned()), vec!["Try It Out"]);
-        assert_eq!(map(&albums, |e| e.rating_key().to_owned()), vec![157]);
+        assert_eq!(map(&albums, |e| e.rating_key().to_owned()), vec!["157"]);
 
         let tracks = albums[0].tracks().await.unwrap();
         assert_eq!(
@@ -785,7 +803,7 @@ mod online {
 
         assert_eq!(
             map(&tracks, |e| e.rating_key().to_owned()),
-            vec![158, 159, 160]
+            vec!["158", "159", "160"]
         );
 
         let album = tracks[0].album().await.unwrap().unwrap();
@@ -827,7 +845,7 @@ mod online {
             map(&playlists, |e| e.title().to_owned()),
             vec!["Best Music"]
         );
-        assert_eq!(map(&playlists, |e| e.rating_key().to_owned()), vec![167]);
+        assert_eq!(map(&playlists, |e| e.rating_key().to_owned()), vec!["167"]);
 
         let tracks = playlists[0].children().await.unwrap();
         assert_eq!(
@@ -866,21 +884,24 @@ mod online {
 
         let albums = library.albums().await.unwrap();
         assert_eq!(map(&albums, |e| e.title().to_owned()), vec!["Cats"]);
-        assert_eq!(map(&albums, |e| e.rating_key().to_owned()), vec![43]);
+        assert_eq!(map(&albums, |e| e.rating_key().to_owned()), vec!["43"]);
 
         let (albums, photos) = split_photo_album(albums[0].contents().await.unwrap());
         assert_eq!(
             map(&albums, |e| e.title().to_owned()),
             vec!["Cats in bed", "Cats not in bed"]
         );
-        assert_eq!(map(&albums, |e| e.rating_key().to_owned()), vec![64, 51]);
+        assert_eq!(
+            map(&albums, |e| e.rating_key().to_owned()),
+            vec!["64", "51"]
+        );
         assert_eq!(
             map(&photos, |e| e.title().to_owned()),
             vec!["Picture1", "Picture2", "Picture3"]
         );
         assert_eq!(
             map(&photos, |e| e.rating_key().to_owned()),
-            vec![59, 60, 61]
+            vec!["59", "60", "61"]
         );
 
         let (inner_albums, photos) = split_photo_album(albums[0].contents().await.unwrap());
@@ -913,7 +934,7 @@ mod online {
 
         let playlists = library.playlists().await.unwrap();
         assert_eq!(map(&playlists, |e| e.title().to_owned()), vec!["Cats"]);
-        assert_eq!(map(&playlists, |e| e.rating_key().to_owned()), vec![163]);
+        assert_eq!(map(&playlists, |e| e.rating_key().to_owned()), vec!["163"]);
 
         let tracks = playlists[0].children().await.unwrap();
         assert_eq!(
@@ -924,59 +945,59 @@ mod online {
 
     #[plex_api_test_helper::online_test]
     async fn item(#[future] server: Server) {
-        let item = server.item_by_id(108).await.unwrap();
+        let item = server.item_by_id("108").await.unwrap();
         assert_eq!(item.title(), "Interstate 60: Episodes of the Road");
         assert!(<Item as TryInto<Movie>>::try_into(item).is_ok());
 
-        let item = server.item_by_id(90).await.unwrap();
+        let item = server.item_by_id("90").await.unwrap();
         assert_eq!(item.title(), "Pilot");
         assert!(<Item as TryInto<Episode>>::try_into(item).is_ok());
 
-        let item = server.item_by_id(33).await.unwrap();
+        let item = server.item_by_id("33").await.unwrap();
         assert_eq!(item.title(), "Season 2");
         assert!(<Item as TryInto<Season>>::try_into(item).is_ok());
 
-        let item = server.item_by_id(60).await.unwrap();
+        let item = server.item_by_id("60").await.unwrap();
         assert_eq!(item.title(), "Picture2");
         assert!(<Item as TryInto<Photo>>::try_into(item).is_ok());
 
-        let item = server.item_by_id(22).await.unwrap();
+        let item = server.item_by_id("22").await.unwrap();
         assert_eq!(item.title(), "The 100");
         assert!(<Item as TryInto<Show>>::try_into(item).is_ok());
 
-        let item = server.item_by_id(161).await.unwrap();
+        let item = server.item_by_id("161").await.unwrap();
         assert_eq!(item.title(), "Animation");
         assert!(<Item as TryInto<Collection<Movie>>>::try_into(item).is_ok());
 
-        let item = server.item_by_id(162).await.unwrap();
+        let item = server.item_by_id("162").await.unwrap();
         assert_eq!(item.title(), "SciFi");
         assert!(<Item as TryInto<Collection<Show>>>::try_into(item).is_ok());
 
-        let err = server.item_by_id(73463523).await.unwrap_err();
+        let err = server.item_by_id("73463523").await.unwrap_err();
         assert!(matches!(err, Error::ItemNotFound));
     }
 
     #[plex_api_test_helper::online_test_non_shared_server]
     async fn item_playlists(#[future] server: Server) {
-        let item = server.item_by_id(168).await.unwrap();
+        let item = server.item_by_id("168").await.unwrap();
         assert_eq!(item.title(), "Movies Since 2007");
         assert!(<Item as TryInto<Playlist<Video>>>::try_into(item).is_ok());
 
-        let item = server.item_by_id(166).await.unwrap();
+        let item = server.item_by_id("166").await.unwrap();
         assert_eq!(item.title(), "Mixed");
         assert!(<Item as TryInto<Playlist<Video>>>::try_into(item).is_ok());
 
-        let item = server.item_by_id(167).await.unwrap();
+        let item = server.item_by_id("167").await.unwrap();
         assert_eq!(item.title(), "Best Music");
         assert!(<Item as TryInto<Playlist<Track>>>::try_into(item).is_ok());
 
-        let item = server.item_by_id(163).await.unwrap();
+        let item = server.item_by_id("163").await.unwrap();
         assert_eq!(item.title(), "Cats");
         assert!(<Item as TryInto<Playlist<Photo>>>::try_into(item).is_ok());
     }
 
     // We want to check that the same works for different ways of getting the item's metadata
-    async fn find_movie(server: &Server, library_id: &str, rating_key: u32) -> [Movie; 2] {
+    async fn find_movie(server: &Server, library_id: &str, rating_key: &str) -> [Movie; 2] {
         let library = server
             .libraries()
             .into_iter()
@@ -1007,7 +1028,7 @@ mod online {
         let aac_file = include_bytes!("../../../plex-stub-data/media/white_noise.aac");
         let jpg_file = include_bytes!("../../../plex-stub-data/media/white_noise_720p.jpg");
 
-        for movie in find_movie(&server, "1", 55).await {
+        for movie in find_movie(&server, "1", "55").await {
             assert_eq!(movie.title(), "Big Buck Bunny");
             let media = movie.media();
             assert_eq!(media.len(), 1);
@@ -1054,7 +1075,7 @@ mod online {
             assert_eq!(&buf[..], &mkv_file[mkv_file.len() - 16..]);
         }
 
-        for movie in find_movie(&server, "1", 56).await {
+        for movie in find_movie(&server, "1", "56").await {
             assert_eq!(movie.title(), "Elephants Dream");
             let media = movie.media();
             assert_eq!(media.len(), 2);
@@ -1090,7 +1111,7 @@ mod online {
             assert_eq!(&buf[..10], &mp4_file[6..16]);
         }
 
-        let episode: Episode = server.item_by_id(93).await.unwrap().try_into().unwrap();
+        let episode: Episode = server.item_by_id("93").await.unwrap().try_into().unwrap();
         let media = episode.media();
         assert_eq!(media.len(), 1);
         let parts = media[0].parts();
@@ -1101,7 +1122,7 @@ mod online {
         assert_eq!(buf.len(), 1);
         assert_eq!(&buf[..], &mp4_file[4..5]);
 
-        let track: Track = server.item_by_id(158).await.unwrap().try_into().unwrap();
+        let track: Track = server.item_by_id("158").await.unwrap().try_into().unwrap();
         let media = track.media();
         assert_eq!(media.len(), 1);
         let parts = media[0].parts();
@@ -1112,7 +1133,7 @@ mod online {
         assert_eq!(buf.len(), aac_file.len());
         assert_eq!(&buf[..16], &aac_file[..16]);
 
-        let photo: Photo = server.item_by_id(60).await.unwrap().try_into().unwrap();
+        let photo: Photo = server.item_by_id("60").await.unwrap().try_into().unwrap();
         let media = photo.media();
         assert_eq!(media.len(), 1);
         let parts = media[0].parts();

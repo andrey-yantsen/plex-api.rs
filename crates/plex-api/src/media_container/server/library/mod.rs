@@ -1,27 +1,23 @@
 mod guid;
 mod metadata_type;
 
-use crate::media_container::{preferences::Preferences, MediaContainer};
+use crate::media_container::{
+    helpers::deserialize_option_string_from_number, helpers::optional_boolish,
+    preferences::Preferences, MediaContainer,
+};
 pub use guid::Guid;
 pub use metadata_type::*;
 use monostate::MustBe;
 use serde::{Deserialize, Deserializer, Serialize};
 use serde_aux::prelude::{
-    deserialize_bool_from_anything, deserialize_number_from_string,
-    deserialize_option_number_from_string,
+    deserialize_number_from_string, deserialize_option_number_from_string,
+    deserialize_string_from_number,
 };
 use serde_json::Value;
 use serde_plain::{derive_display_from_serialize, derive_fromstr_from_deserialize};
 use serde_repr::{Deserialize_repr, Serialize_repr};
 use serde_with::{formats::CommaSeparator, serde_as, StringWithSeparator};
 use time::{Date, OffsetDateTime};
-
-fn optional_boolish<'de, D>(deserializer: D) -> Result<Option<bool>, D::Error>
-where
-    D: Deserializer<'de>,
-{
-    Ok(Some(deserialize_bool_from_anything(deserializer)?))
-}
 
 #[derive(Debug, Clone, Copy, PartialEq, Deserialize, Serialize)]
 #[serde(rename_all = "lowercase")]
@@ -169,8 +165,8 @@ derive_display_from_serialize!(ContainerFormat);
 #[serde(rename_all = "camelCase")]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 pub struct VideoStream {
-    #[serde(deserialize_with = "deserialize_number_from_string")]
-    pub id: u64,
+    #[serde(default, deserialize_with = "deserialize_string_from_number")]
+    pub id: String,
     pub stream_type: MustBe!(1),
     pub index: Option<u32>,
     pub codec: VideoCodec,
@@ -178,7 +174,7 @@ pub struct VideoStream {
     pub selected: Option<bool>,
     pub title: Option<String>,
     pub display_title: String,
-    pub extended_display_title: String,
+    pub extended_display_title: Option<String>,
 
     #[serde_as(as = "Option<StringWithSeparator::<CommaSeparator, u32>>")]
     pub required_bandwidths: Option<Vec<u32>>,
@@ -188,7 +184,7 @@ pub struct VideoStream {
     pub height: u32,
     pub width: u32,
     pub bit_depth: Option<u8>,
-    pub bitrate: u32,
+    pub bitrate: Option<u32>,
     pub chroma_location: Option<String>,
     pub chroma_subsampling: Option<String>,
     pub coded_height: Option<u32>,
@@ -213,8 +209,8 @@ pub struct VideoStream {
 #[serde(rename_all = "camelCase")]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 pub struct AudioStream {
-    #[serde(deserialize_with = "deserialize_number_from_string")]
-    pub id: u64,
+    #[serde(default, deserialize_with = "deserialize_string_from_number")]
+    pub id: String,
     pub stream_type: MustBe!(2),
     pub index: Option<u32>,
     pub codec: AudioCodec,
@@ -222,7 +218,7 @@ pub struct AudioStream {
     pub selected: Option<bool>,
     pub title: Option<String>,
     pub display_title: String,
-    pub extended_display_title: String,
+    pub extended_display_title: Option<String>,
 
     #[serde_as(as = "Option<StringWithSeparator::<CommaSeparator, u32>>")]
     pub required_bandwidths: Option<Vec<u32>>,
@@ -253,8 +249,8 @@ pub struct AudioStream {
 #[serde(rename_all = "camelCase")]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 pub struct SubtitleStream {
-    #[serde(deserialize_with = "deserialize_number_from_string")]
-    pub id: u64,
+    #[serde(default, deserialize_with = "deserialize_string_from_number")]
+    pub id: String,
     pub stream_type: MustBe!(3),
     pub index: Option<u32>,
     pub codec: SubtitleCodec,
@@ -262,7 +258,8 @@ pub struct SubtitleStream {
     pub selected: Option<bool>,
     pub title: Option<String>,
     pub display_title: String,
-    pub extended_display_title: String,
+    pub extended_display_title: Option<String>,
+    pub forced: Option<bool>,
 
     #[serde_as(as = "Option<StringWithSeparator::<CommaSeparator, u32>>")]
     pub required_bandwidths: Option<Vec<u32>>,
@@ -285,8 +282,8 @@ pub struct SubtitleStream {
 #[serde(rename_all = "camelCase")]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 pub struct LyricStream {
-    #[serde(deserialize_with = "deserialize_number_from_string")]
-    pub id: u64,
+    #[serde(default, deserialize_with = "deserialize_string_from_number")]
+    pub id: String,
     pub stream_type: MustBe!(4),
     pub index: Option<u32>,
     pub codec: LyricCodec,
@@ -294,7 +291,7 @@ pub struct LyricStream {
     pub selected: Option<bool>,
     pub title: Option<String>,
     pub display_title: String,
-    pub extended_display_title: String,
+    pub extended_display_title: Option<String>,
 
     pub key: Option<String>,
     pub format: Option<String>,
@@ -368,8 +365,8 @@ impl TryFrom<Value> for Stream {
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct Part {
-    #[serde(deserialize_with = "deserialize_number_from_string")]
-    pub id: u64,
+    #[serde(default, deserialize_with = "deserialize_option_number_from_string")]
+    pub id: Option<u64>,
     pub key: Option<String>,
     pub duration: Option<u64>,
     pub file: Option<String>,
@@ -402,8 +399,8 @@ pub struct Part {
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct Media {
-    #[serde(deserialize_with = "deserialize_number_from_string")]
-    pub id: u64,
+    #[serde(default, deserialize_with = "deserialize_option_number_from_string")]
+    pub id: Option<u64>,
     pub duration: Option<u64>,
     pub bitrate: Option<u32>,
     pub width: Option<u32>,
@@ -416,6 +413,7 @@ pub struct Media {
     pub video_codec: Option<VideoCodec>,
     pub video_resolution: Option<String>,
     pub container: Option<ContainerFormat>,
+    pub extension: Option<String>,
     pub video_frame_rate: Option<String>,
     pub audio_profile: Option<String>,
     pub video_profile: Option<String>,
@@ -446,10 +444,15 @@ pub struct Location {
 #[derive(Debug, Deserialize, Clone)]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 pub struct Tag {
-    #[serde(default, deserialize_with = "deserialize_option_number_from_string")]
-    pub id: Option<u32>,
+    #[serde(default, deserialize_with = "deserialize_option_string_from_number")]
+    pub id: Option<String>,
     pub tag: String,
     pub filter: Option<String>,
+    pub directory: Option<bool>,
+    #[serde(rename = "ratingKey")]
+    pub rating_key: Option<String>,
+    pub context: Option<String>,
+    pub slug: Option<String>,
     #[serde(default, deserialize_with = "deserialize_option_number_from_string")]
     pub count: Option<u32>,
 }
@@ -457,8 +460,10 @@ pub struct Tag {
 #[derive(Debug, Deserialize, Clone)]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 pub struct Collection {
-    #[serde(default, deserialize_with = "deserialize_option_number_from_string")]
-    pub id: Option<u32>,
+    pub id: Option<String>,
+    pub art: Option<String>,
+    pub key: Option<String>,
+    pub thumb: Option<String>,
     pub tag: String,
     pub filter: Option<String>,
     #[serde(default, deserialize_with = "deserialize_option_number_from_string")]
@@ -470,13 +475,13 @@ pub struct Collection {
 #[derive(Debug, Deserialize, Clone)]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 pub struct Review {
-    #[serde(default, deserialize_with = "deserialize_number_from_string")]
-    pub id: u32,
+    #[serde(default, deserialize_with = "deserialize_option_string_from_number")]
+    pub id: Option<String>,
     pub tag: String,
-    pub filter: String,
+    pub filter: Option<String>,
     pub text: String,
     pub image: String,
-    pub link: String,
+    pub link: Option<String>,
     pub source: String,
 }
 
@@ -497,13 +502,18 @@ pub struct Rating {
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct Role {
-    #[serde(default, deserialize_with = "deserialize_option_number_from_string")]
-    pub id: Option<u32>,
+    #[serde(default, deserialize_with = "deserialize_option_string_from_number")]
+    pub id: Option<String>,
     pub tag: String,
+    pub key: Option<String>,
+    pub slug: Option<String>,
     pub tag_key: Option<String>,
     pub filter: Option<String>,
     pub role: Option<String>,
     pub thumb: Option<String>,
+    #[serde(rename = "type")]
+    pub role_type: Option<String>,
+    pub directory: Option<bool>,
     #[serde(default, deserialize_with = "deserialize_option_number_from_string")]
     pub count: Option<u32>,
 }
@@ -553,6 +563,7 @@ pub struct GrandParentMetadata {
 #[serde(rename_all = "camelCase")]
 pub struct Extras {
     pub size: u32,
+    pub key: Option<String>,
     #[serde(default, rename = "Metadata")]
     pub metadata: Vec<Box<Metadata>>,
 }
@@ -641,9 +652,8 @@ pub struct Marker {
 #[serde(rename_all = "camelCase")]
 pub struct Metadata {
     pub key: String,
-    #[serde(deserialize_with = "deserialize_number_from_string")]
-    pub rating_key: u32,
-    pub guid: Guid,
+    pub rating_key: String,
+    pub guid: Option<Guid>,
     pub primary_guid: Option<Guid>,
 
     #[serde(flatten, deserialize_with = "deserialize_option_metadata_type")]
@@ -700,8 +710,8 @@ pub struct Metadata {
     #[serde(rename = "createdAtTZOffset")]
     pub created_at_tz_offset: Option<String>,
     pub created_at_accuracy: Option<String>,
-    #[serde(with = "time::serde::timestamp")]
-    pub added_at: OffsetDateTime,
+    #[serde(default, with = "time::serde::timestamp::option")]
+    pub added_at: Option<OffsetDateTime>,
     #[serde(default, with = "time::serde::timestamp::option")]
     pub deleted_at: Option<OffsetDateTime>,
     #[serde(default, with = "time::serde::timestamp::option")]
@@ -739,11 +749,11 @@ pub struct Metadata {
     #[serde(default, rename = "Genre")]
     pub genres: Vec<Tag>,
     #[serde(default, rename = "Director")]
-    pub directors: Vec<Tag>,
+    pub directors: Vec<Role>,
     #[serde(default, rename = "Producer")]
-    pub producers: Vec<Tag>,
+    pub producers: Vec<Role>,
     #[serde(default, rename = "Writer")]
-    pub writers: Vec<Tag>,
+    pub writers: Vec<Role>,
     #[serde(default, rename = "Country")]
     pub countries: Vec<Tag>,
     #[serde(default, rename = "Rating")]
@@ -774,7 +784,6 @@ pub struct Metadata {
 
     #[serde(rename = "Extras")]
     pub extras: Option<Extras>,
-    pub extra_type: Option<u8>,
 
     #[serde(rename = "OnDeck")]
     pub on_deck: Option<Box<OnDeck>>,

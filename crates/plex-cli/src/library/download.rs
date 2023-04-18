@@ -12,7 +12,7 @@ use tokio_util::compat::TokioAsyncWriteCompatExt;
 
 impl flags::Download {
     pub(crate) async fn run(&self, server: Server, library: Library) -> anyhow::Result<()> {
-        if let Some(item_id) = self.item_id {
+        if let Some(item_id) = &self.item_id {
             match server.item_by_id(item_id).await {
                 Ok(item) => return self.download_item(item).await,
                 Err(error) => bail!("Failed to get requested item! {error}"),

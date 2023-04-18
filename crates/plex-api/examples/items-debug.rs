@@ -50,7 +50,6 @@ async fn main() {
 
     println!("Please enter item id:");
     let id = stdin().lock().lines().next().unwrap().unwrap();
-    let id: u32 = id.parse().unwrap();
 
-    _ = dbg!(device.item_by_id(id).await);
+    _ = dbg!(device.item_by_id(&id).await);
 }

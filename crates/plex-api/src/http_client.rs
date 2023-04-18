@@ -268,6 +268,12 @@ impl HttpClient {
     }
 }
 
+impl From<&HttpClient> for HttpClient {
+    fn from(value: &HttpClient) -> Self {
+        value.to_owned()
+    }
+}
+
 pub struct RequestBuilder<'a, P>
 where
     PathAndQuery: TryFrom<P>,

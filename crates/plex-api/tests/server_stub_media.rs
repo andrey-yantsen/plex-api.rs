@@ -13,7 +13,7 @@ mod online {
         // Ensure that the test media has chapters and the appropriate markers
 
         let episode: Episode = server_claimed
-            .item_by_id(178)
+            .item_by_id("178")
             .await
             .unwrap()
             .try_into()

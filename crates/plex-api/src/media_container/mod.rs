@@ -1,4 +1,5 @@
 pub mod devices;
+pub(crate) mod helpers;
 pub mod home;
 pub mod player;
 pub mod preferences;
@@ -12,6 +13,7 @@ use serde::Deserialize;
 #[serde(rename_all = "camelCase")]
 pub struct MediaContainer {
     pub size: Option<u32>,
+    pub offset: Option<u32>,
     pub total_size: Option<u32>,
     pub public_address: Option<String>,
     pub friendly_name: Option<String>,

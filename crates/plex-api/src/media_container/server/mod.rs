@@ -3,6 +3,7 @@ pub mod library;
 
 pub use self::feature::Feature;
 use self::library::ContentDirectory;
+use crate::media_container::helpers::StringWithSeparatorOrList;
 use serde::Deserialize;
 use serde_plain::derive_fromstr_from_deserialize;
 use serde_with::{formats::CommaSeparator, serde_as, StringWithSeparator};
@@ -118,6 +119,12 @@ pub enum MediaProviderType {
 
 derive_fromstr_from_deserialize!(MediaProviderType);
 
+#[derive(Deserialize)]
+#[serde(rename_all = "PascalCase")]
+pub(crate) struct MediaProviderWrapper {
+    pub(crate) media_provider: MediaProvider,
+}
+
 #[serde_as]
 #[derive(Debug, Deserialize, Clone)]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
@@ -125,10 +132,11 @@ derive_fromstr_from_deserialize!(MediaProviderType);
 pub struct MediaProvider {
     pub identifier: String,
     pub id: Option<u32>,
-    #[serde_as(as = "StringWithSeparator::<CommaSeparator, MediaProviderProtocol>")]
+    #[serde_as(as = "StringWithSeparatorOrList::<CommaSeparator, MediaProviderProtocol>")]
     pub protocols: Vec<MediaProviderProtocol>,
     pub title: String,
     #[serde_as(as = "StringWithSeparator::<CommaSeparator, MediaProviderType>")]
+    #[serde(default)]
     pub types: Vec<MediaProviderType>,
     #[serde(rename = "Feature")]
     pub features: Vec<MediaProviderFeature>,

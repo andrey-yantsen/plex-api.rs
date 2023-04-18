@@ -61,7 +61,7 @@ xflags::xflags! {
 
             cmd download {
                 /// rating_key of the item you want to download.
-                optional --item-id item_id: u32
+                optional --item-id item_id: String
 
                 /// Part index to be downloaded (counting from 1).
                 repeated --required_parts required_parts: usize
@@ -138,7 +138,7 @@ pub enum LibraryCmd {
 
 #[derive(Debug)]
 pub struct Download {
-    pub item_id: Option<u32>,
+    pub item_id: Option<String>,
     pub required_parts: Vec<usize>,
     pub all_parts: bool,
 }
