@@ -365,8 +365,8 @@ impl TryFrom<Value> for Stream {
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct Part {
-    #[serde(default, deserialize_with = "deserialize_option_number_from_string")]
-    pub id: Option<u64>,
+    #[serde(default, deserialize_with = "deserialize_option_string_from_number")]
+    pub id: Option<String>,
     pub key: Option<String>,
     pub duration: Option<u64>,
     pub file: Option<String>,
@@ -399,8 +399,8 @@ pub struct Part {
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct Media {
-    #[serde(default, deserialize_with = "deserialize_option_number_from_string")]
-    pub id: Option<u64>,
+    #[serde(default, deserialize_with = "deserialize_option_string_from_number")]
+    pub id: Option<String>,
     pub duration: Option<u64>,
     pub bitrate: Option<u32>,
     pub width: Option<u32>,
@@ -524,8 +524,8 @@ pub struct Role {
 #[serde(rename_all = "camelCase")]
 pub struct ParentMetadata {
     pub parent_key: Option<String>,
-    #[serde(default, deserialize_with = "deserialize_option_number_from_string")]
-    pub parent_rating_key: Option<u32>,
+    #[serde(default, deserialize_with = "deserialize_option_string_from_number")]
+    pub parent_rating_key: Option<String>,
     pub parent_guid: Option<Guid>,
 
     pub parent_title: Option<String>,
@@ -544,8 +544,8 @@ pub struct ParentMetadata {
 #[serde(rename_all = "camelCase")]
 pub struct GrandParentMetadata {
     pub grandparent_key: Option<String>,
-    #[serde(default, deserialize_with = "deserialize_option_number_from_string")]
-    pub grandparent_rating_key: Option<u32>,
+    #[serde(default, deserialize_with = "deserialize_option_string_from_number")]
+    pub grandparent_rating_key: Option<String>,
     pub grandparent_guid: Option<Guid>,
 
     pub grandparent_title: Option<String>,
@@ -828,8 +828,8 @@ pub struct Link {
 #[serde(rename_all = "camelCase")]
 pub struct MetadataMediaContainer {
     pub key: Option<String>,
-    #[serde(default, deserialize_with = "deserialize_option_number_from_string")]
-    pub rating_key: Option<u32>,
+    #[serde(default, deserialize_with = "deserialize_option_string_from_number")]
+    pub rating_key: Option<String>,
     pub augmentation_key: Option<String>,
 
     pub title: Option<String>,
