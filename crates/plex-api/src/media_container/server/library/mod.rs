@@ -793,6 +793,33 @@ pub struct Metadata {
 
     #[serde(rename = "Media")]
     pub media: Option<Vec<Media>>,
+
+    #[serde(rename = "Vast")]
+    pub vast: Option<Vec<Link>>,
+
+    #[serde(rename = "publicPagesURL")]
+    pub public_pages_url: Option<String>,
+    pub slug: Option<String>,
+    pub user_state: Option<bool>,
+    pub imdb_rating_count: Option<u64>,
+    pub source: Option<String>,
+    #[serde(rename = "Image")]
+    pub image: Option<Vec<Image>>,
+    #[serde(rename = "Studio")]
+    pub studios: Option<Vec<Tag>>,
+}
+
+#[derive(Deserialize, Debug, Clone)]
+pub struct Image {
+    pub url: String,
+    #[serde(rename = "type")]
+    pub image_type: String,
+    pub alt: String,
+}
+
+#[derive(Deserialize, Debug, Clone)]
+pub struct Link {
+    pub url: String,
 }
 
 #[derive(Debug, Deserialize, Clone)]
@@ -872,6 +899,7 @@ pub struct Pivot {
     pub key: String,
     pub symbol: String,
     pub title: String,
+    pub requires: Option<String>,
     #[serde(rename = "type")]
     pub pivot_type: PivotType,
 }
@@ -884,6 +912,7 @@ pub enum LibraryType {
     Artist,
     Photo,
     Mixed,
+    Clip,
     #[cfg(not(feature = "tests_deny_unknown_fields"))]
     #[serde(other)]
     Unknown,
@@ -953,9 +982,14 @@ pub struct LiveTv {
 pub struct OnlineLibrary {
     #[serde(rename = "type")]
     pub library_type: LibraryType,
-    pub key: String,
+    pub key: Option<String>,
     pub title: String,
     pub icon: String,
+    pub id: String,
+    pub context: Option<String>,
+    pub hub_key: Option<String>,
+    #[serde(rename = "Pivot")]
+    pub pivots: Vec<Pivot>,
     #[serde(default, with = "time::serde::timestamp::option")]
     pub updated_at: Option<OffsetDateTime>,
 }

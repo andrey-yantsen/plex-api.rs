@@ -41,3 +41,5 @@ pub const SERVER_TRANSCODE_ART: &str = "/photo/:/transcode";
 pub const SERVER_SYSTEM_PROXY: &str = "/system/proxy";
 
 pub const CLIENT_RESOURCES: &str = "/resources";
+
+pub const MYPLEX_DISCOVER_API_BASE_URL: &str = "https://discover.provider.plex.tv/";

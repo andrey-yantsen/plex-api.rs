@@ -2,6 +2,7 @@ pub(crate) mod account;
 pub(crate) mod announcements;
 pub(crate) mod claim_token;
 pub mod device;
+pub mod discover;
 pub(crate) mod home;
 pub(crate) mod pin;
 pub(crate) mod privacy;
@@ -11,8 +12,8 @@ pub(crate) mod webhook;
 
 use self::{
     account::MyPlexAccount, announcements::AnnouncementsManager, claim_token::ClaimToken,
-    device::DeviceManager, home::HomeManager, pin::PinManager, privacy::Privacy, sharing::Sharing,
-    webhook::WebhookManager,
+    device::DeviceManager, discover::Discover, home::HomeManager, pin::PinManager,
+    privacy::Privacy, sharing::Sharing, webhook::WebhookManager,
 };
 use crate::{
     http_client::{HttpClient, HttpClientBuilder, Request},
@@ -233,6 +234,15 @@ impl MyPlex {
         Ok(HomeManager {
             client: self.client.clone(),
         })
+    }
+
+    /// Interface for discovering new movies & shows (includes watchlist)
+    pub async fn discover(&self) -> Result<Discover> {
+        if !self.client.is_authenticated() {
+            return Err(Error::ClientNotAuthenticated);
+        }
+
+        Discover::new(&self.client).await
     }
 }
 

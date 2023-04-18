@@ -11,9 +11,11 @@ use time::OffsetDateTime;
 
 #[derive(Debug, Deserialize, Clone)]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
+#[serde(rename_all = "camelCase")]
 pub struct Action {
     pub id: String,
     pub key: String,
+    pub reverse_key: Option<String>,
 }
 
 #[derive(Debug, Deserialize, Clone)]
@@ -35,6 +37,10 @@ pub enum MediaProviderFeature {
     Search {
         key: String,
     },
+    #[serde(rename = "universalsearch")]
+    UniversalSearch {
+        key: String,
+    },
     Match {
         key: String,
     },
@@ -46,6 +52,7 @@ pub enum MediaProviderFeature {
     },
     ImageTranscoder {
         key: String,
+        public: Option<bool>,
     },
     Promoted {
         key: String,
@@ -53,8 +60,15 @@ pub enum MediaProviderFeature {
     ContinueWatching {
         key: String,
     },
-    Actions {
+    Availability {
         key: String,
+    },
+    #[serde(rename = "availability-platforms")]
+    AvailabilityPlatforms {
+        key: String,
+    },
+    Actions {
+        key: Option<String>,
         #[serde(rename = "Action")]
         actions: Vec<Action>,
     },
@@ -73,8 +87,8 @@ pub enum MediaProviderFeature {
     #[serde(rename_all = "camelCase")]
     Timeline {
         key: String,
-        scrobble_key: String,
-        unscrobble_key: String,
+        scrobble_key: Option<String>,
+        unscrobble_key: Option<String>,
     },
     Manage,
     #[serde(rename = "queryParser")]
@@ -86,6 +100,9 @@ pub enum MediaProviderFeature {
         key: String,
         #[serde(rename = "GridChannelFilter")]
         grid_channel_filter: Vec<GridChannelFilter>,
+    },
+    Settings {
+        key: String,
     },
     #[cfg(not(feature = "tests_deny_unknown_fields"))]
     #[serde(other)]
@@ -145,6 +162,8 @@ pub struct MediaProvider {
     pub provider_identifier: Option<String>,
     pub epg_source: Option<String>,
     pub friendly_name: Option<String>,
+    pub icon: Option<String>,
+    pub version: Option<String>,
 }
 
 #[derive(Debug, Deserialize, Clone)]

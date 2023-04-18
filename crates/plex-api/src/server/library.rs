@@ -853,6 +853,7 @@ impl Library {
             LibraryType::Artist => Library::Music(MusicLibrary { client, directory }),
             LibraryType::Photo => Library::Photo(PhotoLibrary { client, directory }),
             LibraryType::Mixed => todo!("Mixed library type is not supported yet"),
+            LibraryType::Clip => todo!("Clip library type is not supported yet"),
             #[cfg(not(feature = "tests_deny_unknown_fields"))]
             LibraryType::Unknown => panic!("Unknown library type"),
         }
