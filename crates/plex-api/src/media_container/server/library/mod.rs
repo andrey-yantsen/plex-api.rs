@@ -460,6 +460,7 @@ pub struct Tag {
 #[derive(Debug, Deserialize, Clone)]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 pub struct Collection {
+    #[serde(default, deserialize_with = "deserialize_option_string_from_number")]
     pub id: Option<String>,
     pub art: Option<String>,
     pub key: Option<String>,
@@ -968,6 +969,19 @@ pub struct ServerHome {
 #[derive(Debug, Deserialize, Clone)]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
+pub struct DvrLibrary {
+    #[serde(rename = "type")]
+    pub library_type: LibraryType,
+    pub key: Option<String>,
+    pub title: String,
+    pub icon: String,
+    #[serde(default, with = "time::serde::timestamp::option")]
+    pub updated_at: Option<OffsetDateTime>,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+#[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
+#[serde(rename_all = "camelCase")]
 pub struct LiveTv {
     #[serde(rename = "Pivot")]
     pub pivots: Vec<Pivot>,
@@ -995,7 +1009,8 @@ pub struct OnlineLibrary {
 }
 
 #[derive(Debug, Deserialize, Clone)]
-#[serde(untagged)]
+#[cfg_attr(not(feature = "tests_deny_unknown_fields"), serde(untagged))]
+#[cfg_attr(feature = "tests_deny_unknown_fields", serde(try_from = "Value"))]
 pub enum ContentDirectory {
     Playlists(ServerPlaylists),
     #[serde(rename_all = "camelCase")]
@@ -1006,8 +1021,66 @@ pub enum ContentDirectory {
     LiveTv(LiveTv),
     #[serde(rename_all = "camelCase")]
     Online(OnlineLibrary),
+    #[serde(rename_all = "camelCase")]
+    Dvr(DvrLibrary),
     #[cfg(not(feature = "tests_deny_unknown_fields"))]
     Unknown(Value),
+}
+
+// This generates much saner errors in tests than an untagged enum at the cost
+// of some manual work.
+#[cfg(feature = "tests_deny_unknown_fields")]
+impl TryFrom<Value> for ContentDirectory {
+    type Error = String;
+
+    fn try_from(value: Value) -> Result<Self, Self::Error> {
+        let obj = if let Value::Object(o) = &value {
+            o
+        } else {
+            return Err("Failed to decode Directory. Data was not an object.".to_string());
+        };
+
+        let directory_type = match obj.get("type") {
+            Some(Value::String(n)) => n,
+            Some(_) => {
+                return Err("Failed to decode Directory. Unexpected type property.".to_string())
+            }
+            None => {
+                if obj.contains_key("Pivot") {
+                    let live_tv: LiveTv = serde_json::from_value(value)
+                        .map_err(|e| format!("Failed to decode Live TV directory: {e}"))?;
+                    return Ok(Self::LiveTv(live_tv));
+                }
+
+                let home: ServerHome = serde_json::from_value(value)
+                    .map_err(|e| format!("Failed to decode Home directory: {e}"))?;
+                return Ok(Self::Home(home));
+            }
+        };
+
+        if directory_type.as_str() == "playlist" {
+            let p: ServerPlaylists = serde_json::from_value(value)
+                .map_err(|e| format!("Failed to decode playlist directory: {e}"))?;
+            Ok(Self::Playlists(p))
+        } else {
+            // We're left with ServerLibrary, OnlineLibrary or DvrLibrary.
+
+            // It seems unlikely OnlineLibrary will ever use a scanned_at field.
+            if obj.contains_key("scannedAt") {
+                let l: ServerLibrary = serde_json::from_value(value)
+                    .map_err(|e| format!("Failed to decode server library directory: {e}"))?;
+                Ok(Self::Media(Box::new(l)))
+            } else if obj.contains_key("id") {
+                let l: OnlineLibrary = serde_json::from_value(value)
+                    .map_err(|e| format!("Failed to decode online library directory: {e}"))?;
+                Ok(Self::Online(l))
+            } else {
+                let l: DvrLibrary = serde_json::from_value(value)
+                    .map_err(|e| format!("Failed to decode dvr library directory: {e}"))?;
+                Ok(Self::Dvr(l))
+            }
+        }
+    }
 }
 
 #[derive(Debug, Deserialize_repr, Clone, Serialize_repr)]
