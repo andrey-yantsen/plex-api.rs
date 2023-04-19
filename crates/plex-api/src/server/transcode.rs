@@ -32,8 +32,11 @@ use crate::{
         MediaContainer, MediaContainerWrapper,
     },
     server::library::{MediaItemWithTranscoding, Part},
-    url::{SERVER_TRANSCODE_ART, SERVER_TRANSCODE_DECISION, SERVER_TRANSCODE_DOWNLOAD},
-    HttpClient, Result,
+    url::{
+        SERVER_TRANSCODE_ART, SERVER_TRANSCODE_DECISION, SERVER_TRANSCODE_DOWNLOAD,
+        SERVER_TRANSCODE_SESSIONS,
+    },
+    Error, HttpClient, Result,
 };
 
 #[derive(Debug, Clone, Copy, Deserialize, Serialize, PartialEq)]
@@ -706,6 +709,32 @@ pub(super) async fn create_transcode_session<'a, M: MediaItemWithTranscoding>(
     )
 }
 
+pub(crate) async fn transcode_session_stats(
+    client: &HttpClient,
+    session_id: &str,
+) -> Result<TranscodeSessionStats> {
+    let wrapper: MediaContainerWrapper<TranscodeSessionsMediaContainer> = match client
+        .get(format!("{SERVER_TRANSCODE_SESSIONS}/{session_id}"))
+        .json()
+        .await
+    {
+        Ok(w) => w,
+        Err(Error::UnexpectedApiResponse {
+            status_code: 404,
+            content: _,
+        }) => {
+            return Err(crate::Error::ItemNotFound);
+        }
+        Err(e) => return Err(e),
+    };
+    wrapper
+        .media_container
+        .transcode_sessions
+        .get(0)
+        .cloned()
+        .ok_or(crate::Error::ItemNotFound)
+}
+
 pub enum TranscodeStatus {
     Complete,
     Error,
@@ -901,17 +930,7 @@ impl TranscodeSession {
     /// Retrieves the current transcode stats.
     #[tracing::instrument(level = "debug", skip_all)]
     pub async fn stats(&self) -> Result<TranscodeSessionStats> {
-        let wrapper: MediaContainerWrapper<TranscodeSessionsMediaContainer> = self
-            .client
-            .get(format!("/transcode/sessions/{}", self.id))
-            .json()
-            .await?;
-        wrapper
-            .media_container
-            .transcode_sessions
-            .get(0)
-            .cloned()
-            .ok_or(crate::Error::ItemNotFound)
+        transcode_session_stats(&self.client, &self.id).await
     }
 
     /// Cancels the transcode and removes any transcoded data from the server.

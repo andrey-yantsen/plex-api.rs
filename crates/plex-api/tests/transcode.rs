@@ -181,6 +181,18 @@ mod offline {
         assert_eq!(session.video_transcode(), None);
 
         let mut m = mock_server.mock(|when, then| {
+            when.method(GET)
+                .path("/transcode/sessions/dfghtybntbretybrtyb");
+            then.status(404);
+        });
+
+        let error = session.stats().await.err().unwrap();
+        m.assert();
+        m.delete();
+
+        assert!(matches!(error, plex_api::Error::ItemNotFound));
+
+        let mut m = mock_server.mock(|when, then| {
             when.method(GET).path("/transcode/sessions/gfbrgbrbrfber");
             then.status(200)
                 .header("content-type", "text/json")
@@ -1177,15 +1189,26 @@ mod online {
     /// Cancels the session and verifies it is gone from the server.
     #[cfg_attr(feature = "tests_shared_server_access_token", allow(unused_variables))]
     async fn cancel(server: &Server, session: TranscodeSession) {
+        #[cfg(not(feature = "tests_shared_server_access_token"))]
+        let existing = server
+            .transcode_session(session.session_id())
+            .await
+            .unwrap();
+
         session.cancel().await.unwrap();
 
         // It can take a few moments for the session to disappear.
         #[cfg(not(feature = "tests_shared_server_access_token"))]
-        wait_for(|| async {
-            let sessions = server.transcode_sessions().await.unwrap();
-            sessions.is_empty()
-        })
-        .await;
+        {
+            wait_for(|| async {
+                let sessions = server.transcode_sessions().await.unwrap();
+                sessions.is_empty()
+            })
+            .await;
+
+            let err = existing.stats().await.unwrap_err();
+            assert!(matches!(err, plex_api::Error::ItemNotFound));
+        }
     }
 
     mod movie {
