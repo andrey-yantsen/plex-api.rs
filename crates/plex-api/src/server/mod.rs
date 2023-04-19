@@ -6,7 +6,8 @@ use self::{
     library::{metadata_items, Item, Library},
     prefs::Preferences,
     transcode::{
-        transcode_artwork, ArtTranscodeOptions, TranscodeSession, TranscodeSessionsMediaContainer,
+        transcode_artwork, transcode_session_stats, ArtTranscodeOptions, TranscodeSession,
+        TranscodeSessionsMediaContainer,
     },
 };
 #[cfg(not(feature = "tests_deny_unknown_fields"))]
@@ -143,28 +144,7 @@ impl Server {
     /// Retrieves the transcode session with the passed ID.
     #[tracing::instrument(level = "debug", skip(self))]
     pub async fn transcode_session(&self, session_id: &str) -> Result<TranscodeSession> {
-        let wrapper: MediaContainerWrapper<TranscodeSessionsMediaContainer> = match self
-            .client
-            .get(format!("{SERVER_TRANSCODE_SESSIONS}/{session_id}"))
-            .json()
-            .await
-        {
-            Ok(w) => w,
-            Err(Error::UnexpectedApiResponse {
-                status_code: 404,
-                content: _,
-            }) => {
-                return Err(crate::Error::ItemNotFound);
-            }
-            Err(e) => return Err(e),
-        };
-        let stats = wrapper
-            .media_container
-            .transcode_sessions
-            .get(0)
-            .cloned()
-            .ok_or(crate::Error::ItemNotFound)?;
-
+        let stats = transcode_session_stats(&self.client, session_id).await?;
         Ok(TranscodeSession::from_stats(self.client.clone(), stats))
     }
 
