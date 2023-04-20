@@ -273,6 +273,7 @@ mod offline {
                     .query_param("subtitles", "burn")
                     .query_param("protocol", "dash")
                     .query_param_exists("X-Plex-Client-Profile-Extra")
+                    .query_param_exists("X-Plex-Session-Identifier")
                     .matches(|req| {
                         let settings = expand_profile(req);
 
@@ -371,6 +372,7 @@ mod offline {
                     .query_param("videoResolution", "1920x1080")
                     .query_param("protocol", "hls")
                     .query_param_exists("X-Plex-Client-Profile-Extra")
+                    .query_param_exists("X-Plex-Session-Identifier")
                     .matches(|req| {
                         let settings = expand_profile(req);
 
@@ -519,6 +521,7 @@ mod offline {
                     .query_param("subtitles", "burn")
                     .query_param("offlineTranscode", "1")
                     .query_param_exists("X-Plex-Client-Profile-Extra")
+                    .query_param_exists("X-Plex-Session-Identifier")
                     .matches(|req| {
                         let settings = expand_profile(req);
 
@@ -874,6 +877,7 @@ mod offline {
                     .query_param("musicBitrate", "192")
                     .query_param("protocol", "dash")
                     .query_param_exists("X-Plex-Client-Profile-Extra")
+                    .query_param_exists("X-Plex-Session-Identifier")
                     .matches(|req| {
                         let settings = expand_profile(req);
 

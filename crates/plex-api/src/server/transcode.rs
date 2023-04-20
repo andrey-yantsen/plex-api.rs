@@ -601,6 +601,10 @@ fn get_transcode_params<M: MediaItemWithTranscoding>(
 
     let mut query = Query::new()
         .param("session", id)
+        // It's not clear what this parameter is for. Mobile clients send a
+        // hyphenated UUID that differes from the session id
+        // above but using the same id seems to work.
+        .param("X-Plex-Session-Identifier", id)
         .param("path", item_metadata.key.clone())
         .param("mediaIndex", part.media_index.to_string())
         .param("partIndex", part.part_index.to_string())
