@@ -28,11 +28,10 @@ impl flags::Wait {
                         && (matches!(
                             server.media_container.my_plex_mapping_state,
                             MappingState::Mapped
-                        ) && matches!(server.media_container.certificate, Some(true))
-                            || matches!(
-                                server.media_container.my_plex_mapping_state,
-                                MappingState::Unknown
-                            )))
+                        ) || matches!(
+                            server.media_container.my_plex_mapping_state,
+                            MappingState::Unknown
+                        )))
                 {
                     prefs = server.preferences().await;
                     if prefs.is_ok() {
@@ -64,8 +63,6 @@ impl flags::Wait {
                         "MyPlex state: {:?}",
                         server.media_container.my_plex_mapping_state
                     );
-
-                    println!("Certificate: {:?}", server.media_container.certificate);
                 }
             } else {
                 println!("failed");
