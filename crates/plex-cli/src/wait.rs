@@ -18,9 +18,11 @@ impl flags::Wait {
         }) as u64);
         let sleep_duration = Duration::from_secs(self.delay.unwrap_or(1) as u64);
 
+        let mut server_result = Err(plex_api::Error::ClientNotAuthenticated);
+        let mut prefs = Err(plex_api::Error::ClientNotAuthenticated);
         while start_time.elapsed()? < time_limit {
-            let server_result = plex_api::Server::new(host, client.clone()).await;
-            if let Ok(server) = server_result {
+            server_result = plex_api::Server::new(host, client.clone()).await;
+            if let Ok(server) = &server_result {
                 if !wait_full_start
                     || (server.media_container.start_state.is_none()
                         && (matches!(
@@ -32,7 +34,7 @@ impl flags::Wait {
                                 MappingState::Unknown
                             )))
                 {
-                    let prefs = server.preferences().await;
+                    prefs = server.preferences().await;
                     if prefs.is_ok() {
                         println!(
                             "Ready in {:.2} seconds!",
@@ -44,6 +46,40 @@ impl flags::Wait {
             }
 
             tokio::time::sleep(sleep_duration).await;
+        }
+
+        if self.verbose {
+            println!("Details on the last attempt:");
+            print!("Loading server details: ");
+
+            if server_result.is_ok() {
+                println!("success");
+
+                let server = server_result.as_ref().unwrap();
+
+                if wait_full_start {
+                    println!("Start state: {:?}", server.media_container.start_state);
+
+                    println!(
+                        "MyPlex state: {:?}",
+                        server.media_container.my_plex_mapping_state
+                    );
+
+                    println!("Certificate: {:?}", server.media_container.certificate);
+                }
+            } else {
+                println!("failed");
+            }
+
+            if !matches!(prefs, Err(plex_api::Error::ClientNotAuthenticated)) {
+                print!("Loading preferences: ");
+
+                if prefs.is_ok() {
+                    println!("success");
+                } else {
+                    println!("failed");
+                }
+            }
         }
 
         anyhow::bail!("Timeout reached")

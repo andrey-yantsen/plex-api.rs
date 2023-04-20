@@ -19,6 +19,9 @@ xflags::xflags! {
 
             /// Wait for the full server start, not only the general availability (might take a few minutes)
             optional --full
+
+            /// Display details on the last connection attempt in case of failure.
+            optional --verbose
         }
 
         /// Manage server preferences.
@@ -96,6 +99,7 @@ pub struct Wait {
     pub delay: Option<u32>,
     pub timeout: Option<u32>,
     pub full: bool,
+    pub verbose: bool,
 }
 
 #[derive(Debug)]
