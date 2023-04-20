@@ -10,14 +10,15 @@ use std::mem::discriminant;
 
 #[derive(Debug, Clone)]
 pub struct Preferences<'a> {
-    client: &'a HttpClient,
+    client: HttpClient,
     settings: Vec<Setting>,
     changed: Vec<&'a str>,
 }
 
 impl<'a> Preferences<'a> {
     #[tracing::instrument(level = "debug", skip(client))]
-    pub async fn new(client: &'a HttpClient) -> Result<Preferences<'a>> {
+    pub async fn new<C: Into<HttpClient>>(client: C) -> Result<Preferences<'a>> {
+        let client = client.into();
         let mc: MediaContainerWrapper<MediaContainerPreferences> =
             client.get(SERVER_PREFS).json().await?;
 

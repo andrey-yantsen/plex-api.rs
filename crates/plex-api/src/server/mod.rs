@@ -228,7 +228,7 @@ impl Server {
         &self.client
     }
 
-    pub async fn preferences(&self) -> Result<Preferences<'_>> {
+    pub async fn preferences<'a>(&self) -> Result<Preferences<'a>> {
         Preferences::new(&self.client).await
     }
 
