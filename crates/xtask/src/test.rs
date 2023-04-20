@@ -289,7 +289,7 @@ impl flags::Test {
         println!("Waiting for the plex server to boot...");
         cmd!(
             sh,
-            "cargo run -q -p plex-cli --  --server {server_url} --token {server_owner_token} wait --full"
+            "cargo run -q -p plex-cli --  --server {server_url} --token {server_owner_token} wait --full --verbose"
         )
         .run()?;
 
