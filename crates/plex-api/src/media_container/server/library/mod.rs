@@ -202,6 +202,9 @@ pub struct VideoStream {
     #[serde(rename = "codecID")]
     pub codec_id: Option<String>,
     pub stream_identifier: Option<String>,
+    pub language: Option<String>,
+    pub language_code: Option<String>,
+    pub language_tag: Option<String>,
 }
 
 #[serde_as]
@@ -808,6 +811,8 @@ pub struct Metadata {
     pub image: Option<Vec<Image>>,
     #[serde(rename = "Studio")]
     pub studios: Option<Vec<Tag>>,
+
+    pub language_override: Option<String>,
 }
 
 #[derive(Deserialize, Debug, Clone)]

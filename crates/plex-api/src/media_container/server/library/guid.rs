@@ -18,6 +18,7 @@ pub enum Guid {
     Mbid(String),
     PlexMusic(String),
     Iva(String),
+    File(String),
     #[cfg(not(feature = "tests_deny_unknown_fields"))]
     Unknown(String),
 }
@@ -59,6 +60,7 @@ impl<'de> Deserialize<'de> for Guid {
                     ["com.plexapp.agents.none", id] => Guid::None(id.to_owned()),
                     ["com.plexapp.agents.plexmusic", id] => Guid::PlexMusic(id.to_owned()),
                     ["iva", id] => Guid::Iva(id.to_owned()),
+                    ["file", path] => Guid::File(path.to_owned()),
                     ["plex", id] => {
                         let plex_guid_parts = id.split('/').collect::<Vec<&str>>();
                         if plex_guid_parts.len() != 2 {
