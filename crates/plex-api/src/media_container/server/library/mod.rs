@@ -78,6 +78,9 @@ pub enum AudioCodec {
     Opus,
     Pcm,
     Vorbis,
+    Flac,
+    #[serde(rename = "truehd")]
+    TrueHd,
     #[cfg(not(feature = "tests_deny_unknown_fields"))]
     #[serde(other)]
     Unknown,
@@ -152,6 +155,8 @@ pub enum ContainerFormat {
     MpegTs,
     Ogg,
     Wav,
+    Ac3,
+    Eac3,
     #[cfg(not(feature = "tests_deny_unknown_fields"))]
     #[serde(other)]
     Unknown,
@@ -390,6 +395,7 @@ pub struct Part {
     #[serde(default, deserialize_with = "optional_boolish")]
     pub optimized_for_streaming: Option<bool>,
     pub has_chapter_text_stream: Option<bool>,
+    pub has_chapter_video_stream: Option<bool>,
     pub deep_analysis_version: Option<String>,
     #[serde_as(as = "Option<StringWithSeparator::<CommaSeparator, u32>>")]
     pub required_bandwidths: Option<Vec<u32>>,
@@ -662,6 +668,7 @@ pub struct Metadata {
 
     #[serde(flatten, deserialize_with = "deserialize_option_metadata_type")]
     pub metadata_type: Option<MetadataType>,
+    #[serde(default, deserialize_with = "optional_boolish")]
     pub smart: Option<bool>,
     #[serde(default, deserialize_with = "optional_boolish")]
     pub allow_sync: Option<bool>,
@@ -702,6 +709,7 @@ pub struct Metadata {
     pub playlist_item_id: Option<u32>,
     #[serde(default, deserialize_with = "deserialize_option_number_from_string")]
     pub child_count: Option<u32>,
+    pub season_count: Option<u32>,
     pub leaf_count: Option<u32>,
     pub viewed_leaf_count: Option<u32>,
     pub skip_children: Option<bool>,
@@ -813,6 +821,9 @@ pub struct Metadata {
     pub studios: Option<Vec<Tag>>,
 
     pub language_override: Option<String>,
+    pub content: Option<String>,
+    pub collection_sort: Option<String>,
+    pub skip_parent: Option<bool>,
 }
 
 #[derive(Deserialize, Debug, Clone)]
@@ -872,6 +883,7 @@ pub struct MetadataMediaContainer {
     pub media_tag_prefix: Option<String>,
     #[serde(default, with = "time::serde::timestamp::option")]
     pub media_tag_version: Option<OffsetDateTime>,
+    pub mixed_parents: Option<bool>,
     pub view_group: Option<String>,
     pub view_mode: Option<u32>,
     pub leaf_count: Option<u32>,
