@@ -922,7 +922,7 @@ pub struct Pivot {
     pub pivot_type: PivotType,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 #[serde(rename_all = "lowercase")]
 pub enum LibraryType {
     Movie,
@@ -937,6 +937,7 @@ pub enum LibraryType {
 }
 
 derive_fromstr_from_deserialize!(LibraryType);
+derive_display_from_serialize!(LibraryType);
 
 #[derive(Debug, Deserialize, Clone)]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]

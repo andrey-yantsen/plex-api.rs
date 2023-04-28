@@ -878,4 +878,8 @@ impl Library {
     pub fn title(&self) -> &str {
         &self.directory().title
     }
+
+    pub fn library_type(&self) -> &LibraryType {
+        &self.directory().library_type
+    }
 }
