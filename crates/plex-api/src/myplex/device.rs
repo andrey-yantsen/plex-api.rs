@@ -66,6 +66,16 @@ impl Device<'_> {
         &self.inner.name
     }
 
+    /// Syntax sugar method for checking if the current device provides [`Feature::Server`]
+    pub fn is_server(&self) -> bool {
+        self.provides(Feature::Server)
+    }
+
+    /// Syntax sugar method for checking if the current device provides [`Feature::Controller`]
+    pub fn is_controller(&self) -> bool {
+        self.provides(Feature::Controller)
+    }
+
     /// Returns the authentication token that should be used when connecting to the device.
     /// If it's a shared device, the main authentication token will no be accepted.
     pub fn access_token(&self) -> Option<&str> {
@@ -78,9 +88,7 @@ impl Device<'_> {
     /// Connect to the device.
     #[tracing::instrument(level = "debug", skip(self), fields(device_name = self.inner.name))]
     pub async fn connect(&self) -> Result<DeviceConnection> {
-        if !self.inner.provides.contains(&Feature::Server)
-            && !self.inner.provides.contains(&Feature::Controller)
-        {
+        if !self.is_server() && !self.is_controller() {
             error!("Device must provide Server or Controller");
             return Err(Error::DeviceConnectionNotSupported);
         }
@@ -95,7 +103,7 @@ impl Device<'_> {
                 }
             }
 
-            if self.inner.provides.contains(&Feature::Server) {
+            if self.is_server() {
                 trace!(
                     "Connecting to server {id}",
                     id = self.inner.client_identifier,
@@ -142,7 +150,7 @@ impl Device<'_> {
     /// Establish a connection to the device using server as a proxy.
     #[tracing::instrument(level = "debug", skip(self, server), fields(device_name = self.inner.name))]
     pub async fn connect_via(&self, server: &Server) -> Result<DeviceConnection> {
-        if !self.inner.provides.contains(&Feature::Controller) {
+        if !self.is_controller() {
             error!("Only devices providing Controller can be connected via proxy");
             return Err(Error::DeviceConnectionNotSupported);
         }

@@ -1,4 +1,4 @@
-use plex_api::{device::Device, media_container::devices::Feature, MyPlexBuilder};
+use plex_api::{device::Device, MyPlexBuilder};
 use rpassword::prompt_password;
 use std::io::{stdin, stdout, BufRead, Write};
 
@@ -23,7 +23,7 @@ async fn main() {
 
     let devices = devices
         .into_iter()
-        .filter(|device| device.provides(Feature::Server))
+        .filter(|device| device.is_server())
         .collect::<Vec<Device>>();
 
     let device = {

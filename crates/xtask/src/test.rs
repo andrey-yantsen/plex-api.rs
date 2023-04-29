@@ -4,7 +4,6 @@ use crate::{
 };
 use anyhow::bail;
 use plex_api::{
-    media_container::devices::Feature,
     sharing::{
         Filters, Friend, InviteStatus, Permissions, ShareableLibrary, ShareableServer, User,
     },
@@ -206,8 +205,7 @@ impl flags::Test {
         while attempt < 60 {
             let resources = device_manager.resources().await?;
             let shared_device = resources.into_iter().find(|device| {
-                device.provides(Feature::Server)
-                    && device.identifier() == server.machine_identifier()
+                device.is_server() && device.identifier() == server.machine_identifier()
             });
 
             if let Some(device) = shared_device {
