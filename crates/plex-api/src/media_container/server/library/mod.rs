@@ -593,7 +593,7 @@ pub struct OnDeck {
 #[serde(rename_all = "camelCase")]
 pub struct Chapter {
     pub id: u32,
-    pub filter: String,
+    pub filter: Option<String>,
     pub index: u32,
     pub start_time_offset: u64,
     pub end_time_offset: u64,
