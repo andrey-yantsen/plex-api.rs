@@ -255,7 +255,7 @@ derive_fromstr_from_deserialize!(Diagnostics);
 #[serde(rename_all = "camelCase")]
 pub enum MappingState {
     Unknown,
-    Wating,
+    Waiting,
     Mapped,
     Failed,
     #[cfg(not(feature = "tests_deny_unknown_fields"))]
