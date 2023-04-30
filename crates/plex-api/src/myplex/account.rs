@@ -27,6 +27,7 @@ pub enum SubscriptionStatus {
     PendingCancellation,
     Ended,
     Lapsed,
+    #[cfg(not(feature = "tests_deny_unknown_fields"))]
     #[serde(other)]
     Unknown,
 }
@@ -37,6 +38,7 @@ pub enum AutoSelectSubtitleMode {
     ManuallySelected = 0,
     ShownWithForeignAudio = 1,
     AlwaysEnabled = 2,
+    #[cfg(not(feature = "tests_deny_unknown_fields"))]
     #[serde(other)]
     Unknown,
 }
@@ -167,6 +169,7 @@ pub struct CustomRestrictions {
 #[serde(tag = "id", rename_all = "camelCase")]
 pub enum Settings {
     Experience(ExperienceSettingsContainer),
+    #[cfg(not(feature = "tests_deny_unknown_fields"))]
     #[serde(other)]
     Unknown,
 }
@@ -188,6 +191,7 @@ pub struct ExperienceSettingsContainer {
 #[serde(tag = "type", content = "value", rename_all = "camelCase")]
 pub enum ExperienceSettingsFormat {
     Json(#[serde_as(as = "JsonString")] ExperienceSettings),
+    #[cfg(not(feature = "tests_deny_unknown_fields"))]
     #[serde(other)]
     Unknown,
 }

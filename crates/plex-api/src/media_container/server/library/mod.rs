@@ -1123,6 +1123,7 @@ pub enum SearchType {
     Collection = 18,
     OptimizedVersion = 42,
     UserPlaylistItem = 1001,
+    #[cfg(not(feature = "tests_deny_unknown_fields"))]
     #[serde(other)]
     Unknown,
 }
