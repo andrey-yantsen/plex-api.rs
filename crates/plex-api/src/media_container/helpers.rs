@@ -2,13 +2,17 @@ use serde::{
     de::{Error as DeError, SeqAccess, Visitor},
     Deserializer,
 };
-use serde_aux::prelude::{deserialize_bool_from_anything, deserialize_string_from_number};
+use serde_aux::prelude::{
+    deserialize_bool_from_anything, deserialize_option_number_from_string,
+    deserialize_string_from_number,
+};
 use serde_with::{formats::Separator, DeserializeAs};
 use std::{
     fmt::{self, Display},
     marker::PhantomData,
     str::FromStr,
 };
+use time::OffsetDateTime;
 
 pub(crate) fn optional_boolish<'de, D>(deserializer: D) -> Result<Option<bool>, D::Error>
 where
@@ -24,6 +28,18 @@ where
     D: Deserializer<'de>,
 {
     Ok(Some(deserialize_string_from_number(deserializer)?))
+}
+
+pub(crate) fn deserialize_option_datetime_from_timestamp<'de, D>(
+    deserializer: D,
+) -> Result<Option<OffsetDateTime>, D::Error>
+where
+    D: Deserializer<'de>,
+{
+    deserialize_option_number_from_string(deserializer)?
+        .map(OffsetDateTime::from_unix_timestamp)
+        .transpose()
+        .map_err(DeError::custom)
 }
 
 pub(crate) struct StringWithSeparatorOrList<Sep, T>(PhantomData<(Sep, T)>);

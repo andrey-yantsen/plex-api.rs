@@ -2,8 +2,10 @@ mod guid;
 mod metadata_type;
 
 use crate::media_container::{
-    helpers::deserialize_option_string_from_number, helpers::optional_boolish,
-    preferences::Preferences, MediaContainer,
+    helpers::deserialize_option_string_from_number,
+    helpers::{deserialize_option_datetime_from_timestamp, optional_boolish},
+    preferences::Preferences,
+    MediaContainer,
 };
 pub use guid::Guid;
 pub use metadata_type::*;
@@ -37,13 +39,13 @@ derive_display_from_serialize!(Decision);
 #[derive(Debug, Clone, Copy, PartialEq, Deserialize, Serialize)]
 #[serde(rename_all = "lowercase")]
 pub enum Protocol {
-    // HTTP file download
+    /// HTTP file download
     Http,
-    // HTTP Live Streaming
+    /// HTTP Live Streaming
     Hls,
-    // Dynamic Adaptive Streaming over HTTP
+    /// Dynamic Adaptive Streaming over HTTP
     Dash,
-    // ??? Used in extras
+    /// ??? Used in extras; can't be used for transcoding
     Mp4,
     #[cfg(not(feature = "tests_deny_unknown_fields"))]
     #[serde(other)]
@@ -690,8 +692,12 @@ pub struct Metadata {
     pub rating_image: Option<String>,
     pub audience_rating: Option<f32>,
     pub audience_rating_image: Option<String>,
+    #[serde(default, deserialize_with = "deserialize_option_number_from_string")]
     pub user_rating: Option<f32>,
-    #[serde(default, with = "time::serde::timestamp::option")]
+    #[serde(
+        default,
+        deserialize_with = "deserialize_option_datetime_from_timestamp"
+    )]
     pub last_rated_at: Option<OffsetDateTime>,
     pub tagline: Option<String>,
     pub duration: Option<u64>,
