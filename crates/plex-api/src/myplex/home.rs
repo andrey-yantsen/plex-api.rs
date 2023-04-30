@@ -10,6 +10,7 @@ pub struct HomeManager {
     pub(crate) client: HttpClient,
 }
 
+#[derive(Debug, Clone)]
 pub enum SwitchableUser {
     UserUuid(String),
     UserId(u64),

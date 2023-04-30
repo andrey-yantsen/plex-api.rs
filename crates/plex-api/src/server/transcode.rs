@@ -739,6 +739,7 @@ pub(crate) async fn transcode_session_stats(
         .ok_or(crate::Error::ItemNotFound)
 }
 
+#[derive(Clone, Copy)]
 pub enum TranscodeStatus {
     Complete,
     Error,

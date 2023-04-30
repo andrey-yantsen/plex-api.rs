@@ -8,7 +8,7 @@ pub struct AnnouncementsManager {
     container: AnnouncementsContainer,
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Debug, Clone, Copy)]
 #[serde(rename_all = "snake_case")]
 pub enum AnnouncementStyle {
     Info,

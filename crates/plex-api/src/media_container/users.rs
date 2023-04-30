@@ -14,7 +14,7 @@ pub struct UsersMediaContainer {
     pub media_container: MediaContainer,
 }
 
-#[derive(Debug, Deserialize_repr, Clone, Serialize_repr)]
+#[derive(Debug, Deserialize_repr, Clone, Copy, Serialize_repr)]
 #[repr(u8)]
 pub enum AllowTuners {
     None = 0,

@@ -109,7 +109,7 @@ pub enum MediaProviderFeature {
     Unknown,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Deserialize, Clone, Copy)]
 #[serde(rename_all = "lowercase")]
 pub enum MediaProviderProtocol {
     Stream,
@@ -123,7 +123,7 @@ pub enum MediaProviderProtocol {
 
 derive_fromstr_from_deserialize!(MediaProviderProtocol);
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Deserialize, Clone, Copy)]
 #[serde(rename_all = "lowercase")]
 pub enum MediaProviderType {
     Video,
@@ -166,7 +166,7 @@ pub struct MediaProvider {
     pub version: Option<String>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Deserialize, Clone, Copy)]
 #[serde(rename_all = "camelCase")]
 pub enum StartState {
     StartingPlugins,
@@ -238,7 +238,7 @@ pub struct Server {
     pub media_providers: Vec<MediaProvider>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Deserialize, Clone, Copy)]
 #[serde(rename_all = "lowercase")]
 pub enum Diagnostics {
     Logs,
@@ -251,7 +251,7 @@ pub enum Diagnostics {
 
 derive_fromstr_from_deserialize!(Diagnostics);
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Deserialize, Clone, Copy)]
 #[serde(rename_all = "camelCase")]
 pub enum MappingState {
     Unknown,
@@ -263,7 +263,7 @@ pub enum MappingState {
     UnknownValue,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Deserialize, Clone, Copy)]
 #[serde(rename_all = "camelCase")]
 pub enum MappingError {
     Badauth,
@@ -281,7 +281,7 @@ pub enum MappingError {
     UnknownValue,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Deserialize, Clone, Copy)]
 #[serde(rename_all = "camelCase")]
 pub enum MyPlexSignInState {
     Unknown,

@@ -19,7 +19,7 @@ pub struct SubscriptionSummary {
     pub features: Vec<crate::media_container::server::Feature>,
 }
 
-#[derive(Deserialize, Debug, Clone)]
+#[derive(Deserialize, Debug, Clone, Copy)]
 pub enum SubscriptionStatus {
     Active,
     Inactive,
@@ -31,7 +31,7 @@ pub enum SubscriptionStatus {
     Unknown,
 }
 
-#[derive(Deserialize_repr, Debug, Clone)]
+#[derive(Deserialize_repr, Debug, Clone, Copy)]
 #[repr(u8)]
 pub enum AutoSelectSubtitleMode {
     ManuallySelected = 0,
@@ -238,7 +238,7 @@ pub struct SidebarSource {
     pub is_full_owned_server: bool,
 }
 
-#[derive(Serialize, Deserialize, Debug, PartialEq, Eq, Clone)]
+#[derive(Serialize, Deserialize, Debug, PartialEq, Eq, Clone, Copy)]
 #[serde(rename_all = "snake_case")]
 pub enum RestrictionProfile {
     LittleKid,

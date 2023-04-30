@@ -7,7 +7,7 @@ use serde::{Deserialize, Serialize};
 use serde_plain::derive_display_from_serialize;
 use time::OffsetDateTime;
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy)]
 #[serde(rename_all = "snake_case")]
 pub enum InviteStatus {
     PendingSent,

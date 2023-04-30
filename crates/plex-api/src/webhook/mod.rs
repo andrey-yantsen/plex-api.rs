@@ -88,7 +88,7 @@ pub struct Metadata {
 }
 
 /// Event type as described in the [Plex documentation](https://support.plex.tv/articles/115002267687-webhooks/).
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy)]
 pub enum Event {
     /// A new item is added that appears in the user’s On Deck. A poster is
     /// also attached to this event.

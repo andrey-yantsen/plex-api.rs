@@ -36,7 +36,7 @@ pub struct Player {
     pub protocol_capabilities: Vec<ProtocolCapability>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Deserialize, Clone, Copy)]
 #[serde(rename_all = "kebab-case")]
 pub enum DeviceClass {
     Stb,
@@ -46,7 +46,7 @@ pub enum DeviceClass {
     Unknown,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Deserialize, Clone, Copy)]
 #[serde(rename_all = "kebab-case")]
 pub enum ProtocolCapability {
     Mirror,

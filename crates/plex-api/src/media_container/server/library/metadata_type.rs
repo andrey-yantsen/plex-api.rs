@@ -3,7 +3,7 @@ use serde_plain::derive_fromstr_from_deserialize;
 use serde_repr::{Deserialize_repr, Serialize_repr};
 use std::str::FromStr;
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Copy)]
 pub enum MetadataType {
     Movie,
     Episode,
@@ -149,7 +149,7 @@ where
     }
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Deserialize, Clone, Copy)]
 #[serde(rename_all = "lowercase")]
 pub enum PlaylistMetadataType {
     Video,
@@ -162,7 +162,7 @@ pub enum PlaylistMetadataType {
 
 derive_fromstr_from_deserialize!(PlaylistMetadataType);
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Deserialize, Clone, Copy)]
 #[serde(rename_all = "lowercase")]
 pub enum CollectionMetadataSubtype {
     Show,
@@ -174,7 +174,7 @@ pub enum CollectionMetadataSubtype {
 
 derive_fromstr_from_deserialize!(CollectionMetadataSubtype);
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Deserialize, Clone, Copy)]
 #[serde(rename_all = "camelCase")]
 pub enum ClipMetadataSubtype {
     Trailer,

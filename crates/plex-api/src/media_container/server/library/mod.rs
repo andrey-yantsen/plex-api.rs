@@ -52,7 +52,7 @@ pub enum Protocol {
 
 derive_display_from_serialize!(Protocol);
 
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, Copy, Deserialize)]
 #[serde(rename_all = "lowercase")]
 pub enum ChapterSource {
     Media,
@@ -122,7 +122,7 @@ pub enum LyricCodec {
 derive_fromstr_from_deserialize!(LyricCodec);
 derive_display_from_serialize!(LyricCodec);
 
-#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, Deserialize, Serialize, PartialEq, Eq)]
 #[serde(rename_all = "snake_case")]
 pub enum SubtitleCodec {
     Ass,
@@ -895,7 +895,7 @@ pub struct MetadataMediaContainer {
     pub metadata: Vec<Metadata>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Deserialize, Clone, Copy)]
 #[serde(rename_all = "lowercase")]
 pub enum PivotType {
     Hub,
@@ -922,7 +922,7 @@ pub struct Pivot {
     pub pivot_type: PivotType,
 }
 
-#[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(Debug, Serialize, Deserialize, Clone, Copy)]
 #[serde(rename_all = "lowercase")]
 pub enum LibraryType {
     Movie,
@@ -1101,7 +1101,7 @@ impl TryFrom<Value> for ContentDirectory {
     }
 }
 
-#[derive(Debug, Deserialize_repr, Clone, Serialize_repr)]
+#[derive(Debug, Deserialize_repr, Clone, Copy, Serialize_repr)]
 #[repr(u16)]
 pub enum SearchType {
     Movie = 1,
