@@ -1085,19 +1085,9 @@ mod online {
             AudioCodec, ContainerFormat, Decision, Protocol, VideoCodec,
         },
         transcode::TranscodeSession,
-        HttpClientBuilder, Server,
+        Server,
     };
     use std::time::Duration;
-
-    macro_rules! verify_no_sessions {
-        ($srv:ident) => {
-            #[cfg(not(feature = "tests_shared_server_access_token"))]
-            {
-                let sessions = $srv.transcode_sessions().await.unwrap();
-                assert_eq!(sessions.len(), 0);
-            }
-        };
-    }
 
     // Transcoding may crash the server in Linux container. It's unclear how or why,
     // but as a workaround, let's have an easy way of pausing a test while server's dead.
@@ -1111,6 +1101,16 @@ mod online {
                     eprintln!("Server seems to be down, pausing for a while...");
                 }
                 sleep(Duration::from_secs(3)).await;
+            }
+        };
+    }
+
+    macro_rules! verify_no_sessions {
+        ($srv:ident) => {
+            #[cfg(not(feature = "tests_shared_server_access_token"))]
+            {
+                let sessions = $srv.transcode_sessions().await.unwrap();
+                assert_eq!(sessions.len(), 0);
             }
         };
     }
@@ -1132,31 +1132,6 @@ mod online {
         }
 
         panic!("Timeout exceeded");
-    }
-
-    /// Generates a "Generic" client.
-    async fn generify(server: Server) -> Server {
-        ensure_server_alive!(server);
-        let client = server.client().to_owned();
-
-        // A web client uses the dash protocol for transcoding.
-        let client = HttpClientBuilder::from(client)
-            .set_x_plex_platform("Generic".to_string())
-            .build()
-            .unwrap();
-
-        let server = Server::new(server.client().api_url.clone(), client)
-            .await
-            .unwrap();
-        ensure_server_alive!(server);
-
-        verify_no_sessions!(server);
-
-        #[cfg_attr(
-            feature = "tests_shared_server_access_token",
-            allow(clippy::let_and_return)
-        )]
-        server
     }
 
     /// Checks the session was correct.
@@ -1211,6 +1186,7 @@ mod online {
     /// Cancels the session and verifies it is gone from the server.
     #[cfg_attr(feature = "tests_shared_server_access_token", allow(unused_variables))]
     async fn cancel(server: &Server, session: TranscodeSession) {
+        ensure_server_alive!(server);
         #[cfg(not(feature = "tests_shared_server_access_token"))]
         let existing = server
             .transcode_session(session.session_id())
@@ -1218,7 +1194,6 @@ mod online {
             .unwrap();
 
         session.cancel().await.unwrap();
-        ensure_server_alive!(server);
 
         // It can take a few moments for the session to disappear.
         #[cfg(not(feature = "tests_shared_server_access_token"))]
@@ -1233,10 +1208,12 @@ mod online {
             let err = existing.stats().await.unwrap_err();
             assert!(matches!(err, plex_api::Error::ItemNotFound));
         }
+
+        ensure_server_alive!(server);
     }
 
     mod movie {
-        use super::{super::fixtures::online::server::*, *};
+        use super::{super::fixtures::online::server::server, *};
         use hls_m3u8::{tags::VariantStream, MasterPlaylist, MediaPlaylist};
         use isahc::AsyncReadResponseExt;
         use mp4::{AvcProfile, MediaType, Mp4Reader, TrackType};
@@ -1247,9 +1224,11 @@ mod online {
         use std::io::Cursor;
 
         #[plex_api_test_helper::online_test]
-        async fn dash_transcode(#[future] server: Server) {
-            let server = generify(server).await;
-
+        async fn dash_transcode(
+            #[future]
+            #[with("Generic".to_owned())]
+            server: Server,
+        ) {
             let movie: Movie = server.item_by_id("55").await.unwrap().try_into().unwrap();
             assert_eq!(movie.title(), "Big Buck Bunny");
 
@@ -1290,9 +1269,11 @@ mod online {
         }
 
         #[plex_api_test_helper::online_test]
-        async fn dash_transcode_copy(#[future] server: Server) {
-            let server = generify(server).await;
-
+        async fn dash_transcode_copy(
+            #[future]
+            #[with("Generic".to_owned())]
+            server: Server,
+        ) {
             let movie: Movie = server.item_by_id("57").await.unwrap().try_into().unwrap();
             assert_eq!(movie.title(), "Sintel");
 
@@ -1335,9 +1316,11 @@ mod online {
         }
 
         #[plex_api_test_helper::online_test]
-        async fn hls_transcode(#[future] server: Server) {
-            let server = generify(server).await;
-
+        async fn hls_transcode(
+            #[future]
+            #[with("Generic".to_owned())]
+            server: Server,
+        ) {
             let movie: Movie = server.item_by_id("55").await.unwrap().try_into().unwrap();
             assert_eq!(movie.title(), "Big Buck Bunny");
 
@@ -1394,9 +1377,11 @@ mod online {
         }
 
         #[plex_api_test_helper::online_test]
-        async fn hls_transcode_copy(#[future] server: Server) {
-            let server = generify(server).await;
-
+        async fn hls_transcode_copy(
+            #[future]
+            #[with("Generic".to_owned())]
+            server: Server,
+        ) {
             let movie: Movie = server.item_by_id("55").await.unwrap().try_into().unwrap();
             assert_eq!(movie.title(), "Big Buck Bunny");
 
@@ -1466,9 +1451,11 @@ mod online {
         }
 
         #[plex_api_test_helper::online_test_claimed_server]
-        async fn offline_transcode(#[future] server_claimed: Server) {
-            let server = generify(server_claimed).await;
-
+        async fn offline_transcode(
+            #[future]
+            #[with("Generic".to_owned())]
+            server: Server,
+        ) {
             if !server
                 .media_container
                 .owner_features
@@ -1515,9 +1502,11 @@ mod online {
         }
 
         #[plex_api_test_helper::online_test_claimed_server]
-        async fn offline_transcode_copy(#[future] server_claimed: Server) {
-            let server = generify(server_claimed).await;
-
+        async fn offline_transcode_copy(
+            #[future]
+            #[with("Generic".to_owned())]
+            server: Server,
+        ) {
             if !server
                 .media_container
                 .owner_features
@@ -1609,9 +1598,11 @@ mod online {
         }
 
         #[plex_api_test_helper::online_test_claimed_server]
-        async fn offline_transcode_denied(#[future] server_claimed: Server) {
-            let server = generify(server_claimed).await;
-
+        async fn offline_transcode_denied(
+            #[future]
+            #[with("Generic".to_owned())]
+            server: Server,
+        ) {
             if !server
                 .media_container
                 .owner_features
@@ -1650,7 +1641,7 @@ mod online {
     }
 
     mod music {
-        use super::{super::fixtures::online::server::*, *};
+        use super::{super::fixtures::online::server::server, *};
         use hls_m3u8::{tags::VariantStream, MasterPlaylist, MediaPlaylist};
         use isahc::AsyncReadResponseExt;
         use plex_api::{
@@ -1659,9 +1650,11 @@ mod online {
         };
 
         #[plex_api_test_helper::online_test]
-        async fn dash_transcode(#[future] server: Server) {
-            let server = generify(server).await;
-
+        async fn dash_transcode(
+            #[future]
+            #[with("Generic".to_owned())]
+            server: Server,
+        ) {
             let track: Track = server.item_by_id("158").await.unwrap().try_into().unwrap();
             assert_eq!(track.title(), "Try It Out (Neon mix)");
 
@@ -1701,9 +1694,11 @@ mod online {
         }
 
         #[plex_api_test_helper::online_test]
-        async fn dash_transcode_copy(#[future] server: Server) {
-            let server = generify(server).await;
-
+        async fn dash_transcode_copy(
+            #[future]
+            #[with("Generic".to_owned())]
+            server: Server,
+        ) {
             let track: Track = server.item_by_id("158").await.unwrap().try_into().unwrap();
             assert_eq!(track.title(), "Try It Out (Neon mix)");
 
@@ -1742,9 +1737,11 @@ mod online {
         }
 
         #[plex_api_test_helper::online_test]
-        async fn hls_transcode(#[future] server: Server) {
-            let server = generify(server).await;
-
+        async fn hls_transcode(
+            #[future]
+            #[with("Generic".to_owned())]
+            server: Server,
+        ) {
             let track: Track = server.item_by_id("158").await.unwrap().try_into().unwrap();
             assert_eq!(track.title(), "Try It Out (Neon mix)");
 
@@ -1800,9 +1797,11 @@ mod online {
         }
 
         #[plex_api_test_helper::online_test]
-        async fn hls_transcode_copy(#[future] server: Server) {
-            let server = generify(server).await;
-
+        async fn hls_transcode_copy(
+            #[future]
+            #[with("Generic".to_owned())]
+            server: Server,
+        ) {
             let track: Track = server.item_by_id("158").await.unwrap().try_into().unwrap();
             assert_eq!(track.title(), "Try It Out (Neon mix)");
 
@@ -1859,9 +1858,11 @@ mod online {
         }
 
         #[plex_api_test_helper::online_test_claimed_server]
-        async fn offline_transcode(#[future] server_claimed: Server) {
-            let server = generify(server_claimed).await;
-
+        async fn offline_transcode(
+            #[future]
+            #[with("Generic".to_owned())]
+            server: Server,
+        ) {
             if !server
                 .media_container
                 .owner_features
@@ -1931,9 +1932,11 @@ mod online {
         }
 
         #[plex_api_test_helper::online_test_claimed_server]
-        async fn offline_transcode_denied(#[future] server_claimed: Server) {
-            let server = generify(server_claimed).await;
-
+        async fn offline_transcode_denied(
+            #[future]
+            #[with("Generic".to_owned())]
+            server: Server,
+        ) {
             if !server
                 .media_container
                 .owner_features
@@ -1969,7 +1972,7 @@ mod online {
     }
 
     mod artwork {
-        use super::{super::fixtures::online::server::*, *};
+        use super::super::fixtures::online::server::server;
         use image::io::Reader as ImageReader;
         use plex_api::{
             library::MetadataItem, library::Movie, transcode::ArtTranscodeOptions, Server,
@@ -1977,9 +1980,11 @@ mod online {
         use std::io::Cursor;
 
         #[plex_api_test_helper::online_test]
-        async fn transcode_art(#[future] server: Server) {
-            let server = generify(server).await;
-
+        async fn transcode_art(
+            #[future]
+            #[with("Generic".to_owned())]
+            server: Server,
+        ) {
             let movie: Movie = server.item_by_id("55").await.unwrap().try_into().unwrap();
             assert_eq!(movie.title(), "Big Buck Bunny");
 
