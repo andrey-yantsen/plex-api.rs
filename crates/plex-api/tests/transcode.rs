@@ -1078,8 +1078,7 @@ mod offline {
 }
 
 mod online {
-    use std::{thread::sleep, time::Duration};
-
+    use async_std::task::sleep;
     use futures::Future;
     use plex_api::{
         media_container::server::library::{
@@ -1088,6 +1087,7 @@ mod online {
         transcode::TranscodeSession,
         HttpClientBuilder, Server,
     };
+    use std::time::Duration;
 
     macro_rules! verify_no_sessions {
         ($srv:ident) => {
@@ -1095,6 +1095,22 @@ mod online {
             {
                 let sessions = $srv.transcode_sessions().await.unwrap();
                 assert_eq!(sessions.len(), 0);
+            }
+        };
+    }
+
+    // Transcoding may crash the server in Linux container. It's unclear how or why,
+    // but as a workaround, let's have an easy way of pausing a test while server's dead.
+    macro_rules! ensure_server_alive {
+        ($srv:ident) => {
+            loop {
+                let client = $srv.client().to_owned();
+                if Server::new(client.api_url.clone(), client).await.is_ok() {
+                    break;
+                } else {
+                    eprintln!("Server seems to be down, pausing for a while...");
+                }
+                sleep(Duration::from_secs(3)).await;
             }
         };
     }
@@ -1112,7 +1128,7 @@ mod online {
                 return;
             }
 
-            sleep(Duration::from_millis(500));
+            sleep(Duration::from_millis(500)).await;
         }
 
         panic!("Timeout exceeded");
@@ -1120,6 +1136,7 @@ mod online {
 
     /// Generates a "Generic" client.
     async fn generify(server: Server) -> Server {
+        ensure_server_alive!(server);
         let client = server.client().to_owned();
 
         // A web client uses the dash protocol for transcoding.
@@ -1131,6 +1148,7 @@ mod online {
         let server = Server::new(server.client().api_url.clone(), client)
             .await
             .unwrap();
+        ensure_server_alive!(server);
 
         verify_no_sessions!(server);
 
@@ -1200,11 +1218,13 @@ mod online {
             .unwrap();
 
         session.cancel().await.unwrap();
+        ensure_server_alive!(server);
 
         // It can take a few moments for the session to disappear.
         #[cfg(not(feature = "tests_shared_server_access_token"))]
         {
             wait_for(|| async {
+                ensure_server_alive!(server);
                 let sessions = server.transcode_sessions().await.unwrap();
                 sessions.is_empty()
             })
@@ -1224,7 +1244,7 @@ mod online {
             library::MediaItem, library::MetadataItem, library::Movie,
             media_container::server::Feature, transcode::VideoTranscodeOptions, Server,
         };
-        use std::{io::Cursor, thread::sleep, time::Duration};
+        use std::io::Cursor;
 
         #[plex_api_test_helper::online_test]
         async fn dash_transcode(#[future] server: Server) {
@@ -1551,7 +1571,7 @@ mod online {
                 if stats.complete {
                     break;
                 }
-                sleep(Duration::from_millis(250));
+                sleep(Duration::from_millis(250)).await;
             }
 
             let mut buf = Vec::<u8>::new();
@@ -1637,7 +1657,6 @@ mod online {
             library::MediaItem, library::MetadataItem, library::Track,
             media_container::server::Feature, transcode::MusicTranscodeOptions, Server,
         };
-        use std::{thread::sleep, time::Duration};
 
         #[plex_api_test_helper::online_test]
         async fn dash_transcode(#[future] server: Server) {
@@ -1893,7 +1912,7 @@ mod online {
                 if stats.complete {
                     break;
                 }
-                sleep(Duration::from_millis(250));
+                sleep(Duration::from_millis(250)).await;
             }
 
             let mut buf = Vec::<u8>::new();
