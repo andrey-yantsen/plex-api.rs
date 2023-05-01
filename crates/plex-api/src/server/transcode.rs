@@ -939,6 +939,11 @@ impl TranscodeSession {
     }
 
     /// Cancels the transcode and removes any transcoded data from the server.
+    ///
+    /// NB! Be careful with cancelling sessions too often! Cancelling a few transcoding
+    /// sessions in a short succession, or cancelling a session shortly after it was
+    /// initiated might crash the Plex server. At least the one running inside a Linux
+    /// Docker Container.
     #[tracing::instrument(level = "debug", skip_all)]
     pub async fn cancel(self) -> Result<()> {
         let mut response = self
