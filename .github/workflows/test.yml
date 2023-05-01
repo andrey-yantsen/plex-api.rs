@@ -139,7 +139,10 @@ jobs:
       - run: cargo run --package xtask -- test --online --docker-tag '${{ matrix.plex_server_version }}' --token '${{ secrets.PLEX_API_AUTH_TOKEN_FREE }}' --server-owner-token '${{ secrets.PLEX_API_AUTH_TOKEN_PLEXPASS }}' --deny-unknown-fields --github-actions
 
   collect_coverage:
-    if: "!github.event.review"
+    if: |
+      !github.event.review
+        && !contains(github.event.head_commit.message, 'chore(main): release plex-')
+        && !contains(github.event.head_commit.message, 'chore(deps): update ')
     name: Collect code coverage
     runs-on: ubuntu-latest
     container:
