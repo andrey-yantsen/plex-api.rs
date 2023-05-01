@@ -41,7 +41,7 @@ pub fn offline_test(args: TokenStream, input: TokenStream) -> TokenStream {
     let ignore = quote! {
         #[cfg_attr(
             feature = "tests_only_online",
-            ignore = "Feature tests_only_online is set, running only online tests.",
+            ignore = "Skipping offline tests.",
         )]
     };
     rewrite_single_test(args, input, ignore)
@@ -53,7 +53,7 @@ pub fn online_test_unclaimed_server(args: TokenStream, input: TokenStream) -> To
     let ignore = quote! {
         #[cfg_attr(
             not(feature = "tests_only_online_unclaimed_server"),
-            ignore = "Feature tests_only_online_anonymous is not set, skipping anonymous online tests.",
+            ignore = "Skipping tests requiring an unclaimed server.",
         )]
     };
     rewrite_single_test(args, input, ignore)
@@ -66,7 +66,7 @@ pub fn online_test_claimed_server(args: TokenStream, input: TokenStream) -> Toke
     let ignore = quote! {
         #[cfg_attr(
             not(feature = "tests_only_online_claimed_server"),
-            ignore = "Feature tests_only_online_authenticated is not set, skipping authenticated online tests.",
+            ignore = "Skipping tests requiring a claimed server.",
         )]
     };
     rewrite_single_test(args, input, ignore)
@@ -77,93 +77,44 @@ pub fn online_test_claimed_server(args: TokenStream, input: TokenStream) -> Toke
 pub fn online_test_myplex(args: TokenStream, input: TokenStream) -> TokenStream {
     let ignore = quote! {
         #[cfg_attr(
-            feature = "tests_shared_server_access_token",
-            ignore = "Feature tests_shared_server_access_token is set, skipping tests requiring myplex access.",
+            not(feature = "tests_only_online_claimed_server"),
+            ignore = "Skipping tests requiring a claimed server.",
         )]
         #[cfg_attr(
-            not(feature = "tests_only_online_claimed_server"),
-            ignore = "Feature tests_only_online_authenticated is not set, skipping authenticated online tests.",
+            feature = "tests_shared_server_access_token",
+            ignore = "Skipping tests requiring myplex access.",
         )]
     };
     rewrite_single_test(args, input, ignore)
 }
 
-fn rewrite_multirun_test(
-    args: TokenStream,
-    input: TokenStream,
-    extra_attr_claimed: TokenStream2,
-) -> TokenStream {
-    if !args.is_empty() {
-        return Error::new(
-            TokenStream2::from(args).span(),
-            "Attribute does not accept any arguments",
-        )
-        .to_compile_error()
-        .into();
-    }
-
-    let fn_type = parse_macro_input!(input as ItemFn);
-
-    let mut fn_signature1 = fn_type.sig;
-    #[allow(clippy::redundant_clone)]
-    // false-positive, see https://github.com/rust-lang/rust-clippy/issues/10577
-    let mut fn_signature2 = fn_signature1.clone();
-
-    let mod_ident = syn::Ident::new(&fn_signature1.ident.to_string(), fn_signature1.ident.span());
-
-    fn_signature1.ident = syn::Ident::new("claimed_server", fn_signature1.ident.span());
-
-    fn_signature2.ident = syn::Ident::new("unclaimed_server", fn_signature2.ident.span());
-
-    let fn_vis = fn_type.vis;
-    let fn_attrs = fn_type.attrs;
-    let fn_block = fn_type.block;
-
-    TokenStream::from(quote! {
-        pub mod #mod_ident {
-            use super::*;
-
-            #[::rstest::rstest(server_claimed as server)]
-            #(#fn_attrs)*
-            #[cfg_attr(
-                not(feature = "tests_only_online_claimed_server"),
-                ignore = "Feature tests_only_online_authenticated is not set, skipping authenticated online tests.",
-            )]
-            #extra_attr_claimed
-            #[awt]
-            #fn_vis #fn_signature1 {
-                #fn_block
-            }
-
-            #[::rstest::rstest(server_unclaimed as server)]
-            #(#fn_attrs)*
-            #[cfg_attr(
-                not(feature = "tests_only_online_unclaimed_server"),
-                ignore = "Feature tests_only_online_anonymous is not set, skipping anonymous online tests.",
-            )]
-            #[awt]
-            #fn_vis #fn_signature2 {
-                #fn_block
-            }
-        }
-    })
-}
-
 #[proc_macro_attribute]
 /// Test requires either owned or unclaimed server
 pub fn online_test_non_shared_server(args: TokenStream, input: TokenStream) -> TokenStream {
-    let ignore = quote! {
+    let extra_attrs = quote! {
+        #[cfg_attr(
+            not(any(feature = "tests_only_online_claimed_server", feature = "tests_only_online_unclaimed_server")),
+            ignore = "Skipping online tests.",
+        )]
         #[cfg_attr(
             feature = "tests_shared_server_access_token",
-            ignore = "Feature tests_shared_server_access_token is set, skipping tests requiring myplex access.",
+            ignore = "Skipping tests requiring myplex access.",
         )]
     };
-    rewrite_multirun_test(args, input, ignore)
+
+    rewrite_single_test(args, input, extra_attrs)
 }
 
 #[proc_macro_attribute]
 /// Test can work with both claimed and unclaimed servers.
 /// NB! The provided authentication token might not have MyPlex access.
 pub fn online_test(args: TokenStream, input: TokenStream) -> TokenStream {
-    rewrite_multirun_test(args, input, quote! {})
+    let extra_attrs = quote! {
+        #[cfg_attr(
+            not(any(feature = "tests_only_online_claimed_server", feature = "tests_only_online_unclaimed_server")),
+            ignore = "Skipping online tests.",
+        )]
+    };
+
+    rewrite_single_test(args, input, extra_attrs)
 }
