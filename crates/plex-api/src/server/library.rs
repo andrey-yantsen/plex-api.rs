@@ -301,7 +301,7 @@ pub trait MediaItem: MetadataItem + Sized {
                 .iter()
                 .enumerate()
                 .map(|(index, media)| Media {
-                    _options: PhantomData::default(),
+                    _options: PhantomData,
                     client: self.client(),
                     media_index: index,
                     parent_metadata: metadata,
