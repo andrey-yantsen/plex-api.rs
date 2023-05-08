@@ -130,7 +130,6 @@ impl flags::Test {
         None
     }
 
-    #[must_use = "Method returns an access token that must be used to access the shared server"]
     async fn share_server(
         &self,
         server_url: &str,
