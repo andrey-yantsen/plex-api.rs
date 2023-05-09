@@ -212,6 +212,8 @@ pub struct VideoStream {
     pub language: Option<String>,
     pub language_code: Option<String>,
     pub language_tag: Option<String>,
+    pub anamorphic: Option<bool>,
+    pub pixel_aspect_ratio: Option<String>,
 }
 
 #[serde_as]

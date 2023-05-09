@@ -430,6 +430,7 @@ mod online {
         assert_eq!(
             map(&movies, |e| e.title().to_owned()),
             vec![
+                "Batman",
                 "Big Buck Bunny",
                 "Elephants Dream",
                 "Interstate 60: Episodes of the Road",
@@ -438,7 +439,7 @@ mod online {
         );
         assert_eq!(
             map(&movies, |e| e.rating_key().to_owned()),
-            vec!["55", "56", "108", "57"]
+            vec!["182", "55", "56", "108", "57"]
         );
 
         let collections = library.collections().await.unwrap();

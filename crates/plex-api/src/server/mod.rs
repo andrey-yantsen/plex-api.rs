@@ -3,7 +3,7 @@ pub(crate) mod prefs;
 pub mod transcode;
 
 use self::{
-    library::{metadata_items, Item, Library},
+    library::{metadata_items, FromMetadata, Item, Library, MediaItem, MetadataItem},
     prefs::Preferences,
     transcode::{
         transcode_artwork, transcode_session_stats, ArtTranscodeOptions, TranscodeSession,
@@ -20,8 +20,8 @@ use crate::{
     },
     myplex::MyPlex,
     url::{
-        SERVER_MEDIA_PROVIDERS, SERVER_MYPLEX_ACCOUNT, SERVER_MYPLEX_CLAIM,
-        SERVER_TRANSCODE_SESSIONS,
+        SERVER_MEDIA_PROVIDERS, SERVER_MYPLEX_ACCOUNT, SERVER_MYPLEX_CLAIM, SERVER_SCROBBLE,
+        SERVER_TIMELINE, SERVER_TRANSCODE_SESSIONS, SERVER_UNSCROBBLE,
     },
     Error, HttpClientBuilder, Result,
 };
@@ -29,7 +29,33 @@ use core::convert::TryFrom;
 use futures::AsyncWrite;
 use http::{StatusCode, Uri};
 use isahc::AsyncReadResponseExt;
-use std::fmt::Debug;
+use std::{
+    collections::HashMap,
+    fmt::{self, Debug},
+};
+
+struct Query {
+    params: HashMap<String, String>,
+}
+
+impl Query {
+    fn new() -> Self {
+        Self {
+            params: HashMap::new(),
+        }
+    }
+
+    fn param<N: Into<String>, V: Into<String>>(mut self, name: N, value: V) -> Self {
+        self.params.insert(name.into(), value.into());
+        self
+    }
+}
+
+impl fmt::Display for Query {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.pad(&serde_urlencoded::to_string(&self.params).unwrap())
+    }
+}
 
 #[derive(Debug, Clone)]
 pub struct Server {
@@ -172,6 +198,63 @@ impl Server {
             }
             Err(err) => Err(err),
         }
+    }
+
+    /// Marks a media item as fully watched increasing its view count by one.
+    pub async fn mark_watched<M: MediaItem + FromMetadata>(&self, item: &M) -> Result<M> {
+        let rating_key = item.rating_key();
+        let path =
+            format!("{SERVER_SCROBBLE}?identifier=com.plexapp.plugins.library&key={rating_key}");
+
+        self.client.get(path).consume().await?;
+
+        let item = self.item_by_id(rating_key).await?;
+        Ok(M::from_metadata(
+            self.client.clone(),
+            item.metadata().clone(),
+        ))
+    }
+
+    /// Marks a media item as unwatched.
+    pub async fn mark_unwatched<M: MediaItem + FromMetadata>(&self, item: &M) -> Result<M> {
+        let rating_key = item.rating_key();
+        let path =
+            format!("{SERVER_UNSCROBBLE}?identifier=com.plexapp.plugins.library&key={rating_key}");
+
+        self.client.get(path).consume().await?;
+
+        let item = self.item_by_id(rating_key).await?;
+        Ok(M::from_metadata(
+            self.client.clone(),
+            item.metadata().clone(),
+        ))
+    }
+
+    /// Sets a media item's playback position in milliseconds. The server currently ignores any
+    /// positions equal to or less than 60000ms. The time sets the time the item was last viewed.
+    pub async fn update_timeline<M: MediaItem + FromMetadata>(
+        &self,
+        item: &M,
+        position: u64,
+    ) -> Result<M> {
+        let rating_key = item.rating_key();
+        let query = Query::new()
+            .param("key", format!("/library/metadata/{rating_key}"))
+            .param("ratingKey", rating_key)
+            .param("offline", "1")
+            .param("state", "playing")
+            .param("time", position.to_string());
+
+        self.client
+            .get(format!("{SERVER_TIMELINE}?{query}"))
+            .consume()
+            .await?;
+
+        let item = self.item_by_id(rating_key).await?;
+        Ok(M::from_metadata(
+            self.client.clone(),
+            item.metadata().clone(),
+        ))
     }
 
     #[tracing::instrument(level = "debug", skip(self))]

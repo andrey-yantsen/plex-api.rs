@@ -1,0 +1,2520 @@
+{
+  "MediaContainer": {
+    "size": 1,
+    "allowSync": true,
+    "augmentationKey": "/library/metadata/augmentations/1",
+    "identifier": "com.plexapp.plugins.library",
+    "librarySectionID": 1,
+    "librarySectionTitle": "Movies",
+    "librarySectionUUID": "cebcb7e3-5031-436b-906a-3640d878ba2c",
+    "mediaTagPrefix": "/system/bundle/media/flags/",
+    "mediaTagVersion": 1661864098,
+    "Metadata": [
+      {
+        "ratingKey": "182",
+        "key": "/library/metadata/182",
+        "guid": "plex://movie/5d7768257228e5001f1dccd2",
+        "studio": "The Guber-Peters Company",
+        "type": "movie",
+        "title": "Batman",
+        "librarySectionTitle": "Movies",
+        "librarySectionID": 1,
+        "librarySectionKey": "/library/sections/1",
+        "contentRating": "PG-13",
+        "summary": "The Dark Knight of Gotham City begins his war on crime with his first major enemy being Jack Napier, a criminal who becomes the clownishly homicidal Joker.",
+        "rating": 7.3,
+        "audienceRating": 8.4,
+        "viewCount": 1,
+        "lastViewedAt": 1683761882,
+        "year": 1989,
+        "tagline": "Have you ever danced with the devil in the pale moonlight?",
+        "thumb": "/library/metadata/182/thumb/1683716785",
+        "art": "/library/metadata/182/art/1683716785",
+        "duration": 81030,
+        "originallyAvailableAt": "1989-06-21",
+        "addedAt": 1683716782,
+        "updatedAt": 1683716785,
+        "audienceRatingImage": "rottentomatoes://image.rating.upright",
+        "primaryExtraKey": "/library/metadata/183",
+        "ratingImage": "rottentomatoes://image.rating.ripe",
+        "Media": [
+          {
+            "id": 192,
+            "duration": 81030,
+            "bitrate": 122,
+            "width": 320,
+            "height": 240,
+            "aspectRatio": 1.78,
+            "audioChannels": 1,
+            "audioCodec": "aac",
+            "videoCodec": "hevc",
+            "videoResolution": "sd",
+            "container": "mkv",
+            "videoFrameRate": "PAL",
+            "audioProfile": "lc",
+            "videoProfile": "main",
+            "Part": [
+              {
+                "id": 208,
+                "key": "/library/parts/208/1683716281/file.mkv",
+                "duration": 81030,
+                "file": "/data/Movies/Batman (1989).mkv",
+                "size": 1231830,
+                "audioProfile": "lc",
+                "container": "mkv",
+                "videoProfile": "main",
+                "Stream": [
+                  {
+                    "id": 279,
+                    "streamType": 1,
+                    "default": true,
+                    "codec": "hevc",
+                    "index": 0,
+                    "bitrate": 122,
+                    "anamorphic": true,
+                    "bitDepth": 8,
+                    "chromaLocation": "left",
+                    "chromaSubsampling": "4:2:0",
+                    "codedHeight": 240,
+                    "codedWidth": 320,
+                    "colorPrimaries": "bt709",
+                    "colorRange": "tv",
+                    "colorSpace": "bt709",
+                    "colorTrc": "bt709",
+                    "frameRate": 25.0,
+                    "height": 240,
+                    "level": 60,
+                    "pixelAspectRatio": "4:3",
+                    "profile": "main",
+                    "refFrames": 1,
+                    "scanType": "progressive",
+                    "width": 320,
+                    "displayTitle": "SD (HEVC Main)",
+                    "extendedDisplayTitle": "SD (HEVC Main)"
+                  },
+                  {
+                    "id": 280,
+                    "streamType": 2,
+                    "selected": true,
+                    "default": true,
+                    "codec": "aac",
+                    "index": 1,
+                    "channels": 1,
+                    "profile": "lc",
+                    "samplingRate": 44100,
+                    "displayTitle": "Unknown (AAC Mono)",
+                    "extendedDisplayTitle": "Unknown (AAC Mono)"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "Genre": [
+          {
+            "id": 117,
+            "filter": "genre=117",
+            "tag": "Action"
+          },
+          {
+            "id": 177,
+            "filter": "genre=177",
+            "tag": "Adventure"
+          },
+          {
+            "id": 41,
+            "filter": "genre=41",
+            "tag": "Fantasy"
+          },
+          {
+            "id": 1514,
+            "filter": "genre=1514",
+            "tag": "Crime"
+          }
+        ],
+        "Director": [
+          {
+            "id": 1515,
+            "filter": "director=1515",
+            "tag": "Tim Burton"
+          }
+        ],
+        "Writer": [
+          {
+            "id": 1516,
+            "filter": "writer=1516",
+            "tag": "Warren Skaaren"
+          },
+          {
+            "id": 1517,
+            "filter": "writer=1517",
+            "tag": "Bob Kane"
+          },
+          {
+            "id": 1518,
+            "filter": "writer=1518",
+            "tag": "Sam Hamm"
+          }
+        ],
+        "Producer": [
+          {
+            "id": 1577,
+            "filter": "producer=1577",
+            "tag": "Peter Guber"
+          },
+          {
+            "id": 1578,
+            "filter": "producer=1578",
+            "tag": "Jon Peters"
+          }
+        ],
+        "Country": [
+          {
+            "id": 480,
+            "filter": "country=480",
+            "tag": "United States of America"
+          }
+        ],
+        "Guid": [
+          {
+            "id": "imdb://tt0096895"
+          },
+          {
+            "id": "tmdb://268"
+          },
+          {
+            "id": "tvdb://1204"
+          }
+        ],
+        "Rating": [
+          {
+            "image": "imdb://image.rating",
+            "value": 7.5,
+            "type": "audience"
+          },
+          {
+            "image": "rottentomatoes://image.rating.ripe",
+            "value": 7.3,
+            "type": "critic"
+          },
+          {
+            "image": "rottentomatoes://image.rating.upright",
+            "value": 8.4,
+            "type": "audience"
+          },
+          {
+            "image": "themoviedb://image.rating",
+            "value": 7.2,
+            "type": "audience"
+          }
+        ],
+        "Role": [
+          {
+            "id": 1519,
+            "filter": "actor=1519",
+            "tag": "Michael Keaton",
+            "tagKey": "5d7768255af944001f1f6391",
+            "role": "Bruce Wayne / Batman",
+            "thumb": "https://metadata-static.plex.tv/b/people/bed99132ed4ba3d1f1a450035a084fe8.jpg"
+          },
+          {
+            "id": 1520,
+            "filter": "actor=1520",
+            "tag": "Jack Nicholson",
+            "tagKey": "5d7768255af944001f1f63c8",
+            "role": "Jack Napier / The Joker",
+            "thumb": "https://metadata-static.plex.tv/2/people/2531af8dfde35d605d934bc510238911.jpg"
+          },
+          {
+            "id": 1521,
+            "filter": "actor=1521",
+            "tag": "Kim Basinger",
+            "tagKey": "5d776826e6d55c002040af92",
+            "role": "Vicki Vale",
+            "thumb": "https://metadata-static.plex.tv/5/people/5518ad2d5ddcf78b580be14710ad1ddd.jpg"
+          },
+          {
+            "id": 1522,
+            "filter": "actor=1522",
+            "tag": "Michael Gough",
+            "tagKey": "62fb7cb5443e060f7ad9452a",
+            "role": "Alfred Pennyworth",
+            "thumb": "https://metadata-static.plex.tv/7/people/7bfac4b8e7694e36b8e3b45b1cd0c347.jpg"
+          },
+          {
+            "id": 1523,
+            "filter": "actor=1523",
+            "tag": "Jerry Hall",
+            "tagKey": "5d7768277228e5001f1dd01f",
+            "role": "Alicia Grissom",
+            "thumb": "https://metadata-static.plex.tv/7/people/7e364515f96a90fc819861ae723a9870.jpg"
+          },
+          {
+            "id": 1524,
+            "filter": "actor=1524",
+            "tag": "Robert Wuhl",
+            "tagKey": "5d7768255af944001f1f640a",
+            "role": "Alexander Knox",
+            "thumb": "https://metadata-static.plex.tv/5/people/5cb346f4ecb493d208286d080994f911.jpg"
+          },
+          {
+            "id": 1525,
+            "filter": "actor=1525",
+            "tag": "Pat Hingle",
+            "tagKey": "5d776826103a2d001f563f61",
+            "role": "Commissioner James Gordon",
+            "thumb": "https://metadata-static.plex.tv/e/people/ea2f669fe6f5eee8b38166d7417f683c.jpg"
+          },
+          {
+            "id": 1526,
+            "filter": "actor=1526",
+            "tag": "Billy Dee Williams",
+            "tagKey": "5d7768273c3c2a001fbcb254",
+            "role": "Harvey Dent",
+            "thumb": "https://metadata-static.plex.tv/c/people/cda260da2918bd3dfd00d8ba137dfad3.jpg"
+          },
+          {
+            "id": 1527,
+            "filter": "actor=1527",
+            "tag": "Jack Palance",
+            "tagKey": "5d7768243c3c2a001fbca94b",
+            "role": "Carl Grissom",
+            "thumb": "https://metadata-static.plex.tv/6/people/68950a4a0881933cd93acb0fdc8232a9.jpg"
+          },
+          {
+            "id": 1528,
+            "filter": "actor=1528",
+            "tag": "Tracey Walter",
+            "tagKey": "5d776825eb5d26001f1dd2b2",
+            "role": "Bob the Goon",
+            "thumb": "https://metadata-static.plex.tv/a/people/a011e544cc83c7f5c680d7c26b32f3d7.jpg"
+          },
+          {
+            "id": 1529,
+            "filter": "actor=1529",
+            "tag": "Lee Wallace",
+            "tagKey": "5d7768277228e5001f1dd020",
+            "role": "Mayor",
+            "thumb": "https://metadata-static.plex.tv/8/people/884b1051884424e99919d9e63d15c4f9.jpg"
+          },
+          {
+            "id": 1530,
+            "filter": "actor=1530",
+            "tag": "William Hootkins",
+            "tagKey": "5d776825880197001ec90336",
+            "role": "Eckhardt",
+            "thumb": "https://metadata-static.plex.tv/people/5d776825880197001ec90336.jpg"
+          },
+          {
+            "id": 1531,
+            "filter": "actor=1531",
+            "tag": "Richard Strange",
+            "tagKey": "5d7768277228e5001f1dd021",
+            "role": "Goon",
+            "thumb": "https://metadata-static.plex.tv/people/5d7768277228e5001f1dd021.jpg"
+          },
+          {
+            "id": 1532,
+            "filter": "actor=1532",
+            "tag": "Carl Chase",
+            "tagKey": "5d7768274de0ee001fcc89d8",
+            "role": "Goon",
+            "thumb": "https://metadata-static.plex.tv/d/people/df53f9f0a9e7dbb76bd953e370d9dd9c.jpg"
+          },
+          {
+            "id": 1533,
+            "filter": "actor=1533",
+            "tag": "Mac McDonald",
+            "tagKey": "5d776824103a2d001f563ad9",
+            "role": "Goon",
+            "thumb": "https://metadata-static.plex.tv/people/5d776824103a2d001f563ad9.jpg"
+          },
+          {
+            "id": 1534,
+            "filter": "actor=1534",
+            "tag": "George Lane Cooper",
+            "tagKey": "5d7768277228e5001f1dd023",
+            "role": "Goon"
+          },
+          {
+            "id": 1535,
+            "filter": "actor=1535",
+            "tag": "Terence Plummer",
+            "tagKey": "5d7768277228e5001f1dd024",
+            "role": "Goon",
+            "thumb": "https://metadata-static.plex.tv/people/5d7768277228e5001f1dd024.jpg"
+          },
+          {
+            "id": 1536,
+            "filter": "actor=1536",
+            "tag": "Philip Tan",
+            "tagKey": "5d7768258718ba001e311673",
+            "role": "Goon",
+            "thumb": "https://metadata-static.plex.tv/people/5d7768258718ba001e311673.jpg"
+          },
+          {
+            "id": 1537,
+            "filter": "actor=1537",
+            "tag": "John Sterland",
+            "tagKey": "5d7768277228e5001f1dd025",
+            "role": "Accountant"
+          },
+          {
+            "id": 1538,
+            "filter": "actor=1538",
+            "tag": "Edwin Craig",
+            "tagKey": "5d7768277228e5001f1dd026",
+            "role": "Rotelli"
+          },
+          {
+            "id": 1539,
+            "filter": "actor=1539",
+            "tag": "Vincent Wong",
+            "tagKey": "5d7768277228e5001f1dd027",
+            "role": "Crimelord 1",
+            "thumb": "https://image.tmdb.org/t/p/original/lWPw6iMQKOSh4w099GkexZKkv4F.jpg"
+          },
+          {
+            "id": 1540,
+            "filter": "actor=1540",
+            "tag": "Joel Cutrara",
+            "tagKey": "5d7768277228e5001f1dd028",
+            "role": "Crimelord 2"
+          },
+          {
+            "id": 1541,
+            "filter": "actor=1541",
+            "tag": "John Dair",
+            "tagKey": "5d7768277228e5001f1dd029",
+            "role": "Ricorso"
+          },
+          {
+            "id": 1542,
+            "filter": "actor=1542",
+            "tag": "Christopher Fairbank",
+            "tagKey": "5d776824103a2d001f563ad4",
+            "role": "Nic",
+            "thumb": "https://metadata-static.plex.tv/9/people/980caeff03e335078b215ca77c6956bf.jpg"
+          },
+          {
+            "id": 1543,
+            "filter": "actor=1543",
+            "tag": "George Roth",
+            "tagKey": "5d7768277228e5001f1dd02a",
+            "role": "Eddie"
+          },
+          {
+            "id": 1544,
+            "filter": "actor=1544",
+            "tag": "Kate Harper",
+            "tagKey": "5d7768277228e5001f1dd02b",
+            "role": "Anchorwoman",
+            "thumb": "https://metadata-static.plex.tv/people/5d7768277228e5001f1dd02b.jpg"
+          },
+          {
+            "id": 1545,
+            "filter": "actor=1545",
+            "tag": "Bruce McGuire",
+            "tagKey": "5d7768277228e5001f1dd02c",
+            "role": "Anchorman",
+            "thumb": "https://metadata-static.plex.tv/e/people/ec62f9ab6eaf389422c0ff1f22ed7834.jpg"
+          },
+          {
+            "id": 1546,
+            "filter": "actor=1546",
+            "tag": "Richard Durden",
+            "tagKey": "5d7768253c3c2a001fbca9d4",
+            "role": "TV Director",
+            "thumb": "https://metadata-static.plex.tv/f/people/f0d1c0ac71fc0d5d3c537c893e66d2be.jpg"
+          },
+          {
+            "id": 1547,
+            "filter": "actor=1547",
+            "tag": "Kit Hollerbach",
+            "tagKey": "5d7768277228e5001f1dd02e",
+            "role": "Becky"
+          },
+          {
+            "id": 1548,
+            "filter": "actor=1548",
+            "tag": "Lachele Carl",
+            "tagKey": "5d7768348718ba001e314290",
+            "role": "TV Technician",
+            "thumb": "https://metadata-static.plex.tv/people/5d7768348718ba001e314290.jpg"
+          },
+          {
+            "id": 1549,
+            "filter": "actor=1549",
+            "tag": "Derek Baker",
+            "tagKey": "5d7768277228e5001f1dd030",
+            "role": "Napier Hood",
+            "thumb": "https://metadata-static.plex.tv/4/people/488ae46ba14fb5b17bbf976b481a41a6.jpg"
+          },
+          {
+            "id": 1550,
+            "filter": "actor=1550",
+            "tag": "Jazzer Jeyes",
+            "tagKey": "5d7768277228e5001f1dd031",
+            "role": "Napier Hood"
+          },
+          {
+            "id": 1551,
+            "filter": "actor=1551",
+            "tag": "Wayne Michaels",
+            "tagKey": "5d7768277228e5001f1dd032",
+            "role": "Napier Hood"
+          },
+          {
+            "id": 1552,
+            "filter": "actor=1552",
+            "tag": "Valentino Musetti",
+            "tagKey": "5d7768277228e5001f1dd033",
+            "role": "Napier Hood",
+            "thumb": "https://metadata-static.plex.tv/4/people/4c0989807508b20b9881accc3a8cb2b5.jpg"
+          },
+          {
+            "id": 1553,
+            "filter": "actor=1553",
+            "tag": "Rocky Taylor",
+            "tagKey": "5d776825eb5d26001f1dd1f1",
+            "role": "Napier Hood"
+          },
+          {
+            "id": 1554,
+            "filter": "actor=1554",
+            "tag": "Keith Edwards",
+            "tagKey": "5d7768277228e5001f1dd034",
+            "role": "Reporter"
+          },
+          {
+            "id": 1555,
+            "filter": "actor=1555",
+            "tag": "Leon Herbert",
+            "tagKey": "5d7768277228e5001f1dd035",
+            "role": "Reporter",
+            "thumb": "https://metadata-static.plex.tv/1/people/169b7aa90c12d388847efc1229e1e50d.jpg"
+          },
+          {
+            "id": 1556,
+            "filter": "actor=1556",
+            "tag": "Steve Plytas",
+            "tagKey": "5d7768277228e5001f1dd036",
+            "role": "Doctor",
+            "thumb": "https://metadata-static.plex.tv/people/5d7768277228e5001f1dd036.jpg"
+          },
+          {
+            "id": 1557,
+            "filter": "actor=1557",
+            "tag": "Anthony Wellington",
+            "tagKey": "5d7768277228e5001f1dd037",
+            "role": "Patrolman at Party"
+          },
+          {
+            "id": 1558,
+            "filter": "actor=1558",
+            "tag": "Amir M. Korangy",
+            "tagKey": "5d7768277228e5001f1dd038",
+            "role": "Wine Steward",
+            "thumb": "https://metadata-static.plex.tv/c/people/c50755de56fbf8bfe9202a192cb11b04.jpg"
+          },
+          {
+            "id": 1559,
+            "filter": "actor=1559",
+            "tag": "Hugo Blick",
+            "tagKey": "5d7768277228e5001f1dd039",
+            "role": "Young Jack Napier"
+          },
+          {
+            "id": 1560,
+            "filter": "actor=1560",
+            "tag": "Charles Roskilly",
+            "tagKey": "5d7768277228e5001f1dd03a",
+            "role": "Young Bruce Wayne"
+          },
+          {
+            "id": 1561,
+            "filter": "actor=1561",
+            "tag": "Philip O'Brien",
+            "tagKey": "5d7768277228e5001f1dd03b",
+            "role": "Maitre d'"
+          },
+          {
+            "id": 1562,
+            "filter": "actor=1562",
+            "tag": "Michael Balfour",
+            "tagKey": "5d7768277228e5001f1dd03c",
+            "role": "Scientist",
+            "thumb": "https://metadata-static.plex.tv/5/people/56ce6cc300f35787731fd4947c8a485f.jpg"
+          },
+          {
+            "id": 1563,
+            "filter": "actor=1563",
+            "tag": "Garrick Hagon",
+            "tagKey": "5d776825880197001ec90334",
+            "role": "Dad",
+            "thumb": "https://metadata-static.plex.tv/people/5d776825880197001ec90334.jpg"
+          },
+          {
+            "id": 1564,
+            "filter": "actor=1564",
+            "tag": "Liza Ross",
+            "tagKey": "5d7768277228e5001f1dd03d",
+            "role": "Mom"
+          },
+          {
+            "id": 1565,
+            "filter": "actor=1565",
+            "tag": "Adrian Meyers",
+            "tagKey": "5d7768277228e5001f1dd03e",
+            "role": "Jimmy"
+          },
+          {
+            "id": 1566,
+            "filter": "actor=1566",
+            "tag": "David Baxt",
+            "tagKey": "5d7768277228e5001f1dd03f",
+            "role": "Dr Wayne",
+            "thumb": "https://metadata-static.plex.tv/people/5d7768277228e5001f1dd03f.jpg"
+          },
+          {
+            "id": 1567,
+            "filter": "actor=1567",
+            "tag": "Sharon Holm",
+            "tagKey": "5d7768277228e5001f1dd040",
+            "role": "Mrs Wayne"
+          },
+          {
+            "id": 1568,
+            "filter": "actor=1568",
+            "tag": "Clyde Gatell",
+            "tagKey": "5f3fa6a6fea1a1003f9491c2",
+            "role": "Other Mugger"
+          },
+          {
+            "id": 1569,
+            "filter": "actor=1569",
+            "tag": "Jon Soresi",
+            "tagKey": "5d7768277228e5001f1dd042",
+            "role": "Medic"
+          },
+          {
+            "id": 1570,
+            "filter": "actor=1570",
+            "tag": "Elliott Stein",
+            "tagKey": "5d7768277228e5001f1dd043",
+            "role": "Man in Crowd"
+          },
+          {
+            "id": 1571,
+            "filter": "actor=1571",
+            "tag": "Sam Douglas",
+            "tagKey": "5d776824103a2d001f563af0",
+            "role": "Lawyer",
+            "thumb": "https://metadata-static.plex.tv/f/people/f08e14951d80db4df3161659121ead4f.jpg"
+          },
+          {
+            "id": 1572,
+            "filter": "actor=1572",
+            "tag": "Denis Lill",
+            "tagKey": "5d7768277228e5001f1dd044",
+            "role": "Bob the Cartoonist",
+            "thumb": "https://metadata-static.plex.tv/people/5d7768277228e5001f1dd044.jpg"
+          },
+          {
+            "id": 1573,
+            "filter": "actor=1573",
+            "tag": "Paul Birchard",
+            "tagKey": "5d7768267e9a3c0020c6aa4f",
+            "role": "Reporter",
+            "thumb": "https://metadata-static.plex.tv/people/5d7768267e9a3c0020c6aa4f.jpg"
+          },
+          {
+            "id": 1574,
+            "filter": "actor=1574",
+            "tag": "Paul Michael",
+            "tagKey": "5d7768277228e5001f1dd045",
+            "role": "Cop"
+          },
+          {
+            "id": 1575,
+            "filter": "actor=1575",
+            "tag": "Pat Gorman",
+            "tagKey": "5d77682a8718ba001e3125bd",
+            "role": "Cop at Axis Chemicals",
+            "thumb": "https://metadata-static.plex.tv/9/people/9e494ca1f50b80b24945834837f53d76.jpg"
+          },
+          {
+            "id": 1576,
+            "filter": "actor=1576",
+            "tag": "Chris Andrews",
+            "tagKey": "5d9c087308fddd001f29b84e",
+            "role": "Election Ceremony Patron"
+          }
+        ],
+        "Review": [
+          {
+            "id": 1579,
+            "filter": "art=1579",
+            "tag": "Vincent Canby",
+            "text": "The wit is all pictorial. The film meanders mindlessly from one image to the next, as does a comic book. It doesn't help that the title character remains such a wimp even when played by Michael Keaton.",
+            "image": "rottentomatoes://image.review.rotten",
+            "link": "http://movies.nytimes.com/movie/review?res=950DE7D9133BF930A15755C0A96F948260&partner=Rotten Tomatoes",
+            "source": "New York Times"
+          },
+          {
+            "id": 1580,
+            "filter": "art=1580",
+            "tag": "Sheila Benson",
+            "text": "Is it interesting? Fitfully. Is it fun? Not much, Gotham City fans, not much.",
+            "image": "rottentomatoes://image.review.rotten",
+            "link": "http://articles.latimes.com/1989-06-23/entertainment/ca-2570_1_bruce-wayne-kim-basinger-s-vicki-vale-jack-nicholson-s-joker",
+            "source": "Los Angeles Times"
+          },
+          {
+            "id": 1581,
+            "filter": "art=1581",
+            "tag": "Dave Kehr",
+            "text": "The idea of doing a dark, neurotic, highly stylized and highly claustrophobic superproduction is an audacious and appealing one, but director Tim Burton has only made it halfway there.",
+            "image": "rottentomatoes://image.review.fresh",
+            "link": "http://articles.chicagotribune.com/1989-06-23/entertainment/8902110834_1_love-interest-vicki-vale-batman-tim-burton",
+            "source": "Chicago Tribune"
+          },
+          {
+            "id": 1582,
+            "filter": "art=1582",
+            "tag": "Carrie Rickey",
+            "text": "It's an unforgivably flat ending for a movie of such astonishing contours. But its first two-thirds -- which should be called The Joker's Big Misadventure -- is probably the best film of the year.",
+            "image": "rottentomatoes://image.review.fresh",
+            "link": "http://articles.philly.com/1989-06-23/entertainment/26105491_1_batman-soars-joker-batcave",
+            "source": "Philadelphia Inquirer"
+          },
+          {
+            "id": 1583,
+            "filter": "art=1583",
+            "tag": "James Berardinelli",
+            "text": "There are a lot of things wrong with Batman, but it still makes for decent entertainment in the fine tradition of the typical low-intelligence summer movie.",
+            "image": "rottentomatoes://image.review.fresh",
+            "link": "http://www.reelviews.net/php_review_template.php?identifier=758",
+            "source": "ReelViews"
+          },
+          {
+            "id": 1584,
+            "filter": "art=1584",
+            "tag": "Roger Ebert",
+            "text": "A triumph of design over story, style over substance - a great-looking movie with a plot you can't care much about.",
+            "image": "rottentomatoes://image.review.rotten",
+            "link": "http://www.rogerebert.com/reviews/batman-1989",
+            "source": "Chicago Sun-Times"
+          },
+          {
+            "id": 1585,
+            "filter": "art=1585",
+            "tag": "Josh Wilding",
+            "text": "Like Gotham City, Batman is a little rough at times, but Michael Keaton and Jack Nicholson's wonderfully weird performances (and Tim Burton's unique vision for the DC Universe) mean it deserves to be remembered as a classic.",
+            "image": "rottentomatoes://image.review.fresh",
+            "link": "https://www.comicbookmovie.com/batman/batman_1989/from-the-archives-batman-1989-review-it-deserves-to-beremembered-as-a-classic-a176402#gs.8wo418",
+            "source": "ComicBookMovie.com"
+          },
+          {
+            "id": 1586,
+            "filter": "art=1586",
+            "tag": "Mike Massie",
+            "text": "A groundbreaking comic book adaptation.",
+            "image": "rottentomatoes://image.review.fresh",
+            "link": "http://gonewiththetwins.com/new/batman-1989/",
+            "source": "Gone With The Twins"
+          },
+          {
+            "id": 1587,
+            "filter": "art=1587",
+            "tag": "Steven D. Greydanus",
+            "text": "The story is a mess… Scenes and lines of dialogue make no sense… Keaton makes hardly any impression in the role, in or out of the mask.",
+            "image": "rottentomatoes://image.review.rotten",
+            "link": "http://www.decentfilms.com/sections/reviews/2616",
+            "source": "Decent Films"
+          },
+          {
+            "id": 1588,
+            "filter": "art=1588",
+            "tag": "Ryan Murphy",
+            "text": "Batman, the movie event of the summer, is a psycho thriller posing as an action-adventure movie, a breathtaking ride through a fun-house populated with all-too-believable ghouls, phantoms and tortured souls.",
+            "image": "rottentomatoes://image.review.fresh",
+            "link": "https://www.newspapers.com/clip/83612078/batman/",
+            "source": "Miami Herald"
+          },
+          {
+            "id": 1589,
+            "filter": "art=1589",
+            "tag": "Ron Pennington",
+            "text": "Batman is a stunning achievement, especially through the incredible and unique visualization of director Tim Burton.",
+            "image": "rottentomatoes://image.review.fresh",
+            "link": "http://www.hollywoodreporter.com/news/batman-thrs-1989-review-801339",
+            "source": "Hollywood Reporter"
+          },
+          {
+            "id": 1590,
+            "filter": "art=1590",
+            "tag": "Jay Boyar",
+            "text": "The storytelling has weaknesses, but the characters are fascinating.",
+            "image": "rottentomatoes://image.review.fresh",
+            "link": "http://articles.orlandosentinel.com/1989-07-30/entertainment/8907272738_1_michael-keaton-batman-kim-basinger",
+            "source": "Orlando Sentinel"
+          },
+          {
+            "id": 1591,
+            "filter": "art=1591",
+            "tag": "Variety Staff",
+            "text": "Director Tim Burton effectively echoes the visual style of the original Bob Kane comics while conjuring up a nightmarish world of his own.",
+            "image": "rottentomatoes://image.review.fresh",
+            "link": "http://www.variety.com/review/VE1117788899.html?categoryid=31&cs=1",
+            "source": "Variety"
+          },
+          {
+            "id": 1592,
+            "filter": "art=1592",
+            "tag": "Jonathan Rosenbaum",
+            "text": "The conceptual side of the movie--two rather sick two-sided antagonists having it out in a black and sordid context -- lingers.",
+            "image": "rottentomatoes://image.review.rotten",
+            "link": "http://onfilm.chicagoreader.com/movies/capsules/769_BATMAN_AAA_burton",
+            "source": "Chicago Reader"
+          },
+          {
+            "id": 1593,
+            "filter": "art=1593",
+            "tag": "Desson Thomson",
+            "text": "An exhilarating mix of cartoon lore (though not nearly enough for rabid Batpurists), screen presence (this is pretty much the Jack and Mike Show), psychological murkiness (though it could have used even more) and demented Gothic goofiness.",
+            "image": "rottentomatoes://image.review.fresh",
+            "link": "http://www.washingtonpost.com/wp-srv/style/longterm/movies/videos/batmanpg13howe_a0b220.htm",
+            "source": "Washington Post"
+          },
+          {
+            "id": 1594,
+            "filter": "art=1594",
+            "tag": "Hal Hinson",
+            "text": "Dark, haunting and poetic",
+            "image": "rottentomatoes://image.review.fresh",
+            "link": "http://www.washingtonpost.com/wp-srv/style/longterm/movies/videos/batmanpg13hinson_a07fb8.htm",
+            "source": "Washington Post"
+          },
+          {
+            "id": 1595,
+            "filter": "art=1595",
+            "tag": "Tim Allis",
+            "text": "This might have been a great film if someone had bothered to hire a writer capable of creating fresh, intelligent dialogue.",
+            "image": "rottentomatoes://image.review.rotten",
+            "link": "https://archive.org/details/outweek/OutWeek%203/page/n45/mode/2up",
+            "source": "OutWeek"
+          },
+          {
+            "id": 1596,
+            "filter": "art=1596",
+            "tag": "Sarah Musnicky",
+            "text": "I found that I really enjoyed the film.",
+            "image": "rottentomatoes://image.review.fresh",
+            "link": "http://www.nightmarishconjurings.com/2019/06/07/blu-ray-dvd-review-batman-1989/",
+            "source": "Nightmarish Conjurings"
+          },
+          {
+            "id": 1597,
+            "filter": "art=1597",
+            "tag": "Rachel Wagner",
+            "text": "I don't get the appeal to be honest.",
+            "image": "rottentomatoes://image.review.rotten",
+            "link": "https://rachelsreviews.net/2016/03/21/all-batman-movies-quick-thoughts/",
+            "source": "rachelsreviews.net"
+          },
+          {
+            "id": 1598,
+            "filter": "art=1598",
+            "tag": "Danielle Solzman",
+            "text": "The theatrical release of Batman celebrates 30 years this year and holds up for being the product of its era with regards to cinematic entertainment.",
+            "image": "rottentomatoes://image.review.fresh",
+            "link": "http://www.solzyatthemovies.com/2019/06/06/batman-holds-up-beautifully-after-30-years/",
+            "source": "Solzy at the Movies"
+          }
+        ],
+        "Preferences": {
+          "Setting": [
+            {
+              "id": "languageOverride",
+              "label": "Metadata language",
+              "summary": "Language to use for item metadata such as synopsis and title.",
+              "type": "text",
+              "default": "",
+              "value": "",
+              "hidden": false,
+              "advanced": false,
+              "group": "",
+              "enumValues": ":Library default|ca-ES:català|cs-CZ:Čeština|da-DK:Dansk|de-DE:Deutsch|et-EE:eesti|en-US:English|en-AU:English (Australia)|en-CA:English (Canada)|en-GB:English (UK)|es-ES:Español|es-MX:Español (México)|fr-FR:Français|fr-CA:Français (Canada)|hr-HR:Hrvatski|id-ID:Indonesia|it-IT:Italiano|lv-LV:latviešu|lt-LT:lietuvių|hu-HU:magyar|nl-NL:Nederlands|nb-NO:norsk bokmål|pl-PL:polski|pt-BR:Português|pt-PT:Português (Portugal)|ro-RO:română|sk-SK:Slovenčina|fi-FI:Suomi|sv-SE:Svenska|vi-VN:Tiếng Việt|tr-TR:Türkçe|el-GR:Ελληνικά|bg-BG:български|ru-RU:Русский|uk-UA:Українська|he-IL:עברית|ar-SA:العربية (المملكة العربية السعودية)|fa-IR:فارسی|hi-IN:हिन्दी|th-TH:ไทย|ko-KR:한국어|zh-CN:中文|zh-HK:中文（中國香港）|zh-TW:中文（台灣）|ja-JP:日本語"
+            },
+            {
+              "id": "useOriginalTitle",
+              "label": "Use original title",
+              "summary": "Use the original title for this item regardless of the library language.",
+              "type": "int",
+              "default": "-1",
+              "value": "-1",
+              "hidden": false,
+              "advanced": false,
+              "group": "",
+              "enumValues": "-1:Library default|0:No|1:Yes"
+            }
+          ]
+        },
+        "Extras": {
+          "size": 20,
+          "Metadata": [
+            {
+              "ratingKey": "183",
+              "key": "/library/metadata/183",
+              "guid": "iva://api.internetvideoarchive.com/2.0/DataService/VideoAssets(848)",
+              "type": "clip",
+              "title": "Batman",
+              "summary": "",
+              "index": 1,
+              "thumb": "/library/metadata/183/thumb/1683716785",
+              "primaryGuid": "plex://movie/5d7768257228e5001f1dccd2",
+              "subtype": "trailer",
+              "duration": 107000,
+              "addedAt": 1683716785,
+              "extraType": 1,
+              "Media": [
+                {
+                  "id": 193,
+                  "duration": 107000,
+                  "bitrate": 1500,
+                  "width": 720,
+                  "height": 480,
+                  "aspectRatio": 1.66,
+                  "audioCodec": "aac",
+                  "videoCodec": "h264",
+                  "videoResolution": "480",
+                  "container": "mp4",
+                  "optimizedForStreaming": 1,
+                  "protocol": "mp4",
+                  "premium": true,
+                  "Part": [
+                    {
+                      "id": 209,
+                      "duration": 107000,
+                      "container": "mp4",
+                      "key": "/services/iva/assets/848/video.mp4?fmt=4&bitrate=1500",
+                      "Stream": [
+                        {
+                          "id": 281,
+                          "streamType": 1,
+                          "codec": "h264",
+                          "index": 0,
+                          "bitrate": 1500,
+                          "height": 480,
+                          "width": 720,
+                          "displayTitle": "480p (H.264)",
+                          "extendedDisplayTitle": "480p (H.264)"
+                        },
+                        {
+                          "id": 282,
+                          "streamType": 2,
+                          "selected": true,
+                          "codec": "aac",
+                          "index": 1,
+                          "channels": 2,
+                          "language": "English",
+                          "languageTag": "en",
+                          "languageCode": "eng",
+                          "displayTitle": "English (AAC Stereo)",
+                          "extendedDisplayTitle": "English (AAC Stereo)"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": 194,
+                  "duration": 107000,
+                  "bitrate": 750,
+                  "width": 480,
+                  "height": 320,
+                  "aspectRatio": 1.66,
+                  "audioCodec": "aac",
+                  "videoCodec": "h264",
+                  "videoResolution": "sd",
+                  "container": "mp4",
+                  "optimizedForStreaming": 1,
+                  "protocol": "mp4",
+                  "premium": true,
+                  "Part": [
+                    {
+                      "id": 210,
+                      "duration": 107000,
+                      "container": "mp4",
+                      "key": "/services/iva/assets/848/video.mp4?fmt=4&bitrate=750",
+                      "Stream": [
+                        {
+                          "id": 283,
+                          "streamType": 1,
+                          "codec": "h264",
+                          "index": 0,
+                          "bitrate": 750,
+                          "height": 320,
+                          "width": 480,
+                          "displayTitle": "SD (H.264)",
+                          "extendedDisplayTitle": "SD (H.264)"
+                        },
+                        {
+                          "id": 284,
+                          "streamType": 2,
+                          "selected": true,
+                          "codec": "aac",
+                          "index": 1,
+                          "channels": 2,
+                          "language": "English",
+                          "languageTag": "en",
+                          "languageCode": "eng",
+                          "displayTitle": "English (AAC Stereo)",
+                          "extendedDisplayTitle": "English (AAC Stereo)"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "ratingKey": "184",
+              "key": "/library/metadata/184",
+              "guid": "iva://api.internetvideoarchive.com/2.0/DataService/VideoAssets(876547)",
+              "type": "clip",
+              "title": "Batman (Modern Trailer)",
+              "summary": "",
+              "index": 2,
+              "thumb": "/library/metadata/184/thumb/1683716785",
+              "primaryGuid": "plex://movie/5d7768257228e5001f1dccd2",
+              "subtype": "trailer",
+              "duration": 113000,
+              "addedAt": 1683716785,
+              "extraType": 1,
+              "Media": [
+                {
+                  "id": 195,
+                  "duration": 113000,
+                  "bitrate": 5000,
+                  "width": 1920,
+                  "height": 1080,
+                  "aspectRatio": 1.78,
+                  "audioCodec": "aac",
+                  "videoCodec": "h264",
+                  "videoResolution": "1080",
+                  "container": "mp4",
+                  "optimizedForStreaming": 1,
+                  "protocol": "mp4",
+                  "premium": true,
+                  "Part": [
+                    {
+                      "id": 211,
+                      "duration": 113000,
+                      "container": "mp4",
+                      "key": "/services/iva/assets/876547/video.mp4?fmt=4&bitrate=5000",
+                      "Stream": [
+                        {
+                          "id": 285,
+                          "streamType": 1,
+                          "codec": "h264",
+                          "index": 0,
+                          "bitrate": 5000,
+                          "height": 1080,
+                          "width": 1920,
+                          "displayTitle": "1080p (H.264)",
+                          "extendedDisplayTitle": "1080p (H.264)"
+                        },
+                        {
+                          "id": 286,
+                          "streamType": 2,
+                          "selected": true,
+                          "codec": "aac",
+                          "index": 1,
+                          "channels": 2,
+                          "language": "English",
+                          "languageTag": "en",
+                          "languageCode": "eng",
+                          "displayTitle": "English (AAC Stereo)",
+                          "extendedDisplayTitle": "English (AAC Stereo)"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": 196,
+                  "duration": 113000,
+                  "bitrate": 2500,
+                  "width": 1280,
+                  "height": 720,
+                  "aspectRatio": 1.78,
+                  "audioCodec": "aac",
+                  "videoCodec": "h264",
+                  "videoResolution": "720",
+                  "container": "mp4",
+                  "optimizedForStreaming": 1,
+                  "protocol": "mp4",
+                  "premium": true,
+                  "Part": [
+                    {
+                      "id": 212,
+                      "duration": 113000,
+                      "container": "mp4",
+                      "key": "/services/iva/assets/876547/video.mp4?fmt=4&bitrate=2500",
+                      "Stream": [
+                        {
+                          "id": 287,
+                          "streamType": 1,
+                          "codec": "h264",
+                          "index": 0,
+                          "bitrate": 2500,
+                          "height": 720,
+                          "width": 1280,
+                          "displayTitle": "720p (H.264)",
+                          "extendedDisplayTitle": "720p (H.264)"
+                        },
+                        {
+                          "id": 288,
+                          "streamType": 2,
+                          "selected": true,
+                          "codec": "aac",
+                          "index": 1,
+                          "channels": 2,
+                          "language": "English",
+                          "languageTag": "en",
+                          "languageCode": "eng",
+                          "displayTitle": "English (AAC Stereo)",
+                          "extendedDisplayTitle": "English (AAC Stereo)"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": 197,
+                  "duration": 113000,
+                  "bitrate": 750,
+                  "width": 480,
+                  "height": 270,
+                  "aspectRatio": 1.78,
+                  "audioCodec": "aac",
+                  "videoCodec": "h264",
+                  "videoResolution": "sd",
+                  "container": "mp4",
+                  "optimizedForStreaming": 1,
+                  "protocol": "mp4",
+                  "premium": true,
+                  "Part": [
+                    {
+                      "id": 213,
+                      "duration": 113000,
+                      "container": "mp4",
+                      "key": "/services/iva/assets/876547/video.mp4?fmt=4&bitrate=750",
+                      "Stream": [
+                        {
+                          "id": 289,
+                          "streamType": 1,
+                          "codec": "h264",
+                          "index": 0,
+                          "bitrate": 750,
+                          "height": 270,
+                          "width": 480,
+                          "displayTitle": "SD (H.264)",
+                          "extendedDisplayTitle": "SD (H.264)"
+                        },
+                        {
+                          "id": 290,
+                          "streamType": 2,
+                          "selected": true,
+                          "codec": "aac",
+                          "index": 1,
+                          "channels": 2,
+                          "language": "English",
+                          "languageTag": "en",
+                          "languageCode": "eng",
+                          "displayTitle": "English (AAC Stereo)",
+                          "extendedDisplayTitle": "English (AAC Stereo)"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "ratingKey": "185",
+              "key": "/library/metadata/185",
+              "guid": "iva://api.internetvideoarchive.com/2.0/DataService/VideoAssets(351980)",
+              "type": "clip",
+              "title": "Batman 20th Anniversary Edition",
+              "summary": "",
+              "index": 3,
+              "thumb": "/library/metadata/185/thumb/1683716785",
+              "primaryGuid": "plex://movie/5d7768257228e5001f1dccd2",
+              "subtype": "trailer",
+              "duration": 97000,
+              "addedAt": 1683716785,
+              "extraType": 1,
+              "Media": [
+                {
+                  "id": 198,
+                  "duration": 97000,
+                  "bitrate": 450,
+                  "width": 320,
+                  "height": 242,
+                  "aspectRatio": 1.33,
+                  "audioCodec": "aac",
+                  "videoCodec": "h264",
+                  "videoResolution": "sd",
+                  "container": "mp4",
+                  "optimizedForStreaming": 1,
+                  "protocol": "mp4",
+                  "premium": true,
+                  "Part": [
+                    {
+                      "id": 214,
+                      "duration": 97000,
+                      "container": "mp4",
+                      "key": "/services/iva/assets/351980/video.mp4?fmt=4&bitrate=450",
+                      "Stream": [
+                        {
+                          "id": 291,
+                          "streamType": 1,
+                          "codec": "h264",
+                          "index": 0,
+                          "bitrate": 450,
+                          "height": 242,
+                          "width": 320,
+                          "displayTitle": "SD (H.264)",
+                          "extendedDisplayTitle": "SD (H.264)"
+                        },
+                        {
+                          "id": 292,
+                          "streamType": 2,
+                          "selected": true,
+                          "codec": "aac",
+                          "index": 1,
+                          "channels": 2,
+                          "language": "English",
+                          "languageTag": "en",
+                          "languageCode": "eng",
+                          "displayTitle": "English (AAC Stereo)",
+                          "extendedDisplayTitle": "English (AAC Stereo)"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "ratingKey": "186",
+              "key": "/library/metadata/186",
+              "guid": "iva://api.internetvideoarchive.com/2.0/DataService/VideoAssets(555645)",
+              "type": "clip",
+              "title": "Batman: The Motion Picture Anthology",
+              "summary": "",
+              "index": 4,
+              "thumb": "/library/metadata/186/thumb/1683716785",
+              "primaryGuid": "plex://movie/5d7768257228e5001f1dccd2",
+              "subtype": "trailer",
+              "duration": 102000,
+              "addedAt": 1683716785,
+              "extraType": 1,
+              "Media": [
+                {
+                  "id": 199,
+                  "duration": 102000,
+                  "bitrate": 450,
+                  "width": 320,
+                  "height": 242,
+                  "aspectRatio": 1.33,
+                  "audioCodec": "aac",
+                  "videoCodec": "h264",
+                  "videoResolution": "sd",
+                  "container": "mp4",
+                  "optimizedForStreaming": 1,
+                  "protocol": "mp4",
+                  "premium": true,
+                  "Part": [
+                    {
+                      "id": 215,
+                      "duration": 102000,
+                      "container": "mp4",
+                      "key": "/services/iva/assets/555645/video.mp4?fmt=4&bitrate=450",
+                      "Stream": [
+                        {
+                          "id": 293,
+                          "streamType": 1,
+                          "codec": "h264",
+                          "index": 0,
+                          "bitrate": 450,
+                          "height": 242,
+                          "width": 320,
+                          "displayTitle": "SD (H.264)",
+                          "extendedDisplayTitle": "SD (H.264)"
+                        },
+                        {
+                          "id": 294,
+                          "streamType": 2,
+                          "selected": true,
+                          "codec": "aac",
+                          "index": 1,
+                          "channels": 2,
+                          "language": "English",
+                          "languageTag": "en",
+                          "languageCode": "eng",
+                          "displayTitle": "English (AAC Stereo)",
+                          "extendedDisplayTitle": "English (AAC Stereo)"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "ratingKey": "187",
+              "key": "/library/metadata/187",
+              "guid": "iva://api.internetvideoarchive.com/2.0/DataService/VideoAssets(535626)",
+              "type": "clip",
+              "title": "Batman 80th Anniversary Cinema Events Series",
+              "summary": "",
+              "index": 5,
+              "thumb": "/library/metadata/187/thumb/1683716785",
+              "primaryGuid": "plex://movie/5d7768257228e5001f1dccd2",
+              "subtype": "trailer",
+              "duration": 30000,
+              "addedAt": 1683716785,
+              "extraType": 1,
+              "Media": [
+                {
+                  "id": 200,
+                  "duration": 30000,
+                  "bitrate": 5000,
+                  "width": 1920,
+                  "height": 1080,
+                  "aspectRatio": 1.78,
+                  "audioCodec": "aac",
+                  "videoCodec": "h264",
+                  "videoResolution": "1080",
+                  "container": "mp4",
+                  "optimizedForStreaming": 1,
+                  "protocol": "mp4",
+                  "premium": true,
+                  "Part": [
+                    {
+                      "id": 216,
+                      "duration": 30000,
+                      "container": "mp4",
+                      "key": "/services/iva/assets/535626/video.mp4?fmt=4&bitrate=5000",
+                      "Stream": [
+                        {
+                          "id": 295,
+                          "streamType": 1,
+                          "codec": "h264",
+                          "index": 0,
+                          "bitrate": 5000,
+                          "height": 1080,
+                          "width": 1920,
+                          "displayTitle": "1080p (H.264)",
+                          "extendedDisplayTitle": "1080p (H.264)"
+                        },
+                        {
+                          "id": 296,
+                          "streamType": 2,
+                          "selected": true,
+                          "codec": "aac",
+                          "index": 1,
+                          "channels": 2,
+                          "language": "English",
+                          "languageTag": "en",
+                          "languageCode": "eng",
+                          "displayTitle": "English (AAC Stereo)",
+                          "extendedDisplayTitle": "English (AAC Stereo)"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": 201,
+                  "duration": 30000,
+                  "bitrate": 2500,
+                  "width": 1280,
+                  "height": 720,
+                  "aspectRatio": 1.78,
+                  "audioCodec": "aac",
+                  "videoCodec": "h264",
+                  "videoResolution": "720",
+                  "container": "mp4",
+                  "optimizedForStreaming": 1,
+                  "protocol": "mp4",
+                  "premium": true,
+                  "Part": [
+                    {
+                      "id": 217,
+                      "duration": 30000,
+                      "container": "mp4",
+                      "key": "/services/iva/assets/535626/video.mp4?fmt=4&bitrate=2500",
+                      "Stream": [
+                        {
+                          "id": 297,
+                          "streamType": 1,
+                          "codec": "h264",
+                          "index": 0,
+                          "bitrate": 2500,
+                          "height": 720,
+                          "width": 1280,
+                          "displayTitle": "720p (H.264)",
+                          "extendedDisplayTitle": "720p (H.264)"
+                        },
+                        {
+                          "id": 298,
+                          "streamType": 2,
+                          "selected": true,
+                          "codec": "aac",
+                          "index": 1,
+                          "channels": 2,
+                          "language": "English",
+                          "languageTag": "en",
+                          "languageCode": "eng",
+                          "displayTitle": "English (AAC Stereo)",
+                          "extendedDisplayTitle": "English (AAC Stereo)"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": 202,
+                  "duration": 30000,
+                  "bitrate": 750,
+                  "width": 480,
+                  "height": 270,
+                  "aspectRatio": 1.78,
+                  "audioCodec": "aac",
+                  "videoCodec": "h264",
+                  "videoResolution": "sd",
+                  "container": "mp4",
+                  "optimizedForStreaming": 1,
+                  "protocol": "mp4",
+                  "premium": true,
+                  "Part": [
+                    {
+                      "id": 218,
+                      "duration": 30000,
+                      "container": "mp4",
+                      "key": "/services/iva/assets/535626/video.mp4?fmt=4&bitrate=750",
+                      "Stream": [
+                        {
+                          "id": 299,
+                          "streamType": 1,
+                          "codec": "h264",
+                          "index": 0,
+                          "bitrate": 750,
+                          "height": 270,
+                          "width": 480,
+                          "displayTitle": "SD (H.264)",
+                          "extendedDisplayTitle": "SD (H.264)"
+                        },
+                        {
+                          "id": 300,
+                          "streamType": 2,
+                          "selected": true,
+                          "codec": "aac",
+                          "index": 1,
+                          "channels": 2,
+                          "language": "English",
+                          "languageTag": "en",
+                          "languageCode": "eng",
+                          "displayTitle": "English (AAC Stereo)",
+                          "extendedDisplayTitle": "English (AAC Stereo)"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "ratingKey": "188",
+              "key": "/library/metadata/188",
+              "guid": "iva://api.internetvideoarchive.com/2.0/DataService/VideoAssets(677923)",
+              "type": "clip",
+              "title": "Batman: Those Wonderful Toys",
+              "summary": "",
+              "index": 6,
+              "thumb": "/library/metadata/188/thumb/1683716785",
+              "subtype": "sceneOrSample",
+              "duration": 85000,
+              "addedAt": 1683716785,
+              "extraType": 6,
+              "Media": [
+                {
+                  "id": 203,
+                  "duration": 85000,
+                  "bitrate": 5000,
+                  "width": 1920,
+                  "height": 1080,
+                  "aspectRatio": 1.78,
+                  "audioCodec": "aac",
+                  "videoCodec": "h264",
+                  "videoResolution": "1080",
+                  "container": "mp4",
+                  "optimizedForStreaming": 1,
+                  "protocol": "mp4",
+                  "premium": true,
+                  "Part": [
+                    {
+                      "id": 219,
+                      "duration": 85000,
+                      "container": "mp4",
+                      "key": "/services/iva/assets/677923/video.mp4?fmt=4&bitrate=5000",
+                      "Stream": [
+                        {
+                          "id": 301,
+                          "streamType": 1,
+                          "codec": "h264",
+                          "index": 0,
+                          "bitrate": 5000,
+                          "height": 1080,
+                          "width": 1920,
+                          "displayTitle": "1080p (H.264)",
+                          "extendedDisplayTitle": "1080p (H.264)"
+                        },
+                        {
+                          "id": 302,
+                          "streamType": 2,
+                          "selected": true,
+                          "codec": "aac",
+                          "index": 1,
+                          "channels": 2,
+                          "language": "English",
+                          "languageTag": "en",
+                          "languageCode": "eng",
+                          "displayTitle": "English (AAC Stereo)",
+                          "extendedDisplayTitle": "English (AAC Stereo)"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": 204,
+                  "duration": 85000,
+                  "bitrate": 2500,
+                  "width": 1280,
+                  "height": 720,
+                  "aspectRatio": 1.78,
+                  "audioCodec": "aac",
+                  "videoCodec": "h264",
+                  "videoResolution": "720",
+                  "container": "mp4",
+                  "optimizedForStreaming": 1,
+                  "protocol": "mp4",
+                  "premium": true,
+                  "Part": [
+                    {
+                      "id": 220,
+                      "duration": 85000,
+                      "container": "mp4",
+                      "key": "/services/iva/assets/677923/video.mp4?fmt=4&bitrate=2500",
+                      "Stream": [
+                        {
+                          "id": 303,
+                          "streamType": 1,
+                          "codec": "h264",
+                          "index": 0,
+                          "bitrate": 2500,
+                          "height": 720,
+                          "width": 1280,
+                          "displayTitle": "720p (H.264)",
+                          "extendedDisplayTitle": "720p (H.264)"
+                        },
+                        {
+                          "id": 304,
+                          "streamType": 2,
+                          "selected": true,
+                          "codec": "aac",
+                          "index": 1,
+                          "channels": 2,
+                          "language": "English",
+                          "languageTag": "en",
+                          "languageCode": "eng",
+                          "displayTitle": "English (AAC Stereo)",
+                          "extendedDisplayTitle": "English (AAC Stereo)"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": 205,
+                  "duration": 85000,
+                  "bitrate": 750,
+                  "width": 480,
+                  "height": 270,
+                  "aspectRatio": 1.78,
+                  "audioCodec": "aac",
+                  "videoCodec": "h264",
+                  "videoResolution": "sd",
+                  "container": "mp4",
+                  "optimizedForStreaming": 1,
+                  "protocol": "mp4",
+                  "premium": true,
+                  "Part": [
+                    {
+                      "id": 221,
+                      "duration": 85000,
+                      "container": "mp4",
+                      "key": "/services/iva/assets/677923/video.mp4?fmt=4&bitrate=750",
+                      "Stream": [
+                        {
+                          "id": 305,
+                          "streamType": 1,
+                          "codec": "h264",
+                          "index": 0,
+                          "bitrate": 750,
+                          "height": 270,
+                          "width": 480,
+                          "displayTitle": "SD (H.264)",
+                          "extendedDisplayTitle": "SD (H.264)"
+                        },
+                        {
+                          "id": 306,
+                          "streamType": 2,
+                          "selected": true,
+                          "codec": "aac",
+                          "index": 1,
+                          "channels": 2,
+                          "language": "English",
+                          "languageTag": "en",
+                          "languageCode": "eng",
+                          "displayTitle": "English (AAC Stereo)",
+                          "extendedDisplayTitle": "English (AAC Stereo)"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "ratingKey": "189",
+              "key": "/library/metadata/189",
+              "guid": "iva://api.internetvideoarchive.com/2.0/DataService/VideoAssets(246385)",
+              "type": "clip",
+              "title": "Batman: The Motion Picture Anthology (Urgent)",
+              "summary": "",
+              "index": 7,
+              "thumb": "/library/metadata/189/thumb/1683716785",
+              "subtype": "sceneOrSample",
+              "duration": 141000,
+              "addedAt": 1683716785,
+              "extraType": 6,
+              "Media": [
+                {
+                  "id": 206,
+                  "duration": 141000,
+                  "bitrate": 450,
+                  "width": 320,
+                  "height": 242,
+                  "aspectRatio": 1.33,
+                  "audioCodec": "aac",
+                  "videoCodec": "h264",
+                  "videoResolution": "sd",
+                  "container": "mp4",
+                  "optimizedForStreaming": 1,
+                  "protocol": "mp4",
+                  "premium": true,
+                  "Part": [
+                    {
+                      "id": 222,
+                      "duration": 141000,
+                      "container": "mp4",
+                      "key": "/services/iva/assets/246385/video.mp4?fmt=4&bitrate=450",
+                      "Stream": [
+                        {
+                          "id": 307,
+                          "streamType": 1,
+                          "codec": "h264",
+                          "index": 0,
+                          "bitrate": 450,
+                          "height": 242,
+                          "width": 320,
+                          "displayTitle": "SD (H.264)",
+                          "extendedDisplayTitle": "SD (H.264)"
+                        },
+                        {
+                          "id": 308,
+                          "streamType": 2,
+                          "selected": true,
+                          "codec": "aac",
+                          "index": 1,
+                          "channels": 2,
+                          "language": "English",
+                          "languageTag": "en",
+                          "languageCode": "eng",
+                          "displayTitle": "English (AAC Stereo)",
+                          "extendedDisplayTitle": "English (AAC Stereo)"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "ratingKey": "190",
+              "key": "/library/metadata/190",
+              "guid": "iva://api.internetvideoarchive.com/2.0/DataService/VideoAssets(422192)",
+              "type": "clip",
+              "title": "Batman 20th Anniversary Edition: Jack The Joker",
+              "summary": "",
+              "index": 8,
+              "thumb": "/library/metadata/190/thumb/1683716785",
+              "subtype": "sceneOrSample",
+              "duration": 78000,
+              "addedAt": 1683716785,
+              "extraType": 6,
+              "Media": [
+                {
+                  "id": 207,
+                  "duration": 78000,
+                  "bitrate": 450,
+                  "width": 320,
+                  "height": 242,
+                  "aspectRatio": 1.33,
+                  "audioCodec": "aac",
+                  "videoCodec": "h264",
+                  "videoResolution": "sd",
+                  "container": "mp4",
+                  "optimizedForStreaming": 1,
+                  "protocol": "mp4",
+                  "premium": true,
+                  "Part": [
+                    {
+                      "id": 223,
+                      "duration": 78000,
+                      "container": "mp4",
+                      "key": "/services/iva/assets/422192/video.mp4?fmt=4&bitrate=450",
+                      "Stream": [
+                        {
+                          "id": 309,
+                          "streamType": 1,
+                          "codec": "h264",
+                          "index": 0,
+                          "bitrate": 450,
+                          "height": 242,
+                          "width": 320,
+                          "displayTitle": "SD (H.264)",
+                          "extendedDisplayTitle": "SD (H.264)"
+                        },
+                        {
+                          "id": 310,
+                          "streamType": 2,
+                          "selected": true,
+                          "codec": "aac",
+                          "index": 1,
+                          "channels": 2,
+                          "language": "English",
+                          "languageTag": "en",
+                          "languageCode": "eng",
+                          "displayTitle": "English (AAC Stereo)",
+                          "extendedDisplayTitle": "English (AAC Stereo)"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "ratingKey": "191",
+              "key": "/library/metadata/191",
+              "guid": "iva://api.internetvideoarchive.com/2.0/DataService/VideoAssets(469855)",
+              "type": "clip",
+              "title": "Batman: The Motion Picture Anthology (Watch Me)",
+              "summary": "",
+              "index": 9,
+              "thumb": "/library/metadata/191/thumb/1683716785",
+              "subtype": "sceneOrSample",
+              "duration": 108000,
+              "addedAt": 1683716785,
+              "extraType": 6,
+              "Media": [
+                {
+                  "id": 208,
+                  "duration": 108000,
+                  "bitrate": 450,
+                  "width": 320,
+                  "height": 242,
+                  "aspectRatio": 1.33,
+                  "audioCodec": "aac",
+                  "videoCodec": "h264",
+                  "videoResolution": "sd",
+                  "container": "mp4",
+                  "optimizedForStreaming": 1,
+                  "protocol": "mp4",
+                  "premium": true,
+                  "Part": [
+                    {
+                      "id": 224,
+                      "duration": 108000,
+                      "container": "mp4",
+                      "key": "/services/iva/assets/469855/video.mp4?fmt=4&bitrate=450",
+                      "Stream": [
+                        {
+                          "id": 311,
+                          "streamType": 1,
+                          "codec": "h264",
+                          "index": 0,
+                          "bitrate": 450,
+                          "height": 242,
+                          "width": 320,
+                          "displayTitle": "SD (H.264)",
+                          "extendedDisplayTitle": "SD (H.264)"
+                        },
+                        {
+                          "id": 312,
+                          "streamType": 2,
+                          "selected": true,
+                          "codec": "aac",
+                          "index": 1,
+                          "channels": 2,
+                          "language": "English",
+                          "languageTag": "en",
+                          "languageCode": "eng",
+                          "displayTitle": "English (AAC Stereo)",
+                          "extendedDisplayTitle": "English (AAC Stereo)"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "ratingKey": "192",
+              "key": "/library/metadata/192",
+              "guid": "iva://api.internetvideoarchive.com/2.0/DataService/VideoAssets(488016)",
+              "type": "clip",
+              "title": "Batman: The Motion Picture Anthology (Like Bats)",
+              "summary": "",
+              "index": 10,
+              "thumb": "/library/metadata/192/thumb/1683716785",
+              "subtype": "sceneOrSample",
+              "duration": 104000,
+              "addedAt": 1683716785,
+              "extraType": 6,
+              "Media": [
+                {
+                  "id": 209,
+                  "duration": 104000,
+                  "bitrate": 450,
+                  "width": 320,
+                  "height": 242,
+                  "aspectRatio": 1.33,
+                  "audioCodec": "aac",
+                  "videoCodec": "h264",
+                  "videoResolution": "sd",
+                  "container": "mp4",
+                  "optimizedForStreaming": 1,
+                  "protocol": "mp4",
+                  "premium": true,
+                  "Part": [
+                    {
+                      "id": 225,
+                      "duration": 104000,
+                      "container": "mp4",
+                      "key": "/services/iva/assets/488016/video.mp4?fmt=4&bitrate=450",
+                      "Stream": [
+                        {
+                          "id": 313,
+                          "streamType": 1,
+                          "codec": "h264",
+                          "index": 0,
+                          "bitrate": 450,
+                          "height": 242,
+                          "width": 320,
+                          "displayTitle": "SD (H.264)",
+                          "extendedDisplayTitle": "SD (H.264)"
+                        },
+                        {
+                          "id": 314,
+                          "streamType": 2,
+                          "selected": true,
+                          "codec": "aac",
+                          "index": 1,
+                          "channels": 2,
+                          "language": "English",
+                          "languageTag": "en",
+                          "languageCode": "eng",
+                          "displayTitle": "English (AAC Stereo)",
+                          "extendedDisplayTitle": "English (AAC Stereo)"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "ratingKey": "193",
+              "key": "/library/metadata/193",
+              "guid": "iva://api.internetvideoarchive.com/2.0/DataService/VideoAssets(817391)",
+              "type": "clip",
+              "title": "Batman: The Motion Picture Anthology (Call Me Joker)",
+              "summary": "",
+              "index": 11,
+              "thumb": "/library/metadata/193/thumb/1683716785",
+              "subtype": "sceneOrSample",
+              "duration": 135000,
+              "addedAt": 1683716785,
+              "extraType": 6,
+              "Media": [
+                {
+                  "id": 210,
+                  "duration": 135000,
+                  "bitrate": 450,
+                  "width": 320,
+                  "height": 242,
+                  "aspectRatio": 1.33,
+                  "audioCodec": "aac",
+                  "videoCodec": "h264",
+                  "videoResolution": "sd",
+                  "container": "mp4",
+                  "optimizedForStreaming": 1,
+                  "protocol": "mp4",
+                  "premium": true,
+                  "Part": [
+                    {
+                      "id": 226,
+                      "duration": 135000,
+                      "container": "mp4",
+                      "key": "/services/iva/assets/817391/video.mp4?fmt=4&bitrate=450",
+                      "Stream": [
+                        {
+                          "id": 315,
+                          "streamType": 1,
+                          "codec": "h264",
+                          "index": 0,
+                          "bitrate": 450,
+                          "height": 242,
+                          "width": 320,
+                          "displayTitle": "SD (H.264)",
+                          "extendedDisplayTitle": "SD (H.264)"
+                        },
+                        {
+                          "id": 316,
+                          "streamType": 2,
+                          "selected": true,
+                          "codec": "aac",
+                          "index": 1,
+                          "channels": 2,
+                          "language": "English",
+                          "languageTag": "en",
+                          "languageCode": "eng",
+                          "displayTitle": "English (AAC Stereo)",
+                          "extendedDisplayTitle": "English (AAC Stereo)"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "ratingKey": "194",
+              "key": "/library/metadata/194",
+              "guid": "iva://api.internetvideoarchive.com/2.0/DataService/VideoAssets(16186)",
+              "type": "clip",
+              "title": "Batman: The Motion Picture Anthology (Perfect World)",
+              "summary": "",
+              "index": 12,
+              "thumb": "/library/metadata/194/thumb/1683716785",
+              "subtype": "sceneOrSample",
+              "duration": 86000,
+              "addedAt": 1683716785,
+              "extraType": 6,
+              "Media": [
+                {
+                  "id": 211,
+                  "duration": 86000,
+                  "bitrate": 450,
+                  "width": 320,
+                  "height": 242,
+                  "aspectRatio": 1.33,
+                  "audioCodec": "aac",
+                  "videoCodec": "h264",
+                  "videoResolution": "sd",
+                  "container": "mp4",
+                  "optimizedForStreaming": 1,
+                  "protocol": "mp4",
+                  "premium": true,
+                  "Part": [
+                    {
+                      "id": 227,
+                      "duration": 86000,
+                      "container": "mp4",
+                      "key": "/services/iva/assets/16186/video.mp4?fmt=4&bitrate=450",
+                      "Stream": [
+                        {
+                          "id": 317,
+                          "streamType": 1,
+                          "codec": "h264",
+                          "index": 0,
+                          "bitrate": 450,
+                          "height": 242,
+                          "width": 320,
+                          "displayTitle": "SD (H.264)",
+                          "extendedDisplayTitle": "SD (H.264)"
+                        },
+                        {
+                          "id": 318,
+                          "streamType": 2,
+                          "selected": true,
+                          "codec": "aac",
+                          "index": 1,
+                          "channels": 2,
+                          "language": "English",
+                          "languageTag": "en",
+                          "languageCode": "eng",
+                          "displayTitle": "English (AAC Stereo)",
+                          "extendedDisplayTitle": "English (AAC Stereo)"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "ratingKey": "195",
+              "key": "/library/metadata/195",
+              "guid": "iva://api.internetvideoarchive.com/2.0/DataService/VideoAssets(106753)",
+              "type": "clip",
+              "title": "Batman: The Motion Picture Anthology (Kill Everybody)",
+              "summary": "",
+              "index": 13,
+              "thumb": "/library/metadata/195/thumb/1683716785",
+              "subtype": "sceneOrSample",
+              "duration": 96000,
+              "addedAt": 1683716785,
+              "extraType": 6,
+              "Media": [
+                {
+                  "id": 212,
+                  "duration": 96000,
+                  "bitrate": 450,
+                  "width": 320,
+                  "height": 242,
+                  "aspectRatio": 1.33,
+                  "audioCodec": "aac",
+                  "videoCodec": "h264",
+                  "videoResolution": "sd",
+                  "container": "mp4",
+                  "optimizedForStreaming": 1,
+                  "protocol": "mp4",
+                  "premium": true,
+                  "Part": [
+                    {
+                      "id": 228,
+                      "duration": 96000,
+                      "container": "mp4",
+                      "key": "/services/iva/assets/106753/video.mp4?fmt=4&bitrate=450",
+                      "Stream": [
+                        {
+                          "id": 319,
+                          "streamType": 1,
+                          "codec": "h264",
+                          "index": 0,
+                          "bitrate": 450,
+                          "height": 242,
+                          "width": 320,
+                          "displayTitle": "SD (H.264)",
+                          "extendedDisplayTitle": "SD (H.264)"
+                        },
+                        {
+                          "id": 320,
+                          "streamType": 2,
+                          "selected": true,
+                          "codec": "aac",
+                          "index": 1,
+                          "channels": 2,
+                          "language": "English",
+                          "languageTag": "en",
+                          "languageCode": "eng",
+                          "displayTitle": "English (AAC Stereo)",
+                          "extendedDisplayTitle": "English (AAC Stereo)"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "ratingKey": "196",
+              "key": "/library/metadata/196",
+              "guid": "iva://api.internetvideoarchive.com/2.0/DataService/VideoAssets(993718)",
+              "type": "clip",
+              "title": "Batman: The Motion Picture Anthology (Lend You A Hand)",
+              "summary": "",
+              "index": 14,
+              "thumb": "/library/metadata/196/thumb/1683716785",
+              "subtype": "sceneOrSample",
+              "duration": 130000,
+              "addedAt": 1683716785,
+              "extraType": 6,
+              "Media": [
+                {
+                  "id": 213,
+                  "duration": 130000,
+                  "bitrate": 450,
+                  "width": 320,
+                  "height": 209,
+                  "aspectRatio": 1.66,
+                  "audioCodec": "aac",
+                  "videoCodec": "h264",
+                  "videoResolution": "sd",
+                  "container": "mp4",
+                  "optimizedForStreaming": 1,
+                  "protocol": "mp4",
+                  "premium": true,
+                  "Part": [
+                    {
+                      "id": 229,
+                      "duration": 130000,
+                      "container": "mp4",
+                      "key": "/services/iva/assets/993718/video.mp4?fmt=4&bitrate=450",
+                      "Stream": [
+                        {
+                          "id": 321,
+                          "streamType": 1,
+                          "codec": "h264",
+                          "index": 0,
+                          "bitrate": 450,
+                          "height": 209,
+                          "width": 320,
+                          "displayTitle": "SD (H.264)",
+                          "extendedDisplayTitle": "SD (H.264)"
+                        },
+                        {
+                          "id": 322,
+                          "streamType": 2,
+                          "selected": true,
+                          "codec": "aac",
+                          "index": 1,
+                          "channels": 2,
+                          "language": "English",
+                          "languageTag": "en",
+                          "languageCode": "eng",
+                          "displayTitle": "English (AAC Stereo)",
+                          "extendedDisplayTitle": "English (AAC Stereo)"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "ratingKey": "197",
+              "key": "/library/metadata/197",
+              "guid": "iva://api.internetvideoarchive.com/2.0/DataService/VideoAssets(316170)",
+              "type": "clip",
+              "title": "Batman: The Motion Picture Anthology (Just The Two Of Us)",
+              "summary": "",
+              "index": 15,
+              "thumb": "/library/metadata/197/thumb/1683716785",
+              "subtype": "sceneOrSample",
+              "duration": 136000,
+              "addedAt": 1683716785,
+              "extraType": 6,
+              "Media": [
+                {
+                  "id": 214,
+                  "duration": 136000,
+                  "bitrate": 450,
+                  "width": 320,
+                  "height": 242,
+                  "aspectRatio": 1.33,
+                  "audioCodec": "aac",
+                  "videoCodec": "h264",
+                  "videoResolution": "sd",
+                  "container": "mp4",
+                  "optimizedForStreaming": 1,
+                  "protocol": "mp4",
+                  "premium": true,
+                  "Part": [
+                    {
+                      "id": 230,
+                      "duration": 136000,
+                      "container": "mp4",
+                      "key": "/services/iva/assets/316170/video.mp4?fmt=4&bitrate=450",
+                      "Stream": [
+                        {
+                          "id": 323,
+                          "streamType": 1,
+                          "codec": "h264",
+                          "index": 0,
+                          "bitrate": 450,
+                          "height": 242,
+                          "width": 320,
+                          "displayTitle": "SD (H.264)",
+                          "extendedDisplayTitle": "SD (H.264)"
+                        },
+                        {
+                          "id": 324,
+                          "streamType": 2,
+                          "selected": true,
+                          "codec": "aac",
+                          "index": 1,
+                          "channels": 2,
+                          "language": "English",
+                          "languageTag": "en",
+                          "languageCode": "eng",
+                          "displayTitle": "English (AAC Stereo)",
+                          "extendedDisplayTitle": "English (AAC Stereo)"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "ratingKey": "198",
+              "key": "/library/metadata/198",
+              "guid": "iva://api.internetvideoarchive.com/2.0/DataService/VideoAssets(377632)",
+              "type": "clip",
+              "title": "Batman 20th Anniversary Edition: Who Should Play The Joker",
+              "summary": "",
+              "index": 16,
+              "thumb": "/library/metadata/198/thumb/1683716785",
+              "subtype": "sceneOrSample",
+              "duration": 117000,
+              "addedAt": 1683716785,
+              "extraType": 6,
+              "Media": [
+                {
+                  "id": 215,
+                  "duration": 117000,
+                  "bitrate": 450,
+                  "width": 320,
+                  "height": 242,
+                  "aspectRatio": 1.33,
+                  "audioCodec": "aac",
+                  "videoCodec": "h264",
+                  "videoResolution": "sd",
+                  "container": "mp4",
+                  "optimizedForStreaming": 1,
+                  "protocol": "mp4",
+                  "premium": true,
+                  "Part": [
+                    {
+                      "id": 231,
+                      "duration": 117000,
+                      "container": "mp4",
+                      "key": "/services/iva/assets/377632/video.mp4?fmt=4&bitrate=450",
+                      "Stream": [
+                        {
+                          "id": 325,
+                          "streamType": 1,
+                          "codec": "h264",
+                          "index": 0,
+                          "bitrate": 450,
+                          "height": 242,
+                          "width": 320,
+                          "displayTitle": "SD (H.264)",
+                          "extendedDisplayTitle": "SD (H.264)"
+                        },
+                        {
+                          "id": 326,
+                          "streamType": 2,
+                          "selected": true,
+                          "codec": "aac",
+                          "index": 1,
+                          "channels": 2,
+                          "language": "English",
+                          "languageTag": "en",
+                          "languageCode": "eng",
+                          "displayTitle": "English (AAC Stereo)",
+                          "extendedDisplayTitle": "English (AAC Stereo)"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "ratingKey": "199",
+              "key": "/library/metadata/199",
+              "guid": "iva://api.internetvideoarchive.com/2.0/DataService/VideoAssets(173148)",
+              "type": "clip",
+              "title": "Batman: The Motion Picture Anthology (About To Get A Girl)",
+              "summary": "",
+              "index": 17,
+              "thumb": "/library/metadata/199/thumb/1683716785",
+              "subtype": "sceneOrSample",
+              "duration": 83000,
+              "addedAt": 1683716785,
+              "extraType": 6,
+              "Media": [
+                {
+                  "id": 216,
+                  "duration": 83000,
+                  "bitrate": 450,
+                  "width": 320,
+                  "height": 242,
+                  "aspectRatio": 1.33,
+                  "audioCodec": "aac",
+                  "videoCodec": "h264",
+                  "videoResolution": "sd",
+                  "container": "mp4",
+                  "optimizedForStreaming": 1,
+                  "protocol": "mp4",
+                  "premium": true,
+                  "Part": [
+                    {
+                      "id": 232,
+                      "duration": 83000,
+                      "container": "mp4",
+                      "key": "/services/iva/assets/173148/video.mp4?fmt=4&bitrate=450",
+                      "Stream": [
+                        {
+                          "id": 327,
+                          "streamType": 1,
+                          "codec": "h264",
+                          "index": 0,
+                          "bitrate": 450,
+                          "height": 242,
+                          "width": 320,
+                          "displayTitle": "SD (H.264)",
+                          "extendedDisplayTitle": "SD (H.264)"
+                        },
+                        {
+                          "id": 328,
+                          "streamType": 2,
+                          "selected": true,
+                          "codec": "aac",
+                          "index": 1,
+                          "channels": 2,
+                          "language": "English",
+                          "languageTag": "en",
+                          "languageCode": "eng",
+                          "displayTitle": "English (AAC Stereo)",
+                          "extendedDisplayTitle": "English (AAC Stereo)"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "ratingKey": "200",
+              "key": "/library/metadata/200",
+              "guid": "iva://api.internetvideoarchive.com/2.0/DataService/VideoAssets(248493)",
+              "type": "clip",
+              "title": "Batman: The Motion Picture Anthology (Handle This Personality)",
+              "summary": "",
+              "index": 18,
+              "thumb": "/library/metadata/200/thumb/1683716785",
+              "subtype": "sceneOrSample",
+              "duration": 123000,
+              "addedAt": 1683716785,
+              "extraType": 6,
+              "Media": [
+                {
+                  "id": 217,
+                  "duration": 123000,
+                  "bitrate": 450,
+                  "width": 320,
+                  "height": 231,
+                  "aspectRatio": 1.33,
+                  "audioCodec": "aac",
+                  "videoCodec": "h264",
+                  "videoResolution": "sd",
+                  "container": "mp4",
+                  "optimizedForStreaming": 1,
+                  "protocol": "mp4",
+                  "premium": true,
+                  "Part": [
+                    {
+                      "id": 233,
+                      "duration": 123000,
+                      "container": "mp4",
+                      "key": "/services/iva/assets/248493/video.mp4?fmt=4&bitrate=450",
+                      "Stream": [
+                        {
+                          "id": 329,
+                          "streamType": 1,
+                          "codec": "h264",
+                          "index": 0,
+                          "bitrate": 450,
+                          "height": 231,
+                          "width": 320,
+                          "displayTitle": "SD (H.264)",
+                          "extendedDisplayTitle": "SD (H.264)"
+                        },
+                        {
+                          "id": 330,
+                          "streamType": 2,
+                          "selected": true,
+                          "codec": "aac",
+                          "index": 1,
+                          "channels": 2,
+                          "language": "English",
+                          "languageTag": "en",
+                          "languageCode": "eng",
+                          "displayTitle": "English (AAC Stereo)",
+                          "extendedDisplayTitle": "English (AAC Stereo)"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "ratingKey": "201",
+              "key": "/library/metadata/201",
+              "guid": "iva://api.internetvideoarchive.com/2.0/DataService/VideoAssets(153337)",
+              "type": "clip",
+              "title": "Batman: The Motion Picture Anthology (Run This City Into The Ground)",
+              "summary": "",
+              "index": 19,
+              "thumb": "/library/metadata/201/thumb/1683716785",
+              "subtype": "sceneOrSample",
+              "duration": 99000,
+              "addedAt": 1683716785,
+              "extraType": 6,
+              "Media": [
+                {
+                  "id": 218,
+                  "duration": 99000,
+                  "bitrate": 450,
+                  "width": 320,
+                  "height": 242,
+                  "aspectRatio": 1.33,
+                  "audioCodec": "aac",
+                  "videoCodec": "h264",
+                  "videoResolution": "sd",
+                  "container": "mp4",
+                  "optimizedForStreaming": 1,
+                  "protocol": "mp4",
+                  "premium": true,
+                  "Part": [
+                    {
+                      "id": 234,
+                      "duration": 99000,
+                      "container": "mp4",
+                      "key": "/services/iva/assets/153337/video.mp4?fmt=4&bitrate=450",
+                      "Stream": [
+                        {
+                          "id": 331,
+                          "streamType": 1,
+                          "codec": "h264",
+                          "index": 0,
+                          "bitrate": 450,
+                          "height": 242,
+                          "width": 320,
+                          "displayTitle": "SD (H.264)",
+                          "extendedDisplayTitle": "SD (H.264)"
+                        },
+                        {
+                          "id": 332,
+                          "streamType": 2,
+                          "selected": true,
+                          "codec": "aac",
+                          "index": 1,
+                          "channels": 2,
+                          "language": "English",
+                          "languageTag": "en",
+                          "languageCode": "eng",
+                          "displayTitle": "English (AAC Stereo)",
+                          "extendedDisplayTitle": "English (AAC Stereo)"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "ratingKey": "202",
+              "key": "/library/metadata/202",
+              "guid": "iva://api.internetvideoarchive.com/2.0/DataService/VideoAssets(93230)",
+              "type": "clip",
+              "title": "Batman: The Motion Picture Anthology (Pen Is Mightier Than The Sword)",
+              "summary": "",
+              "index": 20,
+              "thumb": "/library/metadata/202/thumb/1683716785",
+              "subtype": "sceneOrSample",
+              "duration": 115000,
+              "addedAt": 1683716785,
+              "extraType": 6,
+              "Media": [
+                {
+                  "id": 219,
+                  "duration": 115000,
+                  "bitrate": 450,
+                  "width": 320,
+                  "height": 242,
+                  "aspectRatio": 1.33,
+                  "audioCodec": "aac",
+                  "videoCodec": "h264",
+                  "videoResolution": "sd",
+                  "container": "mp4",
+                  "optimizedForStreaming": 1,
+                  "protocol": "mp4",
+                  "premium": true,
+                  "Part": [
+                    {
+                      "id": 235,
+                      "duration": 115000,
+                      "container": "mp4",
+                      "key": "/services/iva/assets/93230/video.mp4?fmt=4&bitrate=450",
+                      "Stream": [
+                        {
+                          "id": 333,
+                          "streamType": 1,
+                          "codec": "h264",
+                          "index": 0,
+                          "bitrate": 450,
+                          "height": 242,
+                          "width": 320,
+                          "displayTitle": "SD (H.264)",
+                          "extendedDisplayTitle": "SD (H.264)"
+                        },
+                        {
+                          "id": 334,
+                          "streamType": 2,
+                          "selected": true,
+                          "codec": "aac",
+                          "index": 1,
+                          "channels": 2,
+                          "language": "English",
+                          "languageTag": "en",
+                          "languageCode": "eng",
+                          "displayTitle": "English (AAC Stereo)",
+                          "extendedDisplayTitle": "English (AAC Stereo)"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
