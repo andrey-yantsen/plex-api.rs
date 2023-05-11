@@ -4,13 +4,13 @@
     branches: [main]
   pull_request:
     branches: [main]
-  pull_request_review:
-    types: [submitted]
+  pull_request_target:
+    types: [auto_merge_enabled]
+    branches: [main]
 
 name: Test
 jobs:
   test_offline:
-    if: "!github.event.review || github.event.review.state == 'approved'"
     strategy:
       matrix:
         os:
@@ -33,7 +33,7 @@ jobs:
         run: cargo run --package xtask -- test --offline --github-actions
 
   test_on_real_server_anonymous:
-    if: "!github.event.review"
+    if: "!github.event.pull_request_target"
     needs: test_offline
     name: Test on a real server (anonymous)
     runs-on: ubuntu-latest
@@ -53,7 +53,7 @@ jobs:
         run: cargo run --package xtask -- test --online --docker-tag '${{ matrix.plex_server_version }}' --deny-unknown-fields --github-actions
 
   test_on_real_server_authenticated_free:
-    if: "(github.ref == 'refs/heads/main' && !github.event.review) || github.event.review.state == 'approved' || github.repository == github.event.pull_request.head.repo.full_name"
+    if: "github.event.pull_request_target"
     needs: test_offline
     strategy:
       fail-fast: false
@@ -75,7 +75,7 @@ jobs:
         run: cargo run --package xtask -- test --online --docker-tag '${{ matrix.plex_server_version }}' --token '${{ secrets.PLEX_API_AUTH_TOKEN_FREE }}' --deny-unknown-fields --github-actions
 
   test_on_real_server_authenticated_plexpass:
-    if: "(github.ref == 'refs/heads/main' && !github.event.review) || github.event.review.state == 'approved' || github.repository == github.event.pull_request.head.repo.full_name"
+    if: "github.event.pull_request_target"
     needs: test_offline
     strategy:
       fail-fast: false
@@ -97,7 +97,7 @@ jobs:
         run: cargo run --package xtask -- test --online --docker-tag '${{ matrix.plex_server_version }}' --token '${{ secrets.PLEX_API_AUTH_TOKEN_PLEXPASS }}' --deny-unknown-fields --github-actions
 
   test_on_real_server_unclaimed_authenticated:
-    if: "(github.ref == 'refs/heads/main' && !github.event.review) || github.event.review.state == 'approved' || github.repository == github.event.pull_request.head.repo.full_name"
+    if: "github.event.pull_request_target"
     needs: test_offline
     strategy:
       fail-fast: false
@@ -118,7 +118,7 @@ jobs:
       - run: cargo run --package xtask -- test --online --docker-tag '${{ matrix.plex_server_version }}' --token '${{ secrets.PLEX_API_AUTH_TOKEN_FREE }}' --server-owner-token '' --deny-unknown-fields --github-actions
 
   test_on_real_server_shared:
-    if: "(github.ref == 'refs/heads/main' && !github.event.review) || github.event.review.state == 'approved' || github.repository == github.event.pull_request.head.repo.full_name"
+    if: "github.event.pull_request_target"
     needs: test_offline
     strategy:
       fail-fast: false
