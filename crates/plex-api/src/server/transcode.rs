@@ -10,7 +10,7 @@
 //!
 //! This feature should be considered quite experimental, lots of the API calls
 //! are derived from inspection and guesswork.
-use std::{collections::HashMap, fmt::Display};
+use std::fmt::Display;
 
 use futures::AsyncWrite;
 use http::StatusCode;
@@ -38,6 +38,8 @@ use crate::{
     },
     Error, HttpClient, Result,
 };
+
+use super::Query;
 
 #[derive(Debug, Clone, Copy, Deserialize, Serialize, PartialEq)]
 #[serde(rename_all = "lowercase")]
@@ -128,29 +130,6 @@ pub struct TranscodeSessionStats {
 pub(crate) struct TranscodeSessionsMediaContainer {
     #[serde(default, rename = "TranscodeSession")]
     pub(crate) transcode_sessions: Vec<TranscodeSessionStats>,
-}
-
-struct Query {
-    params: HashMap<String, String>,
-}
-
-impl Query {
-    fn new() -> Self {
-        Self {
-            params: HashMap::new(),
-        }
-    }
-
-    fn param<N: Into<String>, V: Into<String>>(mut self, name: N, value: V) -> Self {
-        self.params.insert(name.into(), value.into());
-        self
-    }
-}
-
-impl ToString for Query {
-    fn to_string(&self) -> String {
-        serde_urlencoded::to_string(&self.params).unwrap()
-    }
 }
 
 struct ProfileSetting {
@@ -1002,7 +981,7 @@ where
         .param("height", height.to_string());
 
     let mut response = client
-        .get(format!("{SERVER_TRANSCODE_ART}?{}", query.to_string()))
+        .get(format!("{SERVER_TRANSCODE_ART}?{query}"))
         .send()
         .await?;
 

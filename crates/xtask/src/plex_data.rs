@@ -14,7 +14,8 @@ const STUB_VIDEO_2: &str = "testsrc_720p_h264_v2.mkv";
 const STUB_VIDEO_3: &str = "white_noise_720p_h265.mp4";
 const STUB_AUDIO: &str = "white_noise.aac";
 
-const LIBRARY_VIDEOS_1: [(&str, &str); 6] = [
+const LIBRARY_VIDEOS_1: [(&str, &str); 7] = [
+    ("Movies", "Batman (1989).mkv"),
     ("Movies", "Big Buck Bunny (2008) - part1.mkv"),
     ("Movies", "Big Buck Bunny (2008) - part2.mkv"),
     ("Movies", "Elephants Dream (2006).mkv"),

@@ -39,6 +39,9 @@ pub const SERVER_TRANSCODE_DECISION: &str = "/video/:/transcode/universal/decisi
 pub const SERVER_TRANSCODE_DOWNLOAD: &str = "/video/:/transcode/universal";
 pub const SERVER_TRANSCODE_ART: &str = "/photo/:/transcode";
 pub const SERVER_SYSTEM_PROXY: &str = "/system/proxy";
+pub const SERVER_SCROBBLE: &str = "/:/scrobble";
+pub const SERVER_UNSCROBBLE: &str = "/:/unscrobble";
+pub const SERVER_TIMELINE: &str = "/:/timeline";
 
 pub const CLIENT_RESOURCES: &str = "/resources";
 
