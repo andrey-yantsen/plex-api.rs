@@ -13,6 +13,15 @@ pull_request_rules:
     actions:
       queue:
         name: default
+  - name: queue tests for approved PRs
+    conditions:
+      - "#approved-reviews-by>=1"
+      - base=main
+      - -label=S-Merge-Queued
+      - -merged
+    actions:
+      label:
+        add: ["S-Run-Protected-Tests"]
   - name: automatic merge for main when when approved
     conditions:
       - "#approved-reviews-by>=1"
@@ -36,3 +45,6 @@ pull_request_rules:
     actions:
       queue:
         name: default
+      label:
+        remove: ["S-Run-Protected-Tests"]
+        add: ["S-Merge-Queued"]
