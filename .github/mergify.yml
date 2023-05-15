@@ -13,6 +13,28 @@ pull_request_rules:
     actions:
       queue:
         name: default
+  - name: automatic merge media_container::server::Feature enum updates
+    conditions:
+      - author=andrey-yantsen
+      - title=Update the media_container::server::Feature enum
+      - check-success=Test on a real server (anonymous) (1.28.2.6151-914ddd2b3) # supported-version-1
+      - check-success=Test on a real server (anonymous) (1.30.2.6563-3d4dc0cce) # supported-version-2
+      - check-success=Test on a real server (anonymous) (1.32.1.6999-91e1e2e2c) # supported-version-3
+    actions:
+      queue:
+        name: default
+        allow_merging_configuration_change: true
+  - name: automatic merge tested PMS releases update
+    conditions:
+      - author=andrey-yantsen
+      - title=Update the list of tested PMS releases
+      - check-success=Test on a real server (anonymous) (1.28.2.6151-914ddd2b3) # supported-version-1
+      - check-success=Test on a real server (anonymous) (1.30.2.6563-3d4dc0cce) # supported-version-2
+      - check-success=Test on a real server (anonymous) (1.32.1.6999-91e1e2e2c) # supported-version-3
+    actions:
+      queue:
+        name: default
+        allow_merging_configuration_change: true
   - name: queue tests for approved PRs
     conditions:
       - "#approved-reviews-by>=1"
