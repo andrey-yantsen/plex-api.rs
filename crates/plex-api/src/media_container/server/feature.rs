@@ -315,6 +315,11 @@ pub enum Feature {
     )]
     KevinBacon,
     #[serde(
+        rename = "korea-consent",
+        alias = "cb151c05-1943-408a-b37c-06f7d409d6bb"
+    )]
+    KoreaConsent,
+    #[serde(
         rename = "lets_encrypt",
         alias = "8536058d-e1dd-4ae7-b30f-e8b059b7cc17"
     )]
