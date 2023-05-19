@@ -1,5 +1,87 @@
 # Changelog
 
+## [0.0.10](https://github.com/andrey-yantsen/plex-api.rs/compare/plex-api-v0.0.9...plex-api-v0.0.10) (2023-05-19)
+
+
+### ⚠ BREAKING CHANGES
+
+* Chapter.Filter is not always present
+* a typo in MappingState::Waiting variant
+* add more missed types and fields
+* add new fields to make it work with local assets
+* make Preferences use own HttpClient
+* Make rating keys consistent
+* make rating key to be string
+* add Markers parsing
+* make HttpClientBuilder::set_x_plex_features accept slices
+* make HttpClientBuilder accept more params types
+* merge metadata type fields into one
+* add extras and some other new metadata fields
+* make Guids to be enum variants
+
+### Features
+
+* add APIs for setting an item's watched status ([3b04bb0](https://github.com/andrey-yantsen/plex-api.rs/commit/3b04bb0ee45474d85a1a098c1c006a12ba83d305))
+* add extras and some other new metadata fields ([46b6956](https://github.com/andrey-yantsen/plex-api.rs/commit/46b6956ae6ea419ccd79ecc233ebe41a875f75b7))
+* add has_premium_extras to Metadata ([1508142](https://github.com/andrey-yantsen/plex-api.rs/commit/1508142db025e35d8a4b8ef2eb299f54d086f767))
+* add labels to metadata ([714fffd](https://github.com/andrey-yantsen/plex-api.rs/commit/714fffd0bdeb13734597b3b2b23b5589c57664a0))
+* add Markers parsing ([c901c4b](https://github.com/andrey-yantsen/plex-api.rs/commit/c901c4be9182ab7a12600395925bd7b4e5688b08))
+* add missing `thumb` property in Chapter ([cb3eb90](https://github.com/andrey-yantsen/plex-api.rs/commit/cb3eb90eb1a46cac4d78fcea4a1746912004d918))
+* add more missed types and fields ([d8fe885](https://github.com/andrey-yantsen/plex-api.rs/commit/d8fe88565af28609753c0c0e02182dc82e5f0a87))
+* add new fields to make it work with local assets ([123c542](https://github.com/andrey-yantsen/plex-api.rs/commit/123c542f180c138904c17c3d9d9f160b31edd9b9))
+* add new metadata fields ([efe828e](https://github.com/andrey-yantsen/plex-api.rs/commit/efe828ee426068c0a1fe072be6fced0f1d8e28fb))
+* add syntax sugar for checking device types ([09f4377](https://github.com/andrey-yantsen/plex-api.rs/commit/09f4377e71690d4e9588dd7652c0f25febd62848))
+* add viewing an item by it from Discovery ([a496636](https://github.com/andrey-yantsen/plex-api.rs/commit/a496636c492503d200a5359c130b45af5ee1fcaa))
+* expose internal library type ([f2957eb](https://github.com/andrey-yantsen/plex-api.rs/commit/f2957eb5e8982ce2863b9f09d78619c5312b804d))
+* load albums via search ([2574ca2](https://github.com/andrey-yantsen/plex-api.rs/commit/2574ca2d704379e108ee13a82ccbd5b4a83172a7))
+* make HttpClientBuilder accept more params types ([75ac984](https://github.com/andrey-yantsen/plex-api.rs/commit/75ac9846cef3bcce96fc77e1fcd331fc164adab8))
+* pass library_section_id to parsed media ([cf3c868](https://github.com/andrey-yantsen/plex-api.rs/commit/cf3c868ebddd8c285e248ba5d8fdf5804e88bf15))
+* print received body on deserialization errors ([4a54359](https://github.com/andrey-yantsen/plex-api.rs/commit/4a5435976ee9aef94ad2e4d00ab5ba1322c34939))
+
+
+### Bug Fixes
+
+* a typo in MappingState::Waiting variant ([d69a834](https://github.com/andrey-yantsen/plex-api.rs/commit/d69a834102a83fafa40b3accd8e91d31c1112500))
+* Allow parsing Live TV libraries ([d8a9140](https://github.com/andrey-yantsen/plex-api.rs/commit/d8a9140b4cf8e1c80ad84ecc5c7cf4c689d16891))
+* Chapter.Filter is not always present ([49cab2f](https://github.com/andrey-yantsen/plex-api.rs/commit/49cab2f1cced4f169cf658c7af5c2760eae1cf01))
+* Correctly use a 404 response to indicate an unknown transcode session. ([5cd7e27](https://github.com/andrey-yantsen/plex-api.rs/commit/5cd7e27982d312f0cd7b55760a0166e414a8e3fe))
+* Generic videos should be transcodable ([d2e07f2](https://github.com/andrey-yantsen/plex-api.rs/commit/d2e07f2b2005c15b4eb45a51d15313663e20e868))
+* make errors on unknown guids slightly nicer ([f6c7121](https://github.com/andrey-yantsen/plex-api.rs/commit/f6c712198d4062c8f526289b1f6f204a710790cd))
+* make more fields accept strings as numbers ([62bd6b0](https://github.com/andrey-yantsen/plex-api.rs/commit/62bd6b07591e6ab27b7ff94808f47c29f1edc982))
+* Report ItemNotFound from lost transcode sessions ([0fb6e42](https://github.com/andrey-yantsen/plex-api.rs/commit/0fb6e42b719f59b52406275d79f77ddde791adbf))
+* return appropriate MetadataType if subtype is missing ([6e81477](https://github.com/andrey-yantsen/plex-api.rs/commit/6e81477dd0ec2482b3f0fbffdb206f8cf6a4032f))
+* Send a unique X-Plex-Session-Identifier with each transcode request ([0f8d266](https://github.com/andrey-yantsen/plex-api.rs/commit/0f8d266377e58f04f9f8bfb6afe1ad283d8ed36a))
+
+
+### Code Refactoring
+
+* make Guids to be enum variants ([332d07d](https://github.com/andrey-yantsen/plex-api.rs/commit/332d07dfba661ee9f0dbd767d0f0988f0491bd10))
+* make HttpClientBuilder::set_x_plex_features accept slices ([4402e5b](https://github.com/andrey-yantsen/plex-api.rs/commit/4402e5b24945019549419dc1a5a23f0a04ad2fcf))
+* make Preferences use own HttpClient ([10d392e](https://github.com/andrey-yantsen/plex-api.rs/commit/10d392e0f3b83eef6aa3fd03ce7e5b84ccb40a57))
+* make rating key to be string ([1748233](https://github.com/andrey-yantsen/plex-api.rs/commit/174823354bf2c6704ced25c3ebf8f99d2c501d8d))
+* Make rating keys consistent ([8c8df57](https://github.com/andrey-yantsen/plex-api.rs/commit/8c8df57687446b55cfb75d5e3da94f9a6a5d6854))
+* merge metadata type fields into one ([5a790d9](https://github.com/andrey-yantsen/plex-api.rs/commit/5a790d9dea949e73d97d603fd0357e7211457aa3))
+
+
+### Documentation
+
+* add an example that loads all the items ([e35d4e3](https://github.com/andrey-yantsen/plex-api.rs/commit/e35d4e3668961b09c46fe452603bbeb5679d3f69))
+
+
+### Miscellaneous
+
+* add a script for transcoding DoS ([1afc908](https://github.com/andrey-yantsen/plex-api.rs/commit/1afc908ca3808cc849b72b5b96073b9f783ba29e)), closes [#541](https://github.com/andrey-yantsen/plex-api.rs/issues/541)
+* add an example for debugging items ([5c9dc6d](https://github.com/andrey-yantsen/plex-api.rs/commit/5c9dc6d743054278b551cd7ab620deef756c564b))
+* allow println! in http_client when testing ([33753c2](https://github.com/andrey-yantsen/plex-api.rs/commit/33753c2619e99a66be58d40c3a9235b8e2520760))
+* **deps:** update dash-mpd requirement from ^0.7.0 to ^0.8.0 ([360b627](https://github.com/andrey-yantsen/plex-api.rs/commit/360b62754d1373047342a603be3e1a7bce347a55))
+* **deps:** update dash-mpd requirement from ^0.8.0 to ^0.9.0 ([977e26d](https://github.com/andrey-yantsen/plex-api.rs/commit/977e26ddd210b53d49e6abf104981312d0676652))
+* **deps:** update serde_with requirement from ^2.1 to ^3.0 ([d5effb2](https://github.com/andrey-yantsen/plex-api.rs/commit/d5effb2a632d14a1fb553113772936f9a85c9594))
+* forbid printing debug output ([9f4f496](https://github.com/andrey-yantsen/plex-api.rs/commit/9f4f496965d91e6c0389746096b7f5ff0bae408b))
+* remove forgotten dbg!() ([f1fc7c5](https://github.com/andrey-yantsen/plex-api.rs/commit/f1fc7c538cc88b1d79cca013898e4b221ef27d80))
+* update Feature enum ([1f1a7a0](https://github.com/andrey-yantsen/plex-api.rs/commit/1f1a7a0635fadf8d2d5d10416149fb1452aabe09))
+* update Feature enum ([d415390](https://github.com/andrey-yantsen/plex-api.rs/commit/d415390fb8eecd2b219a5fdd3d08f0eb866911f8))
+* update msrv to 1.65 ([0785ade](https://github.com/andrey-yantsen/plex-api.rs/commit/0785adefd7ff997ef84d079afd37900a2615682a))
+
 ## [0.0.9](https://github.com/andrey-yantsen/plex-api.rs/compare/plex-api-v0.0.8...plex-api-v0.0.9) (2023-03-29)
 
 
