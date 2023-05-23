@@ -1,5 +1,5 @@
 use secrecy::SecretString;
-use serde::{Deserialize, Deserializer, Serialize};
+use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use serde_repr::Deserialize_repr;
 use serde_with::{json::JsonString, serde_as};
@@ -43,16 +43,40 @@ pub enum AutoSelectSubtitleMode {
     Unknown,
 }
 
+#[allow(clippy::enum_variant_names)]
+#[derive(Deserialize_repr, Debug, Clone, Copy)]
+#[repr(u8)]
+pub enum DefaultSubtitleAccessibility {
+    PreferNonSdhSubtitles = 0,
+    PreferSdhSubtitles = 1,
+    OnlyShowSdhSubtitles = 2,
+    OnlyShowNonSdhSubtitles = 3,
+    #[cfg(not(feature = "tests_deny_unknown_fields"))]
+    #[serde(other)]
+    Unknown,
+}
+
+#[allow(clippy::enum_variant_names)]
+#[derive(Deserialize_repr, Debug, Clone, Copy)]
+#[repr(u8)]
+pub enum DefaultSubtitleForced {
+    PreferNonForcedSubtitles = 0,
+    PreferForcedSubtitles = 1,
+    OnlyShowForcedSubtitles = 2,
+    OnlyShowNonForcedSubtitles = 3,
+    #[cfg(not(feature = "tests_deny_unknown_fields"))]
+    #[serde(other)]
+    Unknown,
+}
+
 #[derive(Deserialize, Debug, Clone)]
 #[cfg_attr(feature = "tests_deny_unknown_fields", serde(deny_unknown_fields))]
 #[serde(rename_all = "camelCase")]
 pub struct Profile {
     pub auto_select_audio: bool,
     pub auto_select_subtitle: AutoSelectSubtitleMode,
-    #[serde(deserialize_with = "bool_from_int")]
-    pub default_subtitle_accessibility: bool,
-    #[serde(deserialize_with = "bool_from_int")]
-    pub default_subtitle_forced: bool,
+    pub default_subtitle_accessibility: DefaultSubtitleAccessibility,
+    pub default_subtitle_forced: DefaultSubtitleForced,
     pub default_audio_language: Option<String>,
     pub default_subtitle_language: Option<String>,
 }
@@ -251,20 +275,4 @@ pub enum RestrictionProfile {
     #[cfg(not(feature = "tests_deny_unknown_fields"))]
     #[serde(other)]
     Unknown,
-}
-
-fn bool_from_int<'de, D>(deserializer: D) -> Result<bool, D::Error>
-where
-    D: Deserializer<'de>,
-{
-    use serde::de::{self, Unexpected};
-
-    match u8::deserialize(deserializer)? {
-        0 => Ok(false),
-        1 => Ok(true),
-        other => Err(de::Error::invalid_value(
-            Unexpected::Unsigned(other as u64),
-            &"zero or one",
-        )),
-    }
 }
