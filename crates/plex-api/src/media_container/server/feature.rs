@@ -280,6 +280,11 @@ pub enum Feature {
     )]
     ImaggaV2,
     #[serde(
+        rename = "increase-password-complexity",
+        alias = "9e93f8a8-7ccd-4d15-99fa-76a158027660"
+    )]
+    IncreasePasswordComplexity,
+    #[serde(
         rename = "intro-markers",
         alias = "b83c8dc9-5a01-4b7a-a7c9-5870c8a6e21b"
     )]
