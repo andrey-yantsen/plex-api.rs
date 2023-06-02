@@ -458,6 +458,7 @@ pub enum Feature {
         rename = "photos-v5",
         alias = "0a348865-4f87-46dc-8bb2-f37637975724"
     )]
+    #[deprecated]
     PhotosV5,
     #[serde(
         rename = "photosV6-edit",
