@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.0.11](https://github.com/andrey-yantsen/plex-api.rs/compare/plex-api-v0.0.10...plex-api-v0.0.11) (2023-06-02)
+
+
+### ⚠ BREAKING CHANGES
+
+* `Profile#default_subtitle_accessibility` is now an `Enum` `Profile#default_subtitle_forced` is now an `Enum`.
+
+### Bug Fixes
+
+* Profile de-serialization when using new subtitle setting options ([45bab7a](https://github.com/andrey-yantsen/plex-api.rs/commit/45bab7a25f46e9919c5f370f70e5abcd2f692c4d))
+
+
+### Miscellaneous
+
+* update Feature enum ([106150d](https://github.com/andrey-yantsen/plex-api.rs/commit/106150d4062e49c7589965118dc36c556f7a4ae2))
+* update Feature enum ([7f2e9f2](https://github.com/andrey-yantsen/plex-api.rs/commit/7f2e9f2f0770e6cf1a0a28883973f9b0e01da785))
+
 ## [0.0.10](https://github.com/andrey-yantsen/plex-api.rs/compare/plex-api-v0.0.9...plex-api-v0.0.10) (2023-05-19)
 
 
