@@ -59,7 +59,7 @@ the latest 5 minor releases. At the moment the following versions are
 tested:
 
 <!-- plex releases list start -->
-* 1.32.2.7100-248a2daf0
+* 1.32.3.7162-b0a36929b
 * 1.30.2.6563-3d4dc0cce
 * 1.28.2.6151-914ddd2b3
 <!-- plex releases list end -->
