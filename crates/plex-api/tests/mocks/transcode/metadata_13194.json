@@ -1,0 +1,853 @@
+{
+  "MediaContainer": {
+    "size": 1,
+    "allowSync": true,
+    "identifier": "com.plexapp.plugins.library",
+    "librarySectionID": 1,
+    "librarySectionTitle": "Movies",
+    "librarySectionUUID": "a006b58966aa34f3c577ca3106e99c5d1d6ea8b1",
+    "mediaTagPrefix": "/system/bundle/media/flags/",
+    "mediaTagVersion": 1686678193,
+    "Metadata": [
+      {
+        "ratingKey": "13194",
+        "key": "/library/metadata/13194",
+        "guid": "plex://movie/5d776926ad5437001f7595eb",
+        "studio": "Walt Disney Pictures",
+        "type": "movie",
+        "title": "Frozen",
+        "librarySectionTitle": "Movies",
+        "librarySectionID": 1,
+        "librarySectionKey": "/library/sections/1",
+        "contentRating": "gb/PG",
+        "summary": "When the newly crowned Queen Elsa accidentally uses her power to turn things into ice to curse her home in infinite winter, her sister Anna teams up with a mountain man, his playful reindeer, and a snowman to change the weather condition.",
+        "rating": 9.0,
+        "audienceRating": 8.5,
+        "viewCount": 6,
+        "skipCount": 1,
+        "lastViewedAt": 1524861657,
+        "year": 2013,
+        "tagline": "Only the act of true love will thaw a frozen heart.",
+        "thumb": "/library/metadata/13194/thumb/1685492981",
+        "art": "/library/metadata/13194/art/1685492981",
+        "duration": 6133055,
+        "originallyAvailableAt": "2013-11-20",
+        "addedAt": 1405630029,
+        "updatedAt": 1685492981,
+        "audienceRatingImage": "rottentomatoes://image.rating.upright",
+        "chapterSource": "agent",
+        "primaryExtraKey": "/library/metadata/143067",
+        "ratingImage": "rottentomatoes://image.rating.ripe",
+        "Media": [
+          {
+            "id": 101816,
+            "duration": 6133055,
+            "bitrate": 1102,
+            "width": 1280,
+            "height": 568,
+            "aspectRatio": 2.2,
+            "audioChannels": 2,
+            "audioCodec": "aac",
+            "videoCodec": "h264",
+            "videoResolution": "720",
+            "container": "mp4",
+            "videoFrameRate": "24p",
+            "optimizedForStreaming": 1,
+            "audioProfile": "lc",
+            "has64bitOffsets": false,
+            "videoProfile": "high",
+            "Part": [
+              {
+                "id": 284868,
+                "key": "/library/parts/284868/1403500932/file.mp4",
+                "duration": 6133055,
+                "file": "/mnt/media/Libraries/movies/Frozen (2013)/Frozen (2013).mp4",
+                "size": 844474569,
+                "audioProfile": "lc",
+                "container": "mp4",
+                "has64bitOffsets": false,
+                "indexes": "sd",
+                "optimizedForStreaming": true,
+                "videoProfile": "high",
+                "Stream": [
+                  {
+                    "id": 488913,
+                    "streamType": 1,
+                    "default": true,
+                    "codec": "h264",
+                    "index": 0,
+                    "bitrate": 1004,
+                    "bitDepth": 8,
+                    "chromaLocation": "left",
+                    "chromaSubsampling": "4:2:0",
+                    "codedHeight": 576,
+                    "codedWidth": 1280,
+                    "colorPrimaries": "bt709",
+                    "colorRange": "tv",
+                    "colorSpace": "bt709",
+                    "frameRate": 23.976,
+                    "hasScalingMatrix": false,
+                    "height": 568,
+                    "level": 41,
+                    "profile": "high",
+                    "refFrames": 4,
+                    "streamIdentifier": "1",
+                    "width": 1280,
+                    "displayTitle": "720p (H.264)",
+                    "extendedDisplayTitle": "720p (H.264)"
+                  },
+                  {
+                    "id": 488914,
+                    "streamType": 2,
+                    "selected": true,
+                    "default": true,
+                    "codec": "aac",
+                    "index": 1,
+                    "channels": 2,
+                    "bitrate": 98,
+                    "language": "English",
+                    "languageTag": "en",
+                    "languageCode": "eng",
+                    "audioChannelLayout": "stereo",
+                    "profile": "lc",
+                    "samplingRate": 48000,
+                    "streamIdentifier": "2",
+                    "displayTitle": "English (AAC Stereo)",
+                    "extendedDisplayTitle": "English (AAC Stereo)"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "Genre": [
+          {
+            "id": 130,
+            "filter": "genre=130",
+            "tag": "Adventure"
+          },
+          {
+            "id": 282,
+            "filter": "genre=282",
+            "tag": "Animation"
+          },
+          {
+            "id": 817,
+            "filter": "genre=817",
+            "tag": "Family"
+          },
+          {
+            "id": 17,
+            "filter": "genre=17",
+            "tag": "Comedy"
+          },
+          {
+            "id": 48,
+            "filter": "genre=48",
+            "tag": "Fantasy"
+          },
+          {
+            "id": 799,
+            "filter": "genre=799",
+            "tag": "Musical"
+          },
+          {
+            "id": 15565,
+            "filter": "genre=15565",
+            "tag": "Children"
+          }
+        ],
+        "Country": [
+          {
+            "id": 55636,
+            "filter": "country=55636",
+            "tag": "United States of America"
+          }
+        ],
+        "Guid": [
+          {
+            "id": "imdb://tt2294629"
+          },
+          {
+            "id": "tmdb://109445"
+          },
+          {
+            "id": "tvdb://89"
+          }
+        ],
+        "Rating": [
+          {
+            "image": "imdb://image.rating",
+            "value": 7.4,
+            "type": "audience"
+          },
+          {
+            "image": "rottentomatoes://image.rating.ripe",
+            "value": 9.0,
+            "type": "critic"
+          },
+          {
+            "image": "rottentomatoes://image.rating.upright",
+            "value": 8.5,
+            "type": "audience"
+          },
+          {
+            "image": "themoviedb://image.rating",
+            "value": 7.2,
+            "type": "audience"
+          }
+        ],
+        "Collection": [
+          {
+            "id": 147323,
+            "filter": "collection=147323",
+            "tag": "Kids",
+            "guid": "collection://6d66ad49-c50b-4c2e-8c65-1f40fb01b2b5"
+          }
+        ],
+        "Director": [
+          {
+            "id": 102936,
+            "filter": "director=102936",
+            "tag": "Chris Buck",
+            "tagKey": "5d776833103a2d001f567448",
+            "thumb": "https://metadata-static.plex.tv/people/5d776833103a2d001f567448.jpg"
+          },
+          {
+            "id": 104413,
+            "filter": "director=104413",
+            "tag": "Jennifer Lee",
+            "tagKey": "5d7768c99ab54400214eb82d",
+            "thumb": "https://metadata-static.plex.tv/people/5d7768c99ab54400214eb82d.jpg"
+          }
+        ],
+        "Writer": [
+          {
+            "id": 104414,
+            "filter": "writer=104414",
+            "tag": "Chris Buck",
+            "tagKey": "5d776833103a2d001f567448",
+            "thumb": "https://metadata-static.plex.tv/people/5d776833103a2d001f567448.jpg"
+          },
+          {
+            "id": 104415,
+            "filter": "writer=104415",
+            "tag": "Hans Christian Andersen",
+            "tagKey": "5dcd37d6f6c44a0020195e18",
+            "thumb": "https://image.tmdb.org/t/p/original/azV6ZIGZh80eZpVCHAu2cDnytJb.jpg"
+          },
+          {
+            "id": 104416,
+            "filter": "writer=104416",
+            "tag": "Shane Morris",
+            "tagKey": "5dcfbff870b2e6001d82fc20"
+          },
+          {
+            "id": 104417,
+            "filter": "writer=104417",
+            "tag": "Jennifer Lee",
+            "tagKey": "5d7768c99ab54400214eb82d",
+            "thumb": "https://metadata-static.plex.tv/people/5d7768c99ab54400214eb82d.jpg"
+          },
+          {
+            "id": 104418,
+            "filter": "writer=104418",
+            "tag": "Nicole Mitchell",
+            "tagKey": "5d776c6ffb0d55001f587b94"
+          }
+        ],
+        "Role": [
+          {
+            "id": 93988,
+            "filter": "actor=93988",
+            "tag": "Kristen Bell",
+            "tagKey": "5d776833880197001ec92fec",
+            "role": "Anna (voice)",
+            "thumb": "https://metadata-static.plex.tv/a/people/a0584d531c9272b48822022b6fa6f585.jpg"
+          },
+          {
+            "id": 103864,
+            "filter": "actor=103864",
+            "tag": "Idina Menzel",
+            "tagKey": "5d77682aeb5d26001f1de4b0",
+            "role": "Elsa (voice)",
+            "thumb": "https://metadata-static.plex.tv/9/people/9a1f037a0bb8e83126f4bb10e21c286a.jpg"
+          },
+          {
+            "id": 92236,
+            "filter": "actor=92236",
+            "tag": "Jonathan Groff",
+            "tagKey": "5d77685285719b001f3a8b47",
+            "role": "Kristoff (voice)",
+            "thumb": "https://metadata-static.plex.tv/people/5d77685285719b001f3a8b47.jpg"
+          },
+          {
+            "id": 90273,
+            "filter": "actor=90273",
+            "tag": "Frank Welker",
+            "tagKey": "5d7768255af944001f1f63df",
+            "role": "Sven (voice)",
+            "thumb": "https://metadata-static.plex.tv/7/people/741f85d6b299e3ef760bc38229479523.jpg"
+          },
+          {
+            "id": 92326,
+            "filter": "actor=92326",
+            "tag": "Josh Gad",
+            "tagKey": "5d7768318718ba001e313c3b",
+            "role": "Olaf (voice)",
+            "thumb": "https://metadata-static.plex.tv/9/people/9cf98c5dc4ed48188efc6378e3c8d274.jpg"
+          },
+          {
+            "id": 104338,
+            "filter": "actor=104338",
+            "tag": "Santino Fontana",
+            "tagKey": "5d776926ad5437001f75965e",
+            "role": "Hans (voice)",
+            "thumb": "https://metadata-static.plex.tv/people/5d776926ad5437001f75965e.jpg"
+          },
+          {
+            "id": 93399,
+            "filter": "actor=93399",
+            "tag": "Alan Tudyk",
+            "tagKey": "5d776826eb5d26001f1dd578",
+            "role": "Duke (voice)",
+            "thumb": "https://metadata-static.plex.tv/6/people/600119cc678dc09475f73f78250e2963.jpg"
+          },
+          {
+            "id": 97228,
+            "filter": "actor=97228",
+            "tag": "Ciarán Hinds",
+            "tagKey": "5d77682485719b001f3a04da",
+            "role": "Pabbie / Grandpa (voice)",
+            "thumb": "https://metadata-static.plex.tv/6/people/65fcf62694719e09c976547707cf7b69.jpg"
+          },
+          {
+            "id": 104419,
+            "filter": "actor=104419",
+            "tag": "Chris Williams",
+            "tagKey": "5d77683b880197001ec94a96",
+            "role": "Oaken (voice)",
+            "thumb": "https://metadata-static.plex.tv/people/5d77683b880197001ec94a96.jpg"
+          },
+          {
+            "id": 95277,
+            "filter": "actor=95277",
+            "tag": "Stephen J. Anderson",
+            "tagKey": "5d776829103a2d001f564c05",
+            "role": "Kai (voice)",
+            "thumb": "https://metadata-static.plex.tv/a/people/a0e356cdc70ebc40b4ed0f82baa9a7cf.jpg"
+          },
+          {
+            "id": 104420,
+            "filter": "actor=104420",
+            "tag": "Maia Wilson",
+            "tagKey": "5d776926ad5437001f75965f",
+            "role": "Bulda (voice)"
+          },
+          {
+            "id": 93859,
+            "filter": "actor=93859",
+            "tag": "Edie McClurg",
+            "tagKey": "5d776825880197001ec90518",
+            "role": "Gerda (voice)",
+            "thumb": "https://metadata-static.plex.tv/people/5d776825880197001ec90518.jpg"
+          },
+          {
+            "id": 90200,
+            "filter": "actor=90200",
+            "tag": "Robert Pine",
+            "tagKey": "5d776838880197001ec94159",
+            "role": "Bishop (voice)",
+            "thumb": "https://metadata-static.plex.tv/people/5d776838880197001ec94159.jpg"
+          },
+          {
+            "id": 91987,
+            "filter": "actor=91987",
+            "tag": "Maurice LaMarche",
+            "tagKey": "5d776827880197001ec90a8a",
+            "role": "King (voice)",
+            "thumb": "https://metadata-static.plex.tv/people/5d776827880197001ec90a8a.jpg"
+          },
+          {
+            "id": 124985,
+            "filter": "actor=124985",
+            "tag": "Spencer Lacey Ganus",
+            "tagKey": "632095ed294fe2ab63e53630",
+            "role": "Teen Elsa (voice)",
+            "thumb": "https://metadata-static.plex.tv/5/people/5e34c70e6de2f0f092e136667fed9df8.jpg"
+          },
+          {
+            "id": 104421,
+            "filter": "actor=104421",
+            "tag": "Livvy Stubenrauch",
+            "tagKey": "5d776926ad5437001f759660",
+            "role": "Young Anna (voice)",
+            "thumb": "https://metadata-static.plex.tv/b/people/b404c3ea5a72136b8222d8a8d1458312.jpg"
+          },
+          {
+            "id": 104422,
+            "filter": "actor=104422",
+            "tag": "Eva Bella",
+            "tagKey": "5d7768c9594b2b001e695796",
+            "role": "Young Elsa (voice)",
+            "thumb": "https://metadata-static.plex.tv/people/5d7768c9594b2b001e695796.jpg"
+          },
+          {
+            "id": 92825,
+            "filter": "actor=92825",
+            "tag": "Jesse Corti",
+            "tagKey": "5d77682b961905001eb923fe",
+            "role": "Spanish Dignitary (voice)",
+            "thumb": "https://metadata-static.plex.tv/people/5d77682b961905001eb923fe.jpg"
+          },
+          {
+            "id": 94034,
+            "filter": "actor=94034",
+            "tag": "Jeffrey Marcus",
+            "tagKey": "5d9c08737d06d9001ffd308a",
+            "role": "German Dignitary (voice)",
+            "thumb": "https://metadata-static.plex.tv/2/people/26f59edf46f6e284f7f4a02750600bde.jpg"
+          },
+          {
+            "id": 104423,
+            "filter": "actor=104423",
+            "tag": "Tucker Gilmore",
+            "tagKey": "5d7768c99ab54400214eb822",
+            "role": "Irish Dignitary (voice)"
+          },
+          {
+            "id": 104424,
+            "filter": "actor=104424",
+            "tag": "Ava Acres",
+            "tagKey": "5d7768a296b655001fdbd8fb",
+            "role": "Additional Voices (voice)",
+            "thumb": "https://metadata-static.plex.tv/4/people/4300b76dbf1ada19a67417aeb3350da1.jpg"
+          },
+          {
+            "id": 141834,
+            "filter": "actor=141834",
+            "tag": "Jimmy Theodore",
+            "tagKey": "5d776828961905001eb91ab2",
+            "role": "Additional Voices (voice)",
+            "thumb": "https://metadata-static.plex.tv/people/5d776828961905001eb91ab2.jpg"
+          },
+          {
+            "id": 104426,
+            "filter": "actor=104426",
+            "tag": "Annaleigh Ashford",
+            "tagKey": "5d77682e5af944001f1f86e5",
+            "role": "Additional Voices (voice)",
+            "thumb": "https://metadata-static.plex.tv/b/people/b48585424a8752f36026bc98c05645d6.jpg"
+          },
+          {
+            "id": 104427,
+            "filter": "actor=104427",
+            "tag": "Kirk Baily",
+            "tagKey": "5d7768326f4521001ea9ba01",
+            "role": "Additional Voices (voice)",
+            "thumb": "https://metadata-static.plex.tv/0/people/00961c35ad53715a16b3f670f26f442c.jpg"
+          },
+          {
+            "id": 104428,
+            "filter": "actor=104428",
+            "tag": "Jenica Bergere",
+            "tagKey": "5d7768346f4521001ea9bdd9",
+            "role": "Additional Voices (voice)",
+            "thumb": "https://metadata-static.plex.tv/people/5d7768346f4521001ea9bdd9.jpg"
+          },
+          {
+            "id": 104429,
+            "filter": "actor=104429",
+            "tag": "David Boat",
+            "tagKey": "5d77683c103a2d001f5696c5",
+            "role": "Additional Voices (voice)"
+          },
+          {
+            "id": 143142,
+            "filter": "actor=143142",
+            "tag": "Paul Briggs",
+            "tagKey": "5d776b04f617c90020170d8a",
+            "role": "Additional Voices (voice)",
+            "thumb": "https://metadata-static.plex.tv/d/people/d05a6e245e136eaa2ccca572c57107cf.jpg"
+          },
+          {
+            "id": 104430,
+            "filter": "actor=104430",
+            "tag": "Tyree Brown",
+            "tagKey": "5d7768a296b655001fdbd900",
+            "role": "Additional Voices (voice)",
+            "thumb": "https://metadata-static.plex.tv/people/5d7768a296b655001fdbd900.jpg"
+          },
+          {
+            "id": 104431,
+            "filter": "actor=104431",
+            "tag": "Woody Buck",
+            "tagKey": "5d776926ad5437001f759662",
+            "role": "Additional Voices (voice)"
+          },
+          {
+            "id": 104432,
+            "filter": "actor=104432",
+            "tag": "June Christopher",
+            "tagKey": "5d7768265af944001f1f66c4",
+            "role": "Additional Voices (voice)",
+            "thumb": "https://metadata-static.plex.tv/people/5d7768265af944001f1f66c4.jpg"
+          },
+          {
+            "id": 143329,
+            "filter": "actor=143329",
+            "tag": "Lewis Cleale",
+            "tagKey": "5f402a25e4fc610037051222",
+            "role": "Additional Voices (voice)"
+          },
+          {
+            "id": 104434,
+            "filter": "actor=104434",
+            "tag": "Wendy Cutler",
+            "tagKey": "5d7768288718ba001e3121aa",
+            "role": "Additional Voices (voice)",
+            "thumb": "https://metadata-static.plex.tv/7/people/7f0484da9842b10b9ad33f2656fcf6ff.jpg"
+          },
+          {
+            "id": 104435,
+            "filter": "actor=104435",
+            "tag": "Terri Douglas",
+            "tagKey": "5d77683b880197001ec94a9c",
+            "role": "Additional Voices (voice)",
+            "thumb": "https://metadata-static.plex.tv/people/5d77683b880197001ec94a9c.jpg"
+          },
+          {
+            "id": 104436,
+            "filter": "actor=104436",
+            "tag": "Eddie Frierson",
+            "tagKey": "5d77682e961905001eb92c8f",
+            "role": "Additional Voices (voice)",
+            "thumb": "https://metadata-static.plex.tv/7/people/7a71f9e03a06fa5906d8698317cca65c.jpg"
+          },
+          {
+            "id": 96499,
+            "filter": "actor=96499",
+            "tag": "Jean Gilpin",
+            "tagKey": "5d7768337e9a3c0020c6c48f",
+            "role": "Additional Voices (voice)",
+            "thumb": "https://metadata-static.plex.tv/b/people/b633ef0754c885947a27962588adc963.jpg"
+          },
+          {
+            "id": 104437,
+            "filter": "actor=104437",
+            "tag": "Jackie Gonneau",
+            "tagKey": "5d776835999c64001ec2f4d6",
+            "role": "Additional Voices (voice)"
+          },
+          {
+            "id": 104438,
+            "filter": "actor=104438",
+            "tag": "Nicholas Guest",
+            "tagKey": "5d77682d961905001eb92985",
+            "role": "Additional Voices (voice)",
+            "thumb": "https://metadata-static.plex.tv/people/5d77682d961905001eb92985.jpg"
+          },
+          {
+            "id": 101901,
+            "filter": "actor=101901",
+            "tag": "Bridget Hoffman",
+            "tagKey": "5d7768326f4521001ea9ba07",
+            "role": "Additional Voices (voice)",
+            "thumb": "https://metadata-static.plex.tv/a/people/a4e268685ec6cdb86d83d8f8af2a115a.jpg"
+          },
+          {
+            "id": 104439,
+            "filter": "actor=104439",
+            "tag": "Nick Jameson",
+            "tagKey": "5d77682c61141d001fb1426b",
+            "role": "Additional Voices (voice)",
+            "thumb": "https://metadata-static.plex.tv/people/5d77682c61141d001fb1426b.jpg"
+          },
+          {
+            "id": 104440,
+            "filter": "actor=104440",
+            "tag": "Daniel Kaz",
+            "tagKey": "5d77683b880197001ec94a9f",
+            "role": "Additional Voices (voice)"
+          },
+          {
+            "id": 104441,
+            "filter": "actor=104441",
+            "tag": "John Lavelle",
+            "tagKey": "5d7768427228e5001f1e090d",
+            "role": "Additional Voices (voice)",
+            "thumb": "https://metadata-static.plex.tv/people/5d7768427228e5001f1e090d.jpg"
+          },
+          {
+            "id": 104442,
+            "filter": "actor=104442",
+            "tag": "Jennifer Lee",
+            "tagKey": "5d7768c99ab54400214eb82d",
+            "role": "Additional Voices (voice)",
+            "thumb": "https://metadata-static.plex.tv/people/5d7768c99ab54400214eb82d.jpg"
+          },
+          {
+            "id": 104443,
+            "filter": "actor=104443",
+            "tag": "Patricia Lentz",
+            "tagKey": "5d776835999c64001ec2f48c",
+            "role": "Additional Voices (voice)",
+            "thumb": "https://metadata-static.plex.tv/people/5d776835999c64001ec2f48c.jpg"
+          },
+          {
+            "id": 104444,
+            "filter": "actor=104444",
+            "tag": "Annie Lopez",
+            "tagKey": "5d776926ad5437001f759664",
+            "role": "Additional Voices (voice)"
+          },
+          {
+            "id": 100782,
+            "filter": "actor=100782",
+            "tag": "Katie Lowes",
+            "tagKey": "5d77683254f42c001f8c3cc8",
+            "role": "Additional Voices (voice)",
+            "thumb": "https://metadata-static.plex.tv/people/5d77683254f42c001f8c3cc8.jpg"
+          },
+          {
+            "id": 102502,
+            "filter": "actor=102502",
+            "tag": "Mona Marshall",
+            "tagKey": "5d776827151a60001f24ab0c",
+            "role": "Additional Voices (voice)",
+            "thumb": "https://metadata-static.plex.tv/people/5d776827151a60001f24ab0c.jpg"
+          },
+          {
+            "id": 104445,
+            "filter": "actor=104445",
+            "tag": "Dara McGarry",
+            "tagKey": "5d776829103a2d001f564c0b",
+            "role": "Additional Voices (voice)",
+            "thumb": "https://metadata-static.plex.tv/people/5d776829103a2d001f564c0b.jpg"
+          },
+          {
+            "id": 104446,
+            "filter": "actor=104446",
+            "tag": "Scott Menville",
+            "tagKey": "5d7768337e9a3c0020c6c72a",
+            "role": "Additional Voices (voice)",
+            "thumb": "https://metadata-static.plex.tv/4/people/42e523bd13bcce39aaf58573b8673dc5.jpg"
+          },
+          {
+            "id": 104447,
+            "filter": "actor=104447",
+            "tag": "Adam Overett",
+            "tagKey": "5d776926ad5437001f759665",
+            "role": "Additional Voices (voice)"
+          },
+          {
+            "id": 104448,
+            "filter": "actor=104448",
+            "tag": "Paul Pape",
+            "tagKey": "5d77683785719b001f3a43aa",
+            "role": "Additional Voices (voice)",
+            "thumb": "https://metadata-static.plex.tv/people/5d77683785719b001f3a43aa.jpg"
+          },
+          {
+            "id": 104449,
+            "filter": "actor=104449",
+            "tag": "Courtney Peldon",
+            "tagKey": "5d776888d11dd30020227566",
+            "role": "Additional Voices (voice)",
+            "thumb": "https://metadata-static.plex.tv/people/5d776888d11dd30020227566.jpg"
+          },
+          {
+            "id": 143330,
+            "filter": "actor=143330",
+            "tag": "Jennifer Perry",
+            "tagKey": "5dd2e798291185002322528d",
+            "role": "Additional Voices (voice)",
+            "thumb": "https://metadata-static.plex.tv/2/people/2a75c733266de51e63f8931ddeb1ca5a.jpg"
+          },
+          {
+            "id": 104451,
+            "filter": "actor=104451",
+            "tag": "Raymond S. Persi",
+            "tagKey": "5d7768c99ab54400214eb820",
+            "role": "Additional Voices (voice)",
+            "thumb": "https://metadata-static.plex.tv/people/5d7768c99ab54400214eb820.jpg"
+          },
+          {
+            "id": 104452,
+            "filter": "actor=104452",
+            "tag": "Jean-Michel Richaud",
+            "tagKey": "5d776834103a2d001f567984",
+            "role": "Additional Voices (voice)",
+            "thumb": "https://metadata-static.plex.tv/9/people/9a76907348af5800f99e5fe076407172.jpg"
+          },
+          {
+            "id": 104453,
+            "filter": "actor=104453",
+            "tag": "Lynwood Robinson",
+            "tagKey": "5d77683b880197001ec94aa0",
+            "role": "Additional Voices (voice)"
+          },
+          {
+            "id": 104454,
+            "filter": "actor=104454",
+            "tag": "Carter Sand",
+            "tagKey": "5d776926ad5437001f759667",
+            "role": "Additional Voices (voice)",
+            "thumb": "https://metadata-static.plex.tv/people/5d776926ad5437001f759667.jpg"
+          },
+          {
+            "id": 104455,
+            "filter": "actor=104455",
+            "tag": "Jadon Sand",
+            "tagKey": "5d7768c9594b2b001e69579a",
+            "role": "Additional Voices (voice)",
+            "thumb": "https://metadata-static.plex.tv/7/people/706a0b762187fa4d17279d6fc6a4fcde.jpg"
+          },
+          {
+            "id": 104456,
+            "filter": "actor=104456",
+            "tag": "Katie Silverman",
+            "tagKey": "5d7768bdad5437001f74ea19",
+            "role": "Additional Voices (voice)",
+            "thumb": "https://metadata-static.plex.tv/people/5d7768bdad5437001f74ea19.jpg"
+          },
+          {
+            "id": 104457,
+            "filter": "actor=104457",
+            "tag": "Pepper Sweeney",
+            "tagKey": "5d77683b880197001ec94aa2",
+            "role": "Additional Voices (voice)",
+            "thumb": "https://metadata-static.plex.tv/people/5d77683b880197001ec94aa2.jpg"
+          },
+          {
+            "id": 92800,
+            "filter": "actor=92800",
+            "tag": "Fred Tatasciore",
+            "tagKey": "5d776829999c64001ec2cf80",
+            "role": "Additional Voices (voice)",
+            "thumb": "https://metadata-static.plex.tv/people/5d776829999c64001ec2cf80.jpg"
+          },
+          {
+            "id": 104458,
+            "filter": "actor=104458",
+            "tag": "Jack Whitehall",
+            "tagKey": "5d7768a7308bca002032f11a",
+            "role": "Gothi - Troll Priest (voice, uncredited)",
+            "thumb": "https://metadata-static.plex.tv/6/people/63b9cd53c0efbac9b2d1f5df69760311.jpg"
+          }
+        ],
+        "Producer": [
+          {
+            "id": 93279,
+            "filter": "producer=93279",
+            "tag": "Peter Del Vecho",
+            "tagKey": "5d776834880197001ec931db",
+            "thumb": "https://metadata-static.plex.tv/4/people/43229fd04ea7f16603c6b04fd2760419.jpg"
+          }
+        ],
+        "Similar": [
+          {
+            "id": 49987,
+            "filter": "similar=49987",
+            "tag": "Tangled"
+          },
+          {
+            "id": 51665,
+            "filter": "similar=51665",
+            "tag": "Brave"
+          },
+          {
+            "id": 51666,
+            "filter": "similar=51666",
+            "tag": "Maleficent"
+          },
+          {
+            "id": 50555,
+            "filter": "similar=50555",
+            "tag": "Monsters University"
+          },
+          {
+            "id": 51528,
+            "filter": "similar=51528",
+            "tag": "Beauty and the Beast"
+          },
+          {
+            "id": 50552,
+            "filter": "similar=50552",
+            "tag": "Shrek"
+          },
+          {
+            "id": 50547,
+            "filter": "similar=50547",
+            "tag": "Ice Age"
+          },
+          {
+            "id": 49979,
+            "filter": "similar=49979",
+            "tag": "The Little Mermaid"
+          },
+          {
+            "id": 51667,
+            "filter": "similar=51667",
+            "tag": "Despicable Me 2"
+          },
+          {
+            "id": 50543,
+            "filter": "similar=50543",
+            "tag": "Finding Nemo"
+          },
+          {
+            "id": 50546,
+            "filter": "similar=50546",
+            "tag": "Ratatouille"
+          },
+          {
+            "id": 49985,
+            "filter": "similar=49985",
+            "tag": "Mulan"
+          },
+          {
+            "id": 50550,
+            "filter": "similar=50550",
+            "tag": "Shrek 2"
+          },
+          {
+            "id": 51668,
+            "filter": "similar=51668",
+            "tag": "Inside Out"
+          },
+          {
+            "id": 51669,
+            "filter": "similar=51669",
+            "tag": "How to Train Your Dragon 2"
+          },
+          {
+            "id": 50946,
+            "filter": "similar=50946",
+            "tag": "The Princess and the Frog"
+          },
+          {
+            "id": 50539,
+            "filter": "similar=50539",
+            "tag": "Ice Age: The Meltdown"
+          },
+          {
+            "id": 49980,
+            "filter": "similar=49980",
+            "tag": "Aladdin"
+          },
+          {
+            "id": 49981,
+            "filter": "similar=49981",
+            "tag": "Cinderella"
+          },
+          {
+            "id": 51670,
+            "filter": "similar=51670",
+            "tag": "Big Hero 6"
+          }
+        ]
+      }
+    ]
+  }
+}

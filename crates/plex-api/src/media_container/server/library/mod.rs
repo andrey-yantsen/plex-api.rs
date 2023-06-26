@@ -723,6 +723,7 @@ pub struct Metadata {
     pub skip_children: Option<bool>,
 
     pub view_count: Option<u64>,
+    #[serde(default, deserialize_with = "deserialize_option_number_from_string")]
     pub skip_count: Option<u64>,
     #[serde(default, with = "time::serde::timestamp::option")]
     pub last_viewed_at: Option<OffsetDateTime>,
@@ -831,6 +832,7 @@ pub struct Metadata {
     pub language_override: Option<String>,
     pub content: Option<String>,
     pub collection_sort: Option<String>,
+    #[serde(default, deserialize_with = "optional_boolish")]
     pub skip_parent: Option<bool>,
 }
 

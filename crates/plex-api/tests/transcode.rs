@@ -829,6 +829,43 @@ mod offline {
             m.delete();
 
             assert!(matches!(error, plex_api::Error::TranscodeRefused));
+
+            let mut m = mock_server.mock(|when, then| {
+                when.method(GET).path("/library/metadata/13194");
+                then.status(200)
+                    .header("content-type", "text/json")
+                    .body_from_file("tests/mocks/transcode/metadata_13194.json");
+            });
+
+            let item: Movie = server
+                .item_by_id("13194")
+                .await
+                .unwrap()
+                .try_into()
+                .unwrap();
+            m.assert();
+            m.delete();
+
+            let media = &item.media()[0];
+            let part = &media.parts()[0];
+
+            let mut m = mock_server.mock(|when, then| {
+                when.method(GET)
+                    .path("/video/:/transcode/universal/decision");
+                then.status(200)
+                    .header("content-type", "text/json")
+                    .body_from_file("tests/mocks/transcode/decision_13194.json");
+            });
+
+            let error = part
+                .create_download_session(VideoTranscodeOptions::default())
+                .await
+                .err()
+                .unwrap();
+            m.assert();
+            m.delete();
+
+            assert!(matches!(error, plex_api::Error::TranscodeRefused));
         }
     }
 
