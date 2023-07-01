@@ -57,6 +57,11 @@ pub enum Feature {
     )]
     AvodNewMedia,
     #[serde(
+        rename = "blacklist_get_signin",
+        alias = "bec2ba97-4b25-472b-9cfc-674f5c68c2ae"
+    )]
+    BlacklistGetSignin,
+    #[serde(
         rename = "boost-voices",
         alias = "c2409baa-d044-45c7-b1f4-e9e7ccd2d128"
     )]
