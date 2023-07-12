@@ -183,6 +183,11 @@ pub enum Feature {
     )]
     CustomHomeRemoval,
     #[serde(
+        rename = "disable_sharing_friendships",
+        alias = "ce8f644e-87ce-4ba5-b165-fadd69778019"
+    )]
+    DisableSharingFriendships,
+    #[serde(
         rename = "discover",
         alias = "4a933f24-464d-4a6b-b372-9e4497abd361"
     )]
