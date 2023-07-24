@@ -119,46 +119,48 @@ enum SemverOrString<'a> {
 // * semver tags sorted in descending order
 impl<'a> PartialOrd for SemverOrString<'a> {
     fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
-        if let SemverOrString::Str(s) = self {
-            if s == &"latest" {
-                return Some(Ordering::Less);
-            }
-
-            if let SemverOrString::Str(s2) = other {
-                if s2 != &"latest" {
-                    return Some(s.cmp(s2));
-                } else {
-                    return Some(Ordering::Greater);
-                }
-            }
-
-            return Some(Ordering::Less);
-        } else if let SemverOrString::Str(s) = other {
-            if s == &"latest" {
-                return Some(Ordering::Greater);
-            }
-
-            if let SemverOrString::Str(s2) = self {
-                if s2 != &"latest" {
-                    return Some(s2.cmp(s));
-                } else {
-                    return Some(Ordering::Less);
-                }
-            }
-
-            return Some(Ordering::Greater);
-        } else if let SemverOrString::Semver(v) = self {
-            if let SemverOrString::Semver(v2) = other {
-                return Some(v.cmp(v2).reverse());
-            }
-        }
-
-        None
+        Some(self.cmp(other))
     }
 }
 
 impl<'a> Ord for SemverOrString<'a> {
     fn cmp(&self, other: &Self) -> Ordering {
-        self.partial_cmp(other).unwrap()
+        if let SemverOrString::Str(s) = self {
+            if s == &"latest" {
+                return Ordering::Less;
+            }
+
+            if let SemverOrString::Str(s2) = other {
+                if s2 != &"latest" {
+                    return s.cmp(s2);
+                } else {
+                    return Ordering::Greater;
+                }
+            }
+
+            Ordering::Less
+        } else if let SemverOrString::Str(s) = other {
+            if s == &"latest" {
+                return Ordering::Greater;
+            }
+
+            if let SemverOrString::Str(s2) = self {
+                if s2 != &"latest" {
+                    return s2.cmp(s);
+                } else {
+                    return Ordering::Less;
+                }
+            }
+
+            Ordering::Greater
+        } else if let SemverOrString::Semver(v) = self {
+            if let SemverOrString::Semver(v2) = other {
+                return v.cmp(v2).reverse();
+            } else {
+                return Ordering::Less;
+            }
+        } else {
+            return Ordering::Greater;
+        }
     }
 }

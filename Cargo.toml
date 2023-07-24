@@ -1,5 +1,6 @@
 [workspace]
 
+resolver = "2"
 members = [
     "crates/plex-api",
     "crates/plex-api-test-helper",
