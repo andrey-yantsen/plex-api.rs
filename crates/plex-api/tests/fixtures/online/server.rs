@@ -16,8 +16,8 @@ async fn get_server(client: HttpClient) -> Server {
 
         let r = Server::new(url.clone(), client.clone()).await;
 
-        if r.is_ok() {
-            return r.unwrap();
+        if let Ok(srv) = r {
+            return srv;
         }
 
         if attempt < 10 {
