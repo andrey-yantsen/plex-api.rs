@@ -1,10 +1,13 @@
 use super::client_builder;
 use plex_api::{HttpClient, HttpClientBuilder};
 use rstest::fixture;
+use sysinfo::SystemExt;
 
 #[fixture]
 pub fn platform() -> String {
-    sys_info::os_type().unwrap_or_else(|_| "unknown".to_string())
+    sysinfo::System::new()
+        .name()
+        .unwrap_or("unknown".to_string())
 }
 
 #[fixture]
