@@ -10,6 +10,7 @@ use isahc::{
 use secrecy::{ExposeSecret, SecretString};
 use serde::{de::DeserializeOwned, Serialize};
 use std::time::Duration;
+use sysinfo::SystemExt;
 use uuid::Uuid;
 
 const DEFAULT_TIMEOUT: Duration = Duration::from_secs(30);
@@ -464,9 +465,10 @@ pub struct HttpClientBuilder {
 
 impl Default for HttpClientBuilder {
     fn default() -> Self {
-        let sys_platform = sys_info::os_type().unwrap_or_else(|_| "unknown".to_string());
-        let sys_version = sys_info::os_release().unwrap_or_else(|_| "unknown".to_string());
-        let sys_hostname = sys_info::hostname().unwrap_or_else(|_| "unknown".to_string());
+        let sys = sysinfo::System::new();
+        let sys_platform = sys.name().unwrap_or("unknown".to_string());
+        let sys_version = sys.os_version().unwrap_or("unknown".to_string());
+        let sys_hostname = sys.host_name().unwrap_or("unknown".to_string());
 
         let random_uuid = Uuid::new_v4();
 
