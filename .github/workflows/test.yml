@@ -24,7 +24,7 @@ jobs:
       - name: "Git: enable longpaths"
         run: git config --global core.longpaths true
       - name: Checkout sources
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Install stable toolchain
         uses: dtolnay/rust-toolchain@stable
       - uses: Swatinem/rust-cache@v2.6.2
@@ -44,7 +44,7 @@ jobs:
         plex_server_version: ["1.32.5.7349-8f4248874","1.30.2.6563-3d4dc0cce","1.28.2.6151-914ddd2b3"]
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Install stable toolchain
         uses: dtolnay/rust-toolchain@stable
       - uses: Swatinem/rust-cache@v2.6.2
@@ -66,7 +66,7 @@ jobs:
       X_PLEX_CLIENT_IDENTIFIER: "${{ secrets.X_PLEX_CLIENT_IDENTIFIER_FREE }}"
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Install stable toolchain
         uses: dtolnay/rust-toolchain@stable
       - uses: Swatinem/rust-cache@v2.6.2
@@ -88,7 +88,7 @@ jobs:
       X_PLEX_CLIENT_IDENTIFIER: "${{ secrets.X_PLEX_CLIENT_IDENTIFIER_PLEXPASS }}"
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Install stable toolchain
         uses: dtolnay/rust-toolchain@stable
       - uses: Swatinem/rust-cache@v2.6.2
@@ -110,7 +110,7 @@ jobs:
       X_PLEX_CLIENT_IDENTIFIER: "${{ secrets.X_PLEX_CLIENT_IDENTIFIER_FREE }}"
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Install stable toolchain
         uses: dtolnay/rust-toolchain@stable
       - uses: Swatinem/rust-cache@v2.6.2
@@ -131,7 +131,7 @@ jobs:
       X_PLEX_CLIENT_IDENTIFIER: "${{ secrets.X_PLEX_CLIENT_IDENTIFIER_FREE }}"
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Install stable toolchain
         uses: dtolnay/rust-toolchain@stable
       - uses: Swatinem/rust-cache@v2.6.2
@@ -148,7 +148,7 @@ jobs:
       options: --security-opt seccomp=unconfined
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Generate code coverage
         run: |
