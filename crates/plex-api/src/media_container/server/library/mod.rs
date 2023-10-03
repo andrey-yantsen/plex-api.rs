@@ -406,6 +406,8 @@ pub struct Part {
     pub bitrate: Option<u32>,
     #[serde(rename = "Stream")]
     pub streams: Option<Vec<Stream>>,
+    pub accessible: Option<bool>,
+    pub exists: Option<bool>,
 }
 
 #[derive(Debug, Deserialize, Clone)]
