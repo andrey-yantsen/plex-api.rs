@@ -52,6 +52,11 @@ pub enum Feature {
     )]
     ArtistTv,
     #[serde(
+        rename = "avod-ad-analysis",
+        alias = "c987122a-a796-432f-af00-953821c127bb"
+    )]
+    AvodAdAnalysis,
+    #[serde(
         rename = "avod-new-media",
         alias = "e703655b-ee05-4e24-97e3-a138da62c425"
     )]
@@ -61,6 +66,11 @@ pub enum Feature {
         alias = "bec2ba97-4b25-472b-9cfc-674f5c68c2ae"
     )]
     BlacklistGetSignin,
+    #[serde(
+        rename = "blacklist-subnets",
+        alias = "b3b87f19-5ccd-4b14-bb62-b9d7b982392e"
+    )]
+    BlacklistSubnets,
     #[serde(
         rename = "boost-voices",
         alias = "c2409baa-d044-45c7-b1f4-e9e7ccd2d128"
@@ -244,6 +254,11 @@ pub enum Feature {
         alias = "5d819d02-5d04-4116-8eec-f49def4e2d6f"
     )]
     FederatedAuth,
+    #[serde(
+        rename = "friend_request_push_notifications",
+        alias = "c36a6985-eee3-4400-a394-c5787fad15b5"
+    )]
+    FriendRequestPushNotifications,
     #[serde(
         rename = "global-continue-watching",
         alias = "4742780c-af9d-4b44-bf5b-7b27e3369aa8"
