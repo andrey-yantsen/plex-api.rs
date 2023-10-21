@@ -55,6 +55,7 @@ pub enum Feature {
         rename = "avod-ad-analysis",
         alias = "c987122a-a796-432f-af00-953821c127bb"
     )]
+    #[deprecated]
     AvodAdAnalysis,
     #[serde(
         rename = "avod-new-media",
