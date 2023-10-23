@@ -420,7 +420,7 @@ mod online {
     async fn movies(#[future] server: Server) {
         let libraries = server.libraries();
 
-        let library = if let Library::Movie(lib) = libraries.get(0).unwrap() {
+        let library = if let Library::Movie(lib) = libraries.first().unwrap() {
             lib
         } else {
             panic!("Unexpected library type");
@@ -463,7 +463,7 @@ mod online {
     async fn movies_playlists(#[future] server: Server) {
         let libraries = server.libraries();
 
-        let library = if let Library::Movie(lib) = libraries.get(0).unwrap() {
+        let library = if let Library::Movie(lib) = libraries.first().unwrap() {
             lib
         } else {
             panic!("Unexpected library type");

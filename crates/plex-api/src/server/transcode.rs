@@ -713,7 +713,7 @@ pub(crate) async fn transcode_session_stats(
     wrapper
         .media_container
         .transcode_sessions
-        .get(0)
+        .first()
         .cloned()
         .ok_or(crate::Error::ItemNotFound)
 }
@@ -787,7 +787,7 @@ impl TranscodeSession {
         let video_transcode = video_streams
             .iter()
             .find(|s| s.selected == Some(true))
-            .or_else(|| video_streams.get(0))
+            .or_else(|| video_streams.first())
             .map(|s| (s.decision.unwrap(), s.codec));
 
         let audio_streams = streams
@@ -801,7 +801,7 @@ impl TranscodeSession {
         let audio_transcode = audio_streams
             .iter()
             .find(|s| s.selected == Some(true))
-            .or_else(|| audio_streams.get(0))
+            .or_else(|| audio_streams.first())
             .map(|s| (s.decision.unwrap(), s.codec));
 
         Ok(Self {

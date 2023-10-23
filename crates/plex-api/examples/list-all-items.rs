@@ -140,7 +140,7 @@ async fn main() {
 
     let device = {
         if devices.len() == 1 {
-            devices.get(0).unwrap()
+            devices.first().unwrap()
         } else {
             println!("Please selected the server you want to connect to:");
             for (idx, d) in devices.iter().enumerate() {

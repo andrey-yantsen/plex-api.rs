@@ -1959,7 +1959,7 @@ mod online {
             // Check a few unlikely to change properties about the stream.
             let metadata = mp3_metadata::read_from_slice(&buf).unwrap();
             assert_eq!(metadata.duration.as_secs(), 5);
-            let frame = metadata.frames.get(0).unwrap();
+            let frame = metadata.frames.first().unwrap();
             assert_eq!(frame.layer, mp3_metadata::Layer::Layer3);
             assert_eq!(frame.chan_type, mp3_metadata::ChannelType::SingleChannel);
 
