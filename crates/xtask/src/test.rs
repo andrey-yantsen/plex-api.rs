@@ -9,7 +9,7 @@ use plex_api::{
     },
     HttpClientBuilder, MyPlex, MyPlexBuilder, Server,
 };
-use std::{io::Write, time::Duration};
+use std::{fs, io::Write, time::Duration};
 use testcontainers::{clients, core::WaitFor, images::generic::GenericImage, RunnableImage};
 use tokio::{runtime::Runtime, time::sleep};
 use xshell::{cmd, Shell};
@@ -232,45 +232,28 @@ impl flags::Test {
             .docker_tag
             .clone()
             .unwrap_or_else(|| DOCKER_PLEX_IMAGE_TAG_MIN_SUPPORTED.to_owned());
+
+        fs::write(
+            sh.current_dir().join(plex_data_path).join("Dockerfile"),
+            vec![
+                format!("FROM {DOCKER_PLEX_IMAGE_NAME}:{image_tag}"),
+                format!("COPY --chown=1000:1000 \"media\" \"/data\""),
+                format!("COPY --chown=1000:1000 \"config/Library\" \"/config/Library\""),
+            ]
+            .join("\n"),
+        )?;
+
+        cmd!(sh, "docker build -t plex-api-tests:latest {plex_data_path}").run()?;
+
         let docker_image: RunnableImage<GenericImage> =
-            GenericImage::new(DOCKER_PLEX_IMAGE_NAME, &image_tag)
+            GenericImage::new("plex-api-tests", "latest")
                 .with_wait_for(WaitFor::Healthcheck)
                 .into();
 
         #[cfg_attr(windows, allow(unused_mut))]
-        let mut docker_image = docker_image
-            .with_volume((
-                format!("{}/{}/media", sh.current_dir().display(), plex_data_path),
-                "/data",
-            ))
-            .with_volume((
-                format!(
-                    "{}/{}/config/Library",
-                    sh.current_dir().display(),
-                    plex_data_path
-                ),
-                "/config/Library",
-            ))
-            .with_volume((
-                format!(
-                    "{}/{}/transcode",
-                    sh.current_dir().display(),
-                    plex_data_path
-                ),
-                "/transcode",
-            ))
+        let docker_image = docker_image
             .with_env_var(("TZ", "UTC"))
             .with_env_var(("PLEX_CLAIM", claim_token));
-
-        #[cfg(not(windows))]
-        {
-            let uid = users::get_current_uid();
-            let gid = users::get_current_gid();
-
-            docker_image = docker_image
-                .with_env_var(("PLEX_UID", uid.to_string()))
-                .with_env_var(("PLEX_GID", gid.to_string()));
-        }
 
         let docker = clients::Cli::default();
 
