@@ -10,7 +10,7 @@ use plex_api::{
     HttpClientBuilder, MyPlex, MyPlexBuilder, Server,
 };
 use std::{io::Write, time::Duration};
-use testcontainers::{clients, core::WaitFor, images::generic::GenericImage, RunnableImage};
+use testcontainers::{clients, core::WaitFor, GenericImage, RunnableImage};
 use tokio::{runtime::Runtime, time::sleep};
 use xshell::{cmd, Shell};
 
