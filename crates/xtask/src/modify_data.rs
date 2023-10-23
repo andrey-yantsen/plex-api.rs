@@ -4,7 +4,7 @@ use crate::{
     utils::copy_tree,
 };
 use std::{fs::remove_dir_all, io::Write};
-use testcontainers::{clients, core::WaitFor, images::generic::GenericImage, RunnableImage};
+use testcontainers::{clients, core::WaitFor, GenericImage, RunnableImage};
 use xshell::{cmd, Shell};
 
 impl flags::ModifyData {
