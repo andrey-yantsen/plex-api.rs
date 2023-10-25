@@ -55,7 +55,6 @@ pub enum Feature {
         rename = "avod-ad-analysis",
         alias = "c987122a-a796-432f-af00-953821c127bb"
     )]
-    #[deprecated]
     AvodAdAnalysis,
     #[serde(
         rename = "avod-new-media",
@@ -728,6 +727,11 @@ pub enum Feature {
         alias = "68747f3a-ce13-46ce-9274-1e0544c9f500"
     )]
     VodCloudflare,
+    #[serde(
+        rename = "vod-schema",
+        alias = "1b870b8e-f1a7-497c-80b2-857d45f3123f"
+    )]
+    VodSchema,
     #[serde(
         rename = "vod_subtitles",
         alias = "ed374ad1-1d36-4396-8794-f710011e4fed"
