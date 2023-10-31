@@ -41,7 +41,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        plex_server_version: ["1.32.6.7557-1cf77d501","1.30.2.6563-3d4dc0cce","1.28.2.6151-914ddd2b3"]
+        plex_server_version: ["1.32.7.7621-871adbd44","1.30.2.6563-3d4dc0cce","1.28.2.6151-914ddd2b3"]
     steps:
       - name: Checkout sources
         uses: actions/checkout@v4
@@ -59,7 +59,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        plex_server_version: ["1.32.6.7557-1cf77d501","1.30.2.6563-3d4dc0cce","1.28.2.6151-914ddd2b3"]
+        plex_server_version: ["1.32.7.7621-871adbd44","1.30.2.6563-3d4dc0cce","1.28.2.6151-914ddd2b3"]
     name: Test on a real server (authenticated free account)
     runs-on: ubuntu-latest
     env:
@@ -81,7 +81,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        plex_server_version: ["1.32.6.7557-1cf77d501","1.30.2.6563-3d4dc0cce","1.28.2.6151-914ddd2b3"]
+        plex_server_version: ["1.32.7.7621-871adbd44","1.30.2.6563-3d4dc0cce","1.28.2.6151-914ddd2b3"]
     name: Test on a real server (authenticated plexpass account)
     runs-on: ubuntu-latest
     env:
@@ -103,7 +103,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        plex_server_version: ["1.32.6.7557-1cf77d501","1.30.2.6563-3d4dc0cce","1.28.2.6151-914ddd2b3"]
+        plex_server_version: ["1.32.7.7621-871adbd44","1.30.2.6563-3d4dc0cce","1.28.2.6151-914ddd2b3"]
     name: Test on a real server (unclaimed, authenticated free account)
     runs-on: ubuntu-latest
     env:
@@ -124,7 +124,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        plex_server_version: ["1.32.6.7557-1cf77d501","1.30.2.6563-3d4dc0cce","1.28.2.6151-914ddd2b3"]
+        plex_server_version: ["1.32.7.7621-871adbd44","1.30.2.6563-3d4dc0cce","1.28.2.6151-914ddd2b3"]
     name: Test on a real server (authenticated free account with shared from plexpass server)
     runs-on: ubuntu-latest
     env:
