@@ -117,6 +117,11 @@ pub enum Feature {
     )]
     Collections,
     #[serde(
+        rename = "community_access_plex_tv",
+        alias = "3f6baa76-7488-479a-9e4f-49ff2c0d3711"
+    )]
+    CommunityAccessPlexTv,
+    #[serde(
         rename = "community-phase0",
         alias = "fc3e8322-5e6e-4f4a-9d71-728c6d5656bd"
     )]
@@ -338,6 +343,7 @@ pub enum Feature {
         rename = "join-discover-together-as-friend",
         alias = "af866200-1116-4502-be15-f71457ce9d27"
     )]
+    #[deprecated]
     JoinDiscoverTogetherAsFriend,
     #[serde(
         rename = "kevin-bacon",
