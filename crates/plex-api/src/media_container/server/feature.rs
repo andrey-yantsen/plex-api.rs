@@ -117,6 +117,11 @@ pub enum Feature {
     )]
     Collections,
     #[serde(
+        rename = "comments_and_replies_push_notifications",
+        alias = "7f46bf17-fabf-4f96-99a2-cf374f6eed71"
+    )]
+    CommentsAndRepliesPushNotifications,
+    #[serde(
         rename = "community_access_plex_tv",
         alias = "3f6baa76-7488-479a-9e4f-49ff2c0d3711"
     )]
@@ -433,6 +438,11 @@ pub enum Feature {
     )]
     MusicVideos,
     #[serde(
+        rename = "new_plex_pass_prices",
+        alias = "de65add8-2782-4bb8-b156-e0b57a844479"
+    )]
+    NewPlexPassPrices,
+    #[serde(
         rename = "news-provider-sunset-modal",
         alias = "b77e6744-c18d-415a-8e7c-7aac5d7a7750"
     )]
@@ -501,6 +511,11 @@ pub enum Feature {
         alias = "3a2b0cb6-1519-4431-98e2-823c248c70eb"
     )]
     PhotosV6TvAlbums,
+    #[serde(
+        rename = "pms_health",
+        alias = "9aea4ca5-2095-4619-9339-88c1e662fde6"
+    )]
+    PmsHealth,
     #[serde(
         rename = "podcasts",
         alias = "1841971c-6be5-40e6-a211-7e189d767a78"
