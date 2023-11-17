@@ -65,7 +65,7 @@ impl flags::Wait {
                     );
                 }
             } else {
-                println!("failed");
+                println!("failed ({:?})", server_result.err().unwrap());
             }
 
             if !matches!(prefs, Err(plex_api::Error::ClientNotAuthenticated)) {
@@ -74,7 +74,7 @@ impl flags::Wait {
                 if prefs.is_ok() {
                     println!("success");
                 } else {
-                    println!("failed");
+                    println!("failed ({:?})", prefs.err().unwrap());
                 }
             }
         }
