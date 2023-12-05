@@ -207,7 +207,7 @@ pub struct Server {
     pub offline_transcode: Option<u8>,
     #[serde_as(as = "StringWithSeparator::<CommaSeparator, Feature>")]
     pub owner_features: Vec<Feature>,
-    pub photo_auto_tag: bool,
+    pub photo_auto_tag: Option<bool>,
     pub platform: String,
     pub platform_version: String,
     pub plugin_host: bool,
