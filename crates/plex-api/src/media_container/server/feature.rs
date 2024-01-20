@@ -348,6 +348,7 @@ pub enum Feature {
         rename = "join-discover-together",
         alias = "f8f68869-07a5-4fc3-9359-d0b5ba9c487c"
     )]
+    #[deprecated]
     JoinDiscoverTogether,
     #[serde(
         rename = "join-discover-together-as-friend",
