@@ -357,6 +357,11 @@ pub enum Feature {
     #[deprecated]
     JoinDiscoverTogetherAsFriend,
     #[serde(
+        rename = "keep-payment-method",
+        alias = "e4a9fd6f-4105-476b-bc57-adccd009323b"
+    )]
+    KeepPaymentMethod,
+    #[serde(
         rename = "kevin-bacon",
         alias = "c7ae6f8f-05e6-48bb-9024-c05c1dc3c43e"
     )]
@@ -588,6 +593,16 @@ pub enum Feature {
     SessionKick,
     #[serde(rename = "shared-radio")]
     SharedRadio,
+    #[serde(
+        rename = "shared_server_notification",
+        alias = "64adaa4e-aa7e-457d-b385-51438216d7fe"
+    )]
+    SharedServerNotification,
+    #[serde(
+        rename = "shared_source_notification",
+        alias = "6c4d66d9-729d-49dc-b70d-ab2652abf15a"
+    )]
+    SharedSourceNotification,
     #[serde(
         rename = "signin_notification",
         alias = "1b3a63e4-c2f4-4011-a181-2343d3a97ef7"
