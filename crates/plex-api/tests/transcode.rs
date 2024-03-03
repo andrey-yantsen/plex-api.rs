@@ -230,7 +230,6 @@ mod offline {
         use plex_api::{
             library::{MediaItem, Movie},
             transcode::{AudioSetting, Constraint, VideoSetting, VideoTranscodeOptions},
-            Server,
         };
 
         #[plex_api_test_helper::offline_test]
@@ -874,7 +873,6 @@ mod offline {
         use plex_api::{
             library::{MediaItem, Track},
             transcode::{AudioSetting, Constraint, MusicTranscodeOptions},
-            Server,
         };
 
         #[plex_api_test_helper::offline_test]
@@ -1256,7 +1254,7 @@ mod online {
         use mp4::{AvcProfile, MediaType, Mp4Reader, TrackType};
         use plex_api::{
             library::MediaItem, library::MetadataItem, library::Movie,
-            media_container::server::Feature, transcode::VideoTranscodeOptions, Server,
+            media_container::server::Feature, transcode::VideoTranscodeOptions,
         };
         use std::io::Cursor;
 
@@ -1683,7 +1681,7 @@ mod online {
         use isahc::AsyncReadResponseExt;
         use plex_api::{
             library::MediaItem, library::MetadataItem, library::Track,
-            media_container::server::Feature, transcode::MusicTranscodeOptions, Server,
+            media_container::server::Feature, transcode::MusicTranscodeOptions,
         };
 
         #[plex_api_test_helper::online_test]
