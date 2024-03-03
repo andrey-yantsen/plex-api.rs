@@ -1,3 +1,5 @@
+use std::fmt::Display;
+
 use crate::{http_client::HttpClient, url::MYPLEX_CLAIM_TOKEN_PATH, Error, Result};
 use http::StatusCode;
 use isahc::AsyncReadResponseExt;
@@ -52,8 +54,8 @@ impl ClaimToken {
     }
 }
 
-impl ToString for ClaimToken {
-    fn to_string(&self) -> String {
-        self.token.clone()
+impl Display for ClaimToken {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.token)
     }
 }

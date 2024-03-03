@@ -151,9 +151,9 @@ impl ProfileSetting {
     }
 }
 
-impl ToString for ProfileSetting {
-    fn to_string(&self) -> String {
-        format!("{}({})", self.setting, self.params.join("&"))
+impl Display for ProfileSetting {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}({})", self.setting, self.params.join("&"))
     }
 }
 
@@ -173,16 +173,20 @@ pub enum VideoSetting {
     FrameRate,
 }
 
-impl ToString for VideoSetting {
-    fn to_string(&self) -> String {
-        match self {
-            VideoSetting::Width => "video.width".to_string(),
-            VideoSetting::Height => "video.height".to_string(),
-            VideoSetting::BitDepth => "video.bitDepth".to_string(),
-            VideoSetting::Level => "video.level".to_string(),
-            VideoSetting::Profile => "video.profile".to_string(),
-            VideoSetting::FrameRate => "video.frameRate".to_string(),
-        }
+impl Display for VideoSetting {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "{}",
+            match self {
+                VideoSetting::Width => "video.width",
+                VideoSetting::Height => "video.height",
+                VideoSetting::BitDepth => "video.bitDepth",
+                VideoSetting::Level => "video.level",
+                VideoSetting::Profile => "video.profile",
+                VideoSetting::FrameRate => "video.frameRate",
+            }
+        )
     }
 }
 
@@ -196,13 +200,17 @@ pub enum AudioSetting {
     BitDepth,
 }
 
-impl ToString for AudioSetting {
-    fn to_string(&self) -> String {
-        match self {
-            AudioSetting::Channels => "audio.channels".to_string(),
-            AudioSetting::SamplingRate => "audio.samplingRate".to_string(),
-            AudioSetting::BitDepth => "audio.bitDepth".to_string(),
-        }
+impl Display for AudioSetting {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "{}",
+            match self {
+                AudioSetting::Channels => "audio.channels",
+                AudioSetting::SamplingRate => "audio.samplingRate",
+                AudioSetting::BitDepth => "audio.bitDepth",
+            }
+        )
     }
 }
 

@@ -1,5 +1,7 @@
 mod deserializer;
 
+use std::fmt::Display;
+
 use super::MediaContainer;
 use serde::Deserialize;
 
@@ -36,13 +38,13 @@ pub enum Value {
     Double(f64),
 }
 
-impl ToString for Value {
-    fn to_string(&self) -> String {
+impl Display for Value {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            Value::Text(s) => s.to_owned(),
-            Value::Int(i) => i.to_string(),
-            Value::Bool(b) => (if *b { "1" } else { "0" }).to_owned(),
-            Value::Double(d) => d.to_string(),
+            Value::Text(s) => write!(f, "{}", s),
+            Value::Int(i) => write!(f, "{}", i),
+            Value::Bool(b) => write!(f, "{}", if *b { "1" } else { "0" }),
+            Value::Double(d) => write!(f, "{}", d),
         }
     }
 }

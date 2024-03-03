@@ -3,7 +3,7 @@ use serde::{
     Deserialize, Serialize,
 };
 use std::{
-    fmt::{Formatter, Result as FmtResult},
+    fmt::{Display, Formatter, Result as FmtResult},
     result::Result as StdResult,
 };
 
@@ -93,8 +93,8 @@ impl Serialize for SharingFilter {
     }
 }
 
-impl ToString for SharingFilter {
-    fn to_string(&self) -> String {
+impl Display for SharingFilter {
+    fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
         let mut ret: Vec<String> = vec![];
 
         if !self.content_rating.is_empty() {
@@ -116,6 +116,6 @@ impl ToString for SharingFilter {
             ret.push(format!("label!={}", self.exclude_label.join("%2C")))
         }
 
-        ret.join("|")
+        write!(f, "{}", ret.join("|"))
     }
 }
