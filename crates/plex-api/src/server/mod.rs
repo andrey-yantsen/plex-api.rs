@@ -25,7 +25,6 @@ use crate::{
     },
     Error, HttpClientBuilder, Result,
 };
-use core::convert::TryFrom;
 use futures::AsyncWrite;
 use http::{StatusCode, Uri};
 use isahc::AsyncReadResponseExt;

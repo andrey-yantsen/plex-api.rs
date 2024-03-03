@@ -1,5 +1,4 @@
 use crate::{url::MYPLEX_DEFAULT_API_URL, Result};
-use core::convert::TryFrom;
 use http::{uri::PathAndQuery, HeaderValue, StatusCode, Uri};
 use isahc::{
     config::{Configurable, RedirectPolicy},

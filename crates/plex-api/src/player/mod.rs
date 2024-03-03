@@ -4,10 +4,7 @@ use crate::{
     HttpClient, HttpClientBuilder, MyPlex, Result, Server,
 };
 use http::{uri::PathAndQuery, Uri};
-use std::{
-    convert::TryFrom,
-    fmt::{Debug, Display},
-};
+use std::fmt::{Debug, Display};
 
 #[derive(Debug, Clone)]
 pub struct Player {
