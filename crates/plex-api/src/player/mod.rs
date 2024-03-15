@@ -57,7 +57,9 @@ impl Player {
             .header("X-Plex-Url", format!("{uri}"))
             .xml()
             .await?;
-        client.x_plex_target_client_identifier = media_container.player.machine_identifier.clone();
+        client
+            .x_plex_target_client_identifier
+            .clone_from(&media_container.player.machine_identifier);
         Ok(Self {
             _media_container: media_container,
             client,

@@ -79,7 +79,7 @@ impl Friend {
             .post(format!("{}/{}/accept", MYPLEX_INVITES_FRIENDS, self.id))
             .json()
             .await?;
-        friend.client = self.client.clone();
+        friend.client.clone_from(&self.client);
         Ok(friend)
     }
 

@@ -126,7 +126,9 @@ impl Device<'_> {
                     "Connecting to player {id}",
                     id = self.inner.client_identifier,
                 );
-                client.x_plex_target_client_identifier = self.inner.client_identifier.clone();
+                client
+                    .x_plex_target_client_identifier
+                    .clone_from(&self.inner.client_identifier);
 
                 let futures = self
                     .inner

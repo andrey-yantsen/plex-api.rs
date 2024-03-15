@@ -299,7 +299,7 @@ impl flags::Test {
                 .share_server(&server_url, server_owner_token, auth_token)
                 .await?;
 
-            server_auth_token = shared_server_access_token.clone();
+            server_auth_token.clone_from(&shared_server_access_token);
 
             if self.github_actions {
                 println!();
