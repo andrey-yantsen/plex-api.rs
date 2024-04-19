@@ -553,6 +553,11 @@ pub enum Feature {
     )]
     Radio,
     #[serde(
+        rename = "require-plex-nonce",
+        alias = "0cce52a7-0778-4781-9a07-712370fb6b8a"
+    )]
+    RequirePlexNonce,
+    #[serde(
         rename = "retro-games",
         alias = "4e27cf82-9fb6-4ebe-8e10-c48bfe6fbbb6"
     )]
