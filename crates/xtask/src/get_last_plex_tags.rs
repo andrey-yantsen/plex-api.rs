@@ -70,8 +70,7 @@ impl flags::GetLastPlexTags {
         tags.sort();
 
         let mut previous_seen_version = SemverOrString::Str("");
-        let mut next_min_invalid_version =
-            semver::Version::new(u64::max_value(), u64::max_value(), u64::max_value());
+        let mut next_min_invalid_version = semver::Version::new(u64::MAX, u64::MAX, u64::MAX);
         next_min_invalid_version.pre = semver::Prerelease::new("build.0").unwrap();
 
         let mut ret: Vec<&str> = vec![];
