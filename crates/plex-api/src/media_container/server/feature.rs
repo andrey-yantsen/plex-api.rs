@@ -553,6 +553,11 @@ pub enum Feature {
     )]
     Radio,
     #[serde(
+        rename = "rate-limit-client-token",
+        alias = "3eb2789b-200c-4a15-91d2-dedfe560953c"
+    )]
+    RateLimitClientToken,
+    #[serde(
         rename = "require-plex-nonce",
         alias = "0cce52a7-0778-4781-9a07-712370fb6b8a"
     )]
