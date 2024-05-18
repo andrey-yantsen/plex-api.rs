@@ -556,7 +556,6 @@ pub enum Feature {
         rename = "rate-limit-client-token",
         alias = "3eb2789b-200c-4a15-91d2-dedfe560953c"
     )]
-    #[deprecated]
     RateLimitClientToken,
     #[serde(
         rename = "require-plex-nonce",
