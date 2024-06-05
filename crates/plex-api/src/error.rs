@@ -77,6 +77,8 @@ pub enum Error {
     TranscodeRefused,
     #[error("Only invites with status pending_received can be accepted.")]
     InviteAcceptingNotPendingReceived,
+    #[error("Error deserializing field: {0}.")]
+    FieldError(String),
     #[error("Unexpected error. Please create a bug report.")]
     UnexpectedError,
 }
