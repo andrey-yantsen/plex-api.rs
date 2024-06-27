@@ -107,6 +107,11 @@ pub enum Feature {
     )]
     CloudLivetv,
     #[serde(
+        rename = "cloudflare-turnstile-required",
+        alias = "b25b878c-4f60-4337-9f6b-2d97ef41d036"
+    )]
+    CloudflareTurnstileRequired,
+    #[serde(
         rename = "cloudsync",
         alias = "65152b75-13a9-408a-bd30-dbd23a259183"
     )]
@@ -372,6 +377,11 @@ pub enum Feature {
     )]
     KoreaConsent,
     #[serde(
+        rename = "le_isrg_root_x1",
+        alias = "af291e9e-813f-4467-8779-5d215abc3b5f"
+    )]
+    LeIsrgRootX1,
+    #[serde(
         rename = "lets_encrypt",
         alias = "8536058d-e1dd-4ae7-b30f-e8b059b7cc17"
     )]
@@ -561,6 +571,7 @@ pub enum Feature {
         rename = "require-plex-nonce",
         alias = "0cce52a7-0778-4781-9a07-712370fb6b8a"
     )]
+    #[deprecated]
     RequirePlexNonce,
     #[serde(
         rename = "retro-games",
