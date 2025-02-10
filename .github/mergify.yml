@@ -23,7 +23,6 @@ pull_request_rules:
     actions:
       queue:
         name: default
-        allow_merging_configuration_change: true
   - name: automatic merge tested PMS releases update
     conditions:
       - author=andrey-yantsen
@@ -34,7 +33,6 @@ pull_request_rules:
     actions:
       queue:
         name: default
-        allow_merging_configuration_change: true
   - name: queue tests for approved PRs
     conditions:
       - "#approved-reviews-by>=1"
