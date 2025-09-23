@@ -41,7 +41,6 @@ regex = "^1.7"
 
 [dev-dependencies]
 httpmock = "^0.7"
-async-std = { version = "^1.12", features = ["attributes"] }
 plex-api-test-helper = { path = "../plex-api-test-helper" }
 rstest = "^0.26.1"
 rpassword = "^7.2"

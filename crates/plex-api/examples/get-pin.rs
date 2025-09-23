@@ -1,7 +1,7 @@
 use plex_api::MyPlexBuilder;
 use rpassword::prompt_password;
 
-#[async_std::main]
+#[tokio::main]
 async fn main() {
     let token = prompt_password("Token: ").unwrap();
 
@@ -30,7 +30,7 @@ async fn main() {
                 println!("The pin has expired, please request a new one");
                 break;
             }
-            _ => async_std::task::sleep(std::time::Duration::from_secs(1)).await,
+            _ => tokio::time::sleep(std::time::Duration::from_secs(1)).await,
         }
     }
 }

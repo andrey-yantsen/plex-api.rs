@@ -1113,7 +1113,6 @@ mod offline {
 }
 
 mod online {
-    use async_std::task::sleep;
     use futures::Future;
     use plex_api::{
         media_container::server::library::{
@@ -1123,6 +1122,7 @@ mod online {
         Server,
     };
     use std::time::Duration;
+    use tokio::time::sleep;
 
     // Transcoding may crash the server in Linux container. It's unclear how or why,
     // but as a workaround, let's have an easy way of pausing a test while server's dead.

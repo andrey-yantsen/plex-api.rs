@@ -114,7 +114,7 @@ async fn process_photo_library(library: PhotoLibrary) {
     process_playlists(playlists).await;
 }
 
-#[async_std::main]
+#[tokio::main]
 async fn main() {
     let token = prompt_password("Token: ").unwrap();
     stdout().flush().unwrap();

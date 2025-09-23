@@ -1,7 +1,6 @@
 //! This script is used to investigate issue #541.
 //! It creates and cancels a lot of transcoding sessions, to crash the Plex server.
 
-use async_std::task::sleep;
 use plex_api::{
     device::DeviceConnection,
     library::{MediaItem, Movie},
@@ -10,6 +9,7 @@ use plex_api::{
     HttpClientBuilder, MyPlex, MyPlexBuilder, Server,
 };
 use std::{error::Error, time::Duration};
+use tokio::time::sleep;
 use tracing::{debug, error, info, trace};
 
 struct AppArgs {
@@ -164,7 +164,7 @@ async fn punish(server: &Server, args: AppArgs) -> Result<(), Box<dyn Error>> {
     }
 }
 
-#[async_std::main]
+#[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
     tracing_subscriber::fmt::init();
 
