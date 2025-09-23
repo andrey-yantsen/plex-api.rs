@@ -52,6 +52,11 @@ pub enum Feature {
     )]
     ArtistTv,
     #[serde(
+        rename = "auto-sub-offsets",
+        alias = "d4b4e08a-9201-4c99-9a52-8f2de8ff25cd"
+    )]
+    AutoSubOffsets,
+    #[serde(
         rename = "avod-ad-analysis",
         alias = "c987122a-a796-432f-af00-953821c127bb"
     )]
@@ -148,6 +153,81 @@ pub enum Feature {
     )]
     CommunityFriendsGroupNotifications,
     #[serde(
+        rename = "community-friendships-management",
+        alias = "7bb1ed71-a0a3-4362-aa08-7c3fa7241578"
+    )]
+    CommunityFriendshipsManagement,
+    #[serde(
+        rename = "community-new-user-onboarding",
+        alias = "c4704b28-4e26-460a-bf2e-2576d0c2cb77"
+    )]
+    CommunityNewUserOnboarding,
+    #[serde(
+        rename = "community-p1",
+        alias = "6272ad55-9fc0-43c6-8e1a-3f0df7a3630e"
+    )]
+    CommunityP1,
+    #[serde(
+        rename = "community-p2-r1",
+        alias = "31fcbe1f-0459-42cb-a15f-5084f62374d9"
+    )]
+    CommunityP2R1,
+    #[serde(
+        rename = "community-p2-r2",
+        alias = "06798ab7-4fa5-4416-9db3-f313c4292f01"
+    )]
+    CommunityP2R2,
+    #[serde(
+        rename = "community-p2-r3",
+        alias = "626004b8-a8b8-4fb1-9adc-8a6277f98597"
+    )]
+    CommunityP2R3,
+    #[serde(
+        rename = "community-p2-r4",
+        alias = "8f47a689-aa84-408f-bf6b-00015e9413e1"
+    )]
+    CommunityP2R4,
+    #[serde(
+        rename = "community-p2-r5",
+        alias = "36fdfb7c-f0c7-4da8-a167-4775e23cab7e"
+    )]
+    CommunityP2R5,
+    #[serde(
+        rename = "community-p2r5-onboarding",
+        alias = "92c11c50-efed-4eb1-b3fb-0b249fbfc845"
+    )]
+    CommunityP2r5Onboarding,
+    #[serde(
+        rename = "community-p3r1-profiles",
+        alias = "52a31c3c-c8d4-49c8-9f47-18158e5528d8"
+    )]
+    CommunityP3r1Profiles,
+    #[serde(
+        rename = "community-p3r1-reactions",
+        alias = "ad57040a-0b38-4862-bfcf-3fe116e9767b"
+    )]
+    CommunityP3r1Reactions,
+    #[serde(
+        rename = "community-p3r1-reviews",
+        alias = "e73456a8-8962-4151-8e57-3e61c78ed9d3"
+    )]
+    CommunityP3r1Reviews,
+    #[serde(
+        rename = "community-p3r1-reviews-comments",
+        alias = "47c8dede-c75d-4015-8631-8fe5665638c8"
+    )]
+    CommunityP3r1ReviewsComments,
+    #[serde(
+        rename = "community-p3r1-reviews-comments-final",
+        alias = "81f9b923-039c-4828-8455-14de4ffa2059"
+    )]
+    CommunityP3r1ReviewsCommentsFinal,
+    #[serde(
+        rename = "community-p3r1-reviews-creation",
+        alias = "6f4f6325-7d66-405f-96f7-b89b9685473e"
+    )]
+    CommunityP3r1ReviewsCreation,
+    #[serde(
         rename = "community-phase0",
         alias = "fc3e8322-5e6e-4f4a-9d71-728c6d5656bd"
     )]
@@ -239,10 +319,35 @@ pub enum Feature {
     )]
     DisableSharingFriendships,
     #[serde(
+        rename = "disco-director-cast-crew-updates",
+        alias = "d865f64a-ca06-472d-ae01-7a444aba6251"
+    )]
+    DiscoDirectorCastCrewUpdates,
+    #[serde(
+        rename = "disco-epg-airings-on-detail-pages",
+        alias = "e9cc7ec1-be5a-4727-af7b-0f107af1a07c"
+    )]
+    DiscoEpgAiringsOnDetailPages,
+    #[serde(
+        rename = "disco-native-ads-support",
+        alias = "61ace69e-8397-432e-9d46-352a00263a7a"
+    )]
+    DiscoNativeAdsSupport,
+    #[serde(
+        rename = "disco-reported-issues",
+        alias = "6225c337-cd26-4ff0-b864-6c6dd84c9e0d"
+    )]
+    DiscoReportedIssues,
+    #[serde(
         rename = "discover",
         alias = "4a933f24-464d-4a6b-b372-9e4497abd361"
     )]
     Discover,
+    #[serde(
+        rename = "discover-genre-browsing",
+        alias = "2131d3dc-56c8-45d0-acec-c4683fd9a027"
+    )]
+    DiscoverGenreBrowsing,
     #[serde(
         rename = "discover-managed-related-vod",
         alias = "cb0e4c75-b1cb-43e9-97ea-6b9bc66c717b"
@@ -451,6 +556,11 @@ pub enum Feature {
     )]
     Lyrics,
     #[serde(
+        rename = "media-access-split-2",
+        alias = "7ab197ee-1bd6-4335-8f55-db827f0110ba"
+    )]
+    MediaAccessSplit2,
+    #[serde(
         rename = "metadata",
         alias = "f8ea4f37-c554-476a-8852-1cbd2912f3f6"
     )]
@@ -502,6 +612,11 @@ pub enum Feature {
         alias = "3dd35df0-3e4a-4e74-9ba8-2baeda83a733"
     )]
     NonAnonymousAccount,
+    #[serde(
+        rename = "onboarding-community",
+        alias = "5dc82bc9-6038-4c21-b752-bc3454773eda"
+    )]
+    OnboardingCommunity,
     #[serde(
         rename = "onboarding-promo-modal",
         alias = "c0179bb9-b542-4afc-914e-63163f378485"
@@ -562,6 +677,16 @@ pub enum Feature {
     )]
     PhotosV6TvAlbums,
     #[serde(
+        rename = "playback-speed",
+        alias = "068f4adf-43e5-4cc6-b5a1-1243e1be4c53"
+    )]
+    PlaybackSpeed,
+    #[serde(
+        rename = "played_badges",
+        alias = "02da2909-ddfd-46be-9e42-65008a79fc05"
+    )]
+    PlayedBadges,
+    #[serde(
         rename = "plexpass_from_billing_context",
         alias = "007fb90d-2224-4d24-bd42-e87ffde13558"
     )]
@@ -571,6 +696,11 @@ pub enum Feature {
         alias = "9aea4ca5-2095-4619-9339-88c1e662fde6"
     )]
     PmsHealth,
+    #[serde(
+        rename = "PMS HEVC Encoding",
+        alias = "0e2acda2-d70d-4df6-96e0-f63cf264d217"
+    )]
+    PmsHevcEncoding,
     #[serde(
         rename = "podcasts",
         alias = "1841971c-6be5-40e6-a211-7e189d767a78"
@@ -616,6 +746,11 @@ pub enum Feature {
         alias = "76ddd91e-8321-4916-94b6-ded8e3727a64"
     )]
     RemoteWatchPass,
+    #[serde(
+        rename = "remote-watch-pass-iap",
+        alias = "c9adefb7-30ea-4004-977d-ad2d1bc0a8ae"
+    )]
+    RemoteWatchPassIap,
     #[serde(
         rename = "require-plex-nonce",
         alias = "0cce52a7-0778-4781-9a07-712370fb6b8a"
@@ -770,6 +905,26 @@ pub enum Feature {
     )]
     TunerSharing,
     #[serde(
+        rename = "tvod",
+        alias = "9b5a4bea-3bbe-45d2-b226-00a6ef4d8e65"
+    )]
+    Tvod,
+    #[serde(
+        rename = "tvod_playback",
+        alias = "5d80b92d-4ecf-4b0b-935f-5efc907bb2c1"
+    )]
+    TvodPlayback,
+    #[serde(
+        rename = "tvod-rentals",
+        alias = "362c5ba7-41e8-400d-8354-18d53868e2d3"
+    )]
+    TvodRentals,
+    #[serde(
+        rename = "tvod-wtw",
+        alias = "e25d0e25-109e-4d6d-9a54-db0931af31c3"
+    )]
+    TvodWtw,
+    #[serde(
         rename = "two-factor-authentication",
         alias = "06d14b9e-2af8-4c2b-a4a1-ea9d5c515824"
     )]
@@ -799,6 +954,11 @@ pub enum Feature {
         alias = "cce9af5d-7b44-4119-a6b1-108fd0db725c"
     )]
     UniversalSearchLiveTv,
+    #[serde(
+        rename = "universal-search-new-quick-search",
+        alias = "b6b68f84-5127-4dc9-8a7e-3a04419b5cd4"
+    )]
+    UniversalSearchNewQuickSearch,
     #[serde(
         rename = "universal-watchlist",
         alias = "d9528436-ee7c-42e3-ab7b-814f85ef74b4"
@@ -870,6 +1030,11 @@ pub enum Feature {
         alias = "f83450e2-759a-4de4-8b31-e4a163896d43"
     )]
     WatchTogetherInvite,
+    #[serde(
+        rename = "watched-badges-v3",
+        alias = "236de47b-a757-4ed7-9003-507b296057b5"
+    )]
+    WatchedBadgesV3,
     #[serde(
         rename = "watchlist",
         alias = "f0c452ce-11e7-465f-be04-5fb0bf4bec48"
