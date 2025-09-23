@@ -154,12 +154,12 @@ impl<'a> Ord for SemverOrString<'a> {
             Ordering::Greater
         } else if let SemverOrString::Semver(v) = self {
             if let SemverOrString::Semver(v2) = other {
-                return v.cmp(v2).reverse();
+                v.cmp(v2).reverse()
             } else {
-                return Ordering::Less;
+                Ordering::Less
             }
         } else {
-            return Ordering::Greater;
+            Ordering::Greater
         }
     }
 }
