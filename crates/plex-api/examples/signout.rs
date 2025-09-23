@@ -1,7 +1,7 @@
 use plex_api::MyPlexBuilder;
 use rpassword::prompt_password;
 
-#[async_std::main]
+#[tokio::main]
 async fn main() {
     let token = prompt_password("Token: ").unwrap();
 

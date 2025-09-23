@@ -85,11 +85,11 @@ mod online {
 
         // Server responds with 400 Bad Request if the next request is
         // sent too soon after the PUT, so let's add some retries
-        async_std::task::sleep(Duration::from_millis(500)).await;
+        tokio::time::sleep(Duration::from_millis(500)).await;
         let mut prefs = server.preferences().await;
 
         for _ in 0..10 {
-            async_std::task::sleep(Duration::from_millis(500)).await;
+            tokio::time::sleep(Duration::from_millis(500)).await;
             prefs = server.preferences().await;
 
             if prefs.is_ok() {

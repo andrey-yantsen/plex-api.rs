@@ -2,7 +2,7 @@ use plex_api::{device::Device, MyPlexBuilder};
 use rpassword::prompt_password;
 use std::io::{stdin, stdout, BufRead, Write};
 
-#[async_std::main]
+#[tokio::main]
 async fn main() {
     let token = prompt_password("Token: ").unwrap();
     stdout().flush().unwrap();

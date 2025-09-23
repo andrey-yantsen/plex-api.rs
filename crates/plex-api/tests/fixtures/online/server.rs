@@ -1,8 +1,8 @@
 use super::client::{client_anonymous, client_authenticated, platform};
-use async_std::task::sleep;
 use plex_api::{HttpClient, Server};
 use rstest::fixture;
 use std::time::Duration;
+use tokio::time::sleep;
 
 async fn get_server(client: HttpClient) -> Server {
     let url = std::env::var("PLEX_SERVER_URL").unwrap_or_else(|_| "".to_owned());
