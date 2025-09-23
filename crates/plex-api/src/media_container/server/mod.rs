@@ -4,6 +4,7 @@ pub mod library;
 pub use self::feature::Feature;
 use self::library::ContentDirectory;
 use crate::media_container::helpers::StringWithSeparatorOrList;
+use semver::Version;
 use serde::Deserialize;
 use serde_plain::derive_fromstr_from_deserialize;
 use serde_with::{formats::CommaSeparator, serde_as, StringWithSeparator};
@@ -187,6 +188,7 @@ pub struct Server {
     pub allow_sharing: bool,
     pub allow_sync: bool,
     pub allow_tuners: bool,
+    pub api_version: Option<Version>,
     pub background_processing: bool,
     pub certificate: Option<bool>,
     pub companion_proxy: bool,
