@@ -1,5 +1,4 @@
 use crate::{url::MYPLEX_ANNOUNCEMENTS, HttpClient, Result};
-use http::Uri;
 use serde::Deserialize;
 use time::OffsetDateTime;
 
@@ -30,8 +29,8 @@ pub struct Announcement {
     #[serde(rename = "@plainContent")]
     pub plain_content: String,
 
-    #[serde(with = "http_serde::uri", rename = "@imageUrl")]
-    pub image_url: Uri,
+    #[serde(rename = "@imageUrl")]
+    pub image_url: String, // Plex occasionally serve invalid urls
     #[serde(rename = "@style")]
     pub style: AnnouncementStyle,
     #[serde(rename = "@url")]

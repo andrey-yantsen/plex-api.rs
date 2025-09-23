@@ -441,6 +441,8 @@ pub struct Media {
     pub optimized_for_streaming: Option<bool>,
     pub display_offset: Option<u64>,
     pub premium: Option<bool>,
+    #[serde(default, deserialize_with = "optional_boolish")]
+    pub has_voice_activity: Option<bool>,
 }
 
 #[derive(Debug, Deserialize, Clone)]
