@@ -44,9 +44,20 @@ impl Query {
         }
     }
 
+    fn append(mut self, other: HashMap<String, String>) -> Self {
+        self.params.extend(other);
+        self
+    }
+
     fn param<N: Into<String>, V: Into<String>>(mut self, name: N, value: V) -> Self {
         self.params.insert(name.into(), value.into());
         self
+    }
+}
+
+impl From<Query> for HashMap<String, String> {
+    fn from(query: Query) -> Self {
+        query.params
     }
 }
 

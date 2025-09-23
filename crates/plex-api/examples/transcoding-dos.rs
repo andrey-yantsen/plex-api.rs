@@ -3,7 +3,7 @@
 
 use plex_api::{
     device::DeviceConnection,
-    library::{MediaItem, Movie},
+    library::{MediaItem, MediaItemWithTranscoding, Movie},
     media_container::server::library::{AudioCodec, VideoCodec},
     transcode::{TranscodeSession, VideoTranscodeOptions},
     HttpClientBuilder, MyPlex, MyPlexBuilder, Server,
