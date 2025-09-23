@@ -10,7 +10,7 @@
 //!
 //! This feature should be considered quite experimental, lots of the API calls
 //! are derived from inspection and guesswork.
-use std::fmt::Display;
+use std::{collections::HashMap, fmt::Display};
 
 use futures::AsyncWrite;
 use http::StatusCode;
@@ -25,16 +25,15 @@ use crate::{
         server::{
             library::{
                 AudioCodec, AudioStream, ContainerFormat, Decision, Media as MediaMetadata,
-                Metadata, Protocol, Stream, VideoCodec, VideoStream,
+                Metadata, Protocol, Stream, SubtitleCodec, VideoCodec, VideoStream,
             },
             Feature,
         },
         MediaContainer, MediaContainerWrapper,
     },
-    server::library::{MediaItemWithTranscoding, Part},
     url::{
         SERVER_TRANSCODE_ART, SERVER_TRANSCODE_DECISION, SERVER_TRANSCODE_DOWNLOAD,
-        SERVER_TRANSCODE_SESSIONS,
+        SERVER_TRANSCODE_SESSIONS, SERVER_TRANSCODE_STOP,
     },
     Error, HttpClient, Result,
 };
@@ -96,7 +95,7 @@ pub struct TranscodeSessionStats {
     pub size: i64,
     pub speed: Option<f32>,
     pub error: bool,
-    pub duration: Option<u32>,
+    pub duration: Option<u64>,
     // Appears to be the number of seconds that the server thinks remain.
     pub remaining: Option<u32>,
     pub context: Context,
@@ -300,7 +299,7 @@ pub trait TranscodeOptions {
         context: Context,
         protocol: Protocol,
         container: Option<ContainerFormat>,
-    ) -> String;
+    ) -> HashMap<String, String>;
 }
 
 /// Defines the media formats suitable for transcoding video. The server uses
@@ -339,6 +338,8 @@ pub struct VideoTranscodeOptions {
     pub audio_codecs: Vec<AudioCodec>,
     /// Limitations to constraint audio transcoding options.
     pub audio_limitations: Vec<Limitation<AudioCodec, AudioSetting>>,
+    /// Supported subtitle codecs.
+    pub subtitle_codecs: Vec<SubtitleCodec>,
 }
 
 impl Default for VideoTranscodeOptions {
@@ -354,6 +355,7 @@ impl Default for VideoTranscodeOptions {
             video_limitations: Default::default(),
             audio_codecs: vec![AudioCodec::Aac, AudioCodec::Mp3],
             audio_limitations: Default::default(),
+            subtitle_codecs: Default::default(),
         }
     }
 }
@@ -364,11 +366,12 @@ impl TranscodeOptions for VideoTranscodeOptions {
         context: Context,
         protocol: Protocol,
         container: Option<ContainerFormat>,
-    ) -> String {
+    ) -> HashMap<String, String> {
         let mut query = Query::new()
             .param("maxVideoBitrate", self.bitrate.to_string())
             .param("videoBitrate", self.bitrate.to_string())
-            .param("videoResolution", format!("{}x{}", self.width, self.height));
+            .param("videoResolution", format!("{}x{}", self.width, self.height))
+            .param("transcodeType", "video");
 
         if self.burn_subtitles {
             query = query
@@ -383,14 +386,21 @@ impl TranscodeOptions for VideoTranscodeOptions {
         let video_codecs = self
             .video_codecs
             .iter()
-            .map(|c| c.to_string())
+            .map(ToString::to_string)
             .collect::<Vec<String>>()
             .join(",");
 
         let audio_codecs = self
             .audio_codecs
             .iter()
-            .map(|c| c.to_string())
+            .map(ToString::to_string)
+            .collect::<Vec<String>>()
+            .join(",");
+
+        let subtitle_codecs = self
+            .subtitle_codecs
+            .iter()
+            .map(ToString::to_string)
             .collect::<Vec<String>>()
             .join(",");
 
@@ -402,48 +412,39 @@ impl TranscodeOptions for VideoTranscodeOptions {
 
         let mut profile = Vec::new();
 
-        for container in containers {
-            profile.push(
-                ProfileSetting::new("add-transcode-target")
-                    .param("type", "videoProfile")
-                    .param("context", context.to_string())
-                    .param("protocol", protocol.to_string())
-                    .param("container", &container)
-                    .param("videoCodec", &video_codecs)
-                    .param("audioCodec", &audio_codecs)
-                    .to_string(),
-            );
+        let mut is_first = true;
+        for container in &containers {
+            let mut setting = ProfileSetting::new("add-transcode-target")
+                .param("type", "videoProfile")
+                .param("context", context.to_string())
+                .param("protocol", protocol.to_string())
+                .param("container", container)
+                .param("videoCodec", &video_codecs)
+                .param("audioCodec", &audio_codecs)
+                .param("subtitleCodec", &subtitle_codecs);
 
-            // Allow potentially direct playing for offline transcodes.
-            if context == Context::Static {
-                profile.push(
-                    ProfileSetting::new("add-direct-play-profile")
-                        .param("type", "videoProfile")
-                        .param("container", container)
-                        .param("videoCodec", &video_codecs)
-                        .param("audioCodec", &audio_codecs)
-                        .to_string(),
-                );
+            if is_first {
+                is_first = false;
+                // Instructs the server to remove any pre-existing transcode targets from the device profile.
+                setting = setting.param("replace", "true");
             }
+
+            profile.push(setting.to_string());
         }
 
-        profile.extend(self.video_codecs.iter().map(|codec| {
-            ProfileSetting::new("append-transcode-target-codec")
-                .param("type", "videoProfile")
-                .param("context", context.to_string())
-                .param("protocol", protocol.to_string())
-                .param("videoCodec", codec.to_string())
-                .to_string()
-        }));
-
-        profile.extend(self.audio_codecs.iter().map(|codec| {
-            ProfileSetting::new("add-transcode-target-audio-codec")
-                .param("type", "videoProfile")
-                .param("context", context.to_string())
-                .param("protocol", protocol.to_string())
-                .param("audioCodec", codec.to_string())
-                .to_string()
-        }));
+        // Allow potentially direct playing for offline transcodes.
+        if context == Context::Static {
+            profile.push(
+                ProfileSetting::new("add-direct-play-profile")
+                    .param("type", "videoProfile")
+                    .param("container", containers.join(","))
+                    .param("videoCodec", &video_codecs)
+                    .param("audioCodec", &audio_codecs)
+                    .param("subtitleCodec", &subtitle_codecs)
+                    .param("replace", "true")
+                    .to_string(),
+            );
+        }
 
         profile.extend(
             self.video_limitations
@@ -458,7 +459,7 @@ impl TranscodeOptions for VideoTranscodeOptions {
 
         query
             .param("X-Plex-Client-Profile-Extra", profile.join("+"))
-            .to_string()
+            .into()
     }
 }
 
@@ -505,8 +506,10 @@ impl TranscodeOptions for MusicTranscodeOptions {
         context: Context,
         protocol: Protocol,
         container: Option<ContainerFormat>,
-    ) -> String {
-        let query = Query::new().param("musicBitrate", self.bitrate.to_string());
+    ) -> HashMap<String, String> {
+        let query = Query::new()
+            .param("musicBitrate", self.bitrate.to_string())
+            .param("transcodeType", "music");
 
         let audio_codecs = self
             .codecs
@@ -523,27 +526,33 @@ impl TranscodeOptions for MusicTranscodeOptions {
 
         let mut profile = Vec::new();
 
-        for container in containers {
+        let mut is_first = true;
+        for container in &containers {
+            let mut setting = ProfileSetting::new("add-transcode-target")
+                .param("type", "musicProfile")
+                .param("context", context.to_string())
+                .param("protocol", protocol.to_string())
+                .param("container", container)
+                .param("audioCodec", &audio_codecs);
+
+            if is_first {
+                is_first = false;
+                // Instructs the server to remove any pre-existing transcode targets from the device profile.
+                setting = setting.param("replace", "true");
+            }
+
+            profile.push(setting.to_string());
+        }
+
+        // Allow potentially direct playing for offline transcodes.
+        if context == Context::Static {
             profile.push(
-                ProfileSetting::new("add-transcode-target")
+                ProfileSetting::new("add-direct-play-profile")
                     .param("type", "musicProfile")
-                    .param("context", context.to_string())
-                    .param("protocol", protocol.to_string())
-                    .param("container", &container)
+                    .param("container", containers.join(","))
                     .param("audioCodec", &audio_codecs)
                     .to_string(),
             );
-
-            // Allow potentially direct playing for offline transcodes.
-            if context == Context::Static {
-                profile.push(
-                    ProfileSetting::new("add-direct-play-profile")
-                        .param("type", "musicProfile")
-                        .param("container", container)
-                        .param("audioCodec", &audio_codecs)
-                        .to_string(),
-                );
-            }
         }
 
         profile.extend(
@@ -554,7 +563,7 @@ impl TranscodeOptions for MusicTranscodeOptions {
 
         query
             .param("X-Plex-Client-Profile-Extra", profile.join("+"))
-            .to_string()
+            .into()
     }
 }
 
@@ -571,14 +580,14 @@ fn bs(val: bool) -> String {
     }
 }
 
-fn get_transcode_params<M: MediaItemWithTranscoding>(
+fn get_transcode_params<O: TranscodeOptions>(
     id: &str,
     context: Context,
     protocol: Protocol,
-    item_metadata: &Metadata,
-    part: &Part<M>,
-    options: M::Options,
-) -> Result<String> {
+    media_index: Option<usize>,
+    part_index: Option<usize>,
+    options: O,
+) -> Result<Query> {
     let container = match (context, protocol) {
         (Context::Static, _) => None,
         (_, Protocol::Dash) => Some(ContainerFormat::Mp4),
@@ -587,14 +596,10 @@ fn get_transcode_params<M: MediaItemWithTranscoding>(
     };
 
     let mut query = Query::new()
+        // The API docs claim this should be sent as `transcodeSessionId` but
+        // that doesn't seem to work and isn't what other clients do.
         .param("session", id)
-        // It's not clear what this parameter is for. Mobile clients send a
-        // hyphenated UUID that differes from the session id
-        // above but using the same id seems to work.
-        .param("X-Plex-Session-Identifier", id)
-        .param("path", item_metadata.key.clone())
-        .param("mediaIndex", part.media_index.to_string())
-        .param("partIndex", part.part_index.to_string())
+        .param("transcodeSessionId", id)
         // Setting this to true tells the server that we're willing to directly
         // play the item if needed. That probably makes sense for downloads but
         // not streaming (where we need the DASH/HLS protocol).
@@ -608,25 +613,29 @@ fn get_transcode_params<M: MediaItemWithTranscoding>(
         .param("location", "lan")
         .param("fastSeek", bs(true));
 
+    if let Some(index) = media_index {
+        query = query.param("mediaIndex", index.to_string());
+    } else {
+        query = query.param("mediaIndex", "-1");
+    }
+
+    if let Some(index) = part_index {
+        query = query.param("partIndex", index.to_string());
+    } else {
+        query = query.param("partIndex", "-1");
+    }
+
     if context == Context::Static {
         query = query.param("offlineTranscode", bs(true));
     }
 
-    let query = query.to_string();
-
-    let params = options.transcode_parameters(context, protocol, container);
-
-    Ok(format!("{query}&{params}"))
+    Ok(query.append(options.transcode_parameters(context, protocol, container)))
 }
 
-async fn transcode_decision<'a, M: MediaItemWithTranscoding>(
-    part: &Part<'a, M>,
-    params: &str,
-) -> Result<MediaMetadata> {
+async fn transcode_decision(client: &HttpClient, params: &Query) -> Result<MediaMetadata> {
     let path = format!("{SERVER_TRANSCODE_DECISION}?{params}");
 
-    let mut response = part
-        .client
+    let mut response = client
         .get(path)
         .header("Accept", "application/json")
         .send()
@@ -672,18 +681,28 @@ async fn transcode_decision<'a, M: MediaItemWithTranscoding>(
         })
 }
 
-pub(super) async fn create_transcode_session<'a, M: MediaItemWithTranscoding>(
-    item_metadata: &'a Metadata,
-    part: &Part<'a, M>,
+pub(super) async fn create_transcode_session<O: TranscodeOptions>(
+    client: &HttpClient,
+    item_metadata: &Metadata,
     context: Context,
     target_protocol: Protocol,
-    options: M::Options,
+    media_index: Option<usize>,
+    part_index: Option<usize>,
+    options: O,
 ) -> Result<TranscodeSession> {
     let id = session_id();
 
-    let params = get_transcode_params(&id, context, target_protocol, item_metadata, part, options)?;
+    let params = get_transcode_params(
+        &id,
+        context,
+        target_protocol,
+        media_index,
+        part_index,
+        options,
+    )?
+    .param("path", item_metadata.key.clone());
 
-    let media_data = transcode_decision(part, &params).await?;
+    let media_data = transcode_decision(client, &params).await?;
 
     if target_protocol != media_data.protocol.unwrap_or(Protocol::Http) {
         return Err(error::Error::TranscodeError(
@@ -693,7 +712,7 @@ pub(super) async fn create_transcode_session<'a, M: MediaItemWithTranscoding>(
 
     TranscodeSession::from_metadata(
         id,
-        part.client.clone(),
+        client.clone(),
         media_data,
         context == Context::Static,
         params,
@@ -746,7 +765,7 @@ pub struct TranscodeSession {
     container: ContainerFormat,
     video_transcode: Option<(Decision, VideoCodec)>,
     audio_transcode: Option<(Decision, AudioCodec)>,
-    params: String,
+    params: Query,
 }
 
 impl TranscodeSession {
@@ -755,7 +774,7 @@ impl TranscodeSession {
             client,
             // Once the transcode session is started we only need the session ID
             // to download.
-            params: format!("session={}", stats.key),
+            params: Query::new().param("session", &stats.key),
             offline: stats.offline_transcode,
             container: stats.container,
             protocol: stats.protocol,
@@ -770,7 +789,7 @@ impl TranscodeSession {
         client: HttpClient,
         media_data: MediaMetadata,
         offline: bool,
-        params: String,
+        params: Query,
     ) -> Result<Self> {
         let part_data = media_data
             .parts
@@ -886,7 +905,11 @@ impl TranscodeSession {
             (_, container) => container.to_string(),
         };
 
-        let path = format!("{SERVER_TRANSCODE_DOWNLOAD}/start.{}?{}", ext, self.params);
+        let path = format!(
+            "{}?{}",
+            SERVER_TRANSCODE_DOWNLOAD.replace("{extension}", &ext),
+            self.params
+        );
 
         let mut builder = self.client.get(path);
         if self.offline {
@@ -935,10 +958,7 @@ impl TranscodeSession {
     pub async fn cancel(self) -> Result<()> {
         let mut response = self
             .client
-            .get(format!(
-                "/video/:/transcode/universal/stop?session={}",
-                self.id
-            ))
+            .get(format!("{SERVER_TRANSCODE_STOP}?session={}", self.id))
             .send()
             .await?;
 

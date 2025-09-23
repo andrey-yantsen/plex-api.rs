@@ -1,4 +1,4 @@
-use std::{marker::PhantomData, ops::RangeBounds};
+use std::{future::Future, marker::PhantomData, ops::RangeBounds};
 
 use enum_dispatch::enum_dispatch;
 use futures::AsyncWrite;
@@ -177,9 +177,49 @@ impl<'a, M: MediaItem> Media<'a, M> {
             .collect()
     }
 
+    pub fn duration(&self) -> Option<u64> {
+        self.media.duration
+    }
+
     /// The internal metadata for the media.
     pub fn metadata(&self) -> &MediaMetadata {
         self.media
+    }
+}
+
+impl<'a, M: MediaItemWithTranscoding + MediaItem + Sync> MediaItemWithTranscoding for Media<'a, M> {
+    type Options = M::Options;
+
+    #[tracing::instrument(level = "debug", skip_all)]
+    async fn create_download_session(&self, options: M::Options) -> Result<TranscodeSession> {
+        create_transcode_session(
+            self.client,
+            self.parent_metadata,
+            Context::Static,
+            Protocol::Http,
+            Some(self.media_index),
+            None,
+            options,
+        )
+        .await
+    }
+
+    #[tracing::instrument(level = "debug", skip_all)]
+    async fn create_streaming_session(
+        &self,
+        protocol: Protocol,
+        options: M::Options,
+    ) -> Result<TranscodeSession> {
+        create_transcode_session(
+            self.client,
+            self.parent_metadata,
+            Context::Streaming,
+            protocol,
+            Some(self.media_index),
+            None,
+            options,
+        )
+        .await
     }
 }
 
@@ -199,6 +239,10 @@ impl<'a, M: MediaItem> Part<'a, M> {
     #[allow(clippy::len_without_is_empty)]
     pub fn len(&self) -> Option<u64> {
         self.part.size
+    }
+
+    pub fn duration(&self) -> Option<u64> {
+        self.part.duration
     }
 
     /// Downloads the original media file for this part writing the data into
@@ -249,40 +293,36 @@ impl<'a, M: MediaItem> Part<'a, M> {
     }
 }
 
-impl<'a, M: MediaItemWithTranscoding> Part<'a, M> {
-    /// Starts an offline transcode using the provided options.
-    ///
-    /// The server may refuse to transcode if the options suggest that the
-    /// original media file can be played back directly.
-    ///
-    /// Can't be called on media other than Movie, Episode or Track.
+impl<'a, M: MediaItemWithTranscoding + MediaItem + Sync> MediaItemWithTranscoding for Part<'a, M> {
+    type Options = M::Options;
+
     #[tracing::instrument(level = "debug", skip_all)]
-    pub async fn create_download_session(&self, options: M::Options) -> Result<TranscodeSession> {
+    async fn create_download_session(&self, options: M::Options) -> Result<TranscodeSession> {
         create_transcode_session(
+            self.client,
             self.parent_metadata,
-            self,
             Context::Static,
             Protocol::Http,
+            Some(self.media_index),
+            Some(self.part_index),
             options,
         )
         .await
     }
 
-    /// Starts a streaming transcode using of the given media part using the
-    /// streaming protocol and provided options.
-    ///
-    /// Can't be called on media other than Movie, Episode or Track.
     #[tracing::instrument(level = "debug", skip_all)]
-    pub async fn create_streaming_session(
+    async fn create_streaming_session(
         &self,
         protocol: Protocol,
         options: M::Options,
     ) -> Result<TranscodeSession> {
         create_transcode_session(
+            self.client,
             self.parent_metadata,
-            self,
             Context::Streaming,
             protocol,
+            Some(self.media_index),
+            Some(self.part_index),
             options,
         )
         .await
@@ -314,8 +354,29 @@ pub trait MediaItem: MetadataItem + Sized {
     }
 }
 
-pub trait MediaItemWithTranscoding: MediaItem {
-    type Options: TranscodeOptions;
+pub trait MediaItemWithTranscoding {
+    type Options: TranscodeOptions + Send;
+
+    /// Starts an offline transcode using the provided options.
+    ///
+    /// The server may refuse to transcode if the options suggest that the
+    /// original media file can be played back directly.
+    ///
+    /// Can't be called on media other than Movie, Episode or Track.
+    fn create_download_session(
+        &self,
+        options: Self::Options,
+    ) -> impl Future<Output = Result<TranscodeSession>> + Send;
+
+    /// Starts a streaming transcode using of the given media part using the
+    /// streaming protocol and provided options.
+    ///
+    /// Can't be called on media other than Movie, Episode or Track.
+    fn create_streaming_session(
+        &self,
+        protocol: Protocol,
+        options: Self::Options,
+    ) -> impl Future<Output = Result<TranscodeSession>> + Send;
 }
 
 /// A video that can be included in a video playlist.
@@ -339,6 +400,38 @@ impl FromMetadata for Video {
 impl MediaItem for Video {}
 impl MediaItemWithTranscoding for Video {
     type Options = VideoTranscodeOptions;
+
+    #[tracing::instrument(level = "debug", skip_all)]
+    async fn create_download_session(&self, options: Self::Options) -> Result<TranscodeSession> {
+        create_transcode_session(
+            self.client(),
+            self.metadata(),
+            Context::Static,
+            Protocol::Http,
+            None,
+            None,
+            options,
+        )
+        .await
+    }
+
+    #[tracing::instrument(level = "debug", skip_all)]
+    async fn create_streaming_session(
+        &self,
+        protocol: Protocol,
+        options: Self::Options,
+    ) -> Result<TranscodeSession> {
+        create_transcode_session(
+            self.client(),
+            self.metadata(),
+            Context::Streaming,
+            protocol,
+            None,
+            None,
+            options,
+        )
+        .await
+    }
 }
 
 #[derive(Debug, Clone)]
@@ -411,6 +504,38 @@ derive_metadata_item!(Movie);
 impl MediaItem for Movie {}
 impl MediaItemWithTranscoding for Movie {
     type Options = VideoTranscodeOptions;
+
+    #[tracing::instrument(level = "debug", skip_all)]
+    async fn create_download_session(&self, options: Self::Options) -> Result<TranscodeSession> {
+        create_transcode_session(
+            self.client(),
+            self.metadata(),
+            Context::Static,
+            Protocol::Http,
+            None,
+            None,
+            options,
+        )
+        .await
+    }
+
+    #[tracing::instrument(level = "debug", skip_all)]
+    async fn create_streaming_session(
+        &self,
+        protocol: Protocol,
+        options: Self::Options,
+    ) -> Result<TranscodeSession> {
+        create_transcode_session(
+            self.client(),
+            self.metadata(),
+            Context::Streaming,
+            protocol,
+            None,
+            None,
+            options,
+        )
+        .await
+    }
 }
 
 #[derive(Debug, Clone)]
@@ -476,6 +601,38 @@ derive_metadata_item!(Episode);
 impl MediaItem for Episode {}
 impl MediaItemWithTranscoding for Episode {
     type Options = VideoTranscodeOptions;
+
+    #[tracing::instrument(level = "debug", skip_all)]
+    async fn create_download_session(&self, options: Self::Options) -> Result<TranscodeSession> {
+        create_transcode_session(
+            self.client(),
+            self.metadata(),
+            Context::Static,
+            Protocol::Http,
+            None,
+            None,
+            options,
+        )
+        .await
+    }
+
+    #[tracing::instrument(level = "debug", skip_all)]
+    async fn create_streaming_session(
+        &self,
+        protocol: Protocol,
+        options: Self::Options,
+    ) -> Result<TranscodeSession> {
+        create_transcode_session(
+            self.client(),
+            self.metadata(),
+            Context::Streaming,
+            protocol,
+            None,
+            None,
+            options,
+        )
+        .await
+    }
 }
 
 impl Episode {
@@ -565,6 +722,38 @@ derive_metadata_item!(Track);
 impl MediaItem for Track {}
 impl MediaItemWithTranscoding for Track {
     type Options = MusicTranscodeOptions;
+
+    #[tracing::instrument(level = "debug", skip_all)]
+    async fn create_download_session(&self, options: Self::Options) -> Result<TranscodeSession> {
+        create_transcode_session(
+            self.client(),
+            self.metadata(),
+            Context::Static,
+            Protocol::Http,
+            None,
+            None,
+            options,
+        )
+        .await
+    }
+
+    #[tracing::instrument(level = "debug", skip_all)]
+    async fn create_streaming_session(
+        &self,
+        protocol: Protocol,
+        options: Self::Options,
+    ) -> Result<TranscodeSession> {
+        create_transcode_session(
+            self.client(),
+            self.metadata(),
+            Context::Streaming,
+            protocol,
+            None,
+            None,
+            options,
+        )
+        .await
+    }
 }
 
 impl Track {

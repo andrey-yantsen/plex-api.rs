@@ -228,7 +228,8 @@ mod offline {
     mod movie {
         use super::*;
         use plex_api::{
-            library::{MediaItem, Movie},
+            library::{MediaItem, MediaItemWithTranscoding, Movie},
+            media_container::server::library::SubtitleCodec,
             transcode::{AudioSetting, Constraint, VideoSetting, VideoTranscodeOptions},
         };
 
@@ -259,6 +260,8 @@ mod offline {
                 when.method(GET)
                     .path("/video/:/transcode/universal/decision")
                     .query_param_exists("session")
+                    .query_param_exists("transcodeSessionId")
+                    .query_param("transcodeType", "video")
                     .query_param("path", "/library/metadata/159637")
                     .query_param("mediaIndex", "0")
                     .query_param("partIndex", "0")
@@ -272,14 +275,13 @@ mod offline {
                     .query_param("subtitles", "burn")
                     .query_param("protocol", "dash")
                     .query_param_exists("X-Plex-Client-Profile-Extra")
-                    .query_param_exists("X-Plex-Session-Identifier")
                     .matches(|req| {
                         let settings = expand_profile(req);
 
                         assert_setting_count(&settings, "add-transcode-target", 1);
                         assert_setting_count(&settings, "add-direct-play-profile", 0);
-                        assert_setting_count(&settings, "append-transcode-target-codec", 1);
-                        assert_setting_count(&settings, "add-transcode-target-audio-codec", 2);
+                        assert_setting_count(&settings, "append-transcode-target-codec", 0);
+                        assert_setting_count(&settings, "add-transcode-target-audio-codec", 0);
                         assert_setting_count(&settings, "add-limitation", 0);
 
                         assert_setting(
@@ -292,39 +294,8 @@ mod offline {
                                 ("container", "mp4"),
                                 ("videoCodec", "h264"),
                                 ("audioCodec", "aac,mp3"),
-                            ],
-                        );
-
-                        assert_setting(
-                            &settings,
-                            "append-transcode-target-codec",
-                            &[
-                                ("type", "videoProfile"),
-                                ("context", "streaming"),
-                                ("protocol", "dash"),
-                                ("videoCodec", "h264"),
-                            ],
-                        );
-
-                        assert_setting(
-                            &settings,
-                            "add-transcode-target-audio-codec",
-                            &[
-                                ("type", "videoProfile"),
-                                ("context", "streaming"),
-                                ("protocol", "dash"),
-                                ("audioCodec", "aac"),
-                            ],
-                        );
-
-                        assert_setting(
-                            &settings,
-                            "add-transcode-target-audio-codec",
-                            &[
-                                ("type", "videoProfile"),
-                                ("context", "streaming"),
-                                ("protocol", "dash"),
-                                ("audioCodec", "mp3"),
+                                ("subtitleCodec", ""),
+                                ("replace", "true"),
                             ],
                         );
 
@@ -359,6 +330,8 @@ mod offline {
                 when.method(GET)
                     .path("/video/:/transcode/universal/decision")
                     .query_param_exists("session")
+                    .query_param_exists("transcodeSessionId")
+                    .query_param("transcodeType", "video")
                     .query_param("path", "/library/metadata/159637")
                     .query_param("mediaIndex", "1")
                     .query_param("partIndex", "0")
@@ -371,14 +344,13 @@ mod offline {
                     .query_param("videoResolution", "1920x1080")
                     .query_param("protocol", "hls")
                     .query_param_exists("X-Plex-Client-Profile-Extra")
-                    .query_param_exists("X-Plex-Session-Identifier")
                     .matches(|req| {
                         let settings = expand_profile(req);
 
                         assert_setting_count(&settings, "add-transcode-target", 1);
                         assert_setting_count(&settings, "add-direct-play-profile", 0);
-                        assert_setting_count(&settings, "append-transcode-target-codec", 2);
-                        assert_setting_count(&settings, "add-transcode-target-audio-codec", 1);
+                        assert_setting_count(&settings, "append-transcode-target-codec", 0);
+                        assert_setting_count(&settings, "add-transcode-target-audio-codec", 0);
                         assert_setting_count(&settings, "add-limitation", 3);
 
                         assert_setting(
@@ -391,39 +363,8 @@ mod offline {
                                 ("container", "mpegts"),
                                 ("videoCodec", "vp9,vp8"),
                                 ("audioCodec", "eac3"),
-                            ],
-                        );
-
-                        assert_setting(
-                            &settings,
-                            "append-transcode-target-codec",
-                            &[
-                                ("type", "videoProfile"),
-                                ("context", "streaming"),
-                                ("protocol", "hls"),
-                                ("videoCodec", "vp9"),
-                            ],
-                        );
-
-                        assert_setting(
-                            &settings,
-                            "append-transcode-target-codec",
-                            &[
-                                ("type", "videoProfile"),
-                                ("context", "streaming"),
-                                ("protocol", "hls"),
-                                ("videoCodec", "vp8"),
-                            ],
-                        );
-
-                        assert_setting(
-                            &settings,
-                            "add-transcode-target-audio-codec",
-                            &[
-                                ("type", "videoProfile"),
-                                ("context", "streaming"),
-                                ("protocol", "hls"),
-                                ("audioCodec", "eac3"),
+                                ("subtitleCodec", "ass"),
+                                ("replace", "true"),
                             ],
                         );
 
@@ -492,6 +433,7 @@ mod offline {
                         Constraint::Max("2".to_string()),
                     )
                         .into()],
+                    subtitle_codecs: vec![SubtitleCodec::Ass],
                     ..Default::default()
                 },
             )
@@ -507,6 +449,8 @@ mod offline {
                 when.method(GET)
                     .path("/video/:/transcode/universal/decision")
                     .query_param_exists("session")
+                    .query_param_exists("transcodeSessionId")
+                    .query_param("transcodeType", "video")
                     .query_param("path", "/library/metadata/159637")
                     .query_param("mediaIndex", "1")
                     .query_param("partIndex", "1")
@@ -520,14 +464,13 @@ mod offline {
                     .query_param("subtitles", "burn")
                     .query_param("offlineTranscode", "1")
                     .query_param_exists("X-Plex-Client-Profile-Extra")
-                    .query_param_exists("X-Plex-Session-Identifier")
                     .matches(|req| {
                         let settings = expand_profile(req);
 
                         assert_setting_count(&settings, "add-transcode-target", 2);
-                        assert_setting_count(&settings, "add-direct-play-profile", 2);
-                        assert_setting_count(&settings, "append-transcode-target-codec", 1);
-                        assert_setting_count(&settings, "add-transcode-target-audio-codec", 1);
+                        assert_setting_count(&settings, "add-direct-play-profile", 1);
+                        assert_setting_count(&settings, "append-transcode-target-codec", 0);
+                        assert_setting_count(&settings, "add-transcode-target-audio-codec", 0);
                         assert_setting_count(&settings, "add-limitation", 0);
 
                         assert_setting(
@@ -540,6 +483,8 @@ mod offline {
                                 ("container", "mp4"),
                                 ("videoCodec", "h264"),
                                 ("audioCodec", "aac"),
+                                ("subtitleCodec", ""),
+                                ("replace", "true"),
                             ],
                         );
 
@@ -553,6 +498,7 @@ mod offline {
                                 ("container", "mkv"),
                                 ("videoCodec", "h264"),
                                 ("audioCodec", "aac"),
+                                ("subtitleCodec", ""),
                             ],
                         );
 
@@ -561,45 +507,13 @@ mod offline {
                             "add-direct-play-profile",
                             &[
                                 ("type", "videoProfile"),
-                                ("container", "mp4"),
+                                ("container", "mp4,mkv"),
                                 ("videoCodec", "h264"),
                                 ("audioCodec", "aac"),
+                                ("subtitleCodec", ""),
+                                ("replace", "true"),
                             ],
                         );
-
-                        assert_setting(
-                            &settings,
-                            "add-direct-play-profile",
-                            &[
-                                ("type", "videoProfile"),
-                                ("container", "mkv"),
-                                ("videoCodec", "h264"),
-                                ("audioCodec", "aac"),
-                            ],
-                        );
-
-                        assert_setting(
-                            &settings,
-                            "append-transcode-target-codec",
-                            &[
-                                ("type", "videoProfile"),
-                                ("context", "static"),
-                                ("protocol", "http"),
-                                ("videoCodec", "h264"),
-                            ],
-                        );
-
-                        assert_setting(
-                            &settings,
-                            "add-transcode-target-audio-codec",
-                            &[
-                                ("type", "videoProfile"),
-                                ("context", "static"),
-                                ("protocol", "http"),
-                                ("audioCodec", "aac"),
-                            ],
-                        );
-
                         true
                     });
                 then.status(200)
@@ -608,6 +522,187 @@ mod offline {
             });
 
             part.create_download_session(VideoTranscodeOptions {
+                bitrate: 2000,
+                width: 1280,
+                height: 720,
+                burn_subtitles: true,
+                video_codecs: vec![VideoCodec::H264],
+                audio_codecs: vec![AudioCodec::Aac],
+                ..Default::default()
+            })
+            .await
+            .unwrap();
+            m.assert();
+            m.delete();
+
+            let mut m = mock_server.mock(|when, then| {
+                when.method(GET)
+                    .path("/video/:/transcode/universal/decision")
+                    .query_param_exists("session")
+                    .query_param_exists("transcodeSessionId")
+                    .query_param("transcodeType", "video")
+                    .query_param("path", "/library/metadata/159637")
+                    .query_param("mediaIndex", "1")
+                    .query_param("partIndex", "-1")
+                    .query_param("directPlay", "1")
+                    .query_param("directStream", "1")
+                    .query_param("directStreamAudio", "1")
+                    .query_param("context", "static")
+                    .query_param("maxVideoBitrate", "2000")
+                    .query_param("videoBitrate", "2000")
+                    .query_param("videoResolution", "1280x720")
+                    .query_param("subtitles", "burn")
+                    .query_param("offlineTranscode", "1")
+                    .query_param_exists("X-Plex-Client-Profile-Extra")
+                    .matches(|req| {
+                        let settings = expand_profile(req);
+
+                        assert_setting_count(&settings, "add-transcode-target", 2);
+                        assert_setting_count(&settings, "add-direct-play-profile", 1);
+                        assert_setting_count(&settings, "append-transcode-target-codec", 0);
+                        assert_setting_count(&settings, "add-transcode-target-audio-codec", 0);
+                        assert_setting_count(&settings, "add-limitation", 0);
+
+                        assert_setting(
+                            &settings,
+                            "add-transcode-target",
+                            &[
+                                ("type", "videoProfile"),
+                                ("context", "static"),
+                                ("protocol", "http"),
+                                ("container", "mp4"),
+                                ("videoCodec", "h264"),
+                                ("audioCodec", "aac"),
+                                ("subtitleCodec", ""),
+                                ("replace", "true"),
+                            ],
+                        );
+
+                        assert_setting(
+                            &settings,
+                            "add-transcode-target",
+                            &[
+                                ("type", "videoProfile"),
+                                ("context", "static"),
+                                ("protocol", "http"),
+                                ("container", "mkv"),
+                                ("videoCodec", "h264"),
+                                ("audioCodec", "aac"),
+                                ("subtitleCodec", ""),
+                            ],
+                        );
+
+                        assert_setting(
+                            &settings,
+                            "add-direct-play-profile",
+                            &[
+                                ("type", "videoProfile"),
+                                ("container", "mp4,mkv"),
+                                ("videoCodec", "h264"),
+                                ("audioCodec", "aac"),
+                                ("subtitleCodec", ""),
+                                ("replace", "true"),
+                            ],
+                        );
+                        true
+                    });
+                then.status(200)
+                    .header("content-type", "text/json")
+                    .body_from_file("tests/mocks/transcode/video_offline_h264_mp3.json");
+            });
+
+            media
+                .create_download_session(VideoTranscodeOptions {
+                    bitrate: 2000,
+                    width: 1280,
+                    height: 720,
+                    burn_subtitles: true,
+                    video_codecs: vec![VideoCodec::H264],
+                    audio_codecs: vec![AudioCodec::Aac],
+                    ..Default::default()
+                })
+                .await
+                .unwrap();
+            m.assert();
+            m.delete();
+
+            let mut m = mock_server.mock(|when, then| {
+                when.method(GET)
+                    .path("/video/:/transcode/universal/decision")
+                    .query_param_exists("session")
+                    .query_param_exists("transcodeSessionId")
+                    .query_param("transcodeType", "video")
+                    .query_param("path", "/library/metadata/159637")
+                    .query_param("mediaIndex", "-1")
+                    .query_param("partIndex", "-1")
+                    .query_param("directPlay", "1")
+                    .query_param("directStream", "1")
+                    .query_param("directStreamAudio", "1")
+                    .query_param("context", "static")
+                    .query_param("maxVideoBitrate", "2000")
+                    .query_param("videoBitrate", "2000")
+                    .query_param("videoResolution", "1280x720")
+                    .query_param("subtitles", "burn")
+                    .query_param("offlineTranscode", "1")
+                    .query_param_exists("X-Plex-Client-Profile-Extra")
+                    .matches(|req| {
+                        let settings = expand_profile(req);
+
+                        assert_setting_count(&settings, "add-transcode-target", 2);
+                        assert_setting_count(&settings, "add-direct-play-profile", 1);
+                        assert_setting_count(&settings, "append-transcode-target-codec", 0);
+                        assert_setting_count(&settings, "add-transcode-target-audio-codec", 0);
+                        assert_setting_count(&settings, "add-limitation", 0);
+
+                        assert_setting(
+                            &settings,
+                            "add-transcode-target",
+                            &[
+                                ("type", "videoProfile"),
+                                ("context", "static"),
+                                ("protocol", "http"),
+                                ("container", "mp4"),
+                                ("videoCodec", "h264"),
+                                ("audioCodec", "aac"),
+                                ("subtitleCodec", ""),
+                                ("replace", "true"),
+                            ],
+                        );
+
+                        assert_setting(
+                            &settings,
+                            "add-transcode-target",
+                            &[
+                                ("type", "videoProfile"),
+                                ("context", "static"),
+                                ("protocol", "http"),
+                                ("container", "mkv"),
+                                ("videoCodec", "h264"),
+                                ("audioCodec", "aac"),
+                                ("subtitleCodec", ""),
+                            ],
+                        );
+
+                        assert_setting(
+                            &settings,
+                            "add-direct-play-profile",
+                            &[
+                                ("type", "videoProfile"),
+                                ("container", "mp4,mkv"),
+                                ("videoCodec", "h264"),
+                                ("audioCodec", "aac"),
+                                ("subtitleCodec", ""),
+                                ("replace", "true"),
+                            ],
+                        );
+                        true
+                    });
+                then.status(200)
+                    .header("content-type", "text/json")
+                    .body_from_file("tests/mocks/transcode/video_offline_h264_mp3.json");
+            });
+
+            item.create_download_session(VideoTranscodeOptions {
                 bitrate: 2000,
                 width: 1280,
                 height: 720,
@@ -871,7 +966,7 @@ mod offline {
     mod music {
         use super::*;
         use plex_api::{
-            library::{MediaItem, Track},
+            library::{MediaItem, MediaItemWithTranscoding, Track},
             transcode::{AudioSetting, Constraint, MusicTranscodeOptions},
         };
 
@@ -902,6 +997,8 @@ mod offline {
                 when.method(GET)
                     .path("/video/:/transcode/universal/decision")
                     .query_param_exists("session")
+                    .query_param_exists("transcodeSessionId")
+                    .query_param("transcodeType", "music")
                     .query_param("path", "/library/metadata/157786")
                     .query_param("mediaIndex", "0")
                     .query_param("partIndex", "0")
@@ -912,7 +1009,6 @@ mod offline {
                     .query_param("musicBitrate", "192")
                     .query_param("protocol", "dash")
                     .query_param_exists("X-Plex-Client-Profile-Extra")
-                    .query_param_exists("X-Plex-Session-Identifier")
                     .matches(|req| {
                         let settings = expand_profile(req);
 
@@ -931,6 +1027,7 @@ mod offline {
                                 ("protocol", "dash"),
                                 ("container", "mp4"),
                                 ("audioCodec", "mp3,vorbis"),
+                                ("replace", "true"),
                             ],
                         );
 
@@ -1170,18 +1267,24 @@ mod online {
     }
 
     /// Checks the session was correct.
-    fn verify_session(
+    async fn verify_session(
         session: &TranscodeSession,
         protocol: Protocol,
         container: ContainerFormat,
         audio: Option<(Decision, AudioCodec)>,
         video: Option<(Decision, VideoCodec)>,
+        duration: Option<u64>,
     ) {
         assert_eq!(session.is_offline(), protocol == Protocol::Http);
         assert_eq!(session.protocol(), protocol);
         assert_eq!(session.container(), container);
         assert_eq!(session.audio_transcode(), audio);
         assert_eq!(session.video_transcode(), video);
+
+        if let Some(duration) = duration {
+            let stats = session.stats().await.unwrap();
+            assert_eq!(stats.duration.unwrap(), duration);
+        }
     }
 
     /// Checks the server lists a single session matching the one passed.
@@ -1253,8 +1356,9 @@ mod online {
         use isahc::AsyncReadResponseExt;
         use mp4::{AvcProfile, MediaType, Mp4Reader, TrackType};
         use plex_api::{
-            library::MediaItem, library::MetadataItem, library::Movie,
-            media_container::server::Feature, transcode::VideoTranscodeOptions,
+            library::{MediaItem, MediaItemWithTranscoding, MetadataItem, Movie},
+            media_container::server::Feature,
+            transcode::VideoTranscodeOptions,
         };
         use std::io::Cursor;
 
@@ -1291,7 +1395,9 @@ mod online {
                 ContainerFormat::Mp4,
                 Some((Decision::Transcode, AudioCodec::Mp3)),
                 Some((Decision::Transcode, VideoCodec::H264)),
-            );
+                None,
+            )
+            .await;
 
             let mut buf: Vec<u8> = Vec::new();
             session.download(&mut buf).await.unwrap();
@@ -1338,7 +1444,9 @@ mod online {
                 ContainerFormat::Mp4,
                 Some((Decision::Copy, AudioCodec::Aac)),
                 Some((Decision::Copy, VideoCodec::H264)),
-            );
+                None,
+            )
+            .await;
 
             let mut buf: Vec<u8> = Vec::new();
             session.download(&mut buf).await.unwrap();
@@ -1360,8 +1468,10 @@ mod online {
             assert_eq!(movie.title(), "Big Buck Bunny");
 
             let media = &movie.media()[0];
+            assert_eq!(media.parts().len(), 2);
             let part = &media.parts()[0];
 
+            // Tests transcoding a single part
             let session = part
                 .create_streaming_session(
                     Protocol::Hls,
@@ -1383,7 +1493,60 @@ mod online {
                 ContainerFormat::MpegTs,
                 Some((Decision::Transcode, AudioCodec::Mp3)),
                 Some((Decision::Transcode, VideoCodec::H264)),
-            );
+                None,
+            )
+            .await;
+
+            let mut buf = Vec::<u8>::new();
+            session.download(&mut buf).await.unwrap();
+            let index = std::str::from_utf8(&buf).unwrap();
+            let playlist = MasterPlaylist::try_from(index).unwrap();
+            if let VariantStream::ExtXStreamInf { uri, .. } = &playlist.variant_streams[0] {
+                let path = format!("/video/:/transcode/universal/{uri}");
+                let text = server
+                    .client()
+                    .get(path)
+                    .send()
+                    .await
+                    .unwrap()
+                    .text()
+                    .await
+                    .unwrap();
+
+                let _media_playlist = MediaPlaylist::try_from(text.as_str()).unwrap();
+            } else {
+                panic!("Expected a media stream");
+            }
+
+            cancel(&server, session).await;
+
+            verify_no_sessions!(server);
+
+            // Tests transcoding a whole movie (multiple parts)
+            let session = movie
+                .create_streaming_session(
+                    Protocol::Hls,
+                    // These settings will force transcoding as the original has
+                    // higher bitrate and has a different audio codec.
+                    VideoTranscodeOptions {
+                        bitrate: 110,
+                        video_codecs: vec![VideoCodec::H264],
+                        audio_codecs: vec![AudioCodec::Mp3],
+                        ..Default::default()
+                    },
+                )
+                .await
+                .unwrap();
+
+            verify_session(
+                &session,
+                Protocol::Hls,
+                ContainerFormat::MpegTs,
+                Some((Decision::Transcode, AudioCodec::Mp3)),
+                Some((Decision::Transcode, VideoCodec::H264)),
+                None,
+            )
+            .await;
 
             let mut buf = Vec::<u8>::new();
             session.download(&mut buf).await.unwrap();
@@ -1421,8 +1584,10 @@ mod online {
             assert_eq!(movie.title(), "Big Buck Bunny");
 
             let media = &movie.media()[0];
+            assert_eq!(media.parts().len(), 2);
             let part = &media.parts()[0];
 
+            // Tests transcoding a single part
             let session = part
                 .create_streaming_session(
                     Protocol::Hls,
@@ -1446,7 +1611,64 @@ mod online {
                 ContainerFormat::MpegTs,
                 Some((Decision::Copy, AudioCodec::Aac)),
                 Some((Decision::Copy, VideoCodec::H264)),
-            );
+                None,
+            )
+            .await;
+
+            let mut buf = Vec::<u8>::new();
+            session.download(&mut buf).await.unwrap();
+            let index = std::str::from_utf8(&buf).unwrap();
+            let playlist = MasterPlaylist::try_from(index).unwrap();
+            if let VariantStream::ExtXStreamInf { uri, .. } = &playlist.variant_streams[0] {
+                let path = format!("/video/:/transcode/universal/{uri}");
+                let text = server
+                    .client()
+                    .get(path)
+                    .send()
+                    .await
+                    .unwrap()
+                    .text()
+                    .await
+                    .unwrap();
+
+                let _media_playlist = MediaPlaylist::try_from(text.as_str()).unwrap();
+            } else {
+                panic!("Expected a media stream");
+            }
+
+            cancel(&server, session).await;
+
+            verify_no_sessions!(server);
+
+            // Tests transcoding a whole movie (multiple parts)
+            let session = movie
+                .create_streaming_session(
+                    Protocol::Hls,
+                    // These settings should allow for direct streaming of the video
+                    // and audio.
+                    VideoTranscodeOptions {
+                        bitrate: 200000000,
+                        width: 1280,
+                        height: 720,
+                        video_codecs: vec![VideoCodec::H264],
+                        audio_codecs: vec![AudioCodec::Aac],
+                        ..Default::default()
+                    },
+                )
+                .await
+                .unwrap();
+
+            verify_session(
+                &session,
+                Protocol::Hls,
+                ContainerFormat::MpegTs,
+                // Despite being able to play the original parts directly the server will still
+                // transcode in order to combine the parts into a single stream.
+                Some((Decision::Transcode, AudioCodec::Aac)),
+                Some((Decision::Transcode, VideoCodec::H264)),
+                None,
+            )
+            .await;
 
             let mut buf = Vec::<u8>::new();
             session.download(&mut buf).await.unwrap();
@@ -1512,6 +1734,7 @@ mod online {
                     // higher bitrate and has a different audio codec.
                     VideoTranscodeOptions {
                         bitrate: 110,
+                        containers: vec![ContainerFormat::Mp4],
                         video_codecs: vec![VideoCodec::H264],
                         audio_codecs: vec![AudioCodec::Mp3],
                         ..Default::default()
@@ -1526,7 +1749,48 @@ mod online {
                 ContainerFormat::Mp4,
                 Some((Decision::Transcode, AudioCodec::Mp3)),
                 Some((Decision::Transcode, VideoCodec::H264)),
-            );
+                part.duration(),
+            )
+            .await;
+
+            #[cfg(not(feature = "tests_shared_server_access_token"))]
+            verify_remote_sessions(&server, &session).await;
+
+            cancel(&server, session).await;
+
+            verify_no_sessions!(server);
+
+            let movie: Movie = server.item_by_id("55").await.unwrap().try_into().unwrap();
+            assert_eq!(movie.title(), "Big Buck Bunny");
+
+            let media = &movie.media()[0];
+            assert_eq!(media.parts().len(), 2);
+
+            let session = movie
+                .create_download_session(
+                    // These settings will force transcoding as the original has
+                    // higher bitrate and has a different audio codec.
+                    VideoTranscodeOptions {
+                        bitrate: 110,
+                        containers: vec![ContainerFormat::Mp4],
+                        video_codecs: vec![VideoCodec::H264],
+                        audio_codecs: vec![AudioCodec::Mp3],
+                        ..Default::default()
+                    },
+                )
+                .await
+                .unwrap();
+
+            verify_session(
+                &session,
+                Protocol::Http,
+                ContainerFormat::Mp4,
+                Some((Decision::Transcode, AudioCodec::Mp3)),
+                Some((Decision::Transcode, VideoCodec::H264)),
+                // There is only one media item so we know this will be the duration of the whole movie.
+                media.duration(),
+            )
+            .await;
 
             #[cfg(not(feature = "tests_shared_server_access_token"))]
             verify_remote_sessions(&server, &session).await;
@@ -1580,7 +1844,9 @@ mod online {
                 ContainerFormat::Mp4,
                 Some((Decision::Copy, AudioCodec::Aac)),
                 Some((Decision::Copy, VideoCodec::H264)),
-            );
+                part.duration(),
+            )
+            .await;
 
             #[cfg(not(feature = "tests_shared_server_access_token"))]
             verify_remote_sessions(&server, &session).await;
@@ -1617,7 +1883,107 @@ mod online {
             assert!(matches!(video.media_type(), Ok(MediaType::H264)));
             assert_eq!(video.width(), 1280);
             assert_eq!(video.height(), 720);
+            // Allow some slop in the durations
+            assert!(
+                video
+                    .duration()
+                    .as_millis()
+                    .abs_diff(part.duration().unwrap() as u128)
+                    < 200,
+            );
             assert!(matches!(video.video_profile(), Ok(AvcProfile::AvcHigh)));
+            assert!(videos.next().is_none());
+
+            let mut audios = mp4
+                .tracks()
+                .values()
+                .filter(|t| matches!(t.track_type(), Ok(TrackType::Audio)));
+
+            let audio = audios.next().unwrap();
+            assert_eq!(audio.media_type().unwrap(), MediaType::AAC);
+            assert!(audios.next().is_none());
+
+            verify_no_sessions!(server);
+
+            let movie: Movie = server.item_by_id("55").await.unwrap().try_into().unwrap();
+            assert_eq!(movie.title(), "Big Buck Bunny");
+
+            let media = &movie.media()[0];
+            assert_eq!(media.parts().len(), 2);
+
+            let session = movie
+                .create_download_session(
+                    // These settings should allow for direct streaming of the video
+                    // and audio but into a different container format.
+                    VideoTranscodeOptions {
+                        bitrate: 200000000,
+                        width: 1280,
+                        height: 720,
+                        containers: vec![ContainerFormat::Mp4],
+                        video_codecs: vec![VideoCodec::H264],
+                        audio_codecs: vec![AudioCodec::Aac],
+                        ..Default::default()
+                    },
+                )
+                .await
+                .unwrap();
+
+            verify_session(
+                &session,
+                Protocol::Http,
+                ContainerFormat::Mp4,
+                // The server will need to transcode in order to combine the parts
+                // into a single stream.
+                Some((Decision::Transcode, AudioCodec::Aac)),
+                Some((Decision::Transcode, VideoCodec::H264)),
+                media.duration(),
+            )
+            .await;
+
+            #[cfg(not(feature = "tests_shared_server_access_token"))]
+            verify_remote_sessions(&server, &session).await;
+
+            // As this transcode is just copying the existing streams into a new
+            // container format it should complete quickly allowing us to download
+            // the transcoded file.
+
+            // To avoid download timeouts wait for the transcode to complete.
+            loop {
+                let stats = session.stats().await.unwrap();
+                if stats.complete {
+                    break;
+                }
+                sleep(Duration::from_millis(250)).await;
+            }
+
+            let mut buf = Vec::<u8>::new();
+            session.download(&mut buf).await.unwrap();
+            cancel(&server, session).await;
+
+            // Verify that the file is a valid MP4 container and the tracks are
+            // expected.
+            let len = buf.len();
+            let cursor = Cursor::new(buf);
+            let mp4 = Mp4Reader::read_header(cursor, len as u64).unwrap();
+
+            let mut videos = mp4
+                .tracks()
+                .values()
+                .filter(|t| matches!(t.track_type(), Ok(TrackType::Video)));
+
+            let video = videos.next().unwrap();
+            assert!(matches!(video.media_type(), Ok(MediaType::H264)));
+            assert_eq!(video.width(), 1280);
+            assert_eq!(video.height(), 720);
+            // Allow some slop in the durations
+            assert!(
+                video
+                    .duration()
+                    .as_millis()
+                    .abs_diff(media.duration().unwrap() as u128)
+                    < 200,
+            );
+            assert_eq!(video.video_profile().unwrap(), AvcProfile::AvcMain);
             assert!(videos.next().is_none());
 
             let mut audios = mp4
@@ -1680,8 +2046,9 @@ mod online {
         use hls_m3u8::{tags::VariantStream, MasterPlaylist, MediaPlaylist};
         use isahc::AsyncReadResponseExt;
         use plex_api::{
-            library::MediaItem, library::MetadataItem, library::Track,
-            media_container::server::Feature, transcode::MusicTranscodeOptions,
+            library::{MediaItem, MediaItemWithTranscoding, MetadataItem, Track},
+            media_container::server::Feature,
+            transcode::MusicTranscodeOptions,
         };
 
         #[plex_api_test_helper::online_test]
@@ -1716,7 +2083,9 @@ mod online {
                 ContainerFormat::Mp4,
                 Some((Decision::Transcode, AudioCodec::Mp3)),
                 None,
-            );
+                None,
+            )
+            .await;
 
             let mut buf: Vec<u8> = Vec::new();
             session.download(&mut buf).await.unwrap();
@@ -1759,7 +2128,9 @@ mod online {
                 ContainerFormat::Mp4,
                 Some((Decision::Copy, AudioCodec::Aac)),
                 None,
-            );
+                None,
+            )
+            .await;
 
             let mut buf: Vec<u8> = Vec::new();
             session.download(&mut buf).await.unwrap();
@@ -1803,7 +2174,9 @@ mod online {
                 ContainerFormat::MpegTs,
                 Some((Decision::Transcode, AudioCodec::Mp3)),
                 None,
-            );
+                None,
+            )
+            .await;
 
             let mut buf = Vec::<u8>::new();
             session.download(&mut buf).await.unwrap();
@@ -1864,7 +2237,9 @@ mod online {
                 ContainerFormat::MpegTs,
                 Some((Decision::Copy, AudioCodec::Aac)),
                 None,
-            );
+                None,
+            )
+            .await;
 
             let mut buf = Vec::<u8>::new();
             session.download(&mut buf).await.unwrap();
@@ -1935,7 +2310,9 @@ mod online {
                 ContainerFormat::Mp3,
                 Some((Decision::Transcode, AudioCodec::Mp3)),
                 None,
-            );
+                None,
+            )
+            .await;
 
             #[cfg(not(feature = "tests_shared_server_access_token"))]
             verify_remote_sessions(&server, &session).await;
