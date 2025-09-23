@@ -9,7 +9,7 @@ use plex_api::{
     },
     HttpClientBuilder, MyPlex, MyPlexBuilder, Server,
 };
-use std::{io::Write, time::Duration};
+use std::{fs, io::Write, time::Duration};
 use testcontainers::{
     core::{wait::HealthWaitStrategy, Mount, WaitFor},
     runners::AsyncRunner,
@@ -240,6 +240,23 @@ impl flags::Test {
             GenericImage::new(DOCKER_PLEX_IMAGE_NAME, &image_tag)
                 .with_wait_for(WaitFor::Healthcheck(HealthWaitStrategy::default()))
                 .into();
+
+        // Create required directories
+        fs::create_dir_all(format!(
+            "{}/{}/media",
+            sh.current_dir().display(),
+            plex_data_path
+        ))?;
+        fs::create_dir_all(format!(
+            "{}/{}/config/Library",
+            sh.current_dir().display(),
+            plex_data_path
+        ))?;
+        fs::create_dir_all(format!(
+            "{}/{}/transcode",
+            sh.current_dir().display(),
+            plex_data_path
+        ))?;
 
         #[cfg_attr(windows, allow(unused_mut))]
         let mut docker_image = docker_image

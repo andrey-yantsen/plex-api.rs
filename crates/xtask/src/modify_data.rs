@@ -3,7 +3,7 @@ use crate::{
     get_last_plex_tags::{DOCKER_PLEX_IMAGE_NAME, DOCKER_PLEX_IMAGE_TAG_MIN_SUPPORTED},
     utils::copy_tree,
 };
-use std::{fs::remove_dir_all, io::Write};
+use std::{fs, fs::remove_dir_all, io::Write};
 use testcontainers::{
     core::{wait::HealthWaitStrategy, Mount, WaitFor},
     runners::AsyncRunner,
@@ -31,6 +31,7 @@ impl flags::ModifyData {
         };
 
         let plex_data_path = sh.current_dir().join(path);
+
         let plex_config_path = plex_data_path
             .join("config")
             .join("Library")
@@ -53,6 +54,10 @@ impl flags::ModifyData {
             GenericImage::new(DOCKER_PLEX_IMAGE_NAME, &image_tag)
                 .with_wait_for(WaitFor::Healthcheck(HealthWaitStrategy::default()))
                 .into();
+
+        fs::create_dir_all(plex_data_path.join("media"))?;
+        fs::create_dir_all(plex_data_path.join("config").join("Library"))?;
+        fs::create_dir_all(plex_data_path.join("transcode"))?;
 
         #[cfg_attr(windows, allow(unused_mut))]
         let mut docker_image = docker_image
