@@ -11,7 +11,7 @@
 name: Test
 jobs:
   test_offline:
-    if: "!github.event.pull_request_target || github.event.pull_request_target.label.name == 'S-Run-Protected-Tests'"
+    if: "!github.event.pull_request_target || github.event.pull_request.label.name == 'S-Run-Protected-Tests'"
     strategy:
       matrix:
         os:
@@ -54,7 +54,7 @@ jobs:
         run: cargo run --package xtask -- test --online --docker-tag '${{ matrix.plex_server_version }}' --deny-unknown-fields --github-actions
 
   test_on_real_server_authenticated_free:
-    if: "github.event.pull_request_target.label.name == 'S-Run-Protected-Tests'"
+    if: "github.event.pull_request.label.name == 'S-Run-Protected-Tests'"
     needs: test_offline
     strategy:
       fail-fast: false
@@ -76,7 +76,7 @@ jobs:
         run: cargo run --package xtask -- test --online --docker-tag '${{ matrix.plex_server_version }}' --token '${{ secrets.PLEX_API_AUTH_TOKEN_FREE }}' --deny-unknown-fields --github-actions
 
   test_on_real_server_authenticated_plexpass:
-    if: "github.event.pull_request_target.label.name == 'S-Run-Protected-Tests'"
+    if: "github.event.pull_request.label.name == 'S-Run-Protected-Tests'"
     needs: test_offline
     strategy:
       fail-fast: false
@@ -98,7 +98,7 @@ jobs:
         run: cargo run --package xtask -- test --online --docker-tag '${{ matrix.plex_server_version }}' --token '${{ secrets.PLEX_API_AUTH_TOKEN_PLEXPASS }}' --deny-unknown-fields --github-actions
 
   test_on_real_server_unclaimed_authenticated:
-    if: "github.event.pull_request_target.label.name == 'S-Run-Protected-Tests'"
+    if: "github.event.pull_request.label.name == 'S-Run-Protected-Tests'"
     needs: test_offline
     strategy:
       fail-fast: false
@@ -119,7 +119,7 @@ jobs:
       - run: cargo run --package xtask -- test --online --docker-tag '${{ matrix.plex_server_version }}' --token '${{ secrets.PLEX_API_AUTH_TOKEN_FREE }}' --server-owner-token '' --deny-unknown-fields --github-actions
 
   test_on_real_server_shared:
-    if: "github.event.pull_request_target.label.name == 'S-Run-Protected-Tests'"
+    if: "github.event.pull_request.label.name == 'S-Run-Protected-Tests'"
     needs: test_offline
     strategy:
       fail-fast: false
