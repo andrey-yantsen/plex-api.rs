@@ -17,7 +17,7 @@ impl DeviceManager {
         Self { client }
     }
 
-    async fn devices_internal<'a, 'b>(&'a self, url: &'b str) -> Result<Vec<Device<'a>>> {
+    async fn devices_internal<'a>(&'a self, url: &str) -> Result<Vec<Device<'a>>> {
         let container: DevicesMediaContainer = self
             .client
             .get(url)

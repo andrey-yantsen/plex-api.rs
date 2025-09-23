@@ -138,7 +138,7 @@ impl MyPlex {
         Privacy::new(self.client.clone()).await
     }
 
-    pub fn sharing(&self) -> Result<Sharing> {
+    pub fn sharing(&'_ self) -> Result<Sharing<'_>> {
         if !self.client.is_authenticated() {
             return Err(Error::ClientNotAuthenticated);
         }
@@ -159,14 +159,13 @@ impl MyPlex {
     }
 
     pub fn available_features(&self) -> Option<&Vec<Feature>> {
-        return self
-            .account
+        self.account
             .as_ref()
-            .map(|account| &account.subscription.features);
+            .map(|account| &account.subscription.features)
     }
 
     pub fn account(&self) -> Option<&MyPlexAccount> {
-        return self.account.as_ref();
+        self.account.as_ref()
     }
 
     #[tracing::instrument(level = "debug", skip(self))]
