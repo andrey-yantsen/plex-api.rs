@@ -1,5 +1,137 @@
 # Changelog
 
+## 0.1.0 (2025-09-23)
+
+
+### ⚠ BREAKING CHANGES
+
+* add a few new fields to the Part struct
+* bump msrv to 1.70.0
+* `Profile#default_subtitle_accessibility` is now an `Enum` `Profile#default_subtitle_forced` is now an `Enum`.
+* Chapter.Filter is not always present
+* a typo in MappingState::Waiting variant
+* add more missed types and fields
+* add new fields to make it work with local assets
+* make Preferences use own HttpClient
+* Make rating keys consistent
+* make rating key to be string
+* add Markers parsing
+* make HttpClientBuilder::set_x_plex_features accept slices
+* make HttpClientBuilder accept more params types
+* merge metadata type fields into one
+* add extras and some other new metadata fields
+* make Guids to be enum variants
+* deny unreachable_pub and rename some exports
+* add Unknown variant to few more enums
+* move transcoding functions from Media to Part
+* remove webhook.url getter
+* remove `get_` prefix from getters
+* allow creating MyPlex without authentication
+* add tracing instrumenting for most of the methods
+* remove PinManager::default()
+* get rid of Arc over HttpClient
+* add account info to MyPlex struct
+* change MyPlexAccount::id to u64
+* store all the tokens/passwords as SecretString
+* decode start_state as enum instead of String
+* decode updated_at as DateTime
+* Add a way to retrieve specific items.
+* Move a lot of the boilerplate from trait implementations into macros.
+
+### Features
+
+* Add a method for downloading media parts. ([72266cf](https://github.com/andrey-yantsen/plex-api.rs/commit/72266cf333fd646e62ddd73c777a08c481c9b68e))
+* add a stub for sharing-related stuff ([c43c5c3](https://github.com/andrey-yantsen/plex-api.rs/commit/c43c5c3d388f6f9f1af17fabb273f7216664bde5))
+* Add a way to retrieve specific items. ([34298d9](https://github.com/andrey-yantsen/plex-api.rs/commit/34298d95f6c05bab7254e04973354b1baeb10709))
+* add announcements ([01a2137](https://github.com/andrey-yantsen/plex-api.rs/commit/01a213777d40d43ba2c7ac8352612575aa9f1678))
+* add APIs for setting an item's watched status ([3b04bb0](https://github.com/andrey-yantsen/plex-api.rs/commit/3b04bb0ee45474d85a1a098c1c006a12ba83d305))
+* add extras and some other new metadata fields ([46b6956](https://github.com/andrey-yantsen/plex-api.rs/commit/46b6956ae6ea419ccd79ecc233ebe41a875f75b7))
+* Add functionality for transcoding media. ([2584ed0](https://github.com/andrey-yantsen/plex-api.rs/commit/2584ed00b81bc8f0bbcd2e635409630783368054))
+* add has_premium_extras to Metadata ([1508142](https://github.com/andrey-yantsen/plex-api.rs/commit/1508142db025e35d8a4b8ef2eb299f54d086f767))
+* add HttpClient::json_body() convenience method ([f1ba0a6](https://github.com/andrey-yantsen/plex-api.rs/commit/f1ba0a6eb28811b43d5c0bc21d15e2ad323d4586))
+* add labels to metadata ([714fffd](https://github.com/andrey-yantsen/plex-api.rs/commit/714fffd0bdeb13734597b3b2b23b5589c57664a0))
+* add Markers parsing ([c901c4b](https://github.com/andrey-yantsen/plex-api.rs/commit/c901c4be9182ab7a12600395925bd7b4e5688b08))
+* add missing `thumb` property in Chapter ([cb3eb90](https://github.com/andrey-yantsen/plex-api.rs/commit/cb3eb90eb1a46cac4d78fcea4a1746912004d918))
+* add more missed types and fields ([d8fe885](https://github.com/andrey-yantsen/plex-api.rs/commit/d8fe88565af28609753c0c0e02182dc82e5f0a87))
+* add MyPlex::server_info() ([a8deb24](https://github.com/andrey-yantsen/plex-api.rs/commit/a8deb245c7e19fd0a6c8185505fd96001b1743c1))
+* add new fields to make it work with local assets ([123c542](https://github.com/andrey-yantsen/plex-api.rs/commit/123c542f180c138904c17c3d9d9f160b31edd9b9))
+* add new metadata fields ([efe828e](https://github.com/andrey-yantsen/plex-api.rs/commit/efe828ee426068c0a1fe072be6fced0f1d8e28fb))
+* add sharing and friends management ([974ecb1](https://github.com/andrey-yantsen/plex-api.rs/commit/974ecb11217873d6ce3d3bb1501c23d6c1dc62eb))
+* add support for connecting to shared servers ([0e3a4db](https://github.com/andrey-yantsen/plex-api.rs/commit/0e3a4db2a5c96612e31e00f84e3d290af93b8adf))
+* add switching between Plex Home users ([536eab4](https://github.com/andrey-yantsen/plex-api.rs/commit/536eab49e757287ff1be7d436e80c1ca0f3707e8))
+* add syntax sugar for checking device types ([09f4377](https://github.com/andrey-yantsen/plex-api.rs/commit/09f4377e71690d4e9588dd7652c0f25febd62848))
+* add viewing an item by it from Discovery ([a496636](https://github.com/andrey-yantsen/plex-api.rs/commit/a496636c492503d200a5359c130b45af5ee1fcaa))
+* add X-Plex-Model & X-Plex-Features headers ([25dbdec](https://github.com/andrey-yantsen/plex-api.rs/commit/25dbdec4fab9847b65574287ea19bee51f040c57))
+* allow creating MyPlex without authentication ([1672639](https://github.com/andrey-yantsen/plex-api.rs/commit/16726398227c4aa5e7465d751d5be1fbf4ca3f15))
+* Allow resizing item art. ([4a5da5e](https://github.com/andrey-yantsen/plex-api.rs/commit/4a5da5e9d7b2b89120007711c752a6f7d8633d3f))
+* decode start_state as enum instead of String ([5fb355a](https://github.com/andrey-yantsen/plex-api.rs/commit/5fb355a179f63e1d6529eee9709e60cc44d6425d))
+* decode updated_at as DateTime ([2909443](https://github.com/andrey-yantsen/plex-api.rs/commit/29094433bcd05903cf3623720efdb78f4e773aa6))
+* disable timeout when downloading a file ([d17bff3](https://github.com/andrey-yantsen/plex-api.rs/commit/d17bff36770223e355fb1037a36f02a433eaccb3))
+* expose internal library type ([f2957eb](https://github.com/andrey-yantsen/plex-api.rs/commit/f2957eb5e8982ce2863b9f09d78619c5312b804d))
+* expose MyPlex device names ([38cfaf5](https://github.com/andrey-yantsen/plex-api.rs/commit/38cfaf5320d655aaf3c5d64bca19f2f61dd10448))
+* load albums via search ([2574ca2](https://github.com/andrey-yantsen/plex-api.rs/commit/2574ca2d704379e108ee13a82ccbd5b4a83172a7))
+* make HttpClientBuilder accept more params types ([75ac984](https://github.com/andrey-yantsen/plex-api.rs/commit/75ac9846cef3bcce96fc77e1fcd331fc164adab8))
+* migrate the code to serde_with v2 ([7de8395](https://github.com/andrey-yantsen/plex-api.rs/commit/7de83955b53e39f2847ec10d7146ba39f61b8573))
+* pass library_section_id to parsed media ([cf3c868](https://github.com/andrey-yantsen/plex-api.rs/commit/cf3c868ebddd8c285e248ba5d8fdf5804e88bf15))
+* print received body on deserialization errors ([4a54359](https://github.com/andrey-yantsen/plex-api.rs/commit/4a5435976ee9aef94ad2e4d00ab5ba1322c34939))
+* remove PinManager::default() ([5106c37](https://github.com/andrey-yantsen/plex-api.rs/commit/5106c370a574e38b4d3290dff815426f2ef54da0))
+* store all the tokens/passwords as SecretString ([ca5e513](https://github.com/andrey-yantsen/plex-api.rs/commit/ca5e513722124c587e61333af6b0d35c7405772d))
+
+
+### Bug Fixes
+
+* a typo in MappingState::Waiting variant ([d69a834](https://github.com/andrey-yantsen/plex-api.rs/commit/d69a834102a83fafa40b3accd8e91d31c1112500))
+* add a missed field to Friend struct ([e886496](https://github.com/andrey-yantsen/plex-api.rs/commit/e886496fd98b68e2cadbaac8ee263c9e8f5be89b))
+* add missed fields to Device ([70f09ae](https://github.com/andrey-yantsen/plex-api.rs/commit/70f09aec6aa7274346275cd8d15bdd5cf1491772))
+* add the appropriate content-type for sharing request ([f5782af](https://github.com/andrey-yantsen/plex-api.rs/commit/f5782af8fd7237d4ce5b076f9116a8f497dd3e04))
+* Allow more unknown data to be deserialized without failing. ([8257a46](https://github.com/andrey-yantsen/plex-api.rs/commit/8257a46de9540cb569f2a98caaa626906f88b94e))
+* Allow parsing Live TV libraries ([d8a9140](https://github.com/andrey-yantsen/plex-api.rs/commit/d8a9140b4cf8e1c80ad84ecc5c7cf4c689d16891))
+* Chapter.Filter is not always present ([49cab2f](https://github.com/andrey-yantsen/plex-api.rs/commit/49cab2f1cced4f169cf658c7af5c2760eae1cf01))
+* correct condition for player connection ([d18dc96](https://github.com/andrey-yantsen/plex-api.rs/commit/d18dc96602e3b4b3f1a4edb83070c4b057a45ad8))
+* Correctly use a 404 response to indicate an unknown transcode session. ([5cd7e27](https://github.com/andrey-yantsen/plex-api.rs/commit/5cd7e27982d312f0cd7b55760a0166e414a8e3fe))
+* Generic videos should be transcodable ([d2e07f2](https://github.com/andrey-yantsen/plex-api.rs/commit/d2e07f2b2005c15b4eb45a51d15313663e20e868))
+* Make a number of already exposed types publicly usable. ([97810dc](https://github.com/andrey-yantsen/plex-api.rs/commit/97810dc168daade7130674751371b29eee381514))
+* make errors on unknown guids slightly nicer ([f6c7121](https://github.com/andrey-yantsen/plex-api.rs/commit/f6c712198d4062c8f526289b1f6f204a710790cd))
+* make HttpClient::deletem() use only min headers ([94a2d4a](https://github.com/andrey-yantsen/plex-api.rs/commit/94a2d4aaf4cf6f79406d8f7935a5155dc61c5f92))
+* make more fields accept strings as numbers ([62bd6b0](https://github.com/andrey-yantsen/plex-api.rs/commit/62bd6b07591e6ab27b7ff94808f47c29f1edc982))
+* make photo_auto_tag field on the server optional ([345effe](https://github.com/andrey-yantsen/plex-api.rs/commit/345effef0cb0f228cc50f1d327a05a824a0aa0b4))
+* make Players connectable, even through server proxy ([8717cf9](https://github.com/andrey-yantsen/plex-api.rs/commit/8717cf923bc827fc5fb93b91fda4da80ad9aebb5))
+* migrate to the new sysinfo version ([ff70260](https://github.com/andrey-yantsen/plex-api.rs/commit/ff70260e5ee6623ce9ba369661293f548ec685db))
+* Move a lot of the boilerplate from trait implementations into macros. ([95ddf42](https://github.com/andrey-yantsen/plex-api.rs/commit/95ddf425cddb4f5e20e1d143663e4e07da90d749))
+* Only allocate default client if one is not provided. ([bcd9449](https://github.com/andrey-yantsen/plex-api.rs/commit/bcd944977f0a11b2866ead7e9ded9f559c75a006))
+* Profile de-serialization when using new subtitle setting options ([45bab7a](https://github.com/andrey-yantsen/plex-api.rs/commit/45bab7a25f46e9919c5f370f70e5abcd2f692c4d))
+* Report ItemNotFound from lost transcode sessions ([0fb6e42](https://github.com/andrey-yantsen/plex-api.rs/commit/0fb6e42b719f59b52406275d79f77ddde791adbf))
+* return appropriate MetadataType if subtype is missing ([6e81477](https://github.com/andrey-yantsen/plex-api.rs/commit/6e81477dd0ec2482b3f0fbffdb206f8cf6a4032f))
+* Safer deserialisation for skip_parent and skip_count fields ([039db5a](https://github.com/andrey-yantsen/plex-api.rs/commit/039db5a728112211783d088ca9950f844b7099eb))
+* Send a unique X-Plex-Session-Identifier with each transcode request ([0f8d266](https://github.com/andrey-yantsen/plex-api.rs/commit/0f8d266377e58f04f9f8bfb6afe1ad283d8ed36a))
+* Simplify the common case of requesting JSON data. ([0007c77](https://github.com/andrey-yantsen/plex-api.rs/commit/0007c7763c3e2b10dabd6c830cf01226e5415231))
+* webhooks management is now working! ([376e5d0](https://github.com/andrey-yantsen/plex-api.rs/commit/376e5d0e919f59cf236ae3fe39012d9f0f9ddb72))
+
+
+### Miscellaneous Chores
+
+* add a few new fields to the Part struct ([032372d](https://github.com/andrey-yantsen/plex-api.rs/commit/032372d3f05e1c03e5743d805341a38932bea2f7))
+* add tracing instrumenting for most of the methods ([a323dd0](https://github.com/andrey-yantsen/plex-api.rs/commit/a323dd00cea39c4b8b651a69946f353bb15144f9))
+* bump msrv to 1.70.0 ([fc7b85f](https://github.com/andrey-yantsen/plex-api.rs/commit/fc7b85f93014a48b1fd2c47ec3cab61cfd49359c))
+
+
+### Code Refactoring
+
+* add account info to MyPlex struct ([17f03fe](https://github.com/andrey-yantsen/plex-api.rs/commit/17f03fe4425b69f2eaf05d0ac60639b853d6d9ae))
+* add Unknown variant to few more enums ([b16c048](https://github.com/andrey-yantsen/plex-api.rs/commit/b16c04856208af4c89dc72d865ab0d519e3de274))
+* change MyPlexAccount::id to u64 ([05c8c6d](https://github.com/andrey-yantsen/plex-api.rs/commit/05c8c6d13dcbfd353c2eab68f17ddc7864255c0d))
+* deny unreachable_pub and rename some exports ([04ecbc0](https://github.com/andrey-yantsen/plex-api.rs/commit/04ecbc08d1c0cb9e9f2e4be26d65900665855f16)), closes [#509](https://github.com/andrey-yantsen/plex-api.rs/issues/509)
+* get rid of Arc over HttpClient ([928ed7f](https://github.com/andrey-yantsen/plex-api.rs/commit/928ed7ff40753d41a0ed0801cb6ae2d50c00a5c5))
+* make Guids to be enum variants ([332d07d](https://github.com/andrey-yantsen/plex-api.rs/commit/332d07dfba661ee9f0dbd767d0f0988f0491bd10))
+* make HttpClientBuilder::set_x_plex_features accept slices ([4402e5b](https://github.com/andrey-yantsen/plex-api.rs/commit/4402e5b24945019549419dc1a5a23f0a04ad2fcf))
+* make Preferences use own HttpClient ([10d392e](https://github.com/andrey-yantsen/plex-api.rs/commit/10d392e0f3b83eef6aa3fd03ce7e5b84ccb40a57))
+* make rating key to be string ([1748233](https://github.com/andrey-yantsen/plex-api.rs/commit/174823354bf2c6704ced25c3ebf8f99d2c501d8d))
+* Make rating keys consistent ([8c8df57](https://github.com/andrey-yantsen/plex-api.rs/commit/8c8df57687446b55cfb75d5e3da94f9a6a5d6854))
+* merge metadata type fields into one ([5a790d9](https://github.com/andrey-yantsen/plex-api.rs/commit/5a790d9dea949e73d97d603fd0357e7211457aa3))
+* move transcoding functions from Media to Part ([6f9ad71](https://github.com/andrey-yantsen/plex-api.rs/commit/6f9ad71d13655f4f3405caad5b5ed4118e4f1b01))
+* remove `get_` prefix from getters ([26ed77c](https://github.com/andrey-yantsen/plex-api.rs/commit/26ed77cd4f8bb9078dba081ea145de201f7a5c6a))
+* remove webhook.url getter ([359f7a5](https://github.com/andrey-yantsen/plex-api.rs/commit/359f7a594df35c731d40b41a3baf3064d4fd5423))
+
 ## [0.0.11](https://github.com/andrey-yantsen/plex-api.rs/compare/plex-api-v0.0.10...plex-api-v0.0.11) (2023-06-02)
 
 
