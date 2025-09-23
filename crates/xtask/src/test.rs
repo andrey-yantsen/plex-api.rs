@@ -10,7 +10,11 @@ use plex_api::{
     HttpClientBuilder, MyPlex, MyPlexBuilder, Server,
 };
 use std::{io::Write, time::Duration};
-use testcontainers::{clients, core::WaitFor, GenericImage, RunnableImage};
+use testcontainers::{
+    core::{wait::HealthWaitStrategy, Mount, WaitFor},
+    runners::AsyncRunner,
+    ContainerRequest, GenericImage, ImageExt,
+};
 use tokio::{runtime::Runtime, time::sleep};
 use xshell::{cmd, Shell};
 
@@ -232,18 +236,18 @@ impl flags::Test {
             .docker_tag
             .clone()
             .unwrap_or_else(|| DOCKER_PLEX_IMAGE_TAG_MIN_SUPPORTED.to_owned());
-        let docker_image: RunnableImage<GenericImage> =
+        let docker_image: ContainerRequest<GenericImage> =
             GenericImage::new(DOCKER_PLEX_IMAGE_NAME, &image_tag)
-                .with_wait_for(WaitFor::Healthcheck)
+                .with_wait_for(WaitFor::Healthcheck(HealthWaitStrategy::default()))
                 .into();
 
         #[cfg_attr(windows, allow(unused_mut))]
         let mut docker_image = docker_image
-            .with_volume((
+            .with_mount(Mount::bind_mount(
                 format!("{}/{}/media", sh.current_dir().display(), plex_data_path),
                 "/data",
             ))
-            .with_volume((
+            .with_mount(Mount::bind_mount(
                 format!(
                     "{}/{}/config/Library",
                     sh.current_dir().display(),
@@ -251,7 +255,7 @@ impl flags::Test {
                 ),
                 "/config/Library",
             ))
-            .with_volume((
+            .with_mount(Mount::bind_mount(
                 format!(
                     "{}/{}/transcode",
                     sh.current_dir().display(),
@@ -259,8 +263,8 @@ impl flags::Test {
                 ),
                 "/transcode",
             ))
-            .with_env_var(("TZ", "UTC"))
-            .with_env_var(("PLEX_CLAIM", claim_token));
+            .with_env_var("TZ", "UTC")
+            .with_env_var("PLEX_CLAIM", claim_token);
 
         #[cfg(not(windows))]
         {
@@ -268,21 +272,22 @@ impl flags::Test {
             let gid = users::get_current_gid();
 
             docker_image = docker_image
-                .with_env_var(("PLEX_UID", uid.to_string()))
-                .with_env_var(("PLEX_GID", gid.to_string()));
+                .with_env_var("PLEX_UID", uid.to_string())
+                .with_env_var("PLEX_GID", gid.to_string());
         }
-
-        let docker = clients::Cli::default();
 
         print!("// Spawning docker container {DOCKER_PLEX_IMAGE_NAME}:{image_tag}... ");
         let _ = std::io::stdout().flush();
 
-        let plex_node = docker.run(docker_image);
+        let plex_node = docker_image.start().await?;
 
         println!("done!");
         let _ = std::io::stdout().flush();
 
-        let server_url = format!("http://localhost:{}/", plex_node.get_host_port_ipv4(32400));
+        let server_url = format!(
+            "http://localhost:{}/",
+            plex_node.get_host_port_ipv4(32400).await?
+        );
         println!("Waiting for the plex server to boot...");
         cmd!(
             sh,
