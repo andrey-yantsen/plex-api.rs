@@ -4,7 +4,12 @@ use crate::{
     utils::copy_tree,
 };
 use std::{fs::remove_dir_all, io::Write};
-use testcontainers::{clients, core::WaitFor, GenericImage, RunnableImage};
+use testcontainers::{
+    core::{wait::HealthWaitStrategy, Mount, WaitFor},
+    runners::AsyncRunner,
+    ContainerRequest, GenericImage, ImageExt,
+};
+use tokio::runtime::Runtime;
 use xshell::{cmd, Shell};
 
 impl flags::ModifyData {
@@ -44,23 +49,26 @@ impl flags::ModifyData {
             .clone()
             .unwrap_or_else(|| DOCKER_PLEX_IMAGE_TAG_MIN_SUPPORTED.to_owned());
 
-        let docker_image: RunnableImage<GenericImage> =
+        let docker_image: ContainerRequest<GenericImage> =
             GenericImage::new(DOCKER_PLEX_IMAGE_NAME, &image_tag)
-                .with_wait_for(WaitFor::Healthcheck)
+                .with_wait_for(WaitFor::Healthcheck(HealthWaitStrategy::default()))
                 .into();
 
         #[cfg_attr(windows, allow(unused_mut))]
         let mut docker_image = docker_image
-            .with_volume((format!("{}/media", plex_data_path.display()), "/data"))
-            .with_volume((
+            .with_mount(Mount::bind_mount(
+                format!("{}/media", plex_data_path.display()),
+                "/data",
+            ))
+            .with_mount(Mount::bind_mount(
                 format!("{}/config/Library", plex_data_path.display()),
                 "/config/Library",
             ))
-            .with_volume((
+            .with_mount(Mount::bind_mount(
                 format!("{}/transcode", plex_data_path.display()),
                 "/transcode",
             ))
-            .with_env_var(("TZ", "UTC"));
+            .with_env_var("TZ", "UTC");
 
         #[cfg(not(windows))]
         {
@@ -68,21 +76,22 @@ impl flags::ModifyData {
             let gid = users::get_current_gid();
 
             docker_image = docker_image
-                .with_env_var(("PLEX_UID", uid.to_string()))
-                .with_env_var(("PLEX_GID", gid.to_string()));
+                .with_env_var("PLEX_UID", uid.to_string())
+                .with_env_var("PLEX_GID", gid.to_string());
         }
-
-        let docker = clients::Cli::default();
 
         print!("// Spawning docker container {DOCKER_PLEX_IMAGE_NAME}:{image_tag}... ");
         let _ = std::io::stdout().flush();
 
-        let plex_node = docker.run(docker_image);
+        let plex_node = Runtime::new()?.block_on(async { docker_image.start().await })?;
 
         println!("done!");
         let _ = std::io::stdout().flush();
 
-        let server_url = format!("http://localhost:{}/", plex_node.get_host_port_ipv4(32400));
+        let server_url = format!(
+            "http://localhost:{}/",
+            Runtime::new()?.block_on(async { plex_node.get_host_port_ipv4(32400).await })?
+        );
         cmd!(
             sh,
             "cargo run -p plex-cli --  --server {server_url} wait --full"
@@ -97,7 +106,7 @@ impl flags::ModifyData {
 
         print!("// Stopping docker container... ");
         let _ = std::io::stdout().flush();
-        plex_node.stop();
+        Runtime::new()?.block_on(async { plex_node.stop().await })?;
         println!("done!");
 
         remove_dir_all(&plex_stub_config_path)?;
