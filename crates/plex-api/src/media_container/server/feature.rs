@@ -62,6 +62,11 @@ pub enum Feature {
     )]
     AvodAdAnalysis,
     #[serde(
+        rename = "avod-ad-loudness",
+        alias = "05826f20-284b-4bcb-b45c-2367e5c0ea72"
+    )]
+    AvodAdLoudness,
+    #[serde(
         rename = "avod-new-media",
         alias = "e703655b-ee05-4e24-97e3-a138da62c425"
     )]
@@ -908,6 +913,7 @@ pub enum Feature {
         rename = "tvod",
         alias = "9b5a4bea-3bbe-45d2-b226-00a6ef4d8e65"
     )]
+    #[deprecated]
     Tvod,
     #[serde(
         rename = "tvod_playback",
@@ -999,6 +1005,7 @@ pub enum Feature {
         rename = "vod_channels",
         alias = "5050545e-95c6-4a25-b94e-1fe5a5a603d0"
     )]
+    #[deprecated]
     VodChannels,
     #[serde(
         rename = "vod_cloudflare",
