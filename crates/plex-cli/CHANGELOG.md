@@ -1,5 +1,30 @@
 # Changelog
 
+## 0.1.0 (2025-09-23)
+
+
+### ⚠ BREAKING CHANGES
+
+* make rating key to be string
+* deny unreachable_pub and rename some exports
+
+### Features
+
+* add basic media downloading to plex-cli ([6b12426](https://github.com/andrey-yantsen/plex-api.rs/commit/6b124262b2212eeac262f3af10734b48bc3ad663))
+* **wait:** add an argument for extended waiting ([19838c4](https://github.com/andrey-yantsen/plex-api.rs/commit/19838c4b8a5723c08bb9d8b3bbc7e53eb7594971))
+* **wait:** add error details ([b7cd005](https://github.com/andrey-yantsen/plex-api.rs/commit/b7cd005b6fe4cf47235b45dc8056e8a9c2b94d1f))
+* **wait:** add verbose option to display failure details ([343eb17](https://github.com/andrey-yantsen/plex-api.rs/commit/343eb179fc7f151f9cf3cc2ce21a9d337cfcfda7))
+* **wait:** do not wait for certificate for unclaimed servers ([9e22783](https://github.com/andrey-yantsen/plex-api.rs/commit/9e227832a04e0e0ef2ca4b40d06f6e644b8da1dc))
+* **wait:** fix and add more checks for --full waiting ([4622166](https://github.com/andrey-yantsen/plex-api.rs/commit/46221667aa314bfc8e86424a9a0d45b4d497d66d))
+* **wait:** remove waiting for the certificate in full mode ([244b6a5](https://github.com/andrey-yantsen/plex-api.rs/commit/244b6a5be9e066239702249d9207095ed88923b5))
+* **wait:** wait for the server to map with MyPlex in full mode ([9c72e26](https://github.com/andrey-yantsen/plex-api.rs/commit/9c72e26b3a87ec19ac9e6ef1160e03ea42224911))
+
+
+### Code Refactoring
+
+* deny unreachable_pub and rename some exports ([04ecbc0](https://github.com/andrey-yantsen/plex-api.rs/commit/04ecbc08d1c0cb9e9f2e4be26d65900665855f16)), closes [#509](https://github.com/andrey-yantsen/plex-api.rs/issues/509)
+* make rating key to be string ([1748233](https://github.com/andrey-yantsen/plex-api.rs/commit/174823354bf2c6704ced25c3ebf8f99d2c501d8d))
+
 ## [0.0.3](https://github.com/andrey-yantsen/plex-api.rs/compare/plex-cli-v0.0.2...plex-cli-v0.0.3) (2023-05-19)
 
 
