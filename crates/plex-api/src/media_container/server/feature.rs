@@ -105,7 +105,13 @@ pub enum Feature {
         rename = "cloud-livetv",
         alias = "dbab9396-78ff-48f5-a5ce-c76539ed1b6e"
     )]
+    #[deprecated]
     CloudLivetv,
+    #[serde(
+        rename = "cloudflare-turnstile-required",
+        alias = "b25b878c-4f60-4337-9f6b-2d97ef41d036"
+    )]
+    CloudflareTurnstileRequired,
     #[serde(
         rename = "cloudsync",
         alias = "65152b75-13a9-408a-bd30-dbd23a259183"
@@ -122,10 +128,25 @@ pub enum Feature {
     )]
     CommentsAndRepliesPushNotifications,
     #[serde(
+        rename = "common-sense-media-ratings-premium",
+        alias = "f702522e-2445-461e-a83f-fc16c1259035"
+    )]
+    CommonSenseMediaRatingsPremium,
+    #[serde(
         rename = "community_access_plex_tv",
         alias = "3f6baa76-7488-479a-9e4f-49ff2c0d3711"
     )]
     CommunityAccessPlexTv,
+    #[serde(
+        rename = "community_friends_and_followers_new_followers_push",
+        alias = "359796ce-d614-427f-8165-19ff62ca053a"
+    )]
+    CommunityFriendsAndFollowersNewFollowersPush,
+    #[serde(
+        rename = "community_friends_group_notifications",
+        alias = "dd69b465-7eb3-4c18-a1c0-7bc0015969e8"
+    )]
+    CommunityFriendsGroupNotifications,
     #[serde(
         rename = "community-phase0",
         alias = "fc3e8322-5e6e-4f4a-9d71-728c6d5656bd"
@@ -202,6 +223,11 @@ pub enum Feature {
         alias = "849433b0-ef60-4a71-9dd9-939bc01f5362"
     )]
     CustomHomeRemoval,
+    #[serde(
+        rename = "disable-facebook-auth",
+        alias = "00077925-6031-401b-8679-f6617ed0cec6"
+    )]
+    DisableFacebookAuth,
     #[serde(
         rename = "disable_home_user_friendships",
         alias = "d29f0ee0-3d3a-46c3-b582-4bc69bc17c29"
@@ -370,7 +396,13 @@ pub enum Feature {
         rename = "korea-consent",
         alias = "cb151c05-1943-408a-b37c-06f7d409d6bb"
     )]
+    #[deprecated]
     KoreaConsent,
+    #[serde(
+        rename = "le_isrg_root_x1",
+        alias = "af291e9e-813f-4467-8779-5d215abc3b5f"
+    )]
+    LeIsrgRootX1,
     #[serde(
         rename = "lets_encrypt",
         alias = "8536058d-e1dd-4ae7-b30f-e8b059b7cc17"
@@ -432,6 +464,7 @@ pub enum Feature {
         rename = "music",
         alias = "e7cea823-02e5-48c4-a501-d37b82bf132f"
     )]
+    #[deprecated]
     Music,
     #[serde(
         rename = "music-analysis",
@@ -442,6 +475,7 @@ pub enum Feature {
         rename = "music_preview",
         alias = "8e8dd5c8-14a4-4208-97d4-623e09191774"
     )]
+    #[deprecated]
     MusicPreview,
     #[serde(
         rename = "music_videos",
@@ -468,6 +502,11 @@ pub enum Feature {
         alias = "3dd35df0-3e4a-4e74-9ba8-2baeda83a733"
     )]
     NonAnonymousAccount,
+    #[serde(
+        rename = "onboarding-promo-modal",
+        alias = "c0179bb9-b542-4afc-914e-63163f378485"
+    )]
+    OnboardingPromoModal,
     #[serde(
         rename = "optimize-server-users-endpoint",
         alias = "ddd730e1-a0a0-429f-a7d3-7c5001d24497"
@@ -523,6 +562,11 @@ pub enum Feature {
     )]
     PhotosV6TvAlbums,
     #[serde(
+        rename = "plexpass_from_billing_context",
+        alias = "007fb90d-2224-4d24-bd42-e87ffde13558"
+    )]
+    PlexpassFromBillingContext,
+    #[serde(
         rename = "pms_health",
         alias = "9aea4ca5-2095-4619-9339-88c1e662fde6"
     )]
@@ -558,9 +602,25 @@ pub enum Feature {
     )]
     RateLimitClientToken,
     #[serde(
+        rename = "reactions_push_notifications_settings",
+        alias = "34ddfac9-3a76-459a-974d-591520b809dd"
+    )]
+    ReactionsPushNotificationsSettings,
+    #[serde(
+        rename = "redirect-subscription-to-account-page",
+        alias = "b8298a04-46a0-4f9c-ba1b-3b85a7d9f3b9"
+    )]
+    RedirectSubscriptionToAccountPage,
+    #[serde(
+        rename = "remote-watch-pass",
+        alias = "76ddd91e-8321-4916-94b6-ded8e3727a64"
+    )]
+    RemoteWatchPass,
+    #[serde(
         rename = "require-plex-nonce",
         alias = "0cce52a7-0778-4781-9a07-712370fb6b8a"
     )]
+    #[deprecated]
     RequirePlexNonce,
     #[serde(
         rename = "retro-games",
@@ -634,6 +694,11 @@ pub enum Feature {
     )]
     Singleitemsharing,
     #[serde(
+        rename = "skip-data-licensing-consent",
+        alias = "e5fe743c-af51-468a-b7e2-aabf0e79030c"
+    )]
+    SkipDataLicensingConsent,
+    #[serde(
         rename = "sleep-timer",
         alias = "c5adf9dc-af13-4a85-a24b-98de6fa2f595"
     )]
@@ -692,6 +757,7 @@ pub enum Feature {
         rename = "tunefind-clients",
         alias = "07f804e6-28e6-4beb-b5c3-f2aefc88b938"
     )]
+    #[deprecated]
     TunefindClients,
     #[serde(
         rename = "tunefind-vod",
