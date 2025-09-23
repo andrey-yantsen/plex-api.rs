@@ -96,6 +96,8 @@ pub struct Device {
     pub dns_rebinding_protection: Option<bool>,
     #[serde(rename = "@natLoopbackSupported")]
     pub nat_loopback_supported: Option<bool>,
+    #[serde(rename = "@searchEnabled")]
+    pub search_enabled: Option<bool>,
 }
 
 fn create_empty_secret_string() -> SecretString {

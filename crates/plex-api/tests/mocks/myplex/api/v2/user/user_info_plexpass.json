@@ -154,11 +154,17 @@
     "rememberExpiresAt": 1641937035,
     "profile": {
         "autoSelectAudio": true,
+        "defaultAudioAccessibility": 0,
         "defaultAudioLanguage": "en",
+        "defaultAudioLanguages": null,
         "defaultSubtitleLanguage": "en",
+        "defaultSubtitleLanguages": null,
         "autoSelectSubtitle": 0,
         "defaultSubtitleAccessibility": 0,
-        "defaultSubtitleForced": 0
+        "defaultSubtitleForced": 0,
+        "watchedIndicator": 1,
+        "mediaReviewsVisibility": 0,
+        "mediaReviewsLanguages": null
     },
     "entitlements": [
         "ios",

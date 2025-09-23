@@ -78,7 +78,19 @@ pub struct Profile {
     pub default_subtitle_accessibility: DefaultSubtitleAccessibility,
     pub default_subtitle_forced: DefaultSubtitleForced,
     pub default_audio_language: Option<String>,
+    // TODO the meaning of this is unknown
+    pub default_audio_accessibility: Option<u32>,
+    // TODO the type of this is unknown
+    pub default_audio_languages: Option<Vec<String>>,
     pub default_subtitle_language: Option<String>,
+    // TODO the type of this is unknown
+    pub default_subtitle_languages: Option<Vec<String>>,
+    // TODO the meaning of this is unknown
+    pub watched_indicator: Option<u32>,
+    // TODO the meaning of this is unknown
+    pub media_reviews_visibility: Option<u32>,
+    // TODO the type of this is unknown
+    pub media_reviews_languages: Option<Vec<String>>,
 }
 
 #[derive(Deserialize, Debug, Clone)]
@@ -177,6 +189,9 @@ pub struct MyPlexAccount {
     // TODO: I don't have a valid example with the data yet for the following fields
     pub custom_restrictions: Option<CustomRestrictions>,
     pub providers: Option<Vec<String>>,
+
+    // TODO the type of this is unknown
+    pub attribution_partner: Option<String>,
 }
 
 #[derive(Deserialize, Debug, Clone)]
