@@ -2008,7 +2008,7 @@ mod online {
 
     mod artwork {
         use super::super::fixtures::online::server::server;
-        use image::io::Reader as ImageReader;
+        use image::ImageReader;
         use plex_api::{
             library::MetadataItem, library::Movie, transcode::ArtTranscodeOptions, Server,
         };

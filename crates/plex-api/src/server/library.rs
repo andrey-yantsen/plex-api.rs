@@ -161,7 +161,7 @@ pub struct Media<'a, M: MediaItem> {
 impl<'a, M: MediaItem> Media<'a, M> {
     /// The different parts that make up this media. They should be played in
     /// order.
-    pub fn parts(&self) -> Vec<Part<M>> {
+    pub fn parts(&'_ self) -> Vec<Part<'_, M>> {
         self.media
             .parts
             .iter()
@@ -294,7 +294,7 @@ impl<'a, M: MediaItemWithTranscoding> Part<'a, M> {
 /// different parts.
 pub trait MediaItem: MetadataItem + Sized {
     /// The different media formats that this item is available in.
-    fn media(&self) -> Vec<Media<Self>> {
+    fn media(&'_ self) -> Vec<Media<'_, Self>> {
         let metadata = self.metadata();
         if let Some(ref media) = metadata.media {
             media
