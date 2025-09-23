@@ -24,10 +24,17 @@ fn rewrite_single_test(
     let fn_attrs = fn_type.attrs;
     let fn_block = fn_type.block;
 
+    let async_attr = if fn_signature.asyncness.is_some() {
+        quote! { #[async_std::test] }
+    } else {
+        quote! {}
+    };
+
     TokenStream::from(quote! {
         #[::rstest::rstest]
         #(#fn_attrs)*
         #extra_attr
+        #async_attr
         #[awt]
         #fn_vis #fn_signature {
             #fn_block
