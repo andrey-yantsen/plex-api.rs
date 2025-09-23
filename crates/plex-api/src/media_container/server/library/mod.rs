@@ -624,12 +624,10 @@ where
         #[cfg(not(feature = "tests_deny_unknown_fields"))]
         _ => Ok(MarkerType::Unknown(m.r#type)),
         #[cfg(feature = "tests_deny_unknown_fields")]
-        _ => {
-            return Err(serde::de::Error::unknown_variant(
-                m.r#type.as_str(),
-                &["credits", "intro"],
-            ))
-        }
+        _ => Err(serde::de::Error::unknown_variant(
+            m.r#type.as_str(),
+            &["credits", "intro"],
+        )),
     }
 }
 

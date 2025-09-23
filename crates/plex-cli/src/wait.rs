@@ -51,10 +51,8 @@ impl flags::Wait {
             println!("Details on the last attempt:");
             print!("Loading server details: ");
 
-            if server_result.is_ok() {
+            if let Ok(server) = &server_result {
                 println!("success");
-
-                let server = server_result.as_ref().unwrap();
 
                 if wait_full_start {
                     println!("Start state: {:?}", server.media_container.start_state);
