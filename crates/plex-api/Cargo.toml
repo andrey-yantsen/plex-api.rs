@@ -52,6 +52,7 @@ mp3-metadata = "^0.3.4"
 image = "^0.25.0"
 pico-args = "^0.5.0"
 tracing-subscriber = "^0.3"
+tokio = { version = "1.47.1", features = ["rt", "macros"] }
 
 [dev-dependencies.cargo-husky]
 version = "1"

@@ -26,7 +26,7 @@ fn rewrite_single_test(
 
     let async_attr = if fn_signature.asyncness.is_some() {
         quote! {
-            #[::async_std::test]
+            #[::tokio::test]
             #[awt]
         }
     } else {
