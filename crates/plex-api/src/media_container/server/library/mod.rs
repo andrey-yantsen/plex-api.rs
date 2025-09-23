@@ -873,6 +873,7 @@ pub struct MetadataMediaContainer {
 
     pub thumb: Option<String>,
     pub art: Option<String>,
+    pub content: Option<String>,
     pub theme: Option<String>,
     pub composite: Option<String>,
     pub banner: Option<String>,
