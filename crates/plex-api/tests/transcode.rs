@@ -15,10 +15,8 @@ mod offline {
     // Expands a profile query parameter into the list of settings.
     fn expand_profile(req: &HttpMockRequest) -> HashMap<String, Vec<HashMap<String, String>>> {
         let param = req
-            .query_params
-            .as_ref()
-            .unwrap()
-            .iter()
+            .query_params()
+            .into_iter()
             .filter_map(|(n, v)| {
                 if n == "X-Plex-Client-Profile-Extra" {
                     Some(v)
@@ -275,7 +273,7 @@ mod offline {
                     .query_param("subtitles", "burn")
                     .query_param("protocol", "dash")
                     .query_param_exists("X-Plex-Client-Profile-Extra")
-                    .matches(|req| {
+                    .is_true(|req| {
                         let settings = expand_profile(req);
 
                         assert_setting_count(&settings, "add-transcode-target", 1);
@@ -344,7 +342,7 @@ mod offline {
                     .query_param("videoResolution", "1920x1080")
                     .query_param("protocol", "hls")
                     .query_param_exists("X-Plex-Client-Profile-Extra")
-                    .matches(|req| {
+                    .is_true(|req| {
                         let settings = expand_profile(req);
 
                         assert_setting_count(&settings, "add-transcode-target", 1);
@@ -464,7 +462,7 @@ mod offline {
                     .query_param("subtitles", "burn")
                     .query_param("offlineTranscode", "1")
                     .query_param_exists("X-Plex-Client-Profile-Extra")
-                    .matches(|req| {
+                    .is_true(|req| {
                         let settings = expand_profile(req);
 
                         assert_setting_count(&settings, "add-transcode-target", 2);
@@ -554,7 +552,7 @@ mod offline {
                     .query_param("subtitles", "burn")
                     .query_param("offlineTranscode", "1")
                     .query_param_exists("X-Plex-Client-Profile-Extra")
-                    .matches(|req| {
+                    .is_true(|req| {
                         let settings = expand_profile(req);
 
                         assert_setting_count(&settings, "add-transcode-target", 2);
@@ -645,7 +643,7 @@ mod offline {
                     .query_param("subtitles", "burn")
                     .query_param("offlineTranscode", "1")
                     .query_param_exists("X-Plex-Client-Profile-Extra")
-                    .matches(|req| {
+                    .is_true(|req| {
                         let settings = expand_profile(req);
 
                         assert_setting_count(&settings, "add-transcode-target", 2);
@@ -1009,7 +1007,7 @@ mod offline {
                     .query_param("musicBitrate", "192")
                     .query_param("protocol", "dash")
                     .query_param_exists("X-Plex-Client-Profile-Extra")
-                    .matches(|req| {
+                    .is_true(|req| {
                         let settings = expand_profile(req);
 
                         assert_setting_count(&settings, "add-transcode-target", 1);

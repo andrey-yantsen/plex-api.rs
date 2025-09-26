@@ -36,8 +36,8 @@ mod offline {
         let m = mock_server.mock(|when, then| {
             when.method(PUT)
                 .path(MYPLEX_PRIVACY_PATH)
-                .x_www_form_urlencoded_tuple("optOutPlayback", "0")
-                .x_www_form_urlencoded_tuple("optOutLibraryStats", "0");
+                .form_urlencoded_tuple("optOutPlayback", "0")
+                .form_urlencoded_tuple("optOutLibraryStats", "0");
             then.status(204)
                 .header("content-type", "text/json")
                 .body_from_file("tests/mocks/myplex/api/v2/user/privacy.json");
