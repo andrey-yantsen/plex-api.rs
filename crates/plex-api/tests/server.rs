@@ -409,7 +409,7 @@ mod online {
     #[plex_api_test_helper::online_test]
     async fn list_libraries(#[future] server: Server) {
         let libraries = server.libraries();
-        assert_eq!(libraries.len(), 4);
+        assert_eq!(libraries.len(), 5);
         assert_eq!(libraries[0].title(), "Movies");
         assert_eq!(libraries[1].title(), "TV Shows");
         assert_eq!(libraries[2].title(), "Music");
