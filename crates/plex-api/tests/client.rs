@@ -16,9 +16,9 @@ mod offline {
         let m = mock_server.mock(|when, then| {
             when.method(GET)
                 .path("/")
-                .matches(|req| {
+                .is_true(|req| {
                     let mut found = false;
-                    for (header, _) in req.headers.as_ref().unwrap() {
+                    for (header, _) in req.headers().iter() {
                         if header.as_str() == "x-plex-token" {
                             found = true;
                             break;

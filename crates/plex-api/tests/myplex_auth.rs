@@ -15,9 +15,9 @@ mod offline {
         let m = mock_server.mock(|when, then| {
             when.method(POST)
                 .path(MYPLEX_SIGNIN_PATH)
-                .x_www_form_urlencoded_tuple("login", "username")
-                .x_www_form_urlencoded_tuple("password", "password")
-                .x_www_form_urlencoded_tuple("rememberMe", "true");
+                .form_urlencoded_tuple("login", "username")
+                .form_urlencoded_tuple("password", "password")
+                .form_urlencoded_tuple("rememberMe", "true");
             then.status(200)
                 .header("content-type", "text/json")
                 .body_from_file("tests/mocks/myplex/api/v2/user/user_info_free.json");
@@ -46,9 +46,9 @@ mod offline {
         let m = mock_server.mock(|when, then| {
             when.method(POST)
                 .path(MYPLEX_SIGNIN_PATH)
-                .x_www_form_urlencoded_tuple("login", "username")
-                .x_www_form_urlencoded_tuple("password", "password")
-                .x_www_form_urlencoded_tuple("rememberMe", "true");
+                .form_urlencoded_tuple("login", "username")
+                .form_urlencoded_tuple("password", "password")
+                .form_urlencoded_tuple("rememberMe", "true");
             then.status(200)
                 .header("content-type", "text/json")
                 .body_from_file("tests/mocks/myplex/api/v2/user/user_info_plexpass.json");
@@ -77,9 +77,9 @@ mod offline {
         let m = mock_server.mock(|when, then| {
             when.method(POST)
                 .path(MYPLEX_SIGNIN_PATH)
-                .x_www_form_urlencoded_tuple("login", "username")
-                .x_www_form_urlencoded_tuple("password", "password")
-                .x_www_form_urlencoded_tuple("rememberMe", "true");
+                .form_urlencoded_tuple("login", "username")
+                .form_urlencoded_tuple("password", "password")
+                .form_urlencoded_tuple("rememberMe", "true");
             then.status(401)
                 .header("content-type", "text/json")
                 .body(r#"{"errors":[{"code": 1029, "message": "OTP required", "status": 401}]}"#);
@@ -104,10 +104,10 @@ mod offline {
         let m = mock_server.mock(|when, then| {
             when.method(POST)
                 .path(MYPLEX_SIGNIN_PATH)
-                .x_www_form_urlencoded_tuple("login", "username")
-                .x_www_form_urlencoded_tuple("password", "password")
-                .x_www_form_urlencoded_tuple("rememberMe", "true")
-                .x_www_form_urlencoded_tuple("verificationCode", "123456");
+                .form_urlencoded_tuple("login", "username")
+                .form_urlencoded_tuple("password", "password")
+                .form_urlencoded_tuple("rememberMe", "true")
+                .form_urlencoded_tuple("verificationCode", "123456");
             then.status(200)
                 .header("content-type", "text/json")
                 .body_from_file("tests/mocks/myplex/api/v2/user/user_info_free.json");

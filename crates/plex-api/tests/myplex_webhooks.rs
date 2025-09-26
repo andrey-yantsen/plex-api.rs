@@ -17,7 +17,7 @@ mod offline {
         });
 
         let webhook_manager_result = myplex.webhook_manager().await;
-        m.assert_hits(0);
+        m.assert_calls(0);
 
         assert!(
             webhook_manager_result.is_err(),
@@ -128,7 +128,7 @@ mod offline {
         });
 
         let delete_result = webhook_manager.delete("https://example.com/webhook2").await;
-        m.assert_hits(0);
+        m.assert_calls(0);
 
         assert!(
             matches!(

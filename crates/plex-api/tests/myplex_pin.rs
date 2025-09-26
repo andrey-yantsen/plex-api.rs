@@ -15,7 +15,7 @@ mod offline {
         let mut mock = mock_server.mock(|when, then| {
             when.method(PUT)
                 .path(MYPLEX_PINS_LINK)
-                .x_www_form_urlencoded_tuple("code", "abcd");
+                .form_urlencoded_tuple("code", "abcd");
             then.status(404)
                 .header("content-type", "text/json")
                 .body(r#"{"errors":[{"code": 1020, "message": "Code not found or expired"}]}"#);
@@ -30,7 +30,7 @@ mod offline {
         let mut mock = mock_server.mock(|when, then| {
             when.method(PUT)
                 .path(MYPLEX_PINS_LINK)
-                .x_www_form_urlencoded_tuple("code", "code");
+                .form_urlencoded_tuple("code", "code");
             then.status(204);
         });
 
