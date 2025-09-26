@@ -50,9 +50,14 @@ jobs:
   lints:
     name: Lints
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout sources
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref || github.ref }}
+          fetch-depth: 0
       - name: Install stable toolchain
         uses: dtolnay/rust-toolchain@stable
         with:
@@ -61,6 +66,49 @@ jobs:
         with:
           shared-key: cache
       - name: Run cargo fmt
+        id: fmt_check
         run: cargo fmt --all -- --check
-      - name: Clippy with warnings
+        continue-on-error: true
+      - name: Run cargo clippy
+        id: clippy_check
+        run: cargo clippy --all-targets --all-features -- -D warnings
+        continue-on-error: true
+      - name: Apply cargo fmt fixes
+        if: github.event_name == 'pull_request' && steps.fmt_check.outcome == 'failure'
+        run: cargo fmt --all
+      - name: Apply cargo clippy fixes
+        if: github.event_name == 'pull_request' && steps.clippy_check.outcome == 'failure'
+        run: cargo clippy --fix --allow-dirty --allow-staged --all-targets --all-features -- -D warnings
+      - name: Commit lint fixes
+        if: github.event_name == 'pull_request' && (steps.fmt_check.outcome == 'failure' || steps.clippy_check.outcome == 'failure')
+        env:
+          GITHUB_HEAD_REF: ${{ github.head_ref }}
+        run: |
+          if [ -z "$(git status --short)" ]; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "chore(lints): apply automatic lint fixes"
+          echo "LINT_FIX_COMMITTED=true" >> $GITHUB_ENV
+      - name: Push lint fixes
+        if: github.event_name == 'pull_request' && env.LINT_FIX_COMMITTED == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_HEAD_REF: ${{ github.head_ref }}
+          HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name }}
+        run: |
+          REMOTE_URL="https://x-access-token:${GITHUB_TOKEN}@github.com/${HEAD_REPO}.git"
+          if git push "$REMOTE_URL" HEAD:${GITHUB_HEAD_REF}; then
+            echo "Successfully pushed lint fixes"
+          else
+            echo "::warning::Failed to push lint fixes. Please apply them manually."
+          fi
+      - name: Ensure cargo fmt passes
+        if: steps.fmt_check.outcome == 'failure'
+        run: cargo fmt --all -- --check
+      - name: Ensure cargo clippy passes
+        if: steps.clippy_check.outcome == 'failure'
         run: cargo clippy --all-targets --all-features -- -D warnings
