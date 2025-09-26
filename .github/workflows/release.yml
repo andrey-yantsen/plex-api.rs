@@ -13,7 +13,7 @@ jobs:
           - plex-api
           - plex-cli
     steps:
-      - uses: googleapis/release-please-action@v3
+      - uses: googleapis/release-please-action@v4
         id: release
         with:
           path: "crates/${{ matrix.crate }}"
