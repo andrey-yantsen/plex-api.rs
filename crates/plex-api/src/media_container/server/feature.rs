@@ -627,6 +627,7 @@ pub enum Feature {
         rename = "onboarding-promo-modal",
         alias = "c0179bb9-b542-4afc-914e-63163f378485"
     )]
+    #[deprecated]
     OnboardingPromoModal,
     #[serde(
         rename = "optimize-server-users-endpoint",
