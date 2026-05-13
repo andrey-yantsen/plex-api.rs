@@ -392,6 +392,16 @@ pub enum Feature {
     )]
     DvrBlockUnsupportedCountries,
     #[serde(
+        rename = "enable-create-payment-account-age-check",
+        alias = "eb9e316f-f3f7-48cc-83d6-d2d31c7ca453"
+    )]
+    EnableCreatePaymentAccountAgeCheck,
+    #[serde(
+        rename = "enable-create-payment-methods",
+        alias = "592e6f99-ee8d-44eb-97a2-bcd69758eb6d"
+    )]
+    EnableCreatePaymentMethods,
+    #[serde(
         rename = "epg-recent-channels",
         alias = "9c982beb-c676-4d6f-a777-ff5d37ec3081"
     )]
@@ -709,6 +719,11 @@ pub enum Feature {
     )]
     PmsHevcEncoding,
     #[serde(
+        rename = "pms-ipv6",
+        alias = "dac9c45e-6485-4704-a1e2-f9ffb215faa0"
+    )]
+    PmsIpv6,
+    #[serde(
         rename = "podcasts",
         alias = "1841971c-6be5-40e6-a211-7e189d767a78"
     )]
@@ -776,6 +791,11 @@ pub enum Feature {
     )]
     #[deprecated]
     RetroGamesPlexTv,
+    #[serde(
+        rename = "rwp-intro-price-copy",
+        alias = "2c752d0d-7411-4cc6-a5b3-66f57b904126"
+    )]
+    RwpIntroPriceCopy,
     #[serde(
         rename = "save-to-library",
         alias = "644c4466-05fa-45e0-a478-c594cf81778f"
