@@ -30,7 +30,6 @@ use uuid::Uuid;
 
 use crate::{
     error,
-    isahc_compat::StatusCodeExt,
     media_container::server::library::{
         AudioCodec, ContainerFormat, Decision, Protocol, SubtitleCodec, VideoCodec,
     },
@@ -671,7 +670,7 @@ where
         .send()
         .await?;
 
-    match response.status().as_http_status() {
+    match response.status() {
         // Sometimes the server will respond not found but still cancel the
         // session.
         StatusCode::OK => {

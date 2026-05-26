@@ -1,5 +1,4 @@
 use crate::{
-    isahc_compat::StatusCodeExt,
     url::{MYPLEX_PINS, MYPLEX_PINS_LINK},
     Error, HttpClient, Result,
 };
@@ -31,7 +30,7 @@ impl PinManager {
             .send()
             .await?;
 
-        if response.status().as_http_status() == StatusCode::NO_CONTENT {
+        if response.status() == StatusCode::NO_CONTENT {
             Ok(())
         } else {
             Err(Error::from_response(response).await)
@@ -51,7 +50,7 @@ impl PinManager {
             .send()
             .await?;
 
-        if response.status().as_http_status() == StatusCode::CREATED {
+        if response.status() == StatusCode::CREATED {
             let pin = response.json::<PinInfo>().await?;
             Ok(Pin {
                 client: &self.client,

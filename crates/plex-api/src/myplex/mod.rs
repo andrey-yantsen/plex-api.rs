@@ -17,7 +17,6 @@ use self::{
 };
 use crate::{
     http_client::{HttpClient, HttpClientBuilder, Request},
-    isahc_compat::StatusCodeExt,
     media_container::server::Feature,
     url::{MYPLEX_SERVERS, MYPLEX_SIGNIN_PATH, MYPLEX_SIGNOUT_PATH, MYPLEX_USER_INFO_PATH},
     Error, Result,
@@ -219,7 +218,7 @@ impl MyPlex {
             .send()
             .await?;
 
-        match response.status().as_http_status() {
+        match response.status() {
             StatusCode::NO_CONTENT => Ok(()),
             _ => Err(Error::from_response(response).await),
         }

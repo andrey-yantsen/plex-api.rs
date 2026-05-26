@@ -10,7 +10,6 @@ use serde::Deserialize;
 use serde_json::Value;
 
 use crate::{
-    isahc_compat::StatusCodeExt,
     media_container::{
         server::library::{ContainerFormat, Metadata, Protocol},
         MediaContainerWrapper,
@@ -296,7 +295,7 @@ impl QueueItem {
             .replace("{itemId}", &self.state.id.to_string());
 
         let response = self.client.head(path).send().await?;
-        match response.status().as_http_status() {
+        match response.status() {
             StatusCode::OK => {
                 if let Some(val) = response.headers().get(CONTENT_DISPOSITION) {
                     if let Ok(st) = val.to_str() {
@@ -329,7 +328,7 @@ impl QueueItem {
             .replace("{itemId}", &self.state.id.to_string());
 
         let response = self.client.head(path).send().await?;
-        match response.status().as_http_status() {
+        match response.status() {
             StatusCode::OK => {
                 if let Some(val) = response.headers().get(CONTENT_LENGTH) {
                     if let Ok(st) = val.to_str() {
@@ -385,7 +384,7 @@ impl QueueItem {
         }
 
         let mut response = builder.send().await?;
-        match response.status().as_http_status() {
+        match response.status() {
             StatusCode::OK | StatusCode::PARTIAL_CONTENT => {
                 response.copy_to(writer).await?;
                 Ok(())

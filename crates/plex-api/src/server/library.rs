@@ -6,7 +6,6 @@ use http::StatusCode;
 use isahc::AsyncReadResponseExt;
 
 use crate::{
-    isahc_compat::StatusCodeExt,
     media_container::{
         server::library::{
             CollectionMetadataSubtype, LibraryType, Media as MediaMetadata, Metadata,
@@ -298,7 +297,7 @@ impl<'a, M: MediaItem> Part<'a, M> {
         }
 
         let mut response = builder.send().await?;
-        match response.status().as_http_status() {
+        match response.status() {
             StatusCode::OK | StatusCode::PARTIAL_CONTENT => {
                 response.copy_to(writer).await?;
                 Ok(())

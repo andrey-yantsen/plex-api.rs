@@ -1,6 +1,5 @@
 use crate::{
-    isahc_compat::StatusCodeExt, myplex::account::RestrictionProfile, url::MYPLEX_INVITES_FRIENDS,
-    Error, HttpClient, Result,
+    myplex::account::RestrictionProfile, url::MYPLEX_INVITES_FRIENDS, Error, HttpClient, Result,
 };
 use http::StatusCode;
 use isahc::AsyncReadResponseExt;
@@ -99,7 +98,7 @@ impl Friend {
             .send()
             .await?;
 
-        match response.status().as_http_status() {
+        match response.status() {
             StatusCode::OK | StatusCode::NO_CONTENT => {
                 response.consume().await?;
                 Ok(())
